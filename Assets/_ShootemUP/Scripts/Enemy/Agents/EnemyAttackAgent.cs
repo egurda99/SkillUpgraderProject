@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -29,18 +28,6 @@ namespace ShootEmUp
 
         private void OnDisable() => _timer.OnTimerEnd -= ShootTimerEnd;
 
-
-        public void SetTarget(Transform target)
-        {
-            _target = target;
-            _targetHealth = target.GetComponent<HealthComponent>();
-        }
-
-        public void SetPositionReached()
-        {
-            _isPositionReached = true;
-        }
-
         private void FixedUpdate()
         {
             if (!_isPositionReached)
@@ -57,6 +44,17 @@ namespace ShootEmUp
         }
 
 
+        public void SetTarget(Transform target)
+        {
+            _target = target;
+            _targetHealth = target.GetComponent<HealthComponent>();
+        }
+
+        public void SetPositionReached()
+        {
+            _isPositionReached = true;
+        }
+
         private void ShootTimerEnd()
         {
             Fire();
@@ -70,6 +68,5 @@ namespace ShootEmUp
             var direction = vector.normalized;
             _shootComponent.Shoot(direction);
         }
-
     }
 }
