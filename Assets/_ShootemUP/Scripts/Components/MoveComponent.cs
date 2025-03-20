@@ -5,7 +5,7 @@ namespace ShootEmUp
     [RequireComponent(typeof(Rigidbody2D))]
     public sealed class MoveComponent : MonoBehaviour
     {
-        [SerializeField] private float speed = 5.0f;
+        [SerializeField] private float _speed = 0.2f;
 
         private Rigidbody2D _rigidbody2D;
 
@@ -13,7 +13,7 @@ namespace ShootEmUp
 
         public void MoveByRigidbodyVelocity(Vector2 vector)
         {
-            var nextPosition = _rigidbody2D.position + vector * speed;
+            var nextPosition = _rigidbody2D.position + vector * _speed;
             _rigidbody2D.MovePosition(nextPosition);
         }
     }

@@ -15,14 +15,10 @@ namespace ShootEmUp
             _attackAgent = GetComponent<EnemyAttackAgent>();
         }
 
-        private void OnEnable()
-        {
-            _moveAgent.OnPositionReached += OnEnemyReachPosition;
-        }
+        private void OnEnable() => _moveAgent.OnPositionReached += OnEnemyReachPosition;
 
-        private void OnEnemyReachPosition()
-        {
-            _attackAgent.SetPositionReached();
-        }
+        private void OnDisable() => _moveAgent.OnPositionReached -= OnEnemyReachPosition;
+
+        private void OnEnemyReachPosition() => _attackAgent.SetPositionReached();
     }
 }

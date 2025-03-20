@@ -1133,6 +1133,16 @@ PrefabInstance:
       propertyPath: _keyboardinput
       value: 
       objectReference: {fileID: 6702967256636774082}
+    - target: {fileID: 3926786963732877808, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
+        type: 3}
+      propertyPath: _speed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926786964091724597, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
+        type: 3}
+      propertyPath: _isPlayer
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3926786964091724599, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
         type: 3}
       propertyPath: _hp
