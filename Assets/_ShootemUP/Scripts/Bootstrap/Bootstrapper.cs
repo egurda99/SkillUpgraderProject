@@ -21,6 +21,10 @@ public class Bootstrapper : MonoBehaviour
     [SerializeField] private EnemySpawner _enemySpawner;
     [SerializeField] private EnemyPool _enemyPool;
 
+    [Header("UI")] [SerializeField] private StartGameWidget _startGameWidget;
+
+    [SerializeField] private PauseGameWidget _pauseGameWidget;
+
 
     private CharacterDeathObserver _playerDeathObserver;
     private GameFinisher _gameFinisher;
@@ -36,6 +40,8 @@ public class Bootstrapper : MonoBehaviour
     private ActiveEnemiesProvider _activeEnemiesProvider;
     private EnemiesGameCycleUpdater _enemiesGameCycleUpdater;
 
+    private GameCycleWidgetsController _gameCycleWidgetsController;
+
     private void Awake()
     {
         _gameFinisher = new GameFinisher(_gameCycleManager);
@@ -43,6 +49,9 @@ public class Bootstrapper : MonoBehaviour
         PlayerInit();
         BulletInit();
         EnemyInit();
+
+        _gameCycleWidgetsController =
+            new GameCycleWidgetsController(_startGameWidget, _pauseGameWidget, _gameCycleManager);
 
         _gameCycleInstaller.Init();
     }

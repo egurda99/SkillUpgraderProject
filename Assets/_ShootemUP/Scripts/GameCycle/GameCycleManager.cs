@@ -14,6 +14,8 @@ namespace ShootEmUp
 
         private GameState _gameState;
 
+        public GameState GameState => _gameState;
+
         private void Update()
         {
             if (_gameState != GameState.PLAYING)
