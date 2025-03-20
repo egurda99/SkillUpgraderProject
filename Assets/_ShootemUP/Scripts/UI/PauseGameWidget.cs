@@ -9,29 +9,14 @@ public sealed class PauseGameWidget : MonoBehaviour, IGameFinishListener
 
     public event Action OnPauseGameButtonPressed;
 
-    private void OnEnable()
-    {
-        _pauseGameButton.onClick.AddListener(PauseButtonClicked);
-    }
+    private void OnEnable() => _pauseGameButton.onClick.AddListener(PauseButtonClicked);
 
-    public void ShowButton()
-    {
-        _pauseGameButton.gameObject.SetActive(true);
-    }
+    public void ShowButton() => _pauseGameButton.gameObject.SetActive(true);
 
-    public void HideButton()
-    {
-        _pauseGameButton.gameObject.SetActive(false);
-    }
+    public void HideButton() => _pauseGameButton.gameObject.SetActive(false);
 
 
-    private void PauseButtonClicked()
-    {
-        OnPauseGameButtonPressed?.Invoke();
-    }
+    private void PauseButtonClicked() => OnPauseGameButtonPressed?.Invoke();
 
-    void IGameFinishListener.OnFinishGame()
-    {
-        _pauseGameButton.onClick.RemoveListener(PauseButtonClicked);
-    }
+    void IGameFinishListener.OnFinishGame() => _pauseGameButton.onClick.RemoveListener(PauseButtonClicked);
 }

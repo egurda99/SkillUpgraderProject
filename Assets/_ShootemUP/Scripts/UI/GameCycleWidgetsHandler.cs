@@ -1,20 +1,24 @@
 using ShootEmUp;
 
-public sealed class GameCycleWidgetsController
+public sealed class GameCycleWidgetsHandler
 {
     private readonly StartGameWidget _startGameWidget;
     private readonly PauseGameWidget _pauseGameWidget;
+    private readonly TimerBeforeStartWidget _timerBeforeStartWidget;
+
     private readonly GameCycleManager _gameCycleManager;
 
-    public GameCycleWidgetsController(StartGameWidget startGameWidget, PauseGameWidget pauseGameWidget,
-        GameCycleManager gameCycleManager)
+    public GameCycleWidgetsHandler(StartGameWidget startGameWidget, PauseGameWidget pauseGameWidget,
+        GameCycleManager gameCycleManager, TimerBeforeStartWidget timerBeforeStartWidget)
     {
         _startGameWidget = startGameWidget;
         _pauseGameWidget = pauseGameWidget;
         _gameCycleManager = gameCycleManager;
+        _timerBeforeStartWidget = timerBeforeStartWidget;
 
         _startGameWidget.OnStartGameButtonPressed += StartButtonPressed;
         _pauseGameWidget.OnPauseGameButtonPressed += PauseButtonPressed;
+        _timerBeforeStartWidget.OnTimerEnded += TimerBeforeStartEnded;
 
         _pauseGameWidget.HideButton();
     }
@@ -26,7 +30,8 @@ public sealed class GameCycleWidgetsController
         _startGameWidget.ShowButton();
     }
 
-    private void StartButtonPressed()
+
+    private void TimerBeforeStartEnded()
     {
         if (_gameCycleManager.GameState == GameState.OFF)
         {
@@ -38,15 +43,21 @@ public sealed class GameCycleWidgetsController
             _gameCycleManager.ResumeGame();
         }
 
-
-        _startGameWidget.HideButton();
         _pauseGameWidget.ShowButton();
     }
 
 
-    ~GameCycleWidgetsController()
+    private void StartButtonPressed()
+    {
+        _startGameWidget.HideButton();
+        _timerBeforeStartWidget.StartTimer();
+    }
+
+
+    ~GameCycleWidgetsHandler()
     {
         _startGameWidget.OnStartGameButtonPressed -= StartButtonPressed;
         _pauseGameWidget.OnPauseGameButtonPressed -= PauseButtonPressed;
+        _timerBeforeStartWidget.OnTimerEnded -= TimerBeforeStartEnded;
     }
 }

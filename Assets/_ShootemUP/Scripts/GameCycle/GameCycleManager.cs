@@ -48,11 +48,6 @@ namespace ShootEmUp
 
         private void LateUpdate()
         {
-            if (_gameState != GameState.PLAYING)
-            {
-                return;
-            }
-
             var deltaTime = Time.deltaTime;
 
             for (var i = 0; i < _gameLateUpdateListeners.Count; i++)

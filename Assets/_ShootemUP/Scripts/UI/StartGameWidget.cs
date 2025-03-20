@@ -9,28 +9,13 @@ public sealed class StartGameWidget : MonoBehaviour, IGameFinishListener
 
     public event Action OnStartGameButtonPressed;
 
-    private void OnEnable()
-    {
-        _startGameButton.onClick.AddListener(StartButtonClicked);
-    }
+    private void OnEnable() => _startGameButton.onClick.AddListener(StartButtonClicked);
 
-    public void ShowButton()
-    {
-        _startGameButton.gameObject.SetActive(true);
-    }
+    public void ShowButton() => _startGameButton.gameObject.SetActive(true);
 
-    public void HideButton()
-    {
-        _startGameButton.gameObject.SetActive(false);
-    }
+    public void HideButton() => _startGameButton.gameObject.SetActive(false);
 
-    private void StartButtonClicked()
-    {
-        OnStartGameButtonPressed?.Invoke();
-    }
+    private void StartButtonClicked() => OnStartGameButtonPressed?.Invoke();
 
-    void IGameFinishListener.OnFinishGame()
-    {
-        _startGameButton.onClick.RemoveListener(StartButtonClicked);
-    }
+    void IGameFinishListener.OnFinishGame() => _startGameButton.onClick.RemoveListener(StartButtonClicked);
 }

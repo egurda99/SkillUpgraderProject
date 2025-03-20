@@ -3,7 +3,7 @@ using ShootEmUp;
 using UnityEngine;
 
 public sealed class TimerBeforeStartWidget : MonoBehaviour, IGameFinishListener,
-    IGameFixedUpdateListener
+    IGameLateUpdateListener
 {
     [SerializeField] private GameObject _number3;
     [SerializeField] private GameObject _number2;
@@ -15,8 +15,6 @@ public sealed class TimerBeforeStartWidget : MonoBehaviour, IGameFinishListener,
     private bool _isNumber3Active;
     private bool _isNumber2Active;
     private bool _isNumber1Active;
-
-
     public event Action OnTimerEnded;
 
     private void Awake()
@@ -26,17 +24,14 @@ public sealed class TimerBeforeStartWidget : MonoBehaviour, IGameFinishListener,
         Hide();
     }
 
-    void IGameFinishListener.OnFinishGame()
-    {
-        _timer.OnTimerEnd -= TimerEnded;
-    }
+    void IGameFinishListener.OnFinishGame() => _timer.OnTimerEnd -= TimerEnded;
 
-    void IGameFixedUpdateListener.OnFixedUpdate(float fixedDeltaTime)
+    void IGameLateUpdateListener.OnLateUpdate(float deltaTime)
     {
         if (!_isWorking)
             return;
 
-        _timer.UpdateTimer(fixedDeltaTime);
+        _timer.UpdateTimer(deltaTime);
     }
 
     public void StartTimer()

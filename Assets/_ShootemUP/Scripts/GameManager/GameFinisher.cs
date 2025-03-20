@@ -16,7 +16,6 @@ namespace ShootEmUp
             Debug.Log("<color=red>GAME OVER</color>");
 
             _gameCycleManager.FinishGame();
-            //Time.timeScale = 0;
         }
     }
 }
