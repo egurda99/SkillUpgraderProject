@@ -1,10 +1,12 @@
 using System;
+using ShootemUP;
 using UnityEngine;
 
 namespace ShootEmUp
 {
     [RequireComponent(typeof(MoveComponent))]
-    public sealed class EnemyMoveAgent : MonoBehaviour
+    public sealed class EnemyMoveAgent : MonoBehaviour,
+        IGameFixedUpdateListener
     {
         private MoveComponent _moveComponent;
 
@@ -19,18 +21,19 @@ namespace ShootEmUp
             _moveComponent = GetComponent<MoveComponent>();
         }
 
-        private void FixedUpdate()
+        void IGameFixedUpdateListener.OnFixedUpdate(float fixedDeltaTime)
         {
             if (_isReached)
             {
                 return;
             }
 
-            var vector = _destination - (Vector2)this.transform.position;
+            var vector = _destination - (Vector2)transform.position;
             if (vector.magnitude <= 0.25f)
             {
                 _isReached = true;
                 OnPositionReached?.Invoke();
+                Debug.Log("<color=red>ReachedEventMoveAgent</color>");
                 return;
             }
 

@@ -1,9 +1,10 @@
 using System;
+using ShootemUP;
 using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class LevelBackground : MonoBehaviour
+    public sealed class LevelBackground : MonoBehaviour, IGameFixedUpdateListener
     {
         [SerializeField] private Params _params;
 
@@ -31,7 +32,7 @@ namespace ShootEmUp
             _positionZ = position.z;
         }
 
-        private void FixedUpdate()
+        void IGameFixedUpdateListener.OnFixedUpdate(float fixedDeltaTime)
         {
             if (_myTransform.position.y <= _endPositionY)
             {

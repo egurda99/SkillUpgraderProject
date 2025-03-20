@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,10 +7,15 @@ namespace ShootEmUp
     public sealed class EnemyPool : MonoBehaviour
     {
         [SerializeField] private EnemyFactory _enemyFactory;
-        [Header("PoolContainer")] [SerializeField] private Transform _container;
+
+        [Header("PoolContainer")] [SerializeField]
+        private Transform _container;
 
         private readonly Queue<Enemy> _enemyPool = new();
         private readonly int _initialCount = 7;
+
+        public event Action<Enemy> OnEnemySpawned;
+        public event Action<Enemy> OnEnemyDespawned;
 
         private void Awake()
         {
@@ -30,6 +36,7 @@ namespace ShootEmUp
 
             ToggleActiveStatus(enemy.gameObject, true);
 
+            OnEnemySpawned?.Invoke(enemy);
             return enemy;
         }
 
@@ -38,6 +45,7 @@ namespace ShootEmUp
             enemy.transform.SetParent(_container);
             ToggleActiveStatus(enemy.gameObject, false);
             _enemyPool.Enqueue(enemy);
+            OnEnemyDespawned?.Invoke(enemy);
         }
 
         private void ToggleActiveStatus(GameObject enemy, bool isActive)

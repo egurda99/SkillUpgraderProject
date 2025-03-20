@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ShootEmUp
@@ -9,6 +10,8 @@ namespace ShootEmUp
 
         public IReadOnlyList<Bullet> ActiveBullets => _activeBullets;
 
+        public event Action ActiveBulletsChanged;
+
         public ActiveBulletsProvider(BulletPool bulletPool)
         {
             _bulletPool = bulletPool;
@@ -16,9 +19,17 @@ namespace ShootEmUp
             _bulletPool.OnBulletDespawned += RemoveBulletFromActiveList;
         }
 
-        private void RemoveBulletFromActiveList(Bullet bullet) => _activeBullets.Remove(bullet);
+        private void RemoveBulletFromActiveList(Bullet bullet)
+        {
+            _activeBullets.Remove(bullet);
+            ActiveBulletsChanged.Invoke();
+        }
 
-        private void AddBulletToActiveList(Bullet bullet) => _activeBullets.Add(bullet);
+        private void AddBulletToActiveList(Bullet bullet)
+        {
+            _activeBullets.Add(bullet);
+            ActiveBulletsChanged.Invoke();
+        }
 
         ~ActiveBulletsProvider()
         {

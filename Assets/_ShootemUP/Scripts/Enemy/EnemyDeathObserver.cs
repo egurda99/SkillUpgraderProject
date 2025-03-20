@@ -1,9 +1,12 @@
+using ShootemUP;
 using ShootEmUp;
 using UnityEngine;
 
 [RequireComponent(typeof(Enemy))]
 [RequireComponent(typeof(HealthComponent))]
-public sealed class EnemyDeathObserver : MonoBehaviour
+public sealed class EnemyDeathObserver : MonoBehaviour,
+    IGameStartListener,
+    IGameFinishListener
 {
     private HealthComponent _healthComponent;
     private EnemyPool _enemyPool;
@@ -19,9 +22,9 @@ public sealed class EnemyDeathObserver : MonoBehaviour
         _enemyPool = enemySystem.GetComponent<EnemyPool>();
     }
 
-    private void OnEnable() => _healthComponent.OnDead += OnEnemyDeath;
+    void IGameStartListener.OnStartGame() => _healthComponent.OnDead += OnEnemyDeath;
 
-    private void OnDisable() => _healthComponent.OnDead -= OnEnemyDeath;
+    void IGameFinishListener.OnFinishGame() => _healthComponent.OnDead -= OnEnemyDeath;
 
     private void OnEnemyDeath() => _enemyPool.UnspawnEnemy(_enemy);
 }

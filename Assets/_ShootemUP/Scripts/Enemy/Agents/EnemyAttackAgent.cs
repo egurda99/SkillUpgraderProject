@@ -1,9 +1,12 @@
-using System;
+using ShootemUP;
 using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyAttackAgent : MonoBehaviour
+    public sealed class EnemyAttackAgent : MonoBehaviour,
+        IGameStartListener,
+        IGameFinishListener,
+        IGameUpdateListener
     {
         [SerializeField] private float _countdown;
 
@@ -27,22 +30,25 @@ namespace ShootEmUp
             _timer.OnTimerEnd += ShootTimerEnd;
         }
 
-        private void OnDisable() => _timer.OnTimerEnd -= ShootTimerEnd;
-
-
-        public void SetTarget(Transform target)
+        private void OnDisable()
         {
-            _target = target;
-            _targetHealth = target.GetComponent<HealthComponent>();
+            _timer.OnTimerEnd -= ShootTimerEnd;
         }
 
-        public void SetPositionReached()
+        void IGameStartListener.OnStartGame()
         {
-            _isPositionReached = true;
+            // _isPositionReached = false;
+            // _timer.OnTimerEnd += ShootTimerEnd;
         }
 
-        private void FixedUpdate()
+        void IGameFinishListener.OnFinishGame()
         {
+            //_timer.OnTimerEnd -= ShootTimerEnd;
+        }
+
+        void IGameUpdateListener.OnUpdate(float deltaTime)
+        {
+            Debug.Log("_isPositionReached" + _isPositionReached);
             if (!_isPositionReached)
             {
                 return;
@@ -53,7 +59,34 @@ namespace ShootEmUp
                 return;
             }
 
-            _timer.UpdateTimer(Time.deltaTime);
+            _timer.UpdateTimer(deltaTime);
+        }
+
+        // void IGameFixedUpdateListener.OnFixedUpdate(float fixedDeltaTime)
+        // {
+        //     Debug.Log("_isPositionReached" + _isPositionReached);
+        //     if (!_isPositionReached)
+        //     {
+        //         return;
+        //     }
+        //
+        //     if (!_targetHealth.IsAlive())
+        //     {
+        //         return;
+        //     }
+        //
+        //     _timer.UpdateTimer(Time.deltaTime);
+        // }
+
+        public void SetTarget(Transform target)
+        {
+            _target = target;
+            _targetHealth = target.GetComponent<HealthComponent>();
+        }
+
+        public void SetPositionReached()
+        {
+            _isPositionReached = true;
         }
 
 
@@ -70,6 +103,5 @@ namespace ShootEmUp
             var direction = vector.normalized;
             _shootComponent.Shoot(direction);
         }
-
     }
 }

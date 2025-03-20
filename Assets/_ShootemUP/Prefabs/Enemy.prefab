@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba7965842e74a9f89ba3aa66d61da46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _countdown: 1
+  _countdown: 12
 --- !u!114 &366946063069556126
 MonoBehaviour:
   m_ObjectHideFlags: 0

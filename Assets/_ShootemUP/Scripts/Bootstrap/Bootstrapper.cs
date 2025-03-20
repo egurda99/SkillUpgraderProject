@@ -1,8 +1,12 @@
+using ShootemUP;
 using ShootEmUp;
 using UnityEngine;
 
 public class Bootstrapper : MonoBehaviour
 {
+    [Header("GameCycle")] [SerializeField] private GameCycleInstaller _gameCycleInstaller;
+    [SerializeField] private GameCycleManager _gameCycleManager;
+
     [Header("Input")] [SerializeField] private KeyboardInput _keyboardInput;
 
     [Header("Bullet system")] [SerializeField]
@@ -13,14 +17,16 @@ public class Bootstrapper : MonoBehaviour
     [Header("Player")] [SerializeField] private Transform _playerTransform;
 
     [Header("Enemy system")] [SerializeField]
-    private EnemyPositionsHandler enemyPositionsHandler;
+    private EnemyPositionsHandler _enemyPositionsHandler;
 
     [SerializeField] private EnemySpawner _enemySpawner;
+    [SerializeField] private EnemyPool _enemyPool;
 
 
     private CharacterDeathObserver _playerDeathObserver;
     private GameFinisher _gameFinisher;
     private ActiveBulletsProvider _activeBulletsProvider;
+    private BulletsGameCycleUpdater _bulletsGameCycleUpdater;
     private BulletOutOfBoundsObserver _bulletOutOfBoundsObserver;
     private HealthComponent _playerHealthComponent;
     private MoveComponent _playerMoveComponent;
@@ -28,20 +34,28 @@ public class Bootstrapper : MonoBehaviour
     private ShootController _playerShootController;
     private ShootComponent _playerShootComponent;
     private EnemyInstaller _enemyInstaller;
+    private ActiveEnemiesProvider _activeEnemiesProvider;
+    private EnemiesGameCycleUpdater _enemiesGameCycleUpdater;
 
     private void Awake()
     {
-        _gameFinisher = new GameFinisher();
+        _gameFinisher = new GameFinisher(_gameCycleManager);
 
         PlayerInit();
         BulletInit();
         EnemyInit();
+
+        _gameCycleInstaller.Init();
     }
 
     private void EnemyInit()
     {
-        _enemyInstaller = new EnemyInstaller(_playerTransform, enemyPositionsHandler);
+        _enemyInstaller = new EnemyInstaller(_playerTransform, _enemyPositionsHandler);
         _enemySpawner.Init(_enemyInstaller);
+        _activeEnemiesProvider = new ActiveEnemiesProvider(_enemyPool);
+        _enemiesGameCycleUpdater = new EnemiesGameCycleUpdater(_activeEnemiesProvider);
+
+        _gameCycleManager.AddListener(_enemiesGameCycleUpdater);
     }
 
     private void BulletInit()
@@ -49,8 +63,11 @@ public class Bootstrapper : MonoBehaviour
         _bulletPool.Init();
 
         _activeBulletsProvider = new ActiveBulletsProvider(_bulletPool);
+        _bulletsGameCycleUpdater = new BulletsGameCycleUpdater(_activeBulletsProvider);
         _bulletOutOfBoundsChecker.Init(_activeBulletsProvider);
         _bulletOutOfBoundsObserver = new BulletOutOfBoundsObserver(_bulletPool, _bulletOutOfBoundsChecker);
+
+        _gameCycleManager.AddListener(_bulletsGameCycleUpdater);
     }
 
     private void PlayerInit()

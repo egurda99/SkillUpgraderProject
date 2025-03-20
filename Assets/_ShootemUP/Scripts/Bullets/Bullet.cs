@@ -1,11 +1,14 @@
 using System;
+using ShootemUP;
 using UnityEngine;
 
 namespace ShootEmUp
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(SpriteRenderer))]
-    public sealed class Bullet : MonoBehaviour
+    public sealed class Bullet : MonoBehaviour,
+        IGamePauseListener,
+        IGameResumeListener
     {
         [SerializeField] private BulletConfig _playerBulletConfig;
         [SerializeField] private BulletConfig _enemyBulletConfig;
@@ -15,9 +18,12 @@ namespace ShootEmUp
         private SpriteRenderer _spriteRenderer;
         private bool _isPlayer;
         private int _damage;
+        private Vector2 _activeVelocity;
 
         public bool IsPlayer => _isPlayer;
         public int Damage => _damage;
+
+        public event Action<Collision2D> OnCollisionEntered;
 
         private void Awake()
         {
@@ -29,8 +35,6 @@ namespace ShootEmUp
         {
             OnCollisionEntered?.Invoke(collision);
         }
-
-        public event Action<Collision2D> OnCollisionEntered;
 
         public void Init(Vector2 position, Vector2 direction, bool isPlayer)
         {
@@ -61,6 +65,7 @@ namespace ShootEmUp
         private void SetVelocity(Vector2 velocity)
         {
             _rigidbody2D.linearVelocity = velocity;
+            _activeVelocity = velocity;
         }
 
         private void SetPhysicsLayer(PhysicsLayer physicsLayer)
@@ -76,6 +81,16 @@ namespace ShootEmUp
         private void SetColor(Color color)
         {
             _spriteRenderer.color = color;
+        }
+
+        void IGamePauseListener.OnPauseGame()
+        {
+            _rigidbody2D.linearVelocity = Vector2.zero;
+        }
+
+        void IGameResumeListener.OnResumeGame()
+        {
+            _rigidbody2D.linearVelocity = _activeVelocity;
         }
     }
 }

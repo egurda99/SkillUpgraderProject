@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace ShootEmUp
 {
@@ -21,6 +22,7 @@ namespace ShootEmUp
             _currentTime += deltaTime;
             if (_currentTime >= _timeForTimer)
             {
+                Debug.Log($"<color=red>Timer. {_currentTime} , {deltaTime}</color>");
                 OnTimerEnd?.Invoke();
             }
         }

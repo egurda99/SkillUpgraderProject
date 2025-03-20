@@ -1,9 +1,12 @@
+using ShootemUP;
 using UnityEngine;
 
 namespace ShootEmUp
 {
     [RequireComponent(typeof(Bullet))]
-    public sealed class BulletDamageController : MonoBehaviour
+    public sealed class BulletDamageController : MonoBehaviour,
+        IGameStartListener,
+        IGameFinishListener
     {
         private const string BULLETPOOL = "BulletPool";
         private Bullet _bullet;
@@ -15,9 +18,18 @@ namespace ShootEmUp
             _bullet = GetComponent<Bullet>();
         }
 
-        private void OnEnable() => _bullet.OnCollisionEntered += OnBulletCollision;
 
-        private void OnDisable() => _bullet.OnCollisionEntered -= OnBulletCollision;
+        void IGameStartListener.OnStartGame()
+        {
+            Debug.Log("<color=orange>bulletStart</color>");
+            _bullet.OnCollisionEntered += OnBulletCollision;
+        }
+
+        void IGameFinishListener.OnFinishGame()
+        {
+            Debug.Log("<color=orange>bulletEnd</color>");
+            _bullet.OnCollisionEntered -= OnBulletCollision;
+        }
 
         private void OnBulletCollision(Collision2D collision)
         {

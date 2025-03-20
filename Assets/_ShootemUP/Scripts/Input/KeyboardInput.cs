@@ -1,14 +1,18 @@
 using System;
+using ShootemUP;
 using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class KeyboardInput : MonoBehaviour, IInput
+    public sealed class KeyboardInput : MonoBehaviour,
+        IInput,
+        IGameUpdateListener
     {
+        private bool _isActive;
         public event Action<Vector2> OnMoveInputChanged;
         public event Action OnFireClicked;
 
-        private void Update()
+        void IGameUpdateListener.OnUpdate(float deltaTime)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
