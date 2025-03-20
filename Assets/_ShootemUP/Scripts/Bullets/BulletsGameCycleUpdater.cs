@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using ShootemUP;
 
 namespace ShootEmUp
 {
@@ -77,5 +76,7 @@ namespace ShootEmUp
                 _bulletListeners.AddRange(bullet.GetComponents<IGameListener>());
             }
         }
+
+        ~BulletsGameCycleUpdater() => _activeBulletsProvider.ActiveBulletsChanged -= UpdateActiveBullets;
     }
 }

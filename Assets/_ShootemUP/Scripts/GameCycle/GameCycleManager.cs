@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace ShootemUP
+namespace ShootEmUp
 {
     public sealed class GameCycleManager : MonoBehaviour
     {
@@ -21,7 +21,7 @@ namespace ShootemUP
                 return;
             }
 
-            var deltaTime = Time.fixedDeltaTime;
+            var deltaTime = Time.deltaTime;
             for (var i = 0; i < _gameUpdateListeners.Count; i++)
             {
                 var listener = _gameUpdateListeners[i];
@@ -62,7 +62,7 @@ namespace ShootemUP
 
         public void AddListener(IGameListener listener)
         {
-            if (listener == null || _gameListeners.Contains(listener))
+            if (listener == null)
             {
                 return;
             }

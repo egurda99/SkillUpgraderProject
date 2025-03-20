@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ShootemUP
+namespace ShootEmUp
 {
     [RequireComponent(typeof(GameCycleManager))]
     public sealed class GameCycleInstaller : MonoBehaviour

@@ -10,19 +10,10 @@ namespace ShootEmUp
 
         private TransformRandomizer _transformRandomizer;
 
-        private void Awake()
-        {
-            _transformRandomizer = new TransformRandomizer();
-        }
+        private void Awake() => _transformRandomizer = new TransformRandomizer();
 
-        public Transform GetRandomSpawnPosition()
-        {
-            return _transformRandomizer.RandomTransform(_spawnPositions);
-        }
+        public Transform GetRandomSpawnPosition() => _transformRandomizer.RandomTransform(_spawnPositions);
 
-        public Transform GetRandomAttackPosition()
-        {
-            return _transformRandomizer.RandomTransform(_attackPositions);
-        }
+        public Transform GetRandomAttackPosition() => _transformRandomizer.RandomTransform(_attackPositions);
     }
 }

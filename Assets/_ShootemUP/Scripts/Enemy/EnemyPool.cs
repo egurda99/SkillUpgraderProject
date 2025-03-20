@@ -42,15 +42,12 @@ namespace ShootEmUp
 
         public void UnspawnEnemy(Enemy enemy)
         {
+            OnEnemyDespawned?.Invoke(enemy);
             enemy.transform.SetParent(_container);
             ToggleActiveStatus(enemy.gameObject, false);
             _enemyPool.Enqueue(enemy);
-            OnEnemyDespawned?.Invoke(enemy);
         }
 
-        private void ToggleActiveStatus(GameObject enemy, bool isActive)
-        {
-            enemy.SetActive(isActive);
-        }
+        private void ToggleActiveStatus(GameObject enemy, bool isActive) => enemy.SetActive(isActive);
     }
 }

@@ -1,4 +1,4 @@
-namespace ShootemUP
+namespace ShootEmUp
 {
     public enum GameState
     {

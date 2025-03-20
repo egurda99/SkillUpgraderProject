@@ -1,5 +1,4 @@
 using System;
-using ShootemUP;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -33,7 +32,6 @@ namespace ShootEmUp
             {
                 _isReached = true;
                 OnPositionReached?.Invoke();
-                Debug.Log("<color=red>ReachedEventMoveAgent</color>");
                 return;
             }
 

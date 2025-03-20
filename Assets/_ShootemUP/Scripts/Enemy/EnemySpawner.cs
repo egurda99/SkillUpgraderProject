@@ -1,5 +1,4 @@
 using System.Collections;
-using ShootemUP;
 using UnityEngine;
 
 namespace ShootEmUp

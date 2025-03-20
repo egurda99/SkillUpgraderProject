@@ -1,12 +1,9 @@
-using ShootemUP;
 using UnityEngine;
 
 namespace ShootEmUp
 {
     public sealed class EnemyAttackAgent : MonoBehaviour,
-        IGameStartListener,
-        IGameFinishListener,
-        IGameUpdateListener
+        IGameFixedUpdateListener
     {
         [SerializeField] private float _countdown;
 
@@ -21,12 +18,13 @@ namespace ShootEmUp
         {
             _shootComponent = GetComponent<ShootComponent>();
             _timer = new Timer();
-            _timer.StartTimer(_countdown);
         }
 
         private void OnEnable()
         {
             _isPositionReached = false;
+            _timer.StartTimer(_countdown);
+
             _timer.OnTimerEnd += ShootTimerEnd;
         }
 
@@ -35,20 +33,8 @@ namespace ShootEmUp
             _timer.OnTimerEnd -= ShootTimerEnd;
         }
 
-        void IGameStartListener.OnStartGame()
+        void IGameFixedUpdateListener.OnFixedUpdate(float fixedDeltaTime)
         {
-            // _isPositionReached = false;
-            // _timer.OnTimerEnd += ShootTimerEnd;
-        }
-
-        void IGameFinishListener.OnFinishGame()
-        {
-            //_timer.OnTimerEnd -= ShootTimerEnd;
-        }
-
-        void IGameUpdateListener.OnUpdate(float deltaTime)
-        {
-            Debug.Log("_isPositionReached" + _isPositionReached);
             if (!_isPositionReached)
             {
                 return;
@@ -59,24 +45,8 @@ namespace ShootEmUp
                 return;
             }
 
-            _timer.UpdateTimer(deltaTime);
+            _timer.UpdateTimer(fixedDeltaTime);
         }
-
-        // void IGameFixedUpdateListener.OnFixedUpdate(float fixedDeltaTime)
-        // {
-        //     Debug.Log("_isPositionReached" + _isPositionReached);
-        //     if (!_isPositionReached)
-        //     {
-        //         return;
-        //     }
-        //
-        //     if (!_targetHealth.IsAlive())
-        //     {
-        //         return;
-        //     }
-        //
-        //     _timer.UpdateTimer(Time.deltaTime);
-        // }
 
         public void SetTarget(Transform target)
         {

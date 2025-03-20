@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using ShootemUP;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -37,7 +36,6 @@ namespace ShootEmUp
                 if (!_levelBounds.InBounds(bullet.transform.position)) OnBulletOutOfBound?.Invoke(bullet);
             }
         }
-
 
         private void UpdateActiveBullets()
         {

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using ShootemUP;
 
 namespace ShootEmUp
 {
@@ -70,7 +69,7 @@ namespace ShootEmUp
             }
         }
 
-        public void OnUpdate(float deltaTime)
+        void IGameUpdateListener.OnUpdate(float deltaTime)
         {
             for (var i = 0; i < _gameUpdateListeners.Count; i++)
             {
@@ -93,6 +92,9 @@ namespace ShootEmUp
         {
             _activeEnemies.Clear();
             _activeEnemies.AddRange(_activeEnemiesProvider.ActiveEnemies);
+
+            _gameFixedUpdateListeners.Clear();
+            _gameUpdateListeners.Clear();
 
             _enemiesListeners.Clear();
 

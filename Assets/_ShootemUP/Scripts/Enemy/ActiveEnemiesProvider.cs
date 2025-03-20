@@ -22,13 +22,13 @@ namespace ShootEmUp
         private void RemoveEnemyFromActiveList(Enemy enemy)
         {
             _activeEnemies.Remove(enemy);
-            ActiveEnemiesChanged.Invoke();
+            ActiveEnemiesChanged?.Invoke();
         }
 
         private void AddEnemyToActiveList(Enemy enemy)
         {
             _activeEnemies.Add(enemy);
-            ActiveEnemiesChanged.Invoke();
+            ActiveEnemiesChanged?.Invoke();
         }
 
         ~ActiveEnemiesProvider()

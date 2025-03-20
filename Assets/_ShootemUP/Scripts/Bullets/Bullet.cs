@@ -1,5 +1,4 @@
 using System;
-using ShootemUP;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -8,7 +7,8 @@ namespace ShootEmUp
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class Bullet : MonoBehaviour,
         IGamePauseListener,
-        IGameResumeListener
+        IGameResumeListener,
+        IGameFinishListener
     {
         [SerializeField] private BulletConfig _playerBulletConfig;
         [SerializeField] private BulletConfig _enemyBulletConfig;
@@ -35,6 +35,22 @@ namespace ShootEmUp
         {
             OnCollisionEntered?.Invoke(collision);
         }
+
+        void IGamePauseListener.OnPauseGame()
+        {
+            _rigidbody2D.linearVelocity = Vector2.zero;
+        }
+
+        void IGameResumeListener.OnResumeGame()
+        {
+            _rigidbody2D.linearVelocity = _activeVelocity;
+        }
+
+        void IGameFinishListener.OnFinishGame()
+        {
+            _rigidbody2D.linearVelocity = Vector2.zero;
+        }
+
 
         public void Init(Vector2 position, Vector2 direction, bool isPlayer)
         {
@@ -81,16 +97,6 @@ namespace ShootEmUp
         private void SetColor(Color color)
         {
             _spriteRenderer.color = color;
-        }
-
-        void IGamePauseListener.OnPauseGame()
-        {
-            _rigidbody2D.linearVelocity = Vector2.zero;
-        }
-
-        void IGameResumeListener.OnResumeGame()
-        {
-            _rigidbody2D.linearVelocity = _activeVelocity;
         }
     }
 }

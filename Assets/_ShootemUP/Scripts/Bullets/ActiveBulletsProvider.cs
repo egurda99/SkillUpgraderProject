@@ -22,13 +22,13 @@ namespace ShootEmUp
         private void RemoveBulletFromActiveList(Bullet bullet)
         {
             _activeBullets.Remove(bullet);
-            ActiveBulletsChanged.Invoke();
+            ActiveBulletsChanged?.Invoke();
         }
 
         private void AddBulletToActiveList(Bullet bullet)
         {
             _activeBullets.Add(bullet);
-            ActiveBulletsChanged.Invoke();
+            ActiveBulletsChanged?.Invoke();
         }
 
         ~ActiveBulletsProvider()
