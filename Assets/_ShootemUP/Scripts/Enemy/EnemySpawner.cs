@@ -14,6 +14,7 @@ namespace ShootEmUp
         private EnemyInstaller _enemyInstaller;
 
         private Coroutine _spawn;
+        private readonly float _spawnCooldown = 1;
 
 
         public void Init(EnemyInstaller enemyInstaller)
@@ -47,7 +48,7 @@ namespace ShootEmUp
         {
             while (true)
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(_spawnCooldown);
                 var enemy = _enemyPool.SpawnEnemy();
 
                 if (enemy != null)

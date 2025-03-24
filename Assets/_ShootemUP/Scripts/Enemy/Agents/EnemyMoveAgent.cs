@@ -7,6 +7,7 @@ namespace ShootEmUp
     public sealed class EnemyMoveAgent : MonoBehaviour,
         IGameFixedUpdateListener
     {
+        private const float MinimalDistance = 0.25f;
         private MoveComponent _moveComponent;
 
         private Vector2 _destination;
@@ -28,7 +29,7 @@ namespace ShootEmUp
             }
 
             var vector = _destination - (Vector2)transform.position;
-            if (vector.magnitude <= 0.25f)
+            if (vector.magnitude <= MinimalDistance)
             {
                 _isReached = true;
                 OnPositionReached?.Invoke();

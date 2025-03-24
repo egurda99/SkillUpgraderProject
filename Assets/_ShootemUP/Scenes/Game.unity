@@ -2829,10 +2829,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a40dacbeba84ba1b55163e9b048081b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftBorder: {fileID: 5709745669445360551}
-  rightBorder: {fileID: 7796482719437987774}
-  downBorder: {fileID: 1327605569829716514}
-  topBorder: {fileID: 969584894098712457}
+  _leftBorder: {fileID: 5709745669445360551}
+  _rightBorder: {fileID: 7796482719437987774}
+  _downBorder: {fileID: 1327605569829716514}
+  _topBorder: {fileID: 969584894098712457}
 --- !u!114 &6702967256636774082
 MonoBehaviour:
   m_ObjectHideFlags: 0
