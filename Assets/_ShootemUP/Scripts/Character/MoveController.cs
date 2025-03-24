@@ -2,7 +2,7 @@ using System;
 using ShootEmUp;
 using UnityEngine;
 
-public class MoveController : IDisposable
+public sealed class MoveController : IDisposable
 {
     private readonly MoveComponent _moveComponent;
 

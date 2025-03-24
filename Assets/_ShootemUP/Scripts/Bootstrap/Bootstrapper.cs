@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ShootEmUp;
 using UnityEngine;
 
-public class Bootstrapper : MonoBehaviour
+public sealed class Bootstrapper : MonoBehaviour
 {
     [Header("Input")] [SerializeField] private KeyboardInput _keyboardInput;
 
