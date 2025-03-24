@@ -1,6 +1,8 @@
+using System;
+
 namespace ShootEmUp
 {
-    public sealed class BulletOutOfBoundsObserver
+    public sealed class BulletOutOfBoundsObserver : IDisposable
     {
         private readonly BulletPool _bulletPool;
         private readonly BulletOutOfBoundsChecker _checker;
@@ -13,8 +15,11 @@ namespace ShootEmUp
             _checker.OnBulletOutOfBound += RemoveBullet;
         }
 
-        private void RemoveBullet(Bullet bullet) => _bulletPool.DespawnBullet(bullet);
+        void IDisposable.Dispose()
+        {
+            _checker.OnBulletOutOfBound -= RemoveBullet;
+        }
 
-        ~BulletOutOfBoundsObserver() => _checker.OnBulletOutOfBound -= RemoveBullet;
+        private void RemoveBullet(Bullet bullet) => _bulletPool.DespawnBullet(bullet);
     }
 }

@@ -4,22 +4,22 @@ namespace ShootEmUp
 {
     public sealed class LevelBounds : MonoBehaviour
     {
-        [SerializeField] private Transform leftBorder;
+        [SerializeField] private Transform _leftBorder;
 
-        [SerializeField] private Transform rightBorder;
+        [SerializeField] private Transform _rightBorder;
 
-        [SerializeField] private Transform downBorder;
+        [SerializeField] private Transform _downBorder;
 
-        [SerializeField] private Transform topBorder;
+        [SerializeField] private Transform _topBorder;
 
         public bool InBounds(Vector2 position)
         {
             var positionX = position.x;
             var positionY = position.y;
-            return positionX > leftBorder.position.x
-                   && positionX < rightBorder.position.x
-                   && positionY > downBorder.position.y
-                   && positionY < topBorder.position.y;
+            return positionX > _leftBorder.position.x
+                   && positionX < _rightBorder.position.x
+                   && positionY > _downBorder.position.y
+                   && positionY < _topBorder.position.y;
         }
     }
 }

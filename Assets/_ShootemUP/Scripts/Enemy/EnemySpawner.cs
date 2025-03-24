@@ -8,6 +8,7 @@ namespace ShootEmUp
         [SerializeField] private EnemyPool _enemyPool;
 
         private EnemyInstaller _enemyInstaller;
+        private readonly float _spawnCooldown = 1;
 
         public void Init(EnemyInstaller enemyInstaller)
         {
@@ -18,7 +19,7 @@ namespace ShootEmUp
         {
             while (true)
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(_spawnCooldown);
                 var enemy = _enemyPool.SpawnEnemy();
 
                 if (enemy != null)

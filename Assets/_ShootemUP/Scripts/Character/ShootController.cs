@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class ShootController
+    public sealed class ShootController : IDisposable
     {
         private readonly ShootComponent _shootComponent;
 
@@ -17,8 +18,12 @@ namespace ShootEmUp
             _input.OnFireClicked += Shoot;
         }
 
-        private void Shoot() => _shootComponent.Shoot(_direction);
 
-        ~ShootController() => _input.OnFireClicked -= Shoot;
+        void IDisposable.Dispose()
+        {
+            _input.OnFireClicked -= Shoot;
+        }
+
+        private void Shoot() => _shootComponent.Shoot(_direction);
     }
 }

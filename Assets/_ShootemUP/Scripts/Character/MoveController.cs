@@ -1,7 +1,8 @@
+using System;
 using ShootEmUp;
 using UnityEngine;
 
-public class MoveController
+public class MoveController : IDisposable
 {
     private readonly MoveComponent _moveComponent;
 
@@ -14,7 +15,10 @@ public class MoveController
         _input.OnMoveInputChanged += Move;
     }
 
-    private void Move(Vector2 direction) => _moveComponent.MoveByRigidbodyVelocity(direction);
+    void IDisposable.Dispose()
+    {
+        _input.OnMoveInputChanged -= Move;
+    }
 
-    ~MoveController() => _input.OnMoveInputChanged -= Move;
+    private void Move(Vector2 direction) => _moveComponent.MoveByRigidbodyVelocity(direction);
 }

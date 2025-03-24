@@ -24,7 +24,8 @@ namespace ShootEmUp
             for (var i = 0; i < _activeBullets.Count; i++)
             {
                 var bullet = _activeBullets[i];
-                if (!_levelBounds.InBounds(bullet.transform.position)) OnBulletOutOfBound?.Invoke(bullet);
+                if (!_levelBounds.InBounds(bullet.transform.position))
+                    OnBulletOutOfBound?.Invoke(bullet);
             }
         }
 

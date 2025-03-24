@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -10,13 +11,16 @@ namespace ShootEmUp
 
         private TeamComponent _teamComponent;
 
-        private const string BULLETPOOL = "BulletPool";
-
         private void Awake()
         {
             _teamComponent = GetComponent<TeamComponent>();
 
-            _bulletPool = GameObject.FindGameObjectWithTag(BULLETPOOL).GetComponent<BulletPool>();
+            _bulletPool = FindObjectOfType<BulletPool>();
+
+            if (_bulletPool == null)
+            {
+                throw new Exception("BulletPool could not be found");
+            }
         }
 
         public void Shoot(Vector2 direction)

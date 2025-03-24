@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using ShootEmUp;
 using UnityEngine;
 
@@ -13,7 +15,7 @@ public class Bootstrapper : MonoBehaviour
     [Header("Player")] [SerializeField] private Transform _playerTransform;
 
     [Header("Enemy system")] [SerializeField]
-    private EnemyPositionsHandler enemyPositionsHandler;
+    private EnemyPositionsHandler _enemyPositionsHandler;
 
     [SerializeField] private EnemySpawner _enemySpawner;
 
@@ -29,6 +31,8 @@ public class Bootstrapper : MonoBehaviour
     private ShootComponent _playerShootComponent;
     private EnemyInstaller _enemyInstaller;
 
+    private readonly List<IDisposable> _disposables = new();
+
     private void Awake()
     {
         _gameFinisher = new GameFinisher();
@@ -38,9 +42,18 @@ public class Bootstrapper : MonoBehaviour
         EnemyInit();
     }
 
+    private void OnDestroy()
+    {
+        foreach (var disposable in _disposables)
+        {
+            disposable.Dispose();
+        }
+    }
+
+
     private void EnemyInit()
     {
-        _enemyInstaller = new EnemyInstaller(_playerTransform, enemyPositionsHandler);
+        _enemyInstaller = new EnemyInstaller(_playerTransform, _enemyPositionsHandler);
         _enemySpawner.Init(_enemyInstaller);
     }
 
@@ -51,6 +64,9 @@ public class Bootstrapper : MonoBehaviour
         _activeBulletsProvider = new ActiveBulletsProvider(_bulletPool);
         _bulletOutOfBoundsChecker.Init(_activeBulletsProvider);
         _bulletOutOfBoundsObserver = new BulletOutOfBoundsObserver(_bulletPool, _bulletOutOfBoundsChecker);
+
+        _disposables.Add(_activeBulletsProvider);
+        _disposables.Add(_bulletOutOfBoundsObserver);
     }
 
     private void PlayerInit()
@@ -61,5 +77,9 @@ public class Bootstrapper : MonoBehaviour
         _playerMoveController = new MoveController(_playerMoveComponent, _keyboardInput);
         _playerShootController = new ShootController(_playerShootComponent, _keyboardInput);
         _playerDeathObserver = new CharacterDeathObserver(_gameFinisher, _playerHealthComponent);
+
+        _disposables.Add(_playerDeathObserver);
+        _disposables.Add(_playerMoveController);
+        _disposables.Add(_playerShootController);
     }
 }

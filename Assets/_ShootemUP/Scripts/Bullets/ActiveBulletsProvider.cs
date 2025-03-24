@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace ShootEmUp
 {
-    public sealed class ActiveBulletsProvider
+    public sealed class ActiveBulletsProvider : IDisposable
     {
         private readonly BulletPool _bulletPool;
         private readonly List<Bullet> _activeBullets = new();
@@ -16,14 +17,14 @@ namespace ShootEmUp
             _bulletPool.OnBulletDespawned += RemoveBulletFromActiveList;
         }
 
-        private void RemoveBulletFromActiveList(Bullet bullet) => _activeBullets.Remove(bullet);
-
-        private void AddBulletToActiveList(Bullet bullet) => _activeBullets.Add(bullet);
-
-        ~ActiveBulletsProvider()
+        void IDisposable.Dispose()
         {
             _bulletPool.OnBulletSpawned -= AddBulletToActiveList;
             _bulletPool.OnBulletDespawned -= RemoveBulletFromActiveList;
         }
+
+        private void RemoveBulletFromActiveList(Bullet bullet) => _activeBullets.Remove(bullet);
+
+        private void AddBulletToActiveList(Bullet bullet) => _activeBullets.Add(bullet);
     }
 }

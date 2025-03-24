@@ -11,6 +11,7 @@ namespace ShootEmUp
         private Vector2 _destination;
 
         private bool _isReached;
+        private readonly float _minimalDistance = 0.25f;
 
         public event Action OnPositionReached;
 
@@ -26,8 +27,9 @@ namespace ShootEmUp
                 return;
             }
 
-            var vector = _destination - (Vector2)this.transform.position;
-            if (vector.magnitude <= 0.25f)
+            var vector = _destination - (Vector2)transform.position;
+
+            if (vector.magnitude <= _minimalDistance)
             {
                 _isReached = true;
                 OnPositionReached?.Invoke();

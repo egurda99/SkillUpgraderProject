@@ -1,6 +1,8 @@
+using System;
+
 namespace ShootEmUp
 {
-    public sealed class CharacterDeathObserver
+    public sealed class CharacterDeathObserver : IDisposable
     {
         private readonly GameFinisher _gameFinisher;
         private readonly HealthComponent _healthComponent;
@@ -12,8 +14,11 @@ namespace ShootEmUp
             _healthComponent.OnDead += OnCharacterDeath;
         }
 
-        private void OnCharacterDeath() => _gameFinisher.FinishGame();
+        void IDisposable.Dispose()
+        {
+            _healthComponent.OnDead -= OnCharacterDeath;
+        }
 
-        ~CharacterDeathObserver() => _healthComponent.OnDead -= OnCharacterDeath;
+        private void OnCharacterDeath() => _gameFinisher.FinishGame();
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using ShootEmUp;
 using UnityEngine;
 
@@ -9,14 +10,17 @@ public sealed class EnemyDeathObserver : MonoBehaviour
     private EnemyPool _enemyPool;
     private Enemy _enemy;
 
-    private const string ENEMYSYSTEM = "EnemySystem";
-
     private void Awake()
     {
         _healthComponent = GetComponent<HealthComponent>();
         _enemy = GetComponent<Enemy>();
-        var enemySystem = GameObject.FindGameObjectWithTag(ENEMYSYSTEM);
-        _enemyPool = enemySystem.GetComponent<EnemyPool>();
+
+        _enemyPool = FindObjectOfType<EnemyPool>();
+
+        if (_enemyPool == null)
+        {
+            throw new Exception("EnemyPool could not be found");
+        }
     }
 
     private void OnEnable() => _healthComponent.OnDead += OnEnemyDeath;

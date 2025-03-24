@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -5,13 +6,18 @@ namespace ShootEmUp
     [RequireComponent(typeof(Bullet))]
     public sealed class BulletDamageController : MonoBehaviour
     {
-        private const string BULLETPOOL = "BulletPool";
         private Bullet _bullet;
         private BulletPool _bulletPool;
 
         private void Awake()
         {
-            _bulletPool = GameObject.FindGameObjectWithTag(BULLETPOOL).GetComponent<BulletPool>();
+            _bulletPool = FindObjectOfType<BulletPool>();
+
+            if (_bulletPool == null)
+            {
+                throw new Exception("BulletPool could not be found");
+            }
+
             _bullet = GetComponent<Bullet>();
         }
 
