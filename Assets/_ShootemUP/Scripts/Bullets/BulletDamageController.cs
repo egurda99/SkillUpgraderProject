@@ -2,28 +2,23 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(Bullet))]
-    public sealed class BulletDamageController : MonoBehaviour
+    public sealed class BulletDamageController
     {
-        private const string BULLETPOOL = "BulletPool";
-        private Bullet _bullet;
-        private BulletPool _bulletPool;
+        private readonly Bullet _bullet;
+        private readonly BulletPool _bulletPool;
 
-        private void Awake()
+        public BulletDamageController(Bullet bullet, BulletPool bulletPool)
         {
-            _bulletPool = GameObject.FindGameObjectWithTag(BULLETPOOL).GetComponent<BulletPool>();
-            _bullet = GetComponent<Bullet>();
-        }
-
-        private void OnEnable()
-        {
+            _bullet = bullet;
+            _bulletPool = bulletPool;
             _bullet.OnCollisionEntered += OnBulletCollision;
+            Debug.Log($"<color=red>Pool + {_bulletPool}</color>");
         }
 
-        private void OnDisable()
-        {
-            _bullet.OnCollisionEntered -= OnBulletCollision;
-        }
+        // void IDisposable.Dispose()
+        // {
+        //     _bullet.OnCollisionEntered -= OnBulletCollision;
+        // }
 
         private void OnBulletCollision(Collision2D collision)
         {

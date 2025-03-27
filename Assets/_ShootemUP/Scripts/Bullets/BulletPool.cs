@@ -8,20 +8,26 @@ namespace ShootEmUp
     {
         [SerializeField] private int _initialCount = 50;
 
-        [SerializeField] private Transform _containerTransform;
+        // [SerializeField] private Transform _bulletContainerTransform;
+        private Transform _bulletContainerTransform;
 
-        [SerializeField] private BulletFactory _bulletFactory;
+        // [SerializeField] private BulletFactory _bulletFactory;
+        private BulletFactory _bulletFactory;
 
         private readonly Queue<GameObject> _bulletPool = new();
 
         public event Action<Bullet> OnBulletSpawned;
         public event Action<Bullet> OnBulletDespawned;
 
-        public void Init()
+
+        public void Init(BulletFactory bulletFactory, Transform bulletContainerTransform)
         {
+            _bulletFactory = bulletFactory;
+            _bulletContainerTransform = bulletContainerTransform;
+
             for (var i = 0; i < _initialCount; i++)
             {
-                var bullet = _bulletFactory.GetBullet(_containerTransform);
+                var bullet = _bulletFactory.GetBullet(_bulletContainerTransform);
                 _bulletPool.Enqueue(bullet.gameObject);
                 ToggleActiveStatus(bullet.gameObject, false);
             }
@@ -44,7 +50,7 @@ namespace ShootEmUp
 
         public void DespawnBullet(Bullet bullet)
         {
-            bullet.transform.SetParent(_containerTransform);
+            bullet.transform.SetParent(_bulletContainerTransform);
             ToggleActiveStatus(bullet.gameObject, false);
             _bulletPool.Enqueue(bullet.gameObject);
             OnBulletDespawned?.Invoke(bullet);

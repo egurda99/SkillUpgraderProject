@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
+    [RequireComponent(typeof(ShootComponent))]
     public sealed class EnemyAttackAgent : MonoBehaviour,
         IGameFixedUpdateListener
     {

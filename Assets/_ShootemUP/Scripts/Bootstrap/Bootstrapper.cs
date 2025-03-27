@@ -1,15 +1,18 @@
 using ShootEmUp;
 using UnityEngine;
+using Zenject;
 
-public class Bootstrapper : MonoBehaviour
+public sealed class Bootstrapper : MonoBehaviour
 {
     [Header("GameCycle")] [SerializeField] private GameCycleInstaller _gameCycleInstaller;
     [SerializeField] private GameCycleManager _gameCycleManager;
 
     [Header("Input")] [SerializeField] private KeyboardInput _keyboardInput;
 
-    [Header("Bullet system")] [SerializeField]
     private BulletPool _bulletPool;
+
+    [SerializeField] private BulletFactory _bulletFactory;
+    [SerializeField] private Transform _bulletContainerTransform;
 
     [SerializeField] private BulletOutOfBoundsChecker _bulletOutOfBoundsChecker;
 
@@ -43,6 +46,13 @@ public class Bootstrapper : MonoBehaviour
 
     private GameCycleWidgetsHandler _gameCycleWidgetsHandler;
 
+    [Inject]
+    public void Construct(BulletPool bulletPool)
+    {
+        _bulletPool = bulletPool;
+    }
+
+
     private void Awake()
     {
         _gameFinisher = new GameFinisher(_gameCycleManager);
@@ -60,7 +70,7 @@ public class Bootstrapper : MonoBehaviour
 
     private void EnemyInit()
     {
-        _enemyInstaller = new EnemyInstaller(_playerTransform, _enemyPositionsHandler);
+        _enemyInstaller = new EnemyInstaller(_playerTransform, _enemyPositionsHandler, _bulletPool);
         _enemySpawner.Init(_enemyInstaller);
         _activeEnemiesProvider = new ActiveEnemiesProvider(_enemyPool);
         _enemiesGameCycleUpdater = new EnemiesGameCycleUpdater(_activeEnemiesProvider);
@@ -70,7 +80,7 @@ public class Bootstrapper : MonoBehaviour
 
     private void BulletInit()
     {
-        _bulletPool.Init();
+        _bulletPool.Init(_bulletFactory, _bulletContainerTransform);
 
         _activeBulletsProvider = new ActiveBulletsProvider(_bulletPool);
         _bulletsGameCycleUpdater = new BulletsGameCycleUpdater(_activeBulletsProvider);

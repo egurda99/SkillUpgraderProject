@@ -1,7 +1,7 @@
 using ShootEmUp;
 using UnityEngine;
 
-public class MoveController
+public sealed class MoveController
 {
     private readonly MoveComponent _moveComponent;
 

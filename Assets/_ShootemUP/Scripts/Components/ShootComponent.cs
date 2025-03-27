@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
@@ -10,13 +11,15 @@ namespace ShootEmUp
 
         private TeamComponent _teamComponent;
 
-        private const string BULLETPOOL = "BulletPool";
+        [Inject]
+        public void Construct(BulletPool bulletPool)
+        {
+            _bulletPool = bulletPool;
+        }
 
         private void Awake()
         {
             _teamComponent = GetComponent<TeamComponent>();
-
-            _bulletPool = GameObject.FindGameObjectWithTag(BULLETPOOL).GetComponent<BulletPool>();
         }
 
         public void Shoot(Vector2 direction)
