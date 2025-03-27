@@ -5,14 +5,14 @@ namespace ShootEmUp
 {
     public sealed class ActiveBulletsProvider
     {
-        private readonly BulletPool _bulletPool;
+        private readonly Bullet.Pool _bulletPool;
         private readonly List<Bullet> _activeBullets = new();
 
         public IReadOnlyList<Bullet> ActiveBullets => _activeBullets;
 
         public event Action ActiveBulletsChanged;
 
-        public ActiveBulletsProvider(BulletPool bulletPool)
+        public ActiveBulletsProvider(Bullet.Pool bulletPool)
         {
             _bulletPool = bulletPool;
             _bulletPool.OnBulletSpawned += AddBulletToActiveList;

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
@@ -97,6 +98,36 @@ namespace ShootEmUp
         private void SetColor(Color color)
         {
             _spriteRenderer.color = color;
+        }
+
+        public sealed class Pool : MonoMemoryPool<Vector2, bool, Vector2, Bullet>
+        {
+            public event Action<Bullet> OnBulletSpawned;
+            public event Action<Bullet> OnBulletDespawned;
+
+            protected override void Reinitialize(Vector2 spawnPosition, bool isPlayer, Vector2 direction, Bullet bullet)
+            {
+                bullet.Init(spawnPosition, direction, isPlayer);
+            }
+
+            protected override void OnCreated(Bullet bullet)
+            {
+                base.OnCreated(bullet);
+
+                var bulletDamageController = new BulletDamageController(bullet, this);
+            }
+
+            protected override void OnSpawned(Bullet bullet)
+            {
+                base.OnSpawned(bullet);
+                OnBulletSpawned?.Invoke(bullet);
+            }
+
+            protected override void OnDespawned(Bullet bullet)
+            {
+                base.OnDespawned(bullet);
+                OnBulletDespawned?.Invoke(bullet);
+            }
         }
     }
 }

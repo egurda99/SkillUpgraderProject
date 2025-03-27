@@ -5,9 +5,9 @@ namespace ShootEmUp
     public sealed class BulletDamageController
     {
         private readonly Bullet _bullet;
-        private readonly BulletPool _bulletPool;
+        private readonly Bullet.Pool _bulletPool;
 
-        public BulletDamageController(Bullet bullet, BulletPool bulletPool)
+        public BulletDamageController(Bullet bullet, Bullet.Pool bulletPool)
         {
             _bullet = bullet;
             _bulletPool = bulletPool;
@@ -23,7 +23,7 @@ namespace ShootEmUp
         private void OnBulletCollision(Collision2D collision)
         {
             BulletUtils.DealDamage(_bullet, collision.gameObject);
-            _bulletPool.DespawnBullet(_bullet);
+            _bulletPool.Despawn(_bullet);
         }
     }
 }

@@ -4,23 +4,16 @@ using Zenject;
 
 public class BulletInstaller : MonoInstaller
 {
-    [SerializeField] private BulletPool _bulletPool;
-    [SerializeField] private BulletFactory _bulletFactory;
     [SerializeField] private Transform _bulletContainerTransform;
+    [SerializeField] private int _bulletPoolInitialSize;
+    [SerializeField] private Bullet _bulletPrefab;
+
 
     public override void InstallBindings()
     {
-        // Container.Bind<BulletPool>().FromComponentInNewPrefab(_bulletPool).AsSingle().NonLazy();
-        Container.Bind<BulletPool>().FromInstance(_bulletPool).AsSingle();
-        //_bulletPool.Init(_bulletFactory, _bulletContainerTransform);
+        Container.BindMemoryPool<Bullet, Bullet.Pool>().WithInitialSize(_bulletPoolInitialSize)
+            .FromComponentInNewPrefab(_bulletPrefab).UnderTransform(_bulletContainerTransform).AsCached();
 
-
-        // var bulletPool = Container.InstantiatePrefabForComponent<BulletPool>(_bulletPool);
-        // bulletPool.Init(_bulletFactory, _bulletContainerTransform);
-        //
-        //
-        // Container.Bind<BulletPool>().FromInstance(bulletPool).AsSingle();
-
-        // Container.BindInterfacesAndSelfTo<BulletDamageController>().AsTransient();
+        //   Container.Bind<ActiveBulletsProvider>().AsSingle();
     }
 }

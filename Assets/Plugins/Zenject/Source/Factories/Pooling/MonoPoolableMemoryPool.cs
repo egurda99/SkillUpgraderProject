@@ -6,32 +6,32 @@ namespace Zenject
     public class MonoPoolableMemoryPool<TValue> : MemoryPool<TValue>
         where TValue : Component, IPoolable
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoPoolableMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
-            _originalParent = item.transform.parent;
+            bullet.gameObject.SetActive(false);
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            bullet.OnDespawned();
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
 
@@ -47,39 +47,39 @@ namespace Zenject
         : MemoryPool<TParam1, TValue>
         where TValue : Component, IPoolable<TParam1>
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoPoolableMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
-            _originalParent = item.transform.parent;
+            bullet.gameObject.SetActive(false);
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            bullet.OnDespawned();
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
 
-        protected override void Reinitialize(TParam1 p1, TValue item)
+        protected override void Reinitialize(TParam1 position, TValue bullet)
         {
-            item.gameObject.SetActive(true);
-            item.OnSpawned(p1);
+            bullet.gameObject.SetActive(true);
+            bullet.OnSpawned(position);
         }
     }
 
@@ -88,32 +88,32 @@ namespace Zenject
         : MemoryPool<TParam1, TParam2, TValue>
         where TValue : Component, IPoolable<TParam1, TParam2>
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoPoolableMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
-            _originalParent = item.transform.parent;
+            bullet.gameObject.SetActive(false);
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            bullet.OnDespawned();
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
 
@@ -129,39 +129,39 @@ namespace Zenject
         : MemoryPool<TParam1, TParam2, TParam3, TValue>
         where TValue : Component, IPoolable<TParam1, TParam2, TParam3>
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoPoolableMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
-            _originalParent = item.transform.parent;
+            bullet.gameObject.SetActive(false);
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            bullet.OnDespawned();
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
 
-        protected override void Reinitialize(TParam1 p1, TParam2 p2, TParam3 p3, TValue item)
+        protected override void Reinitialize(TParam1 spawnPosition, TParam2 isPlayer, TParam3 direction, TValue bullet)
         {
-            item.gameObject.SetActive(true);
-            item.OnSpawned(p1, p2, p3);
+            bullet.gameObject.SetActive(true);
+            bullet.OnSpawned(spawnPosition, isPlayer, direction);
         }
     }
 
@@ -170,32 +170,32 @@ namespace Zenject
         : MemoryPool<TParam1, TParam2, TParam3, TParam4, TValue>
         where TValue : Component, IPoolable<TParam1, TParam2, TParam3, TParam4>
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoPoolableMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
-            _originalParent = item.transform.parent;
+            bullet.gameObject.SetActive(false);
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            bullet.OnDespawned();
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
 
@@ -211,32 +211,32 @@ namespace Zenject
         : MemoryPool<TParam1, TParam2, TParam3, TParam4, TParam5, TValue>
         where TValue : Component, IPoolable<TParam1, TParam2, TParam3, TParam4, TParam5>
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoPoolableMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
-            _originalParent = item.transform.parent;
+            bullet.gameObject.SetActive(false);
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            bullet.OnDespawned();
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
 
@@ -252,36 +252,37 @@ namespace Zenject
         : MemoryPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TValue>
         where TValue : Component, IPoolable<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6>
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoPoolableMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
-            _originalParent = item.transform.parent;
+            bullet.gameObject.SetActive(false);
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            bullet.OnDespawned();
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
 
-        protected override void Reinitialize(TParam1 p1, TParam2 p2, TParam3 p3, TParam4 p4, TParam5 p5, TParam6 p6, TValue item)
+        protected override void Reinitialize(TParam1 p1, TParam2 p2, TParam3 p3, TParam4 p4, TParam5 p5, TParam6 p6,
+            TValue item)
         {
             item.gameObject.SetActive(true);
             item.OnSpawned(p1, p2, p3, p4, p5, p6);
@@ -293,36 +294,37 @@ namespace Zenject
         : MemoryPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TValue>
         where TValue : Component, IPoolable<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7>
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoPoolableMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
-            _originalParent = item.transform.parent;
+            bullet.gameObject.SetActive(false);
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            bullet.OnDespawned();
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
 
-        protected override void Reinitialize(TParam1 p1, TParam2 p2, TParam3 p3, TParam4 p4, TParam5 p5, TParam6 p6, TParam7 p7, TValue item)
+        protected override void Reinitialize(TParam1 p1, TParam2 p2, TParam3 p3, TParam4 p4, TParam5 p5, TParam6 p6,
+            TParam7 p7, TValue item)
         {
             item.gameObject.SetActive(true);
             item.OnSpawned(p1, p2, p3, p4, p5, p6, p7);
@@ -334,36 +336,37 @@ namespace Zenject
         : MemoryPool<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8, TValue>
         where TValue : Component, IPoolable<TParam1, TParam2, TParam3, TParam4, TParam5, TParam6, TParam7, TParam8>
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoPoolableMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
-            _originalParent = item.transform.parent;
+            bullet.gameObject.SetActive(false);
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.OnDespawned();
-            item.gameObject.SetActive(false);
+            bullet.OnDespawned();
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
 
-        protected override void Reinitialize(TParam1 p1, TParam2 p2, TParam3 p3, TParam4 p4, TParam5 p5, TParam6 p6, TParam7 p7, TParam8 p8, TValue item)
+        protected override void Reinitialize(TParam1 p1, TParam2 p2, TParam3 p3, TParam4 p4, TParam5 p5, TParam6 p6,
+            TParam7 p7, TParam8 p8, TValue item)
         {
             item.gameObject.SetActive(true);
             item.OnSpawned(p1, p2, p3, p4, p5, p6, p7, p8);

@@ -8,37 +8,37 @@ namespace Zenject
     public class MonoMemoryPool<TValue> : MemoryPool<TValue>
         where TValue : Component
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
+            bullet.gameObject.SetActive(false);
             // Record the original parent which will be set to whatever is used in the UnderTransform method
-            _originalParent = item.transform.parent;
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue bullet)
         {
-            item.gameObject.SetActive(true);
+            bullet.gameObject.SetActive(true);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.gameObject.SetActive(false);
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
     }
@@ -49,37 +49,37 @@ namespace Zenject
     public class MonoMemoryPool<TParam1, TValue> : MemoryPool<TParam1, TValue>
         where TValue : Component
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
+            bullet.gameObject.SetActive(false);
             // Record the original parent which will be set to whatever is used in the UnderTransform method
-            _originalParent = item.transform.parent;
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue bullet)
         {
-            item.gameObject.SetActive(true);
+            bullet.gameObject.SetActive(true);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.gameObject.SetActive(false);
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
     }
@@ -91,37 +91,37 @@ namespace Zenject
         : MemoryPool<TParam1, TParam2, TValue>
         where TValue : Component
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
+            bullet.gameObject.SetActive(false);
             // Record the original parent which will be set to whatever is used in the UnderTransform method
-            _originalParent = item.transform.parent;
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue bullet)
         {
-            item.gameObject.SetActive(true);
+            bullet.gameObject.SetActive(true);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.gameObject.SetActive(false);
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
     }
@@ -133,37 +133,37 @@ namespace Zenject
         : MemoryPool<TParam1, TParam2, TParam3, TValue>
         where TValue : Component
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
+            bullet.gameObject.SetActive(false);
             // Record the original parent which will be set to whatever is used in the UnderTransform method
-            _originalParent = item.transform.parent;
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue bullet)
         {
-            item.gameObject.SetActive(true);
+            bullet.gameObject.SetActive(true);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.gameObject.SetActive(false);
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
     }
@@ -175,37 +175,37 @@ namespace Zenject
         : MemoryPool<TParam1, TParam2, TParam3, TParam4, TValue>
         where TValue : Component
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
+            bullet.gameObject.SetActive(false);
             // Record the original parent which will be set to whatever is used in the UnderTransform method
-            _originalParent = item.transform.parent;
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue bullet)
         {
-            item.gameObject.SetActive(true);
+            bullet.gameObject.SetActive(true);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.gameObject.SetActive(false);
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
     }
@@ -217,37 +217,37 @@ namespace Zenject
         : MemoryPool<TParam1, TParam2, TParam3, TParam4, TParam5, TValue>
         where TValue : Component
     {
-        Transform _originalParent;
+        private Transform _originalParent;
 
         [Inject]
         public MonoMemoryPool()
         {
         }
 
-        protected override void OnCreated(TValue item)
+        protected override void OnCreated(TValue bullet)
         {
-            item.gameObject.SetActive(false);
+            bullet.gameObject.SetActive(false);
             // Record the original parent which will be set to whatever is used in the UnderTransform method
-            _originalParent = item.transform.parent;
+            _originalParent = bullet.transform.parent;
         }
 
         protected override void OnDestroyed(TValue item)
         {
-            GameObject.Destroy(item.gameObject);
+            Object.Destroy(item.gameObject);
         }
 
-        protected override void OnSpawned(TValue item)
+        protected override void OnSpawned(TValue bullet)
         {
-            item.gameObject.SetActive(true);
+            bullet.gameObject.SetActive(true);
         }
 
-        protected override void OnDespawned(TValue item)
+        protected override void OnDespawned(TValue bullet)
         {
-            item.gameObject.SetActive(false);
+            bullet.gameObject.SetActive(false);
 
-            if (item.transform.parent != _originalParent)
+            if (bullet.transform.parent != _originalParent)
             {
-                item.transform.SetParent(_originalParent, false);
+                bullet.transform.SetParent(_originalParent, false);
             }
         }
     }

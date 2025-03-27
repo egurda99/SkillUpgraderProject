@@ -9,9 +9,7 @@ public sealed class Bootstrapper : MonoBehaviour
 
     [Header("Input")] [SerializeField] private KeyboardInput _keyboardInput;
 
-    private BulletPool _bulletPool;
 
-    [SerializeField] private BulletFactory _bulletFactory;
     [SerializeField] private Transform _bulletContainerTransform;
 
     [SerializeField] private BulletOutOfBoundsChecker _bulletOutOfBoundsChecker;
@@ -46,8 +44,10 @@ public sealed class Bootstrapper : MonoBehaviour
 
     private GameCycleWidgetsHandler _gameCycleWidgetsHandler;
 
+    private Bullet.Pool _bulletPool;
+
     [Inject]
-    public void Construct(BulletPool bulletPool)
+    public void Construct(Bullet.Pool bulletPool)
     {
         _bulletPool = bulletPool;
     }
@@ -80,8 +80,6 @@ public sealed class Bootstrapper : MonoBehaviour
 
     private void BulletInit()
     {
-        _bulletPool.Init(_bulletFactory, _bulletContainerTransform);
-
         _activeBulletsProvider = new ActiveBulletsProvider(_bulletPool);
         _bulletsGameCycleUpdater = new BulletsGameCycleUpdater(_activeBulletsProvider);
         _bulletOutOfBoundsChecker.Init(_activeBulletsProvider);

@@ -6,9 +6,10 @@ namespace ShootEmUp
     {
         private readonly Transform _enemyTarget;
         private readonly EnemyPositionsHandler _enemyPositionsHandler;
-        private readonly BulletPool _bulletPool;
+        private readonly Bullet.Pool _bulletPool;
 
-        public EnemyInstaller(Transform enemyTarget, EnemyPositionsHandler enemyPositionsHandler, BulletPool bulletPool)
+        public EnemyInstaller(Transform enemyTarget, EnemyPositionsHandler enemyPositionsHandler,
+            Bullet.Pool bulletPool)
         {
             _enemyTarget = enemyTarget;
             _enemyPositionsHandler = enemyPositionsHandler;

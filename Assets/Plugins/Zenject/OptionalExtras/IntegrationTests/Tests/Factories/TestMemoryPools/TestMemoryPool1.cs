@@ -1,4 +1,3 @@
-
 using System.Collections;
 using ModestTree;
 using UnityEngine.TestTools;
@@ -77,25 +76,18 @@ namespace Zenject.Tests.Bindings
             yield break;
         }
 
-        class Foo
+        private class Foo
         {
-            public string Value
-            {
-                get;
-                private set;
-            }
+            public string Value { get; private set; }
 
-            public int ResetCount
-            {
-                get; private set;
-            }
+            public int ResetCount { get; private set; }
 
             public class Pool : MemoryPool<string, Foo>
             {
-                protected override void Reinitialize(string value, Foo foo)
+                protected override void Reinitialize(string position, Foo bullet)
                 {
-                    foo.Value = value;
-                    foo.ResetCount++;
+                    bullet.Value = position;
+                    bullet.ResetCount++;
                 }
             }
         }
@@ -120,7 +112,7 @@ namespace Zenject.Tests.Bindings
             yield break;
         }
 
-        void TestAbstractMemoryPoolInternal()
+        private void TestAbstractMemoryPoolInternal()
         {
             PreInstall();
             Container.BindMemoryPool<IBar, BarPool>()
@@ -142,4 +134,3 @@ namespace Zenject.Tests.Bindings
         }
     }
 }
-
