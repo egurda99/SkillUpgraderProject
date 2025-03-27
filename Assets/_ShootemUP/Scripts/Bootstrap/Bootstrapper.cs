@@ -4,7 +4,7 @@ using Zenject;
 
 public sealed class Bootstrapper : MonoBehaviour
 {
-    [Header("GameCycle")] [SerializeField] private GameCycleInstaller _gameCycleInstaller;
+    [Header("GameCycle")] [SerializeField] private GameCycleListenersInstaller _gameCycleListenersInstaller;
     [SerializeField] private GameCycleManager _gameCycleManager;
 
     [Header("Input")] [SerializeField] private KeyboardInput _keyboardInput;
@@ -65,7 +65,7 @@ public sealed class Bootstrapper : MonoBehaviour
             new GameCycleWidgetsHandler(_startGameWidget, _pauseGameWidget, _gameCycleManager,
                 _timerBeforeStartWidget);
 
-        _gameCycleInstaller.Init();
+        _gameCycleListenersInstaller.Init();
     }
 
     private void EnemyInit()

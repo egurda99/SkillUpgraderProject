@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ShootEmUp
 {
     [RequireComponent(typeof(GameCycleManager))]
-    public sealed class GameCycleInstaller : MonoBehaviour
+    public sealed class GameCycleListenersInstaller : MonoBehaviour
     {
         [SerializeField] private List<MonoBehaviour> _listenersMonoBehaviours = new();
 
