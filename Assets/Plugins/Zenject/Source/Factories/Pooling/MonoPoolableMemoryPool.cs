@@ -158,10 +158,11 @@ namespace Zenject
             }
         }
 
-        protected override void Reinitialize(TParam1 spawnPosition, TParam2 isPlayer, TParam3 direction, TValue bullet)
+        protected override void Reinitialize(TParam1 enemyTarget, TParam2 destination, TParam3 startPosition,
+            TValue enemy)
         {
-            bullet.gameObject.SetActive(true);
-            bullet.OnSpawned(spawnPosition, isPlayer, direction);
+            enemy.gameObject.SetActive(true);
+            enemy.OnSpawned(enemyTarget, destination, startPosition);
         }
     }
 

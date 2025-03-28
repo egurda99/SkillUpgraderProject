@@ -129,7 +129,8 @@ namespace Zenject
             return item;
         }
 
-        protected virtual void Reinitialize(TParam1 spawnPosition, TParam2 isPlayer, TParam3 direction, TValue bullet)
+        protected virtual void Reinitialize(TParam1 enemyTarget, TParam2 destination, TParam3 startPosition,
+            TValue enemy)
         {
             // Optional
         }

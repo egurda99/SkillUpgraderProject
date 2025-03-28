@@ -12,9 +12,9 @@ namespace ShootEmUp
         private TeamComponent _teamComponent;
 
         [Inject]
-        public void Construct(Bullet.Pool bulletCunfigurer)
+        public void Construct(Bullet.Pool bulletPool)
         {
-            _bulletPool = bulletCunfigurer;
+            _bulletPool = bulletPool;
         }
 
         private void Awake()

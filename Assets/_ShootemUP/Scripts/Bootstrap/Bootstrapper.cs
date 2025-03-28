@@ -4,16 +4,10 @@ using Zenject;
 
 public sealed class Bootstrapper : MonoBehaviour
 {
-    // [Header("GameCycle")] [SerializeField] private GameCycleListenersInstaller _gameCycleListenersInstaller;
-
     private GameCycleManager _gameCycleManager;
 
     [Header("Input")] [SerializeField] private KeyboardInput _keyboardInput;
 
-
-    [SerializeField] private Transform _bulletContainerTransform;
-
-    [SerializeField] private BulletOutOfBoundsChecker _bulletOutOfBoundsChecker;
 
     [Header("Player")] [SerializeField] private Transform _playerTransform;
 
@@ -21,7 +15,6 @@ public sealed class Bootstrapper : MonoBehaviour
     private EnemyPositionsHandler _enemyPositionsHandler;
 
     [SerializeField] private EnemySpawner _enemySpawner;
-    [SerializeField] private EnemyPool _enemyPool;
 
     [Header("UI")] [SerializeField] private StartGameWidget _startGameWidget;
 
@@ -31,27 +24,27 @@ public sealed class Bootstrapper : MonoBehaviour
 
     private CharacterDeathObserver _playerDeathObserver;
     private GameFinisher _gameFinisher;
-    private ActiveBulletsProvider _activeBulletsProvider;
-    private BulletsGameCycleUpdater _bulletsGameCycleUpdater;
-    private BulletOutOfBoundsObserver _bulletOutOfBoundsObserver;
+
     private HealthComponent _playerHealthComponent;
     private MoveComponent _playerMoveComponent;
     private MoveController _playerMoveController;
     private ShootController _playerShootController;
     private ShootComponent _playerShootComponent;
-    private EnemyInstaller _enemyInstaller;
+    private EnemyConfigurer _enemyConfigurer;
     private ActiveEnemiesProvider _activeEnemiesProvider;
     private EnemiesGameCycleUpdater _enemiesGameCycleUpdater;
 
     private GameCycleWidgetsHandler _gameCycleWidgetsHandler;
 
     private Bullet.Pool _bulletPool;
+    private Enemy.Pool _enemyPool;
 
     [Inject]
-    public void Construct(Bullet.Pool bulletPool, GameCycleManager gameCycleManager)
+    public void Construct(Bullet.Pool bulletPool, GameCycleManager gameCycleManager, Enemy.Pool enemyPool)
     {
         _bulletPool = bulletPool;
         _gameCycleManager = gameCycleManager;
+        _enemyPool = enemyPool;
     }
 
     private void Awake()
@@ -68,9 +61,9 @@ public sealed class Bootstrapper : MonoBehaviour
 
     private void EnemyInit()
     {
-        _enemyInstaller = new EnemyInstaller(_playerTransform, _enemyPositionsHandler, _bulletPool);
-        _enemySpawner.Init(_enemyInstaller);
+        _enemyConfigurer = new EnemyConfigurer(_playerTransform, _enemyPositionsHandler, _bulletPool, _enemyPool);
         _activeEnemiesProvider = new ActiveEnemiesProvider(_enemyPool);
+        _enemySpawner.Init(_enemyConfigurer, _activeEnemiesProvider);
         _enemiesGameCycleUpdater = new EnemiesGameCycleUpdater(_activeEnemiesProvider);
 
         _gameCycleManager.AddListener(_enemiesGameCycleUpdater);

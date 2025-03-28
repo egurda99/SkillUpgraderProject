@@ -1,35 +1,23 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class BulletOutOfBoundsChecker : MonoBehaviour,
-        IGameFixedUpdateListener,
-        IGameFinishListener
+    public sealed class BulletOutOfBoundsChecker : IGameFixedUpdateListener, IGameFinishListener
 
     {
-        [SerializeField] private LevelBounds _levelBounds;
-
         private readonly List<Bullet> _activeBullets = new();
-        private ActiveBulletsProvider _activeBulletsProvider;
+        private readonly ActiveBulletsProvider _activeBulletsProvider;
+        private readonly LevelBounds _levelBounds;
 
         public event Action<Bullet> OnBulletOutOfBound;
 
-        [Inject]
-        public void Construct(ActiveBulletsProvider activeBulletsProvider)
+        public BulletOutOfBoundsChecker(ActiveBulletsProvider activeBulletsProvider, LevelBounds levelBounds)
         {
             _activeBulletsProvider = activeBulletsProvider;
             _activeBulletsProvider.ActiveBulletsChanged += UpdateActiveBullets;
+            _levelBounds = levelBounds;
         }
-
-
-        // public void Init(ActiveBulletsProvider activeBulletsProvider)
-        // {
-        //     _activeBulletsProvider = activeBulletsProvider;
-        //     _activeBulletsProvider.ActiveBulletsChanged += UpdateActiveBullets;
-        // }
 
         void IGameFinishListener.OnFinishGame()
         {

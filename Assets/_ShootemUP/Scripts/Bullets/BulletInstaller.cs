@@ -16,7 +16,8 @@ public class BulletInstaller : MonoInstaller
 
 
         Container.BindInterfacesAndSelfTo<BulletsGameCycleUpdater>().AsSingle();
-        Container.BindInterfacesAndSelfTo<BulletOutOfBoundsChecker>().FromComponentsInHierarchy().AsSingle();
+        Container.BindInterfacesAndSelfTo<BulletOutOfBoundsChecker>().AsSingle();
+        Container.BindInterfacesAndSelfTo<LevelBounds>().FromComponentsInHierarchy().AsSingle();
 
         Container.BindInterfacesAndSelfTo<ActiveBulletsProvider>().AsSingle();
         Container.BindInterfacesAndSelfTo<BulletOutOfBoundsObserver>().AsSingle().NonLazy();

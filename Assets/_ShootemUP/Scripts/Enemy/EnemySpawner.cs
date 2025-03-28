@@ -9,17 +9,19 @@ namespace ShootEmUp
         IGamePauseListener,
         IGameResumeListener
     {
-        [SerializeField] private EnemyPool _enemyPool;
-
-        private EnemyInstaller _enemyInstaller;
+        private EnemyConfigurer _enemyConfigurer;
 
         private Coroutine _spawn;
         private readonly float _spawnCooldown = 1;
+        private ActiveEnemiesProvider _activeEnemiesProvider;
+        [SerializeField] private int _maxEnemiesOnScene = 7;
 
+        private readonly int _adapterForCountFrom1 = 1;
 
-        public void Init(EnemyInstaller enemyInstaller)
+        public void Init(EnemyConfigurer enemyConfigurer, ActiveEnemiesProvider activeEnemiesProvider)
         {
-            _enemyInstaller = enemyInstaller;
+            _enemyConfigurer = enemyConfigurer;
+            _activeEnemiesProvider = activeEnemiesProvider;
         }
 
         void IGameStartListener.OnStartGame()
@@ -49,12 +51,9 @@ namespace ShootEmUp
             while (true)
             {
                 yield return new WaitForSeconds(_spawnCooldown);
-                var enemy = _enemyPool.SpawnEnemy();
 
-                if (enemy != null)
-                {
-                    _enemyInstaller.ConfigureEnemy(enemy);
-                }
+                if (_activeEnemiesProvider.ActiveEnemies.Count + _adapterForCountFrom1 <= _maxEnemiesOnScene)
+                    _enemyConfigurer.CreateEnemy();
             }
         }
     }

@@ -5,18 +5,18 @@ namespace ShootEmUp
 {
     public sealed class ActiveEnemiesProvider
     {
-        private readonly EnemyPool _enemyPool;
+        private readonly Enemy.Pool _enemyPool;
         private readonly List<Enemy> _activeEnemies = new();
 
         public IReadOnlyList<Enemy> ActiveEnemies => _activeEnemies;
 
         public event Action ActiveEnemiesChanged;
 
-        public ActiveEnemiesProvider(EnemyPool enemyPool)
+        public ActiveEnemiesProvider(Enemy.Pool enemyPool)
         {
             _enemyPool = enemyPool;
-            _enemyPool.OnEnemySpawned += AddEnemyToActiveList;
-            _enemyPool.OnEnemyDespawned += RemoveEnemyFromActiveList;
+            _enemyPool.EnemySpawned += AddEnemyToActiveList;
+            _enemyPool.EnemyDespawned += RemoveEnemyFromActiveList;
         }
 
         private void RemoveEnemyFromActiveList(Enemy enemy)
@@ -33,8 +33,8 @@ namespace ShootEmUp
 
         ~ActiveEnemiesProvider()
         {
-            _enemyPool.OnEnemySpawned -= AddEnemyToActiveList;
-            _enemyPool.OnEnemyDespawned -= RemoveEnemyFromActiveList;
+            _enemyPool.EnemySpawned -= AddEnemyToActiveList;
+            _enemyPool.EnemyDespawned -= RemoveEnemyFromActiveList;
         }
     }
 }

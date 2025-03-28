@@ -1,27 +1,26 @@
+using System;
 using ShootEmUp;
-using UnityEngine;
 
-[RequireComponent(typeof(Enemy))]
-[RequireComponent(typeof(HealthComponent))]
-public sealed class EnemyDeathObserver : MonoBehaviour
+public sealed class EnemyDeathObserver : IDisposable
 {
-    private HealthComponent _healthComponent;
-    private EnemyPool _enemyPool;
-    private Enemy _enemy;
+    private readonly HealthComponent _healthComponent;
+    private readonly Enemy.Pool _enemyPool;
 
-    private const string ENEMYSYSTEM = "EnemySystem";
+    private readonly Enemy _enemy;
 
-    private void Awake()
+    public EnemyDeathObserver(HealthComponent healthComponent, Enemy.Pool pool, Enemy enemy)
     {
-        _healthComponent = GetComponent<HealthComponent>();
-        _enemy = GetComponent<Enemy>();
-        var enemySystem = GameObject.FindGameObjectWithTag(ENEMYSYSTEM);
-        _enemyPool = enemySystem.GetComponent<EnemyPool>();
+        _healthComponent = healthComponent;
+        _enemyPool = pool;
+        _enemy = enemy;
+
+        _healthComponent.OnDead += OnEnemyDeath;
     }
 
-    private void OnEnable() => _healthComponent.OnDead += OnEnemyDeath;
+    private void OnEnemyDeath() => _enemyPool.Despawn(_enemy);
 
-    private void OnDisable() => _healthComponent.OnDead -= OnEnemyDeath;
-
-    private void OnEnemyDeath() => _enemyPool.UnspawnEnemy(_enemy);
+    void IDisposable.Dispose()
+    {
+        _healthComponent.OnDead -= OnEnemyDeath;
+    }
 }
