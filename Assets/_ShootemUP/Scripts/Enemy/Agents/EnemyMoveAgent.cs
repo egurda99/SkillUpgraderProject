@@ -3,32 +3,32 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(MoveComponent))]
-    public sealed class EnemyMoveAgent : MonoBehaviour,
-        IGameFixedUpdateListener
+    public sealed class EnemyMoveAgent : IGameFixedUpdateListener
     {
         private const float MinimalDistance = 0.25f;
-        private MoveComponent _moveComponent;
+        private readonly MoveComponent _moveComponent;
 
         private Vector2 _destination;
 
         private bool _isReached;
+        private readonly Transform _enemyTransform;
 
         public event Action OnPositionReached;
 
-        private void Awake()
+        public EnemyMoveAgent(MoveComponent moveComponent, Transform enemyTransform)
         {
-            _moveComponent = GetComponent<MoveComponent>();
+            _moveComponent = moveComponent;
+            _enemyTransform = enemyTransform;
         }
 
-        void IGameFixedUpdateListener.OnFixedUpdate(float fixedDeltaTime)
+        public void OnFixedUpdate(float fixedDeltaTime)
         {
             if (_isReached)
             {
                 return;
             }
 
-            var vector = _destination - (Vector2)transform.position;
+            var vector = _destination - (Vector2)_enemyTransform.position;
             if (vector.magnitude <= MinimalDistance)
             {
                 _isReached = true;

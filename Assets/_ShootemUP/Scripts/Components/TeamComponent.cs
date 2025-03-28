@@ -4,8 +4,8 @@ namespace ShootEmUp
 {
     public sealed class TeamComponent : MonoBehaviour
     {
-        [SerializeField] private bool isPlayer;
+        [SerializeField] private bool _isPlayer;
 
-        public bool IsPlayer => isPlayer;
+        public bool IsPlayer => _isPlayer;
     }
 }

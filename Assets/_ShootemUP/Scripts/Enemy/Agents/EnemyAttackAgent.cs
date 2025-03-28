@@ -6,7 +6,7 @@ namespace ShootEmUp
     public sealed class EnemyAttackAgent : MonoBehaviour,
         IGameFixedUpdateListener
     {
-        [SerializeField] private float _countdown;
+        [SerializeField] private float _shootCountdown;
 
         private ShootComponent _shootComponent;
         private Transform _target;
@@ -24,7 +24,7 @@ namespace ShootEmUp
         private void OnEnable()
         {
             _isPositionReached = false;
-            _timer.StartTimer(_countdown);
+            _timer.StartTimer(_shootCountdown);
 
             _timer.OnTimerEnd += ShootTimerEnd;
         }
@@ -64,7 +64,7 @@ namespace ShootEmUp
         private void ShootTimerEnd()
         {
             Fire();
-            _timer.StartTimer(_countdown);
+            _timer.StartTimer(_shootCountdown);
         }
 
         private void Fire()

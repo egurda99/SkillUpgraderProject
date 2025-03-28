@@ -1,23 +1,24 @@
-using UnityEngine;
+using System;
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(EnemyMoveAgent))]
-    [RequireComponent(typeof(EnemyAttackAgent))]
-    public sealed class EnemyPositionObserver : MonoBehaviour
+    public sealed class EnemyPositionObserver : IDisposable
     {
-        private EnemyMoveAgent _moveAgent;
-        private EnemyAttackAgent _attackAgent;
+        private readonly EnemyMoveAgent _moveAgent;
+        private readonly EnemyAttackAgent _attackAgent;
 
-        private void Awake()
+        public EnemyPositionObserver(EnemyMoveAgent moveAgent, EnemyAttackAgent attackAgent)
         {
-            _moveAgent = GetComponent<EnemyMoveAgent>();
-            _attackAgent = GetComponent<EnemyAttackAgent>();
+            _moveAgent = moveAgent;
+            _attackAgent = attackAgent;
+
+            _moveAgent.OnPositionReached += OnEnemyReachPosition;
         }
 
-        private void OnEnable() => _moveAgent.OnPositionReached += OnEnemyReachPosition;
-
-        private void OnDisable() => _moveAgent.OnPositionReached -= OnEnemyReachPosition;
+        void IDisposable.Dispose()
+        {
+            _moveAgent.OnPositionReached -= OnEnemyReachPosition;
+        }
 
         private void OnEnemyReachPosition() => _attackAgent.SetPositionReached();
     }

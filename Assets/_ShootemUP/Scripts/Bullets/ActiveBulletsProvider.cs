@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ShootEmUp
 {
-    public sealed class ActiveBulletsProvider
+    public sealed class ActiveBulletsProvider : IDisposable
     {
         private readonly Bullet.Pool _bulletPool;
         private readonly List<Bullet> _activeBullets = new();
@@ -31,7 +31,7 @@ namespace ShootEmUp
             ActiveBulletsChanged?.Invoke();
         }
 
-        ~ActiveBulletsProvider()
+        void IDisposable.Dispose()
         {
             _bulletPool.OnBulletSpawned -= AddBulletToActiveList;
             _bulletPool.OnBulletDespawned -= RemoveBulletFromActiveList;

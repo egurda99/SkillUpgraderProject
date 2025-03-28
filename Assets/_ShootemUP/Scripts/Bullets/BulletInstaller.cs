@@ -2,7 +2,7 @@ using ShootEmUp;
 using UnityEngine;
 using Zenject;
 
-public class BulletInstaller : MonoInstaller
+public sealed class BulletInstaller : MonoInstaller
 {
     [SerializeField] private Transform _bulletContainerTransform;
     [SerializeField] private int _bulletPoolInitialSize;
@@ -21,11 +21,5 @@ public class BulletInstaller : MonoInstaller
 
         Container.BindInterfacesAndSelfTo<ActiveBulletsProvider>().AsSingle();
         Container.BindInterfacesAndSelfTo<BulletOutOfBoundsObserver>().AsSingle().NonLazy();
-
-
-        // Container.BindInterfacesAndSelfTo<Bullet>().FromInstance(_bulletPrefab).AsTransient();
-
-        // Container.BindInterfacesTo<BulletDamageController>().AsTransient().NonLazy();
-        // Container.BindInterfacesTo<BulletDamageController>().AsCached();
     }
 }

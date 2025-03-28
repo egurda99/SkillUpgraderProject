@@ -43,7 +43,7 @@ namespace Zenject
         private Stack<TContract> _inactiveItems;
         private IFactory<TContract> _factory;
         private MemoryPoolSettings _settings;
-        private DiContainer _container;
+        protected DiContainer _container;
 
         private int _activeCount;
 

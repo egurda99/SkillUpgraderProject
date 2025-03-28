@@ -7,7 +7,7 @@ namespace ShootEmUp
         IGamePauseListener,
         IGameResumeListener
     {
-        [SerializeField] private float speed = 5.0f;
+        [SerializeField] private float _speed = 5.0f;
 
         private Rigidbody2D _rigidbody2D;
         private bool _isPause;
@@ -19,7 +19,7 @@ namespace ShootEmUp
             if (_isPause)
                 return;
 
-            var nextPosition = _rigidbody2D.position + vector * speed;
+            var nextPosition = _rigidbody2D.position + vector * _speed;
             _rigidbody2D.MovePosition(nextPosition);
         }
 

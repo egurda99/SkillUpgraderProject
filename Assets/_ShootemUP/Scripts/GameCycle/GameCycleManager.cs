@@ -85,32 +85,6 @@ namespace ShootEmUp
             }
         }
 
-        public void AddListener(IGameListener listener)
-        {
-            if (listener == null)
-            {
-                return;
-            }
-
-            _gameListeners.Add(listener);
-
-            if (listener is IGameUpdateListener gameUpdateListener)
-            {
-                _gameUpdateListeners.Add(gameUpdateListener);
-            }
-
-            if (listener is IGameFixedUpdateListener gameFixedUpdateListener)
-            {
-                _gameFixedUpdateListeners.Add(gameFixedUpdateListener);
-            }
-
-            if (listener is IGameLateUpdateListener gameLateUpdateListener)
-            {
-                _gameLateUpdateListeners.Add(gameLateUpdateListener);
-            }
-        }
-
-
         [Button]
         public void StartGame()
         {
@@ -124,15 +98,6 @@ namespace ShootEmUp
             foreach (var gameStartListener in _container.Resolve<IEnumerable<IGameStartListener>>())
             {
                 gameStartListener.OnStartGame();
-            }
-
-
-            foreach (var listener in _gameListeners)
-            {
-                if (listener is IGameStartListener gameStartListener)
-                {
-                    gameStartListener.OnStartGame();
-                }
             }
 
 
@@ -154,14 +119,6 @@ namespace ShootEmUp
                 gamePauseListener.OnPauseGame();
             }
 
-            foreach (var listener in _gameListeners)
-            {
-                if (listener is IGamePauseListener gamePauseListener)
-                {
-                    gamePauseListener.OnPauseGame();
-                }
-            }
-
             _gameState = GameState.PAUSED;
         }
 
@@ -180,13 +137,6 @@ namespace ShootEmUp
                 gameResumeListener.OnResumeGame();
             }
 
-            foreach (var listener in _gameListeners)
-            {
-                if (listener is IGameResumeListener gameResumeListener)
-                {
-                    gameResumeListener.OnResumeGame();
-                }
-            }
 
             _gameState = GameState.PLAYING;
         }
@@ -204,14 +154,6 @@ namespace ShootEmUp
             foreach (var gameFinishListener in _container.Resolve<IEnumerable<IGameFinishListener>>())
             {
                 gameFinishListener.OnFinishGame();
-            }
-
-            foreach (var listener in _gameListeners)
-            {
-                if (listener is IGameFinishListener gameFinishListener)
-                {
-                    gameFinishListener.OnFinishGame();
-                }
             }
 
             _gameState = GameState.FINISHED;

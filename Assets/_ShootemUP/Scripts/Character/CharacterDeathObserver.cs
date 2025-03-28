@@ -1,19 +1,30 @@
+using System;
+using Zenject;
+
 namespace ShootEmUp
 {
-    public sealed class CharacterDeathObserver
+    public sealed class CharacterDeathObserver : IDisposable
     {
-        private readonly GameFinisher _gameFinisher;
+        private GameFinisher _gameFinisher;
         private readonly HealthComponent _healthComponent;
 
-        public CharacterDeathObserver(GameFinisher gameFinisher, HealthComponent healthComponent)
+        public CharacterDeathObserver(HealthComponent healthComponent)
         {
-            _gameFinisher = gameFinisher;
             _healthComponent = healthComponent;
             _healthComponent.OnDead += OnCharacterDeath;
         }
 
-        private void OnCharacterDeath() => _gameFinisher.FinishGame();
+        [Inject]
+        public void Construct(GameFinisher gameFinisher)
+        {
+            _gameFinisher = gameFinisher;
+        }
 
-        ~CharacterDeathObserver() => _healthComponent.OnDead -= OnCharacterDeath;
+        void IDisposable.Dispose()
+        {
+            _healthComponent.OnDead -= OnCharacterDeath;
+        }
+
+        private void OnCharacterDeath() => _gameFinisher.FinishGame();
     }
 }

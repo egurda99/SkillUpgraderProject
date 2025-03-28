@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
@@ -18,7 +19,9 @@ namespace ShootEmUp
 
         private readonly int _adapterForCountFrom1 = 1;
 
-        public void Init(EnemyConfigurer enemyConfigurer, ActiveEnemiesProvider activeEnemiesProvider)
+
+        [Inject]
+        public void Construct(EnemyConfigurer enemyConfigurer, ActiveEnemiesProvider activeEnemiesProvider)
         {
             _enemyConfigurer = enemyConfigurer;
             _activeEnemiesProvider = activeEnemiesProvider;

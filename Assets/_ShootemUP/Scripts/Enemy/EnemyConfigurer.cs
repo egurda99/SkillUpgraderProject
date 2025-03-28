@@ -4,34 +4,24 @@ namespace ShootEmUp
 {
     public sealed class EnemyConfigurer
     {
-        private readonly Transform _enemyTarget;
+        private readonly Transform _enemyTargetTransform;
         private readonly EnemyPositionsHandler _enemyPositionsHandler;
-        private readonly Bullet.Pool _bulletPool;
+
 
         private readonly Enemy.Pool _enemyPool;
 
-        public EnemyConfigurer(Transform enemyTarget, EnemyPositionsHandler enemyPositionsHandler,
-            Bullet.Pool bulletPool, Enemy.Pool enemyPool)
+        public EnemyConfigurer(Player player, EnemyPositionsHandler enemyPositionsHandler, Enemy.Pool enemyPool)
         {
-            _enemyTarget = enemyTarget;
+            _enemyTargetTransform = player.transform;
             _enemyPositionsHandler = enemyPositionsHandler;
-            _bulletPool = bulletPool;
-            _enemyPool = enemyPool;
 
-            _enemyPool.EnemyCreated += OnEnemyCreated;
+            _enemyPool = enemyPool;
         }
 
         public void CreateEnemy()
         {
-            _enemyPool.Spawn(_enemyTarget, _enemyPositionsHandler.GetRandomAttackPosition().position,
+            _enemyPool.Spawn(_enemyTargetTransform, _enemyPositionsHandler.GetRandomAttackPosition().position,
                 _enemyPositionsHandler.GetRandomSpawnPosition().position);
-        }
-
-        private void OnEnemyCreated(Enemy enemy)
-        {
-            var shootComponent = enemy.GetComponent<ShootComponent>();
-
-            shootComponent.Construct(_bulletPool);
         }
     }
 }
