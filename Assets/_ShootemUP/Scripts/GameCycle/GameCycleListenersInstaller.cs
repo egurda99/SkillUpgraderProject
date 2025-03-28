@@ -1,46 +1,14 @@
-using System.Collections.Generic;
-using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    [RequireComponent(typeof(GameCycleManager))]
-    public sealed class GameCycleListenersInstaller : MonoBehaviour
+    public sealed class GameCycleListenersInstaller : MonoInstaller<GameCycleListenersInstaller>
     {
-        [SerializeField] private List<MonoBehaviour> _listenersMonoBehaviours = new();
-
-
-        public void Init()
+        public override void InstallBindings()
         {
-            var gameCycleManager = GetComponent<GameCycleManager>();
-
-            AddListenersFromChildren(gameCycleManager);
-            AddListenersFromMonobehaviours(gameCycleManager);
-        }
-
-        private void AddListenersFromMonobehaviours(GameCycleManager gameCycleManager)
-        {
-            foreach (var listenerMonoBehaviour in _listenersMonoBehaviours)
+            foreach (var gameListener in GetComponentsInChildren<IGameListener>())
             {
-                var gameListeners = listenerMonoBehaviour.GetComponents<IGameListener>();
-
-
-                foreach (var listener in gameListeners)
-                {
-                    if (listener is IGameListener gameListener)
-                    {
-                        gameCycleManager.AddListener(gameListener);
-                    }
-                }
-            }
-        }
-
-        private void AddListenersFromChildren(GameCycleManager gameCycleManager)
-        {
-            var listeners = GetComponentsInChildren<IGameListener>();
-
-            foreach (var gameListener in listeners)
-            {
-                gameCycleManager.AddListener(gameListener);
+                Container.BindInterfacesTo(gameListener.GetType()).FromInstance(gameListener).AsCached();
             }
         }
     }

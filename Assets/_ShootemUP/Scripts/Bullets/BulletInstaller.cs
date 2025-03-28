@@ -14,6 +14,17 @@ public class BulletInstaller : MonoInstaller
         Container.BindMemoryPool<Bullet, Bullet.Pool>().WithInitialSize(_bulletPoolInitialSize)
             .FromComponentInNewPrefab(_bulletPrefab).UnderTransform(_bulletContainerTransform).AsCached();
 
-        //   Container.Bind<ActiveBulletsProvider>().AsSingle();
+
+        Container.BindInterfacesAndSelfTo<BulletsGameCycleUpdater>().AsSingle();
+        Container.BindInterfacesAndSelfTo<BulletOutOfBoundsChecker>().FromComponentsInHierarchy().AsSingle();
+
+        Container.BindInterfacesAndSelfTo<ActiveBulletsProvider>().AsSingle();
+        Container.BindInterfacesAndSelfTo<BulletOutOfBoundsObserver>().AsSingle().NonLazy();
+
+
+        // Container.BindInterfacesAndSelfTo<Bullet>().FromInstance(_bulletPrefab).AsTransient();
+
+        // Container.BindInterfacesTo<BulletDamageController>().AsTransient().NonLazy();
+        // Container.BindInterfacesTo<BulletDamageController>().AsCached();
     }
 }

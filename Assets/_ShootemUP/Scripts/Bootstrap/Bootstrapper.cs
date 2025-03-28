@@ -4,8 +4,9 @@ using Zenject;
 
 public sealed class Bootstrapper : MonoBehaviour
 {
-    [Header("GameCycle")] [SerializeField] private GameCycleListenersInstaller _gameCycleListenersInstaller;
-    [SerializeField] private GameCycleManager _gameCycleManager;
+    // [Header("GameCycle")] [SerializeField] private GameCycleListenersInstaller _gameCycleListenersInstaller;
+
+    private GameCycleManager _gameCycleManager;
 
     [Header("Input")] [SerializeField] private KeyboardInput _keyboardInput;
 
@@ -47,25 +48,22 @@ public sealed class Bootstrapper : MonoBehaviour
     private Bullet.Pool _bulletPool;
 
     [Inject]
-    public void Construct(Bullet.Pool bulletPool)
+    public void Construct(Bullet.Pool bulletPool, GameCycleManager gameCycleManager)
     {
         _bulletPool = bulletPool;
+        _gameCycleManager = gameCycleManager;
     }
-
 
     private void Awake()
     {
         _gameFinisher = new GameFinisher(_gameCycleManager);
 
         PlayerInit();
-        BulletInit();
         EnemyInit();
 
         _gameCycleWidgetsHandler =
             new GameCycleWidgetsHandler(_startGameWidget, _pauseGameWidget, _gameCycleManager,
                 _timerBeforeStartWidget);
-
-        _gameCycleListenersInstaller.Init();
     }
 
     private void EnemyInit()
@@ -78,15 +76,6 @@ public sealed class Bootstrapper : MonoBehaviour
         _gameCycleManager.AddListener(_enemiesGameCycleUpdater);
     }
 
-    private void BulletInit()
-    {
-        _activeBulletsProvider = new ActiveBulletsProvider(_bulletPool);
-        _bulletsGameCycleUpdater = new BulletsGameCycleUpdater(_activeBulletsProvider);
-        _bulletOutOfBoundsChecker.Init(_activeBulletsProvider);
-        _bulletOutOfBoundsObserver = new BulletOutOfBoundsObserver(_bulletPool, _bulletOutOfBoundsChecker);
-
-        _gameCycleManager.AddListener(_bulletsGameCycleUpdater);
-    }
 
     private void PlayerInit()
     {

@@ -107,6 +107,7 @@ namespace ShootEmUp
 
             protected override void Reinitialize(Vector2 spawnPosition, bool isPlayer, Vector2 direction, Bullet bullet)
             {
+                base.Reinitialize(spawnPosition, isPlayer, direction, bullet);
                 bullet.Init(spawnPosition, direction, isPlayer);
             }
 

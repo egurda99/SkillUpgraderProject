@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
@@ -16,12 +17,19 @@ namespace ShootEmUp
 
         public event Action<Bullet> OnBulletOutOfBound;
 
-
-        public void Init(ActiveBulletsProvider activeBulletsProvider)
+        [Inject]
+        public void Construct(ActiveBulletsProvider activeBulletsProvider)
         {
             _activeBulletsProvider = activeBulletsProvider;
             _activeBulletsProvider.ActiveBulletsChanged += UpdateActiveBullets;
         }
+
+
+        // public void Init(ActiveBulletsProvider activeBulletsProvider)
+        // {
+        //     _activeBulletsProvider = activeBulletsProvider;
+        //     _activeBulletsProvider.ActiveBulletsChanged += UpdateActiveBullets;
+        // }
 
         void IGameFinishListener.OnFinishGame()
         {
