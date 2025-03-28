@@ -105,12 +105,6 @@ namespace ShootEmUp
             public event Action<Bullet> OnBulletSpawned;
             public event Action<Bullet> OnBulletDespawned;
 
-            [Inject]
-            public void Construct(DiContainer container)
-            {
-                _container = container;
-            }
-
             protected override void Reinitialize(Vector2 spawnPosition, bool isPlayer, Vector2 direction, Bullet bullet)
             {
                 base.Reinitialize(spawnPosition, isPlayer, direction, bullet);
