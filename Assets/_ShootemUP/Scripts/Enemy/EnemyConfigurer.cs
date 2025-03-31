@@ -18,6 +18,7 @@ namespace ShootEmUp
             _enemyPool = enemyPool;
         }
 
+
         public void CreateEnemy()
         {
             _enemyPool.Spawn(_enemyTargetTransform, _enemyPositionsHandler.GetRandomAttackPosition().position,

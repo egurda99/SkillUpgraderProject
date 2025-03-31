@@ -9,6 +9,7 @@ namespace ShootEmUp
         [SerializeField] private Transform _spawnPoint;
         [SerializeField] private Transform _worldContainer;
 
+
         public override void InstallBindings()
         {
             var player = Container.InstantiatePrefabForComponent<Player>(_playerPrefab, _spawnPoint.position,
@@ -20,6 +21,7 @@ namespace ShootEmUp
             var playerMoveController = new MoveController(player.GetComponent<MoveComponent>());
             Container.QueueForInject(playerMoveController);
 
+            Container.BindInterfacesTo<MoveController>().FromInstance(playerMoveController).AsSingle();
 
             var playerShootController = new ShootController(player.GetComponent<ShootComponent>());
             Container.QueueForInject(playerShootController);

@@ -28,8 +28,10 @@ namespace ShootEmUp
             _enemyMoveAgent = new EnemyMoveAgent(GetComponent<MoveComponent>(), transform);
             _enemyAttackAgent = GetComponent<EnemyAttackAgent>();
 
-            var enemyDeathObserver = new EnemyDeathObserver(GetComponent<HealthComponent>(), _pool, this);
-            var enemyPositionObserver = new EnemyPositionObserver(_enemyMoveAgent, _enemyAttackAgent);
+            var enemyObserversCreator = new EnemyObserversCreator(GetComponent<HealthComponent>(),
+                _pool, this, _enemyMoveAgent, GetComponent<EnemyAttackAgent>());
+
+            enemyObserversCreator.CreateObservers();
         }
 
         void IGameFixedUpdateListener.OnFixedUpdate(float fixedDeltaTime)
@@ -60,10 +62,6 @@ namespace ShootEmUp
             protected override void OnCreated(Enemy enemy)
             {
                 base.OnCreated(enemy);
-
-                // var enemyDeathObserver = new EnemyDeathObserver(enemy.GetComponent<HealthComponent>(), this, enemy);
-                // var enemyPositionObserver = new EnemyPositionObserver(enemy.EnemyMoveAgent,
-                //     enemy.GetComponent<EnemyAttackAgent>());
             }
 
 

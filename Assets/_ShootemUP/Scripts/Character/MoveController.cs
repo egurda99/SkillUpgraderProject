@@ -23,6 +23,7 @@ public sealed class MoveController : IDisposable
 
     public void Dispose()
     {
+        Debug.Log("Dispose Move Controller");
         _input.OnMoveInputChanged -= Move;
     }
 

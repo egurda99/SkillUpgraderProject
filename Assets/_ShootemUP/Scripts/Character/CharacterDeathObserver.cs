@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using Zenject;
 
 namespace ShootEmUp
@@ -22,6 +23,7 @@ namespace ShootEmUp
 
         void IDisposable.Dispose()
         {
+            Debug.Log("<color=red>Dispose in character death observer</color>");
             _healthComponent.OnDead -= OnCharacterDeath;
         }
 
