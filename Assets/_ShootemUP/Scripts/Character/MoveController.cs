@@ -1,22 +1,16 @@
 using System;
 using ShootEmUp;
 using UnityEngine;
-using Zenject;
 
 public sealed class MoveController : IDisposable
 {
     private readonly MoveComponent _moveComponent;
 
-    private IInput _input;
+    private readonly IInput _input;
 
-    public MoveController(MoveComponent moveComponent)
+    public MoveController(MoveComponent moveComponent, IInput input)
     {
         _moveComponent = moveComponent;
-    }
-
-    [Inject]
-    public void Construct(IInput input)
-    {
         _input = input;
         _input.OnMoveInputChanged += Move;
     }

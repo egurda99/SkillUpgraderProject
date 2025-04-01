@@ -18,16 +18,17 @@ namespace ShootEmUp
             Container.BindInterfacesAndSelfTo<Player>().FromInstance(player).AsSingle();
 
 
-            var playerMoveController = new MoveController(player.GetComponent<MoveComponent>());
-            Container.QueueForInject(playerMoveController);
+            Container.BindInterfacesAndSelfTo<MoveController>()
+                .AsSingle()
+                .WithArguments(player.GetComponent<MoveComponent>());
 
-            Container.BindInterfacesTo<MoveController>().FromInstance(playerMoveController).AsSingle();
+            Container.BindInterfacesAndSelfTo<ShootController>()
+                .AsSingle()
+                .WithArguments(player.GetComponent<ShootComponent>());
 
-            var playerShootController = new ShootController(player.GetComponent<ShootComponent>());
-            Container.QueueForInject(playerShootController);
-
-            var playerDeathObserver = new CharacterDeathObserver(player.GetComponent<HealthComponent>());
-            Container.QueueForInject(playerDeathObserver);
+            Container.BindInterfacesAndSelfTo<CharacterDeathObserver>()
+                .AsSingle()
+                .WithArguments(player.GetComponent<HealthComponent>());
         }
     }
 }

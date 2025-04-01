@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Zenject;
 
 namespace ShootEmUp
 {
@@ -10,16 +9,11 @@ namespace ShootEmUp
 
         private readonly Vector2 _direction = Vector2.up;
 
-        private IInput _input;
+        private readonly IInput _input;
 
-        public ShootController(ShootComponent shootComponent)
+        public ShootController(ShootComponent shootComponent, IInput input)
         {
             _shootComponent = shootComponent;
-        }
-
-        [Inject]
-        public void Construct(IInput input)
-        {
             _input = input;
             _input.OnFireClicked += Shoot;
         }
