@@ -2,11 +2,11 @@ using Zenject;
 
 namespace Lessons.Architecture.PM
 {
-    public sealed class PlayerInfoInstaller : MonoInstaller<PlayerInfoInstaller>
+    public sealed class UserInfoInstaller : MonoInstaller<UserInfoInstaller>
     {
         public override void InstallBindings()
         {
-            var playerInfo = FindObjectOfType<PlayerInfoInstallerHelper>();
+            var playerInfo = FindObjectOfType<UserInfoInstallerHelper>();
 
             Container.Bind<UserInfo>()
                 .AsSingle()

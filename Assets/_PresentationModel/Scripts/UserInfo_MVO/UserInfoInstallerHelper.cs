@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Lessons.Architecture.PM
 {
-    public sealed class PlayerInfoInstallerHelper : MonoBehaviour
+    public sealed class UserInfoInstallerHelper : MonoBehaviour
     {
         [SerializeField] private string _name;
         [SerializeField] private string _description;
