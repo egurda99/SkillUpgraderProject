@@ -25,6 +25,18 @@ namespace Lessons.Architecture.PM
             _characterStat.OnValueChanged -= OnValueChanged;
         }
 
+        public void Show()
+        {
+            _statView.SetupStat(_characterStat.Name, _characterStat.Value.ToString());
+            _statView.Show();
+        }
+
+        public void Hide()
+        {
+            _statView.Hide();
+        }
+
+
         private void OnValueChanged(int value)
         {
             _statView.UpdateStatValue(value.ToString());

@@ -1,10 +1,8 @@
-using System;
 using UnityEngine;
-using Zenject;
 
 namespace Lessons.Architecture.PM
 {
-    public sealed class UserInfoAdapter : IInitializable, IDisposable
+    public sealed class UserInfoAdapter
     {
         private readonly UserInfo _userInfo;
         private readonly UserInfoView _userInfoView;
@@ -15,7 +13,7 @@ namespace Lessons.Architecture.PM
             _userInfoView = userInfoView;
         }
 
-        public void Initialize()
+        public void Show()
         {
             _userInfo.OnNameChanged += OnNameChanged;
             _userInfo.OnDescriptionChanged += OnDescriptionChanged;
@@ -24,7 +22,7 @@ namespace Lessons.Architecture.PM
             _userInfoView.SetupUser(_userInfo.Name, _userInfo.Description, _userInfo.Icon);
         }
 
-        public void Dispose()
+        public void Hide()
         {
             _userInfo.OnNameChanged -= OnNameChanged;
             _userInfo.OnDescriptionChanged -= OnDescriptionChanged;

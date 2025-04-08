@@ -27,6 +27,17 @@ namespace Lessons.Architecture.PM
             _characterStatsHolder.OnStatRemoved -= OnStatRemoved;
         }
 
+        public void Show()
+        {
+            _listView.Show();
+        }
+
+        public void Hide()
+        {
+            _listView.Hide();
+        }
+
+
         private void OnStatRemoved(CharacterStat stat)
         {
             _listView.RemoveStat(stat);

@@ -6,7 +6,6 @@ namespace Lessons.Architecture.PM
     {
         private readonly DiContainer _container;
 
-
         public StatAdapterFactory(DiContainer container)
         {
             _container = container;
@@ -16,6 +15,7 @@ namespace Lessons.Architecture.PM
         {
             var statAdapter = new StatAdapter(stat, statView);
             _container.QueueForInject(statAdapter);
+            // прочитал что так можно забиндить сущность к интерфейсам зенжекта, не уверен что правильно
 
             statAdapter.Initialize();
 

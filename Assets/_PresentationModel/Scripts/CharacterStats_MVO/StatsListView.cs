@@ -16,6 +16,22 @@ namespace Lessons.Architecture.PM
             _statAdapterFactory = statAdapterFactory;
         }
 
+        public void Show()
+        {
+            foreach (var viewHolder in _statsDictionary.Values)
+            {
+                viewHolder.Adapter.Show();
+            }
+        }
+
+        public void Hide()
+        {
+            foreach (var viewHolder in _statsDictionary.Values)
+            {
+                viewHolder.Adapter.Hide();
+            }
+        }
+
 
         public void AddStat(CharacterStat stat)
         {

@@ -8,6 +8,17 @@ namespace Lessons.Architecture.PM
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _value;
 
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+
         public void SetupStat(string name, string value)
         {
             Setuper(name, value);

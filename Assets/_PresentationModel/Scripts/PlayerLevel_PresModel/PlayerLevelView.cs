@@ -24,11 +24,6 @@ namespace Lessons.Architecture.PM
             _playerLevelPresenter = playerPresentationModel;
         }
 
-        private void Start()
-        {
-            Show(_playerLevelPresenter);
-        }
-
         public void Show(IViewModel viewModel)
         {
             if (viewModel is not IPlayerLevelPresentationModel playerLevelPresentationModel)
