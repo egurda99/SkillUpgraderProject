@@ -1,13 +1,15 @@
 using System;
+using R3;
 using Zenject;
 
 namespace Lessons.Architecture.PM
 {
     public sealed class PlayerPresentationModel : IPlayerLevelPresentationModel, IInitializable, IDisposable
     {
-        public event Action OnStateChanged;
-
         private readonly PlayerLevel _playerLevel;
+
+        private readonly CompositeDisposable _disposables = new();
+        private readonly Subject<Unit> _onStateChanged = new();
 
         public PlayerPresentationModel(PlayerLevel playerLevel)
         {
@@ -16,25 +18,31 @@ namespace Lessons.Architecture.PM
 
         public void Initialize()
         {
-            _playerLevel.OnLevelUp += OnLevelUp;
-            _playerLevel.OnExperienceChanged += OnExperienceChanged;
+            _playerLevel.CurrentLevelProperty
+                .Subscribe(OnLevelUp)
+                .AddTo(_disposables);
+
+            _playerLevel.CurrentExperienceProperty
+                .Subscribe(OnExperienceChanged)
+                .AddTo(_disposables);
         }
 
         public void Dispose()
         {
-            _playerLevel.OnLevelUp -= OnLevelUp;
-            _playerLevel.OnExperienceChanged -= OnExperienceChanged;
+            _disposables.Dispose();
         }
 
 
+        Observable<Unit> IPlayerLevelPresentationModel.OnStateChanged => _onStateChanged;
+
         public string GetCurrentLevel()
         {
-            return _playerLevel.CurrentLevel.ToString();
+            return _playerLevel.CurrentLevelProperty.CurrentValue.ToString();
         }
 
         public string GetCurrentXp()
         {
-            return _playerLevel.CurrentExperience.ToString();
+            return _playerLevel.CurrentExperienceProperty.CurrentValue.ToString();
         }
 
         public string GetRequiredXp()
@@ -55,13 +63,13 @@ namespace Lessons.Architecture.PM
 
         private void OnExperienceChanged(int obj)
         {
-            OnStateChanged?.Invoke();
+            _onStateChanged.OnNext(Unit.Default);
         }
 
 
-        private void OnLevelUp()
+        private void OnLevelUp(int obj)
         {
-            OnStateChanged?.Invoke();
+            _onStateChanged.OnNext(Unit.Default);
         }
     }
 }

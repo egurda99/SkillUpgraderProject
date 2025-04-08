@@ -7,6 +7,8 @@ namespace Lessons.Architecture.PM
     {
         public event Action<int> OnValueChanged;
 
+        //public readonly Subject<int>
+
         public CharacterStat(string name, int value)
         {
             Name = name;

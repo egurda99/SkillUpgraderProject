@@ -1,10 +1,10 @@
-using System;
+using R3;
 
 namespace Lessons.Architecture.PM
 {
     public interface IPlayerLevelPresentationModel : IViewModel
     {
-        event Action OnStateChanged;
+        Observable<Unit> OnStateChanged { get; }
 
         string GetCurrentLevel();
         string GetCurrentXp();

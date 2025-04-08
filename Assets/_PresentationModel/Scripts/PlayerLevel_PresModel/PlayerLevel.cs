@@ -1,30 +1,26 @@
 using System;
+using R3;
 using Sirenix.OdinInspector;
 
 namespace Lessons.Architecture.PM
 {
     public sealed class PlayerLevel
     {
-        public event Action OnLevelUp;
-        public event Action<int> OnExperienceChanged;
-
-        [ShowInInspector] [ReadOnly] public int CurrentLevel { get; private set; } = 1;
-
-        [ShowInInspector] [ReadOnly] public int CurrentExperience { get; private set; }
+        public ReactiveProperty<int> CurrentExperienceProperty = new(0);
+        public ReactiveProperty<int> CurrentLevelProperty = new(1);
 
         [ShowInInspector]
         [ReadOnly]
         public int RequiredExperience
         {
-            get { return 100 * (CurrentLevel + 1); }
+            get { return 100 * (CurrentLevelProperty.CurrentValue + 1); }
         }
 
         [Button]
         public void AddExperience(int range)
         {
-            var xp = Math.Min(CurrentExperience + range, RequiredExperience);
-            CurrentExperience = xp;
-            OnExperienceChanged?.Invoke(xp);
+            var xp = Math.Min(CurrentExperienceProperty.Value + range, RequiredExperience);
+            CurrentExperienceProperty.Value = xp;
         }
 
         [Button]
@@ -32,15 +28,14 @@ namespace Lessons.Architecture.PM
         {
             if (CanLevelUp())
             {
-                CurrentExperience = 0;
-                CurrentLevel++;
-                OnLevelUp?.Invoke();
+                CurrentExperienceProperty.Value = 0;
+                CurrentLevelProperty.Value++;
             }
         }
 
         public bool CanLevelUp()
         {
-            return CurrentExperience >= RequiredExperience;
+            return CurrentExperienceProperty.CurrentValue >= RequiredExperience;
         }
     }
 }

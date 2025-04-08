@@ -1,4 +1,5 @@
 using System;
+using R3;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -14,7 +15,7 @@ namespace Lessons.Architecture.PM
         [SerializeField] private LevelButton _levelButton;
         [SerializeField] private LevelProgressBar _levelProgressBar;
 
-
+        private readonly CompositeDisposable _disposables = new();
         private IPlayerLevelPresentationModel _playerLevelPresenter;
 
 
@@ -41,13 +42,15 @@ namespace Lessons.Architecture.PM
             _levelProgressBar.SetStatus(_playerLevelPresenter.CanUpgrade());
 
 
-            _playerLevelPresenter.OnStateChanged += OnStateChanged;
+            _playerLevelPresenter.OnStateChanged
+                .Subscribe(_ => OnStateChanged())
+                .AddTo(_disposables);
         }
 
 
         public void Hide()
         {
-            _playerLevelPresenter.OnStateChanged -= OnStateChanged;
+            _disposables.Dispose();
             _levelButton.RemoveListener(OnUpgradeClicked);
         }
 
