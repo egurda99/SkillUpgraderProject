@@ -1,17 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using R3;
 using UnityEngine;
 
 namespace Lessons.Architecture.PM
 {
     public sealed class CharacterStatsHolder
     {
-        public event Action<CharacterStat> OnStatAdded;
-        public event Action<CharacterStat> OnStatRemoved;
+        public Subject<CharacterStat> OnStatAdded = new();
+        public Subject<CharacterStat> OnStatRemoved = new();
 
         private readonly HashSet<CharacterStat> _stats = new();
-
 
         public void AddStat(CharacterStat stat)
         {
@@ -24,7 +24,7 @@ namespace Lessons.Architecture.PM
 
             if (_stats.Add(stat))
             {
-                OnStatAdded?.Invoke(stat);
+                OnStatAdded.OnNext(stat);
             }
         }
 
@@ -34,9 +34,7 @@ namespace Lessons.Architecture.PM
             foreach (var stat in _stats)
             {
                 if (stat.Name == characterStat.Name)
-                {
                     return true;
-                }
             }
 
             return false;
@@ -46,7 +44,7 @@ namespace Lessons.Architecture.PM
         {
             if (_stats.Remove(stat))
             {
-                OnStatRemoved?.Invoke(stat);
+                OnStatRemoved.OnNext(stat);
             }
         }
 

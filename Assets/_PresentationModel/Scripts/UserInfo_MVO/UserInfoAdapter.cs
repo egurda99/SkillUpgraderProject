@@ -1,3 +1,4 @@
+using R3;
 using UnityEngine;
 
 namespace Lessons.Architecture.PM
@@ -7,6 +8,8 @@ namespace Lessons.Architecture.PM
         private readonly UserInfo _userInfo;
         private readonly UserInfoView _userInfoView;
 
+        private readonly CompositeDisposable _disposable = new();
+
         public UserInfoAdapter(UserInfo userInfo, UserInfoView userInfoView)
         {
             _userInfo = userInfo;
@@ -15,18 +18,25 @@ namespace Lessons.Architecture.PM
 
         public void Show()
         {
-            _userInfo.OnNameChanged += OnNameChanged;
-            _userInfo.OnDescriptionChanged += OnDescriptionChanged;
-            _userInfo.OnIconChanged += OnIconChanged;
+            _userInfo.Name
+                .Subscribe(OnNameChanged)
+                .AddTo(_disposable);
 
-            _userInfoView.SetupUser(_userInfo.Name, _userInfo.Description, _userInfo.Icon);
+            _userInfo.Description
+                .Subscribe(OnDescriptionChanged)
+                .AddTo(_disposable);
+
+            _userInfo.Icon
+                .Subscribe(OnIconChanged)
+                .AddTo(_disposable);
+
+            _userInfoView.SetupUser(_userInfo.Name.CurrentValue, _userInfo.Description.CurrentValue,
+                _userInfo.Icon.CurrentValue);
         }
 
         public void Hide()
         {
-            _userInfo.OnNameChanged -= OnNameChanged;
-            _userInfo.OnDescriptionChanged -= OnDescriptionChanged;
-            _userInfo.OnIconChanged -= OnIconChanged;
+            _disposable.Dispose();
         }
 
         private void OnIconChanged(Sprite sprite)

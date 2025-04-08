@@ -1,24 +1,29 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace Lessons.Architecture.PM
 {
     public sealed class PlayerPopupTester : MonoBehaviour
     {
-        [SerializeField] private PlayerPopup _playerPopup;
+        private PopupManager _popupManager;
+
+        [Inject]
+        public void Construct(PopupManager popupManager)
+        {
+            _popupManager = popupManager;
+        }
 
         [Button]
         public void Show()
         {
-            _playerPopup.gameObject.SetActive(true);
-            _playerPopup.Show();
+            _popupManager.ShowPopup(PopupName.PLAYER_STATS);
         }
 
         [Button]
         public void Hide()
         {
-            _playerPopup.gameObject.SetActive(false);
-            _playerPopup.Hide();
+            _popupManager.HidePopup(PopupName.PLAYER_STATS);
         }
     }
 }

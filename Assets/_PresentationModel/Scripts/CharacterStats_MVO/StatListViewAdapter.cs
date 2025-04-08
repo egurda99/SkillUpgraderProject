@@ -1,4 +1,5 @@
 using System;
+using R3;
 using Zenject;
 
 namespace Lessons.Architecture.PM
@@ -7,6 +8,7 @@ namespace Lessons.Architecture.PM
     {
         private readonly StatsListView _listView;
         private readonly CharacterStatsHolder _characterStatsHolder;
+        private readonly CompositeDisposable _disposable = new();
 
         public StatListViewAdapter(StatsListView listView, CharacterStatsHolder characterStatsHolder)
         {
@@ -16,15 +18,18 @@ namespace Lessons.Architecture.PM
 
         public void Initialize()
         {
-            _characterStatsHolder.OnStatAdded += OnStatAdded;
-            _characterStatsHolder.OnStatRemoved += OnStatRemoved;
-        }
+            _characterStatsHolder.OnStatRemoved
+                .Subscribe(OnStatRemoved)
+                .AddTo(_disposable);
 
+            _characterStatsHolder.OnStatAdded
+                .Subscribe(OnStatAdded)
+                .AddTo(_disposable);
+        }
 
         public void Dispose()
         {
-            _characterStatsHolder.OnStatAdded -= OnStatAdded;
-            _characterStatsHolder.OnStatRemoved -= OnStatRemoved;
+            _disposable.Dispose();
         }
 
         public void Show()

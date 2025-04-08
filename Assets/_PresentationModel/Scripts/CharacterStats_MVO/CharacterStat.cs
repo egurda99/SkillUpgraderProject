@@ -1,29 +1,22 @@
-using System;
-using Sirenix.OdinInspector;
+using R3;
 
 namespace Lessons.Architecture.PM
 {
     public sealed class CharacterStat
     {
-        public event Action<int> OnValueChanged;
+        public ReactiveProperty<int> Value { get; private set; }
 
-        //public readonly Subject<int>
+        public string Name { get; private set; }
 
         public CharacterStat(string name, int value)
         {
             Name = name;
-            Value = value;
+            Value = new ReactiveProperty<int>(value);
         }
 
-        [ShowInInspector] [ReadOnly] public string Name { get; private set; }
-
-        [ShowInInspector] [ReadOnly] public int Value { get; private set; }
-
-        [Button]
         public void ChangeValue(int value)
         {
-            Value = value;
-            OnValueChanged?.Invoke(value);
+            Value.Value = value;
         }
     }
 }

@@ -16,19 +16,14 @@ namespace Lessons.Architecture.PM
         private PlayerPresentationModel _playerPresentaionModel;
         private PopupManager _popupManager;
 
-
-        private void Awake()
-        {
-            _popupManager = FindObjectOfType<PopupManager>();
-        }
-
         [Inject]
         public void Construct(StatListViewAdapter statListViewAdapter, UserInfoAdapter userInfoAdapter,
-            PlayerPresentationModel playerPresentationModel)
+            PlayerPresentationModel playerPresentationModel, PopupManager popupManager)
         {
             _statListViewAdapter = statListViewAdapter;
             _userInfoAdapter = userInfoAdapter;
             _playerPresentaionModel = playerPresentationModel;
+            _popupManager = popupManager;
         }
 
         protected override void OnShow()
