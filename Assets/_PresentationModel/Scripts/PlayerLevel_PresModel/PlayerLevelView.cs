@@ -50,8 +50,12 @@ namespace Lessons.Architecture.PM
 
         public void Hide()
         {
-            _disposables.Dispose();
             _levelButton.RemoveListener(OnUpgradeClicked);
+        }
+
+        private void OnDestroy()
+        {
+            _disposables.Dispose();
         }
 
 

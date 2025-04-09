@@ -38,7 +38,6 @@ namespace Lessons.Architecture.PM
         {
             _playerLevelView.Hide();
             _statListViewAdapter.Hide();
-            _userInfoAdapter.Hide();
             _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
         }
 

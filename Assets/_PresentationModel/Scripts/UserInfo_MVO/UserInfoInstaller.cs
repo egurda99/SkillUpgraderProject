@@ -12,7 +12,7 @@ namespace Lessons.Architecture.PM
                 .AsSingle()
                 .WithArguments(playerInfo.Name, playerInfo.Description, playerInfo.IconSprite);
 
-            Container.Bind<UserInfoAdapter>()
+            Container.BindInterfacesAndSelfTo<UserInfoAdapter>()
                 .AsSingle()
                 .WithArguments(playerInfo.UserInfoView);
         }

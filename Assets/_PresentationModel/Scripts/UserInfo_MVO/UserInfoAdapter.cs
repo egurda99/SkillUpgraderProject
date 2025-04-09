@@ -1,9 +1,11 @@
+using System;
 using R3;
 using UnityEngine;
+using Zenject;
 
 namespace Lessons.Architecture.PM
 {
-    public sealed class UserInfoAdapter
+    public sealed class UserInfoAdapter : IInitializable, IDisposable
     {
         private readonly UserInfo _userInfo;
         private readonly UserInfoView _userInfoView;
@@ -16,7 +18,7 @@ namespace Lessons.Architecture.PM
             _userInfoView = userInfoView;
         }
 
-        public void Show()
+        void IInitializable.Initialize()
         {
             _userInfo.Name
                 .Subscribe(OnNameChanged)
@@ -29,14 +31,17 @@ namespace Lessons.Architecture.PM
             _userInfo.Icon
                 .Subscribe(OnIconChanged)
                 .AddTo(_disposable);
-
-            _userInfoView.SetupUser(_userInfo.Name.CurrentValue, _userInfo.Description.CurrentValue,
-                _userInfo.Icon.CurrentValue);
         }
 
-        public void Hide()
+        void IDisposable.Dispose()
         {
             _disposable.Dispose();
+        }
+
+        public void Show()
+        {
+            _userInfoView.SetupUser(_userInfo.Name.CurrentValue, _userInfo.Description.CurrentValue,
+                _userInfo.Icon.CurrentValue);
         }
 
         private void OnIconChanged(Sprite sprite)
