@@ -7,7 +7,6 @@ namespace Lessons.Architecture.PM
     public sealed class PlayerPopup : Popup
     {
         [SerializeField] private PlayerLevelView _playerLevelView;
-
         [SerializeField] private Button _closeButton;
 
 
