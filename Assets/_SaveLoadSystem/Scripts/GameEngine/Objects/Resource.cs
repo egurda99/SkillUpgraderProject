@@ -5,21 +5,20 @@ namespace GameEngine
     //Нельзя менять!
     public sealed class Resource : MonoBehaviour
     {
-        public string ID
+        [SerializeField] private ResourceType _resourceType;
+        [SerializeField] private string _id;
+        [SerializeField] private int _amount;
+
+        public ResourceType ResourceType => _resourceType;
+
+        public string ID => _id;
+
+        public int Amount => _amount;
+
+        public void Setup(ResourceType resourceType, int amount)
         {
-            get => id;
+            _resourceType = resourceType;
+            _amount = amount;
         }
-
-        public int Amount
-        {
-            get => amount;
-            set => amount = value;
-        }
-
-        [SerializeField]
-        private string id;
-
-        [SerializeField]
-        private int amount;
     }
 }
