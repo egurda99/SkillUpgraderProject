@@ -1,18 +1,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 namespace GameEngine
 {
-    public sealed class ResourceService : MonoBehaviour
+    public sealed class ResourceService : IInitializable
     {
+        private readonly Transform _resourceContainer;
         private readonly List<Resource> _sceneResources = new();
-
         public List<Resource> SceneResources => _sceneResources;
 
-        private void Awake()
+        public ResourceService(Transform resourceContainer)
         {
-            _sceneResources.AddRange(gameObject.GetComponentsInChildren<Resource>());
+            _resourceContainer = resourceContainer;
+        }
+
+        void IInitializable.Initialize()
+        {
+            _sceneResources.AddRange(_resourceContainer.GetComponentsInChildren<Resource>());
         }
 
         public void SetupResources(ResourcesData resourcesData)
