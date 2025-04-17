@@ -4,12 +4,11 @@ using Zenject;
 
 public sealed class SaveLoadManager
 {
-    public event Action OnStartSaving;
-    public event Action OnLoaded;
-
     private ISaveLoader[] _saveLoaders;
     private readonly GameRepository _repository;
     private DiContainer _diContainer;
+    public event Action OnStartSaving;
+    public event Action OnLoaded;
 
     public SaveLoadManager(GameRepository repository, DiContainer diContainer)
     {

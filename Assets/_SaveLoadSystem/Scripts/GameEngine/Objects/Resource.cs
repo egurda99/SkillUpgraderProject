@@ -1,12 +1,12 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace GameEngine
 {
-    //Нельзя менять!
     public sealed class Resource : MonoBehaviour
     {
         [SerializeField] private ResourceType _resourceType;
-        [SerializeField] private string _id;
+        [SerializeField] [ReadOnly] private string _id;
         [SerializeField] private int _amount;
 
         public ResourceType ResourceType => _resourceType;
@@ -19,6 +19,21 @@ namespace GameEngine
         {
             _resourceType = resourceType;
             _amount = amount;
+        }
+
+        public void TryGenerateId()
+        {
+            if (string.IsNullOrEmpty(_id))
+            {
+                GenerateId();
+            }
+        }
+
+        [Button]
+        private void GenerateId()
+        {
+            var instanceId = GetInstanceID().ToString();
+            _id = IdGenerator.Generate<Resource>("RES_") + "_" + instanceId;
         }
     }
 }

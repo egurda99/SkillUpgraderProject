@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8317805116646253974}
-  - component: {fileID: 8317805116646253975}
+  - component: {fileID: 8423709212209628169}
   m_Layer: 0
   m_Name: Stone
   m_TagString: Untagged
@@ -24,6 +24,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1869199794537658908}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.60876137, y: -0, z: -0, w: 0.7933534}
   m_LocalPosition: {x: -5.33, y: 5.89, z: 22.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,9 +32,8 @@ Transform:
   m_Children:
   - {fileID: 5281203461640333460}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8317805116646253975
+--- !u!114 &8423709212209628169
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92cc34cfc3244b2b8878d8fec2e705a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 
-  amount: 0
+  _resourceType: 0
+  _id: 
+  _amount: 0
 --- !u!1 &5287069010646736326
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,13 +73,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5287069010646736326}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.3197043, y: 0.44828275, z: -0.6796048, w: 0.48473606}
   m_LocalPosition: {x: 0, y: 0.17, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8317805116646253974}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 17.42, y: 65.633, z: -97.719}
 --- !u!33 &5272977048895913808
 MeshFilter:
@@ -105,6 +106,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

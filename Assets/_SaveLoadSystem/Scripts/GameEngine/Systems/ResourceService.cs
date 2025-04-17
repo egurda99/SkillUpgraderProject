@@ -4,25 +4,6 @@ using UnityEngine;
 
 namespace GameEngine
 {
-    // //Нельзя менять!
-    // [Serializable]
-    // public sealed class ResourceService
-    // {
-    //     [ShowInInspector, ReadOnly]
-    //     private Dictionary<string, Resource> sceneResources = new();
-    //
-    //     public void SetResources(IEnumerable<Resource> resources)
-    //     {
-    //         this.sceneResources = resources.ToDictionary(it => it.ID);
-    //     }
-    //
-    //     public IEnumerable<Resource> GetResources()
-    //     {
-    //         return this.sceneResources.Values;
-    //     }
-    // }
-
-
     public sealed class ResourceService : MonoBehaviour
     {
         private readonly List<Resource> _sceneResources = new();
