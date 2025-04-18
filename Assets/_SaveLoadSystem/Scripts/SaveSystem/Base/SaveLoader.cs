@@ -1,5 +1,3 @@
-using Zenject;
-
 public abstract class SaveLoader<TService, TData> : ISaveLoader
 {
     protected abstract TData ConvertToData(TService service);
@@ -9,9 +7,9 @@ public abstract class SaveLoader<TService, TData> : ISaveLoader
     {
     }
 
-    public void LoadGame(IGameRepository repository, DiContainer context)
+    public void LoadGame(IGameRepository repository, IContext context)
     {
-        var service = context.Resolve<TService>();
+        var service = context.GetService<TService>();
 
         if (repository.TryGetData(out TData data))
         {
@@ -23,9 +21,9 @@ public abstract class SaveLoader<TService, TData> : ISaveLoader
         }
     }
 
-    public void SaveGame(IGameRepository repository, DiContainer context)
+    public void SaveGame(IGameRepository repository, IContext context)
     {
-        var service = context.Resolve<TService>();
+        var service = context.GetService<TService>();
         var data = ConvertToData(service);
         repository.SetData(data);
     }

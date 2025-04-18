@@ -14,8 +14,12 @@ namespace GameEngine
 
             Container.Bind<UnitSpawner>()
                 .AsSingle()
-                .WithArguments(helper.OrcMountedShamanPrefab, helper.OrcArcherPrefab, helper.WKWorkerPrefab,
-                    helper.WKCatapultPrefab, helper.WKSpearmanAPrefab, helper.UnitContainer);
+                .WithArguments(helper.OrcMountedShamanPrefab,
+                    helper.OrcArcherPrefab,
+                    helper.WKWorkerPrefab,
+                    helper.WKCatapultPrefab,
+                    helper.WKSpearmanAPrefab,
+                    helper.UnitContainer);
         }
     }
 }

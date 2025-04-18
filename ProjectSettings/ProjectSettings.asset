@@ -164,6 +164,7 @@ PlayerSettings:
   androidMinAspectRatio: 1
   applicationIdentifier:
     Android: com.Cat.LP
+    Standalone: com.Cat.LP
   buildNumber:
     Standalone: 0
     VisionOS: 0

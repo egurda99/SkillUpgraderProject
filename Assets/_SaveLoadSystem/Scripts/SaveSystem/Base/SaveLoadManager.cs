@@ -5,22 +5,25 @@ using Zenject;
 public sealed class SaveLoadManager
 {
     private ISaveLoader[] _saveLoaders;
+
     private readonly GameRepository _repository;
-    private DiContainer _diContainer;
+
+    private readonly IContext _gameContext;
+
     public event Action OnStartSaving;
     public event Action OnLoaded;
 
     public SaveLoadManager(GameRepository repository, DiContainer diContainer)
     {
         _repository = repository;
-        _diContainer = diContainer;
+        _gameContext = new ZenjectContext(diContainer);
     }
 
     public void InitOnNewScene(DiContainer container)
     {
-        _diContainer = container;
+        _gameContext.UpdateContainer(container);
 
-        _saveLoaders = _diContainer.ResolveAll<ISaveLoader>().ToArray();
+        _saveLoaders = _gameContext.GetServices<ISaveLoader>();
     }
 
     [Button]
@@ -30,7 +33,7 @@ public sealed class SaveLoadManager
 
         foreach (var saveLoader in _saveLoaders)
         {
-            saveLoader.LoadGame(_repository, _diContainer);
+            saveLoader.LoadGame(_repository, _gameContext);
         }
 
         OnLoaded?.Invoke();
@@ -42,7 +45,7 @@ public sealed class SaveLoadManager
         OnStartSaving?.Invoke();
         foreach (var saveLoader in _saveLoaders)
         {
-            saveLoader.SaveGame(_repository, _diContainer);
+            saveLoader.SaveGame(_repository, _gameContext);
         }
 
         _repository.SaveState();

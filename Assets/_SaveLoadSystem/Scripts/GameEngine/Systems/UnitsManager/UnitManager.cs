@@ -30,7 +30,6 @@ namespace GameEngine
         {
             var existingUnitsById = new Dictionary<string, Unit>();
 
-            // Индексируем существующих юнитов по ID
             foreach (var unit in _sceneUnits)
             {
                 existingUnitsById[unit.ID] = unit;
@@ -40,14 +39,12 @@ namespace GameEngine
             {
                 if (existingUnitsById.TryGetValue(data.Id, out var existingUnit))
                 {
-                    // Настроить существующего
                     existingUnit.transform.position = data.Position;
                     existingUnit.transform.eulerAngles = data.EulerAngles;
                     existingUnit.Setup(data.Type, data.Id, data.HitPoints);
                 }
                 else
                 {
-                    // Спавним нового, если юнита с таким ID не было
                     var newUnit = _unitSpawner.SpawnUnitByType(data.Type, data.Position, data.EulerAngles);
                     newUnit.Setup(data.Type, data.Id, data.HitPoints);
                     _sceneUnits.Add(newUnit);
