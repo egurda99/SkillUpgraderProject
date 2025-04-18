@@ -13,6 +13,7 @@ namespace GameEngine
         private readonly GameObject _wK_workerPrefab;
         private readonly GameObject _wK_CatapultPrefab;
         private readonly GameObject _wK_spearman_APrefab;
+        private readonly int _defaultHP = 10;
 
         public UnitSpawner(GameObject orcMountedShamanPrefab, GameObject orcArcherPrefab, GameObject wKWorkerPrefab,
             GameObject wKCatapultPrefab, GameObject wKSpearmanAPrefab, Transform container)
@@ -28,6 +29,9 @@ namespace GameEngine
         public Unit SpawnUnit(Unit prefab, Vector3 position, Quaternion rotation, Transform parent)
         {
             var unit = Object.Instantiate(prefab, position, rotation, parent);
+            unit.GenerateId();
+            unit.Setup(GetUnitTypeByPrefab(prefab.gameObject), _defaultHP);
+
             return unit;
         }
 
@@ -35,6 +39,16 @@ namespace GameEngine
         {
             GameObject unitPrefab = null;
 
+            unitPrefab = GetUnitPrefabByType(type);
+
+            var unit = Object.Instantiate(unitPrefab, position, Quaternion.Euler(eulerAngles), _container);
+            var unitComp = unit.GetComponent<Unit>();
+            return unitComp;
+        }
+
+        private GameObject GetUnitPrefabByType(string type)
+        {
+            GameObject unitPrefab;
             switch (type)
             {
                 case "Orc_MountedShaman":
@@ -58,10 +72,26 @@ namespace GameEngine
                     break;
             }
 
+            return unitPrefab;
+        }
 
-            var unit = Object.Instantiate(unitPrefab, position, Quaternion.Euler(eulerAngles), _container);
-            var unitComp = unit.GetComponent<Unit>();
-            return unitComp;
+        public string GetUnitTypeByPrefab(GameObject unitPrefab)
+        {
+            switch (unitPrefab)
+            {
+                case var _ when unitPrefab == _orc_MountedShamanPrefab:
+                    return "Orc_MountedShaman";
+                case var _ when unitPrefab == _orc_archerPrefab:
+                    return "Orc_archer";
+                case var _ when unitPrefab == _wK_workerPrefab:
+                    return "WK_worker";
+                case var _ when unitPrefab == _wK_CatapultPrefab:
+                    return "WK_Catapult";
+                case var _ when unitPrefab == _wK_spearman_APrefab:
+                    return "WK_spearman_A";
+                default:
+                    throw new ArgumentException("Unknown Unit Prefab");
+            }
         }
     }
 }

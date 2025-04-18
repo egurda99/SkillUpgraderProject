@@ -58,10 +58,6 @@ namespace GameEngine
         public void SpawnUnit(Unit prefab, Vector3 position, Quaternion rotation)
         {
             var unit = _unitSpawner.SpawnUnit(prefab, position, rotation, _container);
-            unit.GenerateId();
-
-            //TODO стартовую инициализацию полей ,чтобы потом сохраняло норм
-
             _sceneUnits.Add(unit);
         }
 

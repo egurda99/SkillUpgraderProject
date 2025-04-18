@@ -40,6 +40,12 @@ namespace GameEngine
             _hitPoints = hitPoints;
         }
 
+        public void Setup(string type, int hitPoints)
+        {
+            _type = type;
+            _hitPoints = hitPoints;
+        }
+
         [Button]
         public void GenerateId()
         {
