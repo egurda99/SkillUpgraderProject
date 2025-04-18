@@ -12,7 +12,6 @@ public class GameRepository : IGameRepository
         Converters = new List<JsonConverter>
         {
             new Vector3Converter()
-            // new QuaternionConverter()
         },
         ReferenceLoopHandling = ReferenceLoopHandling.Ignore
     };

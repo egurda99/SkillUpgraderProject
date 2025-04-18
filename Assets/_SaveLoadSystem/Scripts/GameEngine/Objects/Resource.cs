@@ -21,14 +21,6 @@ namespace GameEngine
             _amount = amount;
         }
 
-        public void TryGenerateId()
-        {
-            if (string.IsNullOrEmpty(_id))
-            {
-                GenerateId();
-            }
-        }
-
         [Button]
         private void GenerateId()
         {

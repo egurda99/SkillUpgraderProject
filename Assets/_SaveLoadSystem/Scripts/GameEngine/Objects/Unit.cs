@@ -40,15 +40,6 @@ namespace GameEngine
             _hitPoints = hitPoints;
         }
 
-
-        public void TryGenerateId()
-        {
-            if (string.IsNullOrEmpty(_id))
-            {
-                GenerateId();
-            }
-        }
-
         [Button]
         public void GenerateId()
         {

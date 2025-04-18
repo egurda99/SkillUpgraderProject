@@ -9,12 +9,6 @@ namespace GameEngine
     {
         public List<UnitData> UnitsDataList = new();
 
-        // public UnitsData(List<UnitData> unitsData)
-        // {
-        //     Debug.Log($"units data {unitsData} ");
-        //     UnitsDataList.AddRange(unitsData);
-        // }
-
         public UnitsData(List<UnitData> unitsData)
         {
             if (unitsData != null)
@@ -23,7 +17,7 @@ namespace GameEngine
             }
             else
             {
-                Debug.LogWarning("[UnitsData] ?? Constructor received null list!");
+                Debug.LogWarning("[UnitsData] Constructor received null list!");
             }
         }
     }
