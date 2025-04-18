@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using GameEngine;
 using Newtonsoft.Json;
 
-public class GameRepository : IGameRepository
+public sealed class GameRepository : IGameRepository
 {
     private Dictionary<string, string> _gameState = new();
 

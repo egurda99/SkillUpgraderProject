@@ -1,6 +1,6 @@
 using Zenject;
 
-public class SaveSystemInstaller : MonoInstaller<SaveSystemInstaller>
+public sealed class SaveSystemInstaller : MonoInstaller<SaveSystemInstaller>
 {
     public override void InstallBindings()
     {

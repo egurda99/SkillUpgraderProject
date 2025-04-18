@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class MoneySaveLoader : SaveLoader<MoneyStorage, MoneyData>
+public sealed class MoneySaveLoader : SaveLoader<MoneyStorage, MoneyData>
 {
     protected override MoneyData ConvertToData(MoneyStorage service)
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameEngine
 {
-    public class Vector3Converter : JsonConverter<Vector3>
+    public sealed class Vector3Converter : JsonConverter<Vector3>
     {
         public override void WriteJson(JsonWriter writer, Vector3 value, JsonSerializer serializer)
         {

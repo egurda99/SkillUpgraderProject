@@ -1,7 +1,7 @@
 using System;
 using Zenject;
 
-public class ZenjectContext : IContext
+public sealed class ZenjectContext : IContext
 {
     private DiContainer _container;
 

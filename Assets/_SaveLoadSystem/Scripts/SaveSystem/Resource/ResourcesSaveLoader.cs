@@ -4,7 +4,7 @@ using GameEngine;
 using UnityEngine;
 
 [Serializable]
-public class ResourcesSaveLoader : SaveLoader<ResourceService, ResourcesData>
+public sealed class ResourcesSaveLoader : SaveLoader<ResourceService, ResourcesData>
 {
     protected override ResourcesData ConvertToData(ResourceService service)
     {

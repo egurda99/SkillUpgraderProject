@@ -5,7 +5,7 @@ using UnityEngine;
 namespace GameEngine
 {
     [Serializable]
-    public class UnitsSaveLoader : SaveLoader<UnitManager, UnitsData>
+    public sealed class UnitsSaveLoader : SaveLoader<UnitManager, UnitsData>
     {
         protected override UnitsData ConvertToData(UnitManager service)
         {
