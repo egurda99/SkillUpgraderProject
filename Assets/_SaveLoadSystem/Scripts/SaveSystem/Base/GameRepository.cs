@@ -5,7 +5,8 @@ using Newtonsoft.Json;
 public class GameRepository : IGameRepository
 {
     private Dictionary<string, string> _gameState = new();
-    private readonly IGameStateSaver _gameStateSaver = new PlayerPrefsGameStateSaver();
+
+    private readonly IGameStateSaver _gameStateSaver = new EncryptionFileGameStateSaver();
 
     private static readonly JsonSerializerSettings _jsonSettings = new()
     {
