@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -7,91 +6,31 @@ namespace GameEngine
     public sealed class UnitSpawner
     {
         private readonly Transform _container;
-
-        private readonly GameObject _orc_MountedShamanPrefab;
-        private readonly GameObject _orc_archerPrefab;
-        private readonly GameObject _wK_workerPrefab;
-        private readonly GameObject _wK_CatapultPrefab;
-        private readonly GameObject _wK_spearman_APrefab;
         private readonly int _defaultHP = 10;
+        private readonly UnitPrefabProvider _unitPrefabProvider;
 
-        public UnitSpawner(GameObject orcMountedShamanPrefab, GameObject orcArcherPrefab, GameObject wKWorkerPrefab,
-            GameObject wKCatapultPrefab, GameObject wKSpearmanAPrefab, Transform container)
+
+        public UnitSpawner(Transform container, UnitPrefabProvider prefabProvider)
         {
-            _orc_MountedShamanPrefab = orcMountedShamanPrefab;
-            _orc_archerPrefab = orcArcherPrefab;
-            _wK_workerPrefab = wKWorkerPrefab;
-            _wK_CatapultPrefab = wKCatapultPrefab;
-            _wK_spearman_APrefab = wKSpearmanAPrefab;
+            _unitPrefabProvider = prefabProvider;
             _container = container;
         }
 
-        public Unit SpawnUnit(Unit prefab, Vector3 position, Quaternion rotation, Transform parent)
+
+        public Unit SpawnUnit(Unit prefab, Vector3 position, Quaternion rotation)
         {
-            var unit = Object.Instantiate(prefab, position, rotation, parent);
+            var unit = Object.Instantiate(prefab, position, rotation, _container);
             unit.GenerateId();
-            unit.Setup(GetUnitTypeByPrefab(prefab.gameObject), _defaultHP);
+            unit.Setup(_unitPrefabProvider.GetUnitTypeByPrefab(prefab), _defaultHP);
 
             return unit;
         }
 
         public Unit SpawnUnitByType(string type, Vector3 position, Vector3 eulerAngles)
         {
-            GameObject unitPrefab = null;
-
-            unitPrefab = GetUnitPrefabByType(type);
-
+            var unitPrefab = _unitPrefabProvider.GetPrefab(type);
             var unit = Object.Instantiate(unitPrefab, position, Quaternion.Euler(eulerAngles), _container);
-            var unitComp = unit.GetComponent<Unit>();
-            return unitComp;
-        }
-
-        private GameObject GetUnitPrefabByType(string type)
-        {
-            GameObject unitPrefab;
-            switch (type)
-            {
-                case "Orc_MountedShaman":
-                    unitPrefab = _orc_MountedShamanPrefab;
-                    break;
-                case "Orc_archer":
-                    unitPrefab = _orc_archerPrefab;
-                    break;
-                case "WK_worker":
-                    unitPrefab = _wK_workerPrefab;
-                    break;
-                case "WK_Catapult":
-                    unitPrefab = _wK_CatapultPrefab;
-                    break;
-                case "WK_spearman_A":
-                    unitPrefab = _wK_spearman_APrefab;
-                    break;
-
-                default:
-                    throw new ArgumentException("Unknown Unit Type");
-                    break;
-            }
-
-            return unitPrefab;
-        }
-
-        public string GetUnitTypeByPrefab(GameObject unitPrefab)
-        {
-            switch (unitPrefab)
-            {
-                case var _ when unitPrefab == _orc_MountedShamanPrefab:
-                    return "Orc_MountedShaman";
-                case var _ when unitPrefab == _orc_archerPrefab:
-                    return "Orc_archer";
-                case var _ when unitPrefab == _wK_workerPrefab:
-                    return "WK_worker";
-                case var _ when unitPrefab == _wK_CatapultPrefab:
-                    return "WK_Catapult";
-                case var _ when unitPrefab == _wK_spearman_APrefab:
-                    return "WK_spearman_A";
-                default:
-                    throw new ArgumentException("Unknown Unit Prefab");
-            }
+            return unit;
         }
     }
 }

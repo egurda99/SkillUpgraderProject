@@ -916,6 +916,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1347248348}
   - {fileID: 1426761320}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1365,6 +1366,52 @@ Transform:
   - {fileID: 1738537724}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1347248347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1347248348}
+  - component: {fileID: 1347248349}
+  m_Layer: 0
+  m_Name: '[BOOTSTRAP]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1347248348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347248347}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 653492621}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1347248349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347248347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01cbb24e97f644a6b30e04257e4b4d7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitsContainer: {fileID: 1263304700}
+  _resorcesContainer: {fileID: 120165744}
 --- !u!1 &1426761319
 GameObject:
   m_ObjectHideFlags: 0
@@ -1376,7 +1423,7 @@ GameObject:
   - component: {fileID: 1426761320}
   - component: {fileID: 1426761321}
   m_Layer: 0
-  m_Name: '[Zenject]'
+  m_Name: '[ZENJECT]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2112,12 +2159,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitContainer: {fileID: 1263304700}
-  _orc_MountedShamanPrefab: {fileID: 129878, guid: 091fdccaeaa7b2241a4c5998b2bfd5ec,
+  _orc_MountedShamanPrefab: {fileID: -35759933609886829, guid: 091fdccaeaa7b2241a4c5998b2bfd5ec,
     type: 3}
-  _orc_archerPrefab: {fileID: 156552, guid: 37773be3ffa21ce4a89a9ab8b6243a4e, type: 3}
-  _wK_workerPrefab: {fileID: 169886, guid: cdbe91a91060b1e4eb4bd0b52d578091, type: 3}
-  _wK_CatapultPrefab: {fileID: 173382, guid: 6e11dc0269b03fc42bf8720d4403af8e, type: 3}
-  _wK_spearman_APrefab: {fileID: 121440, guid: cd7c964661058ec4db55d651fda81cfe, type: 3}
+  _orc_archerPrefab: {fileID: -6780732715649493285, guid: 37773be3ffa21ce4a89a9ab8b6243a4e,
+    type: 3}
+  _wK_workerPrefab: {fileID: 4032437966975482922, guid: cdbe91a91060b1e4eb4bd0b52d578091,
+    type: 3}
+  _wK_CatapultPrefab: {fileID: 6467707349054415413, guid: 6e11dc0269b03fc42bf8720d4403af8e,
+    type: 3}
+  _wK_spearman_APrefab: {fileID: 8553889709589752911, guid: cd7c964661058ec4db55d651fda81cfe,
+    type: 3}
 --- !u!1001 &1905236159
 PrefabInstance:
   m_ObjectHideFlags: 0

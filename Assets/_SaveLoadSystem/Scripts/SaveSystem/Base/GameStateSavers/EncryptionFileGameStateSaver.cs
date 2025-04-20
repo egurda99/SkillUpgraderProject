@@ -8,7 +8,7 @@ public sealed class EncryptionFileGameStateSaver : IGameStateSaver
 {
     private const string FILE_NAME = "gamestate.sav";
     private readonly string _filePath = Path.Combine(Application.persistentDataPath, FILE_NAME);
-    private readonly EncryptionHelper _encryptionHelper = new();
+    private readonly AesEncryptor _aesEncryptor = new();
 
     public Dictionary<string, string> LoadData()
     {
@@ -18,7 +18,7 @@ public sealed class EncryptionFileGameStateSaver : IGameStateSaver
         try
         {
             var encryptedBytes = File.ReadAllBytes(_filePath);
-            var jsonData = _encryptionHelper.Decrypt(encryptedBytes);
+            var jsonData = _aesEncryptor.Decrypt(encryptedBytes);
             return JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonData);
         }
         catch (Exception e)
@@ -33,7 +33,7 @@ public sealed class EncryptionFileGameStateSaver : IGameStateSaver
         try
         {
             var jsonData = JsonConvert.SerializeObject(data);
-            var encrypted = _encryptionHelper.Encrypt(jsonData);
+            var encrypted = _aesEncryptor.Encrypt(jsonData);
             File.WriteAllBytes(_filePath, encrypted);
         }
         catch (Exception e)

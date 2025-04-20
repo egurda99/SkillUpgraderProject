@@ -7,6 +7,13 @@ namespace GameEngine
     [Serializable]
     public sealed class UnitsSaveLoader : SaveLoader<UnitManager, UnitsData>
     {
+        private readonly UnitSpawner _unitSpawner;
+
+        public UnitsSaveLoader(UnitSpawner unitSpawner)
+        {
+            _unitSpawner = unitSpawner;
+        }
+
         protected override UnitsData ConvertToData(UnitManager service)
         {
             Debug.Log($"<color=yellow>Converted to data = {service.SceneUnits}</color>");
@@ -24,7 +31,17 @@ namespace GameEngine
         protected override void SetupData(UnitManager service, UnitsData data)
         {
             Debug.Log($"<color=yellow>Setuped data = {data.UnitsDataList}</color>");
-            service.SetupUnits(data.UnitsDataList);
+
+            var units = new List<Unit>();
+
+            foreach (var unitData in data.UnitsDataList)
+            {
+                var unit = _unitSpawner.SpawnUnitByType(unitData.Type, unitData.Position, unitData.EulerAngles);
+                unit.Setup(unitData.Type, unitData.Id, unitData.HitPoints);
+                units.Add(unit);
+            }
+
+            service.SetupUnits(units);
         }
 
         protected override void SetupDefaultData(UnitManager service)

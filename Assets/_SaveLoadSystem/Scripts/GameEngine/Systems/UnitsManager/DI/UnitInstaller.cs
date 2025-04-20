@@ -8,18 +8,19 @@ namespace GameEngine
         {
             var helper = FindAnyObjectByType<UnitInstallerHelper>();
 
-            Container.BindInterfacesAndSelfTo<UnitManager>()
-                .AsSingle()
-                .WithArguments(helper.UnitContainer);
+            Container.Bind<UnitManager>().AsSingle();
 
-            Container.Bind<UnitSpawner>()
+            Container.Bind<UnitPrefabProvider>()
                 .AsSingle()
                 .WithArguments(helper.OrcMountedShamanPrefab,
                     helper.OrcArcherPrefab,
                     helper.WKWorkerPrefab,
                     helper.WKCatapultPrefab,
-                    helper.WKSpearmanAPrefab,
-                    helper.UnitContainer);
+                    helper.WKSpearmanAPrefab);
+
+            Container.Bind<UnitSpawner>()
+                .AsSingle()
+                .WithArguments(helper.UnitContainer);
         }
     }
 }

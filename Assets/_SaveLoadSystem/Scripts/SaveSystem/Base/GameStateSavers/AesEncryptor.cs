@@ -2,7 +2,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-public sealed class EncryptionHelper
+public sealed class AesEncryptor
 {
     private readonly byte[] Key = Encoding.ASCII.GetBytes("MySecretKey12345"); // 16 symbols
     private readonly byte[] IV = Encoding.ASCII.GetBytes("InitVector123456"); // 16 symbols
