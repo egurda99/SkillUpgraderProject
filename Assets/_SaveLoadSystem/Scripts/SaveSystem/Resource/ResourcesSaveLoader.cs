@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using GameEngine;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public sealed class ResourcesSaveLoader : SaveLoader<ResourceService, ResourcesD
 
         foreach (var resource in service.SceneResources)
         {
-            resourcesData.Add(new ResourceData(resource.ResourceType, resource.ID, resource.Amount));
+            resourcesData.Add(new ResourceData(resource.Value.ResourceType, resource.Value.ID, resource.Value.Amount));
         }
 
         return new ResourcesData(resourcesData);
@@ -23,7 +24,22 @@ public sealed class ResourcesSaveLoader : SaveLoader<ResourceService, ResourcesD
     protected override void SetupData(ResourceService service, ResourcesData data)
     {
         Debug.Log($"<color=yellow>Setuped data = {data.ResourcesDataList}</color>");
-        service.SetupResources(data);
+
+        var sceneResources = new List<Resource>();
+
+        sceneResources.AddRange(service.SceneResources.Values);
+
+        var resourceDataDict = data.ResourcesDataList.ToDictionary(data => data.Id);
+
+        foreach (var sceneResource in sceneResources)
+        {
+            if (resourceDataDict.TryGetValue(sceneResource.ID, out var resourceData))
+            {
+                sceneResource.Setup(resourceData.ResourceType, resourceData.Amount, resourceData.Id);
+            }
+        }
+
+        service.SetResources(sceneResources);
     }
 
     protected override void SetupDefaultData(ResourceService service)

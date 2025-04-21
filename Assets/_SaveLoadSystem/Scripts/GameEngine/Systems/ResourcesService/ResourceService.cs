@@ -1,37 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using Zenject;
+using Sirenix.OdinInspector;
 
 namespace GameEngine
 {
-    public sealed class ResourceService : IInitializable
+    public sealed class ResourceService
     {
-        private readonly Transform _resourceContainer;
-        private readonly List<Resource> _sceneResources = new();
-        public List<Resource> SceneResources => _sceneResources;
+        [ShowInInspector] [ReadOnly] private Dictionary<string, Resource> _sceneResources = new();
 
-        public ResourceService(Transform resourceContainer)
+        public Dictionary<string, Resource> SceneResources => _sceneResources;
+
+        public void SetResources(IEnumerable<Resource> resources)
         {
-            _resourceContainer = resourceContainer;
-        }
-
-        void IInitializable.Initialize()
-        {
-            _sceneResources.AddRange(_resourceContainer.GetComponentsInChildren<Resource>());
-        }
-
-        public void SetupResources(ResourcesData resourcesData)
-        {
-            var resourceDataDict = resourcesData.ResourcesDataList.ToDictionary(data => data.Id);
-
-            foreach (var sceneResource in _sceneResources)
-            {
-                if (resourceDataDict.TryGetValue(sceneResource.ID, out var resourceData))
-                {
-                    sceneResource.Setup(resourceData.ResourceType, resourceData.Amount);
-                }
-            }
+            _sceneResources.Clear();
+            _sceneResources = resources.ToDictionary(it => it.ID);
         }
     }
 }

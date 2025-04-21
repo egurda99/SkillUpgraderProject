@@ -6,11 +6,8 @@ namespace GameEngine
     {
         public override void InstallBindings()
         {
-            var helper = FindAnyObjectByType<ResourceInstallerHelper>();
-
             Container.BindInterfacesAndSelfTo<ResourceService>()
                 .AsSingle()
-                .WithArguments(helper.ResourceContainer)
                 .NonLazy();
         }
     }

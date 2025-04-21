@@ -15,10 +15,11 @@ namespace GameEngine
 
         public int Amount => _amount;
 
-        public void Setup(ResourceType resourceType, int amount)
+        public void Setup(ResourceType resourceType, int amount, string id)
         {
             _resourceType = resourceType;
             _amount = amount;
+            _id = id;
         }
 
         [Button]
