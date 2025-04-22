@@ -16,7 +16,7 @@ namespace Lessons.Architecture.PM
 
             Container.Bind<StatsListView>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<StatListViewAdapter>().AsSingle();
+            Container.BindInterfacesAndSelfTo<StatListView>().AsSingle();
 
             Container.Bind<CharacterStatsHolder>().AsSingle();
         }

@@ -10,25 +10,22 @@ namespace Lessons.Architecture.PM
         [SerializeField] private Button _closeButton;
 
 
-        private StatListViewAdapter _statListViewAdapter;
+        private StatsListView _statListView;
         private UserInfoAdapter _userInfoAdapter;
-        private PlayerPresentationModel _playerPresentaionModel;
         private PopupManager _popupManager;
 
         [Inject]
-        public void Construct(StatListViewAdapter statListViewAdapter, UserInfoAdapter userInfoAdapter,
-            PlayerPresentationModel playerPresentationModel, PopupManager popupManager)
+        public void Construct(StatsListView statListView, UserInfoAdapter userInfoAdapter, PopupManager popupManager)
         {
-            _statListViewAdapter = statListViewAdapter;
+            _statListView = statListView;
             _userInfoAdapter = userInfoAdapter;
-            _playerPresentaionModel = playerPresentationModel;
             _popupManager = popupManager;
         }
 
         protected override void OnShow()
         {
-            _playerLevelView.Show(_playerPresentaionModel);
-            _statListViewAdapter.Show();
+            _playerLevelView.Show();
+            _statListView.Show();
             _userInfoAdapter.Show();
             _closeButton.onClick.AddListener(OnCloseButtonClicked);
         }
@@ -36,7 +33,7 @@ namespace Lessons.Architecture.PM
         protected override void OnHide()
         {
             _playerLevelView.Hide();
-            _statListViewAdapter.Hide();
+            _statListView.Hide();
             _closeButton.onClick.RemoveListener(OnCloseButtonClicked);
         }
 

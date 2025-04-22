@@ -1,4 +1,3 @@
-using System;
 using R3;
 using TMPro;
 using UnityEngine;
@@ -25,15 +24,8 @@ namespace Lessons.Architecture.PM
             _playerLevelPresenter = playerPresentationModel;
         }
 
-        public void Show(IViewModel viewModel)
+        public void Show()
         {
-            if (viewModel is not IPlayerLevelPresentationModel playerLevelPresentationModel)
-            {
-                throw new Exception("Expected playerLevelPresentationModel");
-            }
-
-            _playerLevelPresenter = playerLevelPresentationModel;
-
             UpdateUI();
 
             _levelButton.SetAvailable(_playerLevelPresenter.CanUpgrade());
@@ -46,7 +38,6 @@ namespace Lessons.Architecture.PM
                 .Subscribe(_ => OnStateChanged())
                 .AddTo(_disposables);
         }
-
 
         public void Hide()
         {
