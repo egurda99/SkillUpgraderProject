@@ -39,6 +39,9 @@ namespace Lessons.Architecture.PM
             _viewModel?.UserInfoAdapter.Hide();
             _playerLevelView.Hide();
             _statListView.Hide();
+
+            _statListView.Dispose();
+            _statListView = null;
         }
 
         private void OnDestroy()

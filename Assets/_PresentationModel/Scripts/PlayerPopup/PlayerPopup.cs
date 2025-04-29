@@ -3,15 +3,20 @@ using Zenject;
 
 namespace Lessons.Architecture.PM
 {
+    [RequireComponent(typeof(PlayerPopupView))]
     public sealed class PlayerPopup : Popup
     {
-        [SerializeField] private PlayerPopupView _popupView;
+        private PlayerPopupView _popupView;
 
         private PlayerPopupViewModel _viewModel;
 
 
         private PlayerPopupViewModelFactory _playerPopupViewModelFactory;
 
+        private void Awake()
+        {
+            _popupView = GetComponent<PlayerPopupView>();
+        }
 
         [Inject]
         public void Construct(PlayerPopupViewModelFactory playerPopupViewModelFactory)

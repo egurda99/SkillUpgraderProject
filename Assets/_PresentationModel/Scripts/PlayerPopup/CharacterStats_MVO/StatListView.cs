@@ -29,6 +29,7 @@ namespace Lessons.Architecture.PM
         public void Dispose()
         {
             _disposable.Dispose();
+            _listView.Clear();
         }
 
         public void Show()
@@ -54,10 +55,7 @@ namespace Lessons.Architecture.PM
 
         public void Reload()
         {
-            foreach (var stat in _characterStatsHolder.GetStats())
-            {
-                _listView.RemoveStat(stat); // или .Clear() всё
-            }
+            _listView.Clear();
 
             foreach (var stat in _characterStatsHolder.GetStats())
             {
