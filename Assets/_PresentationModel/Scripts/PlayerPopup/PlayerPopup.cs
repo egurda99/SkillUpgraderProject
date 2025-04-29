@@ -6,15 +6,17 @@ namespace Lessons.Architecture.PM
     public sealed class PlayerPopup : Popup
     {
         [SerializeField] private PlayerLevelView _playerLevelView;
+        [SerializeField] private UserInfoView _userInfoView;
 
-        private StatsListView _statListView;
+
+        private StatListView _statListView;
         private UserInfoAdapter _userInfoAdapter;
 
         [Inject]
-        public void Construct(StatsListView statListView, UserInfoAdapter userInfoAdapter)
+        public void Construct(StatListView statListView, UserInfo userInfo)
         {
-            _statListView = statListView;
-            _userInfoAdapter = userInfoAdapter;
+            _statListView = statListView; // sozdaet staty
+            _userInfoAdapter = new UserInfoAdapter(userInfo, _userInfoView);
         }
 
         protected override void OnShow()
@@ -28,6 +30,12 @@ namespace Lessons.Architecture.PM
         {
             _playerLevelView.Hide();
             _statListView.Hide();
+            _userInfoAdapter.Hide();
+        }
+
+        private void OnDestroy()
+        {
+            _userInfoAdapter?.Dispose();
         }
     }
 }

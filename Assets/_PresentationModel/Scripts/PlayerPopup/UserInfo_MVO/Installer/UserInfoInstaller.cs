@@ -11,10 +11,6 @@ namespace Lessons.Architecture.PM
             Container.Bind<UserInfo>()
                 .AsSingle()
                 .WithArguments(playerInfo.Name, playerInfo.Description, playerInfo.IconSprite);
-
-            Container.BindInterfacesAndSelfTo<UserInfoAdapter>()
-                .AsSingle()
-                .WithArguments(playerInfo.UserInfoView);
         }
     }
 }

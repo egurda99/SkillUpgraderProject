@@ -1,11 +1,9 @@
-using System;
 using R3;
 using UnityEngine;
-using Zenject;
 
 namespace Lessons.Architecture.PM
 {
-    public sealed class UserInfoAdapter : IInitializable, IDisposable
+    public sealed class UserInfoAdapter
     {
         private readonly UserInfo _userInfo;
         private readonly UserInfoView _userInfoView;
@@ -16,10 +14,7 @@ namespace Lessons.Architecture.PM
         {
             _userInfo = userInfo;
             _userInfoView = userInfoView;
-        }
 
-        void IInitializable.Initialize()
-        {
             _userInfo.Name
                 .Subscribe(OnNameChanged)
                 .AddTo(_disposable);
@@ -33,7 +28,22 @@ namespace Lessons.Architecture.PM
                 .AddTo(_disposable);
         }
 
-        void IDisposable.Dispose()
+        // void IInitializable.Initialize()
+        // {
+        //     _userInfo.Name
+        //         .Subscribe(OnNameChanged)
+        //         .AddTo(_disposable);
+        //
+        //     _userInfo.Description
+        //         .Subscribe(OnDescriptionChanged)
+        //         .AddTo(_disposable);
+        //
+        //     _userInfo.Icon
+        //         .Subscribe(OnIconChanged)
+        //         .AddTo(_disposable);
+        // }
+
+        public void Dispose()
         {
             _disposable.Dispose();
         }
@@ -42,6 +52,7 @@ namespace Lessons.Architecture.PM
         {
             _userInfoView.SetupUser(_userInfo.Name.CurrentValue, _userInfo.Description.CurrentValue,
                 _userInfo.Icon.CurrentValue);
+            _userInfoView.Show();
         }
 
         private void OnIconChanged(Sprite sprite)
@@ -57,6 +68,11 @@ namespace Lessons.Architecture.PM
         private void OnNameChanged(string name)
         {
             _userInfoView.SetName(name);
+        }
+
+        public void Hide()
+        {
+            _userInfoView.Hide();
         }
     }
 }

@@ -167,7 +167,6 @@ MonoBehaviour:
   _name: Player1
   _description: aaaa1111
   _iconSprite: {fileID: 21300000, guid: a564258f7260e47d58e9ee37e2a3abb7, type: 3}
-  _userInfoView: {fileID: 1362081470}
 --- !u!114 &65324523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1134,6 +1133,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 535956900}
     m_Modifications:
+    - target: {fileID: 3867608349437025597, guid: e279aa74da5f4af45875a3b11161689b,
+        type: 3}
+      propertyPath: _userInfoView
+      value: 
+      objectReference: {fileID: 1362081470}
     - target: {fileID: 3952901192531747276, guid: e279aa74da5f4af45875a3b11161689b,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1238,6 +1242,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerStatsPopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031849345263398208, guid: e279aa74da5f4af45875a3b11161689b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

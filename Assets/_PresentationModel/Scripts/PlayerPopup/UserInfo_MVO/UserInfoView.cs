@@ -10,6 +10,17 @@ namespace Lessons.Architecture.PM
         [SerializeField] private TextMeshProUGUI _description;
         [SerializeField] private Image _icon;
 
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
+
+
         public void SetupUser(string userName, string description, Sprite icon)
         {
             Setter(userName, description, icon);
