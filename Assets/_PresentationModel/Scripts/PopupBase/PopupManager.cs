@@ -14,7 +14,29 @@ namespace Lessons.Architecture.PM
         {
             foreach (var popupHolder in _allPopups)
             {
+                var popup = popupHolder.Popup.GetComponent<Popup>();
+
+                if (popup == null)
+                {
+                    throw new ArgumentException("Popup component is missing a popup component");
+                }
+
+                popup.OnPopupCloseRequested += OnPopupCloseRequested;
+
                 popupHolder.Popup.gameObject.SetActive(false);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var popupHolder in _allPopups)
+            {
+                var popup = popupHolder.Popup.GetComponent<Popup>();
+
+                if (popup != null)
+                {
+                    popup.OnPopupCloseRequested -= OnPopupCloseRequested;
+                }
             }
         }
 
@@ -78,6 +100,13 @@ namespace Lessons.Architecture.PM
 
             throw new Exception($"Popup with name {name} is not found!");
         }
+
+
+        private void OnPopupCloseRequested(Popup popup)
+        {
+            HidePopup(FindName(popup));
+        }
+
 
         [Serializable]
         private struct PopupHolder

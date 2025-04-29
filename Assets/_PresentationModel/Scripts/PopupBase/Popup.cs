@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,6 +10,8 @@ namespace Lessons.Architecture.PM
 
         [SerializeField] private UnityEvent OnPopupHide;
 
+        public event Action<Popup> OnPopupCloseRequested;
+
         public void Show()
         {
             OnShow();
@@ -19,6 +22,11 @@ namespace Lessons.Architecture.PM
         {
             OnHide();
             OnPopupHide?.Invoke();
+        }
+
+        public void HideRequested()
+        {
+            OnPopupCloseRequested?.Invoke(this);
         }
 
         protected virtual void OnShow()
