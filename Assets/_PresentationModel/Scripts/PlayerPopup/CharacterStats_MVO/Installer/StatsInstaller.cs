@@ -14,9 +14,9 @@ namespace Lessons.Architecture.PM
 
             Container.Bind<StatAdapterFactory>().AsSingle();
 
-            Container.Bind<StatsListView>().AsSingle();
+            //     Container.Bind<StatsListView>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<StatListView>().AsSingle();
+            //   Container.BindInterfacesAndSelfTo<StatListView>().AsSingle();
 
             Container.Bind<CharacterStatsHolder>().AsSingle();
         }

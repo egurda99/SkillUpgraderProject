@@ -6,7 +6,7 @@ namespace Lessons.Architecture.PM
 {
     public sealed class StatsListView
     {
-        private readonly Dictionary<CharacterStat, StatViewHolder> _statsDictionary = new();
+        private readonly Dictionary<string, StatViewHolder> _statsDictionary = new();
         private readonly StatViewFactory _statViewFactory;
         private readonly StatAdapterFactory _statAdapterFactory;
 
@@ -35,7 +35,7 @@ namespace Lessons.Architecture.PM
 
         public void AddStat(CharacterStat stat)
         {
-            if (_statsDictionary.ContainsKey(stat))
+            if (_statsDictionary.ContainsKey(stat.Name))
             {
                 Debug.LogWarning("Stat already added");
                 return;
@@ -45,24 +45,24 @@ namespace Lessons.Architecture.PM
             var adapter = _statAdapterFactory.GetStatAdapter(stat, view);
             var holder = new StatViewHolder(view, adapter);
 
-            _statsDictionary.Add(stat, holder);
+            _statsDictionary.Add(stat.Name, holder);
         }
 
         public void RemoveStat(CharacterStat stat)
         {
-            if (_statsDictionary.ContainsKey(stat) == false)
+            if (_statsDictionary.ContainsKey(stat.Name) == false)
             {
                 Debug.LogWarning("Stat dont exist");
                 return;
             }
 
-            var holder = _statsDictionary[stat];
+            var holder = _statsDictionary[stat.Name];
+            holder.Adapter.Dispose();
 
             Object.Destroy(holder.View.gameObject);
 
-            holder.Adapter.Dispose();
 
-            _statsDictionary.Remove(stat);
+            _statsDictionary.Remove(stat.Name);
         }
 
 

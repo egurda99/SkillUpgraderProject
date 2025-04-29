@@ -1,10 +1,8 @@
-using System;
 using R3;
-using Zenject;
 
 namespace Lessons.Architecture.PM
 {
-    public sealed class PlayerPresentationModel : IPlayerLevelPresentationModel, IInitializable, IDisposable
+    public sealed class PlayerPresentationModel : IPlayerLevelPresentationModel
     {
         private readonly PlayerLevel _playerLevel;
 
@@ -14,9 +12,10 @@ namespace Lessons.Architecture.PM
         public PlayerPresentationModel(PlayerLevel playerLevel)
         {
             _playerLevel = playerLevel;
+            Initialize();
         }
 
-        public void Initialize()
+        private void Initialize()
         {
             _playerLevel.CurrentLevelProperty
                 .Subscribe(OnLevelUp)

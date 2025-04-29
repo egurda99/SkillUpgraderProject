@@ -1,7 +1,6 @@
 using R3;
 using TMPro;
 using UnityEngine;
-using Zenject;
 
 namespace Lessons.Architecture.PM
 {
@@ -17,12 +16,11 @@ namespace Lessons.Architecture.PM
         private readonly CompositeDisposable _disposables = new();
         private IPlayerLevelPresentationModel _playerLevelPresenter;
 
-
-        [Inject]
-        public void Construct(PlayerPresentationModel playerPresentationModel)
+        public void Init(PlayerPresentationModel playerPresentationModel)
         {
             _playerLevelPresenter = playerPresentationModel;
         }
+
 
         public void Show()
         {

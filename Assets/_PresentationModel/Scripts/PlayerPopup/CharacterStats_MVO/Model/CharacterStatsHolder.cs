@@ -11,59 +11,46 @@ namespace Lessons.Architecture.PM
         public Subject<CharacterStat> OnStatAdded = new();
         public Subject<CharacterStat> OnStatRemoved = new();
 
-        private readonly HashSet<CharacterStat> _stats = new();
+        private readonly Dictionary<string, CharacterStat> _stats = new();
 
         public void AddStat(CharacterStat stat)
         {
-            if (CheckIsStatAlreadyExist(stat))
+            if (_stats.ContainsKey(stat.Name))
             {
-                Debug.LogWarning("Stat already exist");
+                Debug.LogWarning($"Stat with name {stat.Name} already exists.");
                 return;
             }
 
-
-            if (_stats.Add(stat))
-            {
-                OnStatAdded.OnNext(stat);
-            }
-        }
-
-        private bool CheckIsStatAlreadyExist(CharacterStat characterStat)
-        {
-            // у меня rider через alt enter не дает  сконвертить в for. Покажите плз у себя как конвертите.
-            foreach (var stat in _stats)
-            {
-                if (stat.Name == characterStat.Name)
-                    return true;
-            }
-
-            return false;
+            _stats.Add(stat.Name, stat);
+            OnStatAdded.OnNext(stat);
         }
 
         public void RemoveStat(CharacterStat stat)
         {
-            if (_stats.Remove(stat))
+            if (_stats.TryGetValue(stat.Name, out var existingStat))
             {
-                OnStatRemoved.OnNext(stat);
+                _stats.Remove(stat.Name);
+                OnStatRemoved.OnNext(existingStat);
+            }
+            else
+            {
+                Debug.LogWarning($"Trying to remove non-existent stat: {stat.Name}");
             }
         }
 
         public CharacterStat GetStat(string name)
         {
-            foreach (var stat in _stats)
+            if (_stats.TryGetValue(name, out var stat))
             {
-                if (stat.Name == name)
-                {
-                    return stat;
-                }
+                return stat;
             }
 
-            throw new Exception($"Stat {name} is not found!");
+            throw new Exception($"Stat '{name}' is not found!");
         }
 
         public CharacterStat[] GetStats()
         {
-            return _stats.ToArray();
+            return _stats.Values.ToArray();
         }
     }
 }
