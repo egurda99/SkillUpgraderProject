@@ -1,10 +1,8 @@
-using System;
 using R3;
-using Zenject;
 
 namespace Lessons.Architecture.PM
 {
-    public sealed class StatListView : IInitializable, IDisposable
+    public sealed class StatListView
     {
         private readonly StatsListView _listView;
         private readonly CharacterStatsHolder _characterStatsHolder;
@@ -26,6 +24,7 @@ namespace Lessons.Architecture.PM
                 .Subscribe(OnStatAdded)
                 .AddTo(_disposable);
         }
+
 
         public void Dispose()
         {
@@ -51,6 +50,19 @@ namespace Lessons.Architecture.PM
         private void OnStatAdded(CharacterStat stat)
         {
             _listView.AddStat(stat);
+        }
+
+        public void Reload()
+        {
+            foreach (var stat in _characterStatsHolder.GetStats())
+            {
+                _listView.RemoveStat(stat); // или .Clear() всё
+            }
+
+            foreach (var stat in _characterStatsHolder.GetStats())
+            {
+                _listView.AddStat(stat);
+            }
         }
     }
 }

@@ -33,6 +33,10 @@ namespace Lessons.Architecture.PM
 
         public void Show()
         {
+            _characterStat.Value
+                .Subscribe(OnValueChanged)
+                .AddTo(_disposable);
+
             _statView.SetupStat(_characterStat.Name, _characterStat.Value.ToString());
             _statView.Show();
         }
@@ -40,6 +44,7 @@ namespace Lessons.Architecture.PM
         public void Hide()
         {
             _statView.Hide();
+            _disposable.Dispose();
         }
 
 

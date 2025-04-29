@@ -41,6 +41,8 @@ namespace Lessons.Architecture.PM
                 return;
             }
 
+            Debug.Log("Added stat" + stat);
+
             var view = _statViewFactory.GetStatView();
             var adapter = _statAdapterFactory.GetStatAdapter(stat, view);
             var holder = new StatViewHolder(view, adapter);
@@ -63,6 +65,17 @@ namespace Lessons.Architecture.PM
 
 
             _statsDictionary.Remove(stat.Name);
+        }
+
+        public void Clear()
+        {
+            foreach (var holder in _statsDictionary.Values)
+            {
+                holder.Adapter.Dispose();
+                Object.Destroy(holder.View.gameObject);
+            }
+
+            _statsDictionary.Clear();
         }
 
 

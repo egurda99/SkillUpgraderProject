@@ -5,56 +5,34 @@ namespace Lessons.Architecture.PM
 {
     public sealed class PlayerPopup : Popup
     {
-        [SerializeField] private PlayerLevelView _playerLevelView;
-        [SerializeField] private UserInfoView _userInfoView;
+        [SerializeField] private PlayerPopupView _popupView;
 
-        private StatListView _statListView;
-        private UserInfoAdapter _userInfoAdapter;
-        private StatViewFactory _statViewFactory;
-        private StatAdapterFactory _statAdapterFactory;
-        private CharacterStatsHolder _characterStatsHolder;
-        private PlayerPresentationModel _playerPresentaionModel;
+        private PlayerPopupViewModel _viewModel;
+
+
+        private PlayerPopupViewModelFactory _playerPopupViewModelFactory;
+
 
         [Inject]
-        public void Construct(StatViewFactory statViewFactory, StatAdapterFactory statAdapterFactory,
-            CharacterStatsHolder characterStatsHolder,
-            UserInfo userInfo, PlayerLevel playerLevel)
+        public void Construct(PlayerPopupViewModelFactory playerPopupViewModelFactory)
         {
-            // level info part
-            _playerPresentaionModel = new PlayerPresentationModel(playerLevel);
-            _playerLevelView.Init(_playerPresentaionModel);
-
-            // user info part
-            _userInfoAdapter = new UserInfoAdapter(userInfo, _userInfoView);
-
-            // Stats part
-            _statViewFactory = statViewFactory;
-            _statAdapterFactory = statAdapterFactory;
-            _characterStatsHolder = characterStatsHolder;
-            var statsListView = new StatsListView(_statViewFactory, _statAdapterFactory);
-            _statListView = new StatListView(statsListView, _characterStatsHolder);
-            _statListView.Initialize();
+            _playerPopupViewModelFactory = playerPopupViewModelFactory;
         }
 
         protected override void OnShow()
         {
-            _playerLevelView.Show();
-            _statListView.Show();
-            _userInfoAdapter.Show();
+            _viewModel = _playerPopupViewModelFactory.Create();
+            _popupView.Show(_viewModel);
         }
 
         protected override void OnHide()
         {
-            _playerLevelView.Hide();
-            _statListView.Hide();
-            _userInfoAdapter.Hide();
+            _popupView.Hide();
         }
 
         private void OnDestroy()
         {
-            _userInfoAdapter?.Dispose();
-            _statListView?.Dispose();
-            _playerPresentaionModel?.Dispose();
+            _viewModel?.Dispose();
         }
     }
 }

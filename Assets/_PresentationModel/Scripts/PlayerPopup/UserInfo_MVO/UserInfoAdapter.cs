@@ -28,21 +28,6 @@ namespace Lessons.Architecture.PM
                 .AddTo(_disposable);
         }
 
-        // void IInitializable.Initialize()
-        // {
-        //     _userInfo.Name
-        //         .Subscribe(OnNameChanged)
-        //         .AddTo(_disposable);
-        //
-        //     _userInfo.Description
-        //         .Subscribe(OnDescriptionChanged)
-        //         .AddTo(_disposable);
-        //
-        //     _userInfo.Icon
-        //         .Subscribe(OnIconChanged)
-        //         .AddTo(_disposable);
-        // }
-
         public void Dispose()
         {
             _disposable.Dispose();
