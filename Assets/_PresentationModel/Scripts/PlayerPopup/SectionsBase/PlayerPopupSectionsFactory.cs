@@ -3,7 +3,7 @@ namespace Lessons.Architecture.PM
     public sealed class PlayerPopupSectionsFactory
     {
         private readonly CharacterStatsHolder _characterStatsHolder;
-        private readonly StatsListViewFactory _statsListViewFactory;
+        private readonly StatsListHandlerFactory _statsListHandlerFactory;
 
         private readonly PlayerLevel _playerLevel;
 
@@ -14,11 +14,11 @@ namespace Lessons.Architecture.PM
 
 
         public PlayerPopupSectionsFactory(CharacterStatsHolder characterStatsHolder,
-            StatsListViewFactory statsListViewFactory, PlayerLevel playerLevel, PlayerLevelView playerLevelView,
+            StatsListHandlerFactory statsListHandlerFactory, PlayerLevel playerLevel, PlayerLevelView playerLevelView,
             UserInfo userInfo, UserInfoView userInfoView)
         {
             _characterStatsHolder = characterStatsHolder;
-            _statsListViewFactory = statsListViewFactory;
+            _statsListHandlerFactory = statsListHandlerFactory;
             _playerLevel = playerLevel;
             _playerLevelView = playerLevelView;
             _userInfo = userInfo;
@@ -27,7 +27,7 @@ namespace Lessons.Architecture.PM
 
         public CharacterStatsSectionViewModel CreateCharacterStatsSection()
         {
-            return new CharacterStatsSectionViewModel(_characterStatsHolder, _statsListViewFactory);
+            return new CharacterStatsSectionViewModel(_characterStatsHolder, _statsListHandlerFactory);
         }
 
         public PlayerLevelSectionViewModel CreatePlayerLevelSection()

@@ -4,13 +4,13 @@ using Object = UnityEngine.Object;
 
 namespace Lessons.Architecture.PM
 {
-    public sealed class StatsListView
+    public sealed class StatsListHandler
     {
         private readonly Dictionary<string, StatViewHolder> _statsDictionary = new();
         private readonly StatViewFactory _statViewFactory;
         private readonly StatAdapterFactory _statAdapterFactory;
 
-        public StatsListView(StatViewFactory statViewFactory, StatAdapterFactory statAdapterFactory)
+        public StatsListHandler(StatViewFactory statViewFactory, StatAdapterFactory statAdapterFactory)
         {
             _statViewFactory = statViewFactory;
             _statAdapterFactory = statAdapterFactory;

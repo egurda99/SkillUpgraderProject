@@ -4,13 +4,13 @@ namespace Lessons.Architecture.PM
 {
     public sealed class StatListAdapter
     {
-        private readonly StatsListView _listView;
+        private readonly StatsListHandler _listHandler;
         private readonly CharacterStatsHolder _characterStatsHolder;
         private readonly CompositeDisposable _disposable = new();
 
-        public StatListAdapter(StatsListView listView, CharacterStatsHolder characterStatsHolder)
+        public StatListAdapter(StatsListHandler listHandler, CharacterStatsHolder characterStatsHolder)
         {
-            _listView = listView;
+            _listHandler = listHandler;
             _characterStatsHolder = characterStatsHolder;
         }
 
@@ -29,37 +29,37 @@ namespace Lessons.Architecture.PM
         public void Dispose()
         {
             _disposable.Dispose();
-            _listView.Clear();
+            _listHandler.Clear();
         }
 
         public void Show()
         {
-            _listView.Show();
+            _listHandler.Show();
         }
 
         public void Hide()
         {
-            _listView.Hide();
+            _listHandler.Hide();
         }
 
 
         private void OnStatRemoved(CharacterStat stat)
         {
-            _listView.RemoveStat(stat);
+            _listHandler.RemoveStat(stat);
         }
 
         private void OnStatAdded(CharacterStat stat)
         {
-            _listView.AddStat(stat);
+            _listHandler.AddStat(stat);
         }
 
         public void Reload()
         {
-            _listView.Clear();
+            _listHandler.Clear();
 
             foreach (var stat in _characterStatsHolder.GetStats())
             {
-                _listView.AddStat(stat);
+                _listHandler.AddStat(stat);
             }
         }
     }

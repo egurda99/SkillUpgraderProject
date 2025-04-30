@@ -6,10 +6,10 @@ namespace Lessons.Architecture.PM
         private readonly StatListAdapter _statListAdapter;
 
         public CharacterStatsSectionViewModel(CharacterStatsHolder statsHolder,
-            StatsListViewFactory statsListViewFactory)
+            StatsListHandlerFactory statsListHandlerFactory)
         {
             _statsHolderModel = statsHolder;
-            _statListAdapter = new StatListAdapter(statsListViewFactory.Create(), statsHolder);
+            _statListAdapter = new StatListAdapter(statsListHandlerFactory.Create(), statsHolder);
             _statListAdapter.Initialize();
         }
 
