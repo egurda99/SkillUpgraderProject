@@ -1,41 +1,52 @@
 using System;
+using System.Collections.Generic;
 
 namespace Lessons.Architecture.PM
 {
     public sealed class PlayerPopupViewModel : IDisposable
     {
-        private readonly PlayerPresentationModel _playerLevelModel;
-        private readonly UserInfoAdapter _userInfoAdapter;
-        private readonly StatsListView _statsListView;
-        private readonly CharacterStatsHolder _characterStatsHolder;
-
-        public PlayerPresentationModel PlayerLevelModel => _playerLevelModel;
-
-        public UserInfoAdapter UserInfoAdapter => _userInfoAdapter;
-
-        public StatsListView StatsListView => _statsListView;
-
-        public CharacterStatsHolder CharacterStatsHolder => _characterStatsHolder;
+        private readonly CharacterStatsSectionViewModel _characterStatsSection;
+        private readonly PlayerLevelSectionViewModel _playerLevelSection;
+        private readonly UserInfoSectionViewModel _userInfoSection;
 
 
-        public PlayerPopupViewModel(
-            PlayerLevel playerLevel,
-            UserInfo userInfo,
-            UserInfoView userInfoView,
-            StatViewFactory statViewFactory,
-            StatAdapterFactory statAdapterFactory,
-            CharacterStatsHolder characterStatsHolder)
+        private readonly List<ISectionViewModel> _sections = new();
+
+        public PlayerPopupViewModel(PlayerPopupSectionsFactory factory)
         {
-            _playerLevelModel = new PlayerPresentationModel(playerLevel);
-            _userInfoAdapter = new UserInfoAdapter(userInfo, userInfoView);
-            _statsListView = new StatsListView(statViewFactory, statAdapterFactory);
-            _characterStatsHolder = characterStatsHolder;
+            _characterStatsSection = factory.CreateCharacterStatsSection();
+            _playerLevelSection = factory.CreatePlayerLevelSection();
+            _userInfoSection = factory.CreateUserInfoSection();
+            _sections.Add(_characterStatsSection);
+            _sections.Add(_playerLevelSection);
+            _sections.Add(_userInfoSection);
+        }
+
+        public void Show()
+        {
+            for (var index = 0; index < _sections.Count; index++)
+            {
+                var section = _sections[index];
+                section.Show();
+            }
+        }
+
+        public void Hide()
+        {
+            for (var index = 0; index < _sections.Count; index++)
+            {
+                var section = _sections[index];
+                section.Hide();
+            }
         }
 
         public void Dispose()
         {
-            _playerLevelModel.Dispose();
-            _userInfoAdapter.Dispose();
+            for (var index = 0; index < _sections.Count; index++)
+            {
+                var section = _sections[index];
+                section.Dispose();
+            }
         }
     }
 }

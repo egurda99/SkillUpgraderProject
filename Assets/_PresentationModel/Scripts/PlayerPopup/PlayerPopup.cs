@@ -1,43 +1,30 @@
-using UnityEngine;
 using Zenject;
 
 namespace Lessons.Architecture.PM
 {
-    [RequireComponent(typeof(PlayerPopupView))]
     public sealed class PlayerPopup : Popup
     {
-        private PlayerPopupView _popupView;
-
-        private PlayerPopupViewModel _viewModel;
-
-
-        private PlayerPopupViewModelFactory _playerPopupViewModelFactory;
-
-        private void Awake()
-        {
-            _popupView = GetComponent<PlayerPopupView>();
-        }
+        private PlayerPopupViewModel _playerPopupViewModel;
 
         [Inject]
-        public void Construct(PlayerPopupViewModelFactory playerPopupViewModelFactory)
+        public void Construct(PlayerPopupSectionsFactory playerPopupSectionsFactory)
         {
-            _playerPopupViewModelFactory = playerPopupViewModelFactory;
+            _playerPopupViewModel = new PlayerPopupViewModel(playerPopupSectionsFactory);
         }
 
         protected override void OnShow()
         {
-            _viewModel = _playerPopupViewModelFactory.Create();
-            _popupView.Show(_viewModel);
+            _playerPopupViewModel.Show();
         }
 
         protected override void OnHide()
         {
-            _popupView.Hide();
+            _playerPopupViewModel.Hide();
         }
 
         private void OnDestroy()
         {
-            _viewModel?.Dispose();
+            _playerPopupViewModel.Dispose();
         }
     }
 }

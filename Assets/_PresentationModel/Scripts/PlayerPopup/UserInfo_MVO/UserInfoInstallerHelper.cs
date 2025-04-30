@@ -8,6 +8,9 @@ namespace Lessons.Architecture.PM
         [SerializeField] private string _description;
         [SerializeField] private Sprite _iconSprite;
 
+        [SerializeField] private UserInfoView _userInfoView;
+        public UserInfoView UserInfoView => _userInfoView;
+
 
         public string Name => _name;
 

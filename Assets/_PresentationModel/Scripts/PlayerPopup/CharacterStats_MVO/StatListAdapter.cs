@@ -2,13 +2,13 @@ using R3;
 
 namespace Lessons.Architecture.PM
 {
-    public sealed class StatListView
+    public sealed class StatListAdapter
     {
         private readonly StatsListView _listView;
         private readonly CharacterStatsHolder _characterStatsHolder;
         private readonly CompositeDisposable _disposable = new();
 
-        public StatListView(StatsListView listView, CharacterStatsHolder characterStatsHolder)
+        public StatListAdapter(StatsListView listView, CharacterStatsHolder characterStatsHolder)
         {
             _listView = listView;
             _characterStatsHolder = characterStatsHolder;
