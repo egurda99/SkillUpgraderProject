@@ -10,7 +10,8 @@ namespace Lessons.Architecture.PM
         [SerializeField] private TextMeshProUGUI _currentXp;
         [SerializeField] private TextMeshProUGUI _requiredXp;
 
-        [SerializeField] private LevelButton _levelButton;
+        // [SerializeField] private LevelButton _levelButton;
+        [SerializeField] private LevelButtonTest _levelButton;
         [SerializeField] private LevelProgressBar _levelProgressBar;
 
         private readonly CompositeDisposable _disposables = new();
