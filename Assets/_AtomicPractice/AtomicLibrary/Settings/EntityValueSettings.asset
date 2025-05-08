@@ -51,6 +51,27 @@ MonoBehaviour:
     - id: 28
       name: IsTargetAlive
       type: ReactiveVariable<bool>
+    - id: 32
+      name: IsAmmoFull
+      type: ReactiveVariable<bool>
+    - id: 33
+      name: Reloaded
+      type: IEvent
+    - id: 34
+      name: NeedReload
+      type: ReactiveVariable<bool>
+    - id: 35
+      name: AmountAmmoAfterReload
+      type: ReactiveVariable<int>
+    - id: 36
+      name: CurrentAmmo
+      type: ReactiveVariable<int>
+    - id: 37
+      name: MaxAmmo
+      type: ReactiveVariable<int>
+    - id: 38
+      name: IsAmmoEmpty
+      type: ReactiveVariable<bool>
   - name: Move
     indexes:
     - id: 2

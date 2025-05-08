@@ -9,9 +9,8 @@ public sealed class PlayerInputController : IContextInit, IContextDispose
 {
     [SerializeField] private SceneEntity _sceneEntity;
 
-    // private KeyboardInput _keyboardInput;
+    private KeyboardInput _keyboardInput;
 
-    private CameraBasedKeyboardInput _keyboardInput;
     private MouseInput _mouseInput;
     private ReactiveVariable<Vector3> _moveDirection;
 
@@ -20,8 +19,7 @@ public sealed class PlayerInputController : IContextInit, IContextDispose
 
     public void Init(IContext context)
     {
-        _keyboardInput = context.GetCameraBasedKeyboardInput();
-        // _keyboardInput = context.GetKeyboardInput();
+        _keyboardInput = context.GetKeyboardInput();
         _mouseInput = context.GetMouseInput();
 
         _mouseTargetPosition = _sceneEntity.GetTargetPosition();

@@ -4,7 +4,7 @@ using Atomic.Entities;
 using UnityEngine;
 
 [Serializable]
-public sealed class TimerBeforeShootMechanic : IEntityInstaller
+public sealed class ReloadMechanic : IEntityInstaller
 {
     [SerializeField] private float _reloadTime;
 
@@ -12,6 +12,8 @@ public sealed class TimerBeforeShootMechanic : IEntityInstaller
     {
         entity.AddReloadTime(_reloadTime);
         entity.AddReloadEnded(new ReactiveVariable<bool>());
-        entity.AddBehaviour(new TimerBeforeShootBehaviour());
+        entity.AddReloaded(new BaseEvent());
+
+        entity.AddBehaviour(new ReloadMechanicBehaviour());
     }
 }

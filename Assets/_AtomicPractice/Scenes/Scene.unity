@@ -3683,13 +3683,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
         type: 3}
+      propertyPath: _ammoMechanic._maxAmmo
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
+        type: 3}
       propertyPath: _shootMechanic._target
       value: 
       objectReference: {fileID: 236932030}
     - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
         type: 3}
+      propertyPath: _ammoMechanic._startAmmo
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
+        type: 3}
       propertyPath: _shootMechanic._firePoint
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
+        type: 3}
+      propertyPath: _reloadMechanic._reloadTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
         type: 3}
@@ -3699,9 +3714,19 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
         type: 3}
+      propertyPath: _ammoMechanic._ammoAfterReload
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
+        type: 3}
       propertyPath: _shootForwardMechanic._firePoint
       value: 
       objectReference: {fileID: 2118053996}
+    - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
+        type: 3}
+      propertyPath: _rotateByMouseMechanic._rotateSpeed
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
         type: 3}
       propertyPath: _shootForwardMechanic._bulletPrefab
@@ -10253,7 +10278,6 @@ MonoBehaviour:
     _sceneEntity: {fileID: 625937920}
   _keyboardInput: {fileID: 2046217954}
   _mouseInput: {fileID: 2046217955}
-  _cameraBasedKeyboardInput: {fileID: 2046217956}
 --- !u!114 &1764645754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11826,7 +11850,6 @@ GameObject:
   - component: {fileID: 2046217953}
   - component: {fileID: 2046217954}
   - component: {fileID: 2046217955}
-  - component: {fileID: 2046217956}
   m_Layer: 0
   m_Name: Input
   m_TagString: Untagged
@@ -11874,19 +11897,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 1060751498}
---- !u!114 &2046217956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046217952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf1e97c6d01e451a8aff4b1fdc8d3af7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cameraTransform: {fileID: 1060751499}
 --- !u!1 &2078601295 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5879414446769212800, guid: a76c89c6a539356478cffc6e1b88e8dc,

@@ -2,7 +2,7 @@ using Atomic.Elements;
 using Atomic.Entities;
 using UnityEngine;
 
-public sealed class RotateToTargetBehaviour : IEntityInit, IEntityUpdate
+public class RotateByMouseBehaviour : IEntityInit, IEntityUpdate
 {
     private Transform _rootTransform;
     private AndExpression _canRotate;
@@ -10,9 +10,8 @@ public sealed class RotateToTargetBehaviour : IEntityInit, IEntityUpdate
 
     private ReactiveVariable<bool> _isRotating;
 
-    // private ReactiveVariable<Transform> _target;
     private readonly float _minAngleForRotate = 0.5f;
-    private ReactiveVariable<Vector3> _targetPosition;
+    private ReactiveVariable<Vector3> _mousePosition;
 
 
     public void Init(IEntity entity)
@@ -21,15 +20,14 @@ public sealed class RotateToTargetBehaviour : IEntityInit, IEntityUpdate
         _rotateSpeed = entity.GetRotationSpeed();
         _isRotating = entity.GetIsRotating();
         _canRotate = entity.GetCanRotate();
-        //   _target = entity.GetTarget();
-        _targetPosition = entity.GetTargetPosition();
+        _mousePosition = entity.GetTargetPosition();
     }
 
     public void OnUpdate(IEntity entity, float deltaTime)
     {
         if (_canRotate.Value)
         {
-            var direction = (_targetPosition.Value - _rootTransform.position).normalized;
+            var direction = (_mousePosition.Value - _rootTransform.position).normalized;
             var targetRotation = Quaternion.LookRotation(direction);
             var angle = Quaternion.Angle(_rootTransform.rotation, targetRotation);
 

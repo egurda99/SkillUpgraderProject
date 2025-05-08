@@ -9,13 +9,10 @@ public class GameContextInstaller : SceneContextInstallerBase
 
     [SerializeField] private MouseInput _mouseInput;
 
-    [SerializeField] private CameraBasedKeyboardInput _cameraBasedKeyboardInput;
-
 
     public override void Install(IContext context)
     {
-        //context.AddKeyboardInput(_keyboardInput);
-        context.AddCameraBasedKeyboardInput(_cameraBasedKeyboardInput);
+        context.AddKeyboardInput(_keyboardInput);
         context.AddMouseInput(_mouseInput);
 
 

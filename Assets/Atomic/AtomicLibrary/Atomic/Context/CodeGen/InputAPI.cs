@@ -14,7 +14,6 @@ namespace Atomic.Contexts
 		///Keys
 		public const int KeyboardInput = 1; // KeyboardInput
 		public const int MouseInput = 2; // MouseInput
-		public const int CameraBasedKeyboardInput = 3; // CameraBasedKeyboardInput
 
 
 		///Extensions
@@ -53,23 +52,5 @@ namespace Atomic.Contexts
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool HasMouseInput(this IContext obj) => obj.HasValue(MouseInput);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static CameraBasedKeyboardInput GetCameraBasedKeyboardInput(this IContext obj) => obj.ResolveValue<CameraBasedKeyboardInput>(CameraBasedKeyboardInput);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool TryGetCameraBasedKeyboardInput(this IContext obj, out CameraBasedKeyboardInput value) => obj.TryResolveValue(CameraBasedKeyboardInput, out value);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool AddCameraBasedKeyboardInput(this IContext obj, CameraBasedKeyboardInput value) => obj.AddValue(CameraBasedKeyboardInput, value);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool DelCameraBasedKeyboardInput(this IContext obj) => obj.DelValue(CameraBasedKeyboardInput);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void SetCameraBasedKeyboardInput(this IContext obj, CameraBasedKeyboardInput value) => obj.SetValue(CameraBasedKeyboardInput, value);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static bool HasCameraBasedKeyboardInput(this IContext obj) => obj.HasValue(CameraBasedKeyboardInput);
     }
 }
