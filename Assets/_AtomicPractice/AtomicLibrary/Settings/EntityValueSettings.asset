@@ -72,6 +72,9 @@ MonoBehaviour:
     - id: 38
       name: IsAmmoEmpty
       type: ReactiveVariable<bool>
+    - id: 39
+      name: AmmoAdded
+      type: IEvent
   - name: Move
     indexes:
     - id: 2
@@ -138,6 +141,9 @@ MonoBehaviour:
       type: ReactiveVariable<bool>
     - id: 29
       name: LifeTime
+      type: ReactiveVariable<float>
+    - id: 40
+      name: AmmoRefillTime
       type: ReactiveVariable<float>
   - name: Animation
     indexes:

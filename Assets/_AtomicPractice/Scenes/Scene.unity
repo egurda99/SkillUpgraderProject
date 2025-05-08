@@ -979,12 +979,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176383536}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7009093, y: 0, z: 0, w: 0.71325046}
+  m_LocalRotation: {x: 0.7009093, y: -0, z: -0, w: 0.71325046}
   m_LocalPosition: {x: -2, y: 13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2057537715}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &176383539
 MonoBehaviour:
@@ -3704,7 +3704,7 @@ PrefabInstance:
     - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
         type: 3}
       propertyPath: _reloadMechanic._reloadTime
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
         type: 3}
@@ -3722,6 +3722,11 @@ PrefabInstance:
       propertyPath: _shootForwardMechanic._firePoint
       value: 
       objectReference: {fileID: 2118053996}
+    - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
+        type: 3}
+      propertyPath: _ammoRefillMechanic._ammoRefillTime
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
         type: 3}
       propertyPath: _rotateByMouseMechanic._rotateSpeed
@@ -6205,12 +6210,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1060751495}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7009094, y: 0, z: 0, w: 0.7132504}
+  m_LocalRotation: {x: 0.7009094, y: -0, z: -0, w: 0.7132504}
   m_LocalPosition: {x: -2, y: 13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2057537715}
   m_LocalEulerAnglesHint: {x: 80, y: 0, z: 0}
 --- !u!114 &1060751500
 MonoBehaviour:
@@ -11897,6 +11902,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 1060751498}
+--- !u!1 &2057537714
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2057537715}
+  m_Layer: 0
+  m_Name: '[CAMS]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2057537715
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057537714}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1060751499}
+  - {fileID: 176383538}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2078601295 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5879414446769212800, guid: a76c89c6a539356478cffc6e1b88e8dc,
@@ -12412,8 +12450,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1060751499}
+  - {fileID: 2057537715}
   - {fileID: 18385285}
   - {fileID: 1366530279}
   - {fileID: 1980450348533929280}
-  - {fileID: 176383538}

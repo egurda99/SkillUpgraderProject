@@ -1,6 +1,5 @@
 using Atomic.Elements;
 using Atomic.Entities;
-using UnityEngine;
 
 public sealed class AmmoBehaviour : IEntityInit, IEntityDispose
 {
@@ -35,10 +34,7 @@ public sealed class AmmoBehaviour : IEntityInit, IEntityDispose
 
     private void OnShootEvent()
     {
-        Debug.Log("before shot: " + _currentAmmo.Value);
-
         _currentAmmo.Value -= 1;
-        Debug.Log("after shot: " + _currentAmmo.Value);
     }
 
     private void OnCurrentAmmoChanged(int currentValue)
@@ -66,11 +62,7 @@ public sealed class AmmoBehaviour : IEntityInit, IEntityDispose
 
     private void OnReloaded()
     {
-        Debug.Log("before reload: " + _currentAmmo.Value);
         _currentAmmo.Value += _ammoAfterReload.Value;
-        Debug.Log("reload amount: " + _ammoAfterReload.Value);
-
-        Debug.Log("after reload: " + _currentAmmo.Value);
 
         if (_currentAmmo.Value > _maxAmmo.Value)
         {
