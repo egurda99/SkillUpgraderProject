@@ -4,7 +4,6 @@ using UnityEngine;
 public sealed class KeyboardInput : MonoBehaviour
 {
     public event Action<Vector3> OnMoveInputChanged;
-    public event Action OnFireClicked;
 
     private Vector3 _moveDirection = Vector3.zero;
 
@@ -12,7 +11,6 @@ public sealed class KeyboardInput : MonoBehaviour
     public void Update()
     {
         HandleMoveInput();
-        HandleShootingInput();
     }
 
     private void HandleMoveInput()
@@ -45,13 +43,5 @@ public sealed class KeyboardInput : MonoBehaviour
         }
 
         OnMoveInputChanged?.Invoke(_moveDirection);
-    }
-
-    private void HandleShootingInput()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            OnFireClicked?.Invoke();
-        }
     }
 }

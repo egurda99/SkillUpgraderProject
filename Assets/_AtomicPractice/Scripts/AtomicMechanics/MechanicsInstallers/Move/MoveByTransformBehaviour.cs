@@ -1,4 +1,3 @@
-using System;
 using Atomic.Elements;
 using Atomic.Entities;
 using UnityEngine;
@@ -25,23 +24,21 @@ public sealed class MoveByTransformBehaviour : IEntityInit, IEntityUpdate
     {
         if (_canMove.Value)
         {
-            if (_direction.Value.sqrMagnitude > 0)
+            var worldDirection = _direction.Value;
+
+            if (worldDirection.sqrMagnitude > 0f)
             {
                 _isMoving.Value = true;
+                _root.position += worldDirection * _speed.Value * deltaTime;
             }
-
             else
             {
                 _isMoving.Value = false;
             }
-            _root.position += _direction.Value * _speed.Value * deltaTime;
         }
-
         else
         {
             _isMoving.Value = false;
-
         }
-
     }
 }

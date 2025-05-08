@@ -30,11 +30,11 @@ public sealed class TwoD_MoveAnimationBehaviour : IEntityInit, IEntityLateUpdate
     {
         if (_isMoving.Value)
         {
-            var verticalValue = _direction.Value.z;
-            var horizontalValue = _direction.Value.x;
+            var worldDirection = _direction.Value;
+            var localDirection = _animator.transform.InverseTransformDirection(worldDirection);
 
-            _animator.SetFloat(MoveHorizontal, horizontalValue);
-            _animator.SetFloat(MoveVertical, verticalValue);
+            _animator.SetFloat(MoveHorizontal, localDirection.x);
+            _animator.SetFloat(MoveVertical, localDirection.z);
         }
     }
 

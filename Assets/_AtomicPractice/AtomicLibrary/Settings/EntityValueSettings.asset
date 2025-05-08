@@ -93,6 +93,12 @@ MonoBehaviour:
     - id: 20
       name: IsRotating
       type: ReactiveVariable<bool>
+    - id: 30
+      name: MouseDeltaX
+      type: ReactiveVariable<float>
+    - id: 31
+      name: TargetPosition
+      type: ReactiveVariable<Vector3>
   - name: Radar
     indexes:
     - id: 21

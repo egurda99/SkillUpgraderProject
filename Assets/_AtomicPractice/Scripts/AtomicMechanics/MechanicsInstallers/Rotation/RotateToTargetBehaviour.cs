@@ -2,14 +2,17 @@ using Atomic.Elements;
 using Atomic.Entities;
 using UnityEngine;
 
-public sealed class RotateBehaviour : IEntityInit, IEntityUpdate
+public sealed class RotateToTargetBehaviour : IEntityInit, IEntityUpdate
 {
     private Transform _rootTransform;
     private AndExpression _canRotate;
     private ReactiveVariable<float> _rotateSpeed;
+
     private ReactiveVariable<bool> _isRotating;
-    private ReactiveVariable<Transform> _target;
+
+    // private ReactiveVariable<Transform> _target;
     private readonly float _minAngleForRotate = 0.5f;
+    private ReactiveVariable<Vector3> _targetPosition;
 
 
     public void Init(IEntity entity)
@@ -18,16 +21,17 @@ public sealed class RotateBehaviour : IEntityInit, IEntityUpdate
         _rotateSpeed = entity.GetRotationSpeed();
         _isRotating = entity.GetIsRotating();
         _canRotate = entity.GetCanRotate();
-        _target = entity.GetTarget();
+        //   _target = entity.GetTarget();
+        _targetPosition = entity.GetTargetPosition();
     }
 
     public void OnUpdate(IEntity entity, float deltaTime)
     {
         if (_canRotate.Value)
         {
-            Vector3 direction = (_target.Value.position - _rootTransform.position).normalized;
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            float angle = Quaternion.Angle(_rootTransform.rotation, targetRotation);
+            var direction = (_targetPosition.Value - _rootTransform.position).normalized;
+            var targetRotation = Quaternion.LookRotation(direction);
+            var angle = Quaternion.Angle(_rootTransform.rotation, targetRotation);
 
             if (angle > _minAngleForRotate)
             {

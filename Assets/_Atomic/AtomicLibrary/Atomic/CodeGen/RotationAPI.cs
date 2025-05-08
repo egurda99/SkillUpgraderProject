@@ -15,6 +15,8 @@ namespace Atomic.Entities
         public const int RotationSpeed = 18; // ReactiveVariable<float>
         public const int CanRotate = 19; // AndExpression
         public const int IsRotating = 20; // ReactiveVariable<bool>
+        public const int MouseDeltaX = 30; // ReactiveVariable<float>
+        public const int TargetPosition = 31; // ReactiveVariable<Vector3>
 
 
         ///Extensions
@@ -71,5 +73,41 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetIsRotating(this IEntity obj, ReactiveVariable<bool> value) => obj.SetValue(IsRotating, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ReactiveVariable<float> GetMouseDeltaX(this IEntity obj) => obj.GetValue<ReactiveVariable<float>>(MouseDeltaX);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetMouseDeltaX(this IEntity obj, out ReactiveVariable<float> value) => obj.TryGetValue(MouseDeltaX, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddMouseDeltaX(this IEntity obj, ReactiveVariable<float> value) => obj.AddValue(MouseDeltaX, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasMouseDeltaX(this IEntity obj) => obj.HasValue(MouseDeltaX);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelMouseDeltaX(this IEntity obj) => obj.DelValue(MouseDeltaX);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetMouseDeltaX(this IEntity obj, ReactiveVariable<float> value) => obj.SetValue(MouseDeltaX, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ReactiveVariable<Vector3> GetTargetPosition(this IEntity obj) => obj.GetValue<ReactiveVariable<Vector3>>(TargetPosition);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetTargetPosition(this IEntity obj, out ReactiveVariable<Vector3> value) => obj.TryGetValue(TargetPosition, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddTargetPosition(this IEntity obj, ReactiveVariable<Vector3> value) => obj.AddValue(TargetPosition, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasTargetPosition(this IEntity obj) => obj.HasValue(TargetPosition);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelTargetPosition(this IEntity obj) => obj.DelValue(TargetPosition);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetTargetPosition(this IEntity obj, ReactiveVariable<Vector3> value) => obj.SetValue(TargetPosition, value);
     }
 }

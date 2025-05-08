@@ -19,7 +19,6 @@ public sealed class ShootForwardBehaviour : IEntityInit, IEntityDispose
         _shootEvent = entity.GetShootEvent();
         _shootRequested = entity.GetShootRequest();
 
-
         _bulletPrefab = entity.GetBulletPrefab();
 
         _firePoint = entity.GetFirePoint();
@@ -46,7 +45,7 @@ public sealed class ShootForwardBehaviour : IEntityInit, IEntityDispose
 
             Debug.Log("Shooted");
 
-            bulletEntity.GetMoveDirection().Value = Vector3.forward;
+            bulletEntity.GetMoveDirection().Value = _firePoint.forward;
             _shootEvent?.Invoke();
         }
 

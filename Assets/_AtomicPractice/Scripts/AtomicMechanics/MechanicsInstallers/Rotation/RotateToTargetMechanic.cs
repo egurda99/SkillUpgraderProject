@@ -4,10 +4,9 @@ using Atomic.Entities;
 using UnityEngine;
 
 [Serializable]
-public sealed class RotateMechanic : IEntityInstaller
+public sealed class RotateToTargetMechanic : IEntityInstaller
 {
     [SerializeField] private Transform _rootTransform;
-    [SerializeField] private Transform _target;
     [SerializeField] private float _rotateSpeed = 1f;
     [SerializeField] private bool _isRotating;
 
@@ -17,13 +16,12 @@ public sealed class RotateMechanic : IEntityInstaller
         entity.AddRootTransform(_rootTransform);
         entity.AddRotationSpeed(_rotateSpeed);
         entity.AddIsRotating(_isRotating);
-        entity.AddTarget(_target);
+        entity.AddTargetPosition(new ReactiveVariable<Vector3>());
 
         var canRotate = new AndExpression();
 
         entity.AddCanRotate(canRotate);
 
-        entity.AddBehaviour(new RotateBehaviour());
-
+        entity.AddBehaviour(new RotateToTargetBehaviour());
     }
 }

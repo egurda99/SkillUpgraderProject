@@ -4,6 +4,9 @@ using UnityEngine;
 public class CharacterInstaller : SceneEntityInstallerBase
 {
     [SerializeField] private MoveByTransformMechanic _moveByTransformMechanic;
+    [SerializeField] private RotateToTargetMechanic _rotateToTargetMechanic;
+
+
     [SerializeField] private ShootForwardMechanic _shootForwardMechanic;
     [SerializeField] private LifeMechanic _lifeMechanic;
 
@@ -13,6 +16,8 @@ public class CharacterInstaller : SceneEntityInstallerBase
         _moveByTransformMechanic.Install(entity);
         _lifeMechanic.Install(entity);
         _shootForwardMechanic.Install(entity);
+        _rotateToTargetMechanic.Install(entity);
+
 
         entity.GetCanMove().Append(() => !entity.GetIsDead().Value);
         entity.GetCanShoot().Append(() => !entity.GetIsDead().Value);

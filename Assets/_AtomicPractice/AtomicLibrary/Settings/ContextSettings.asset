@@ -24,3 +24,9 @@ MonoBehaviour:
     - id: 1
       name: KeyboardInput
       type: KeyboardInput
+    - id: 2
+      name: MouseInput
+      type: MouseInput
+    - id: 3
+      name: CameraBasedKeyboardInput
+      type: CameraBasedKeyboardInput
