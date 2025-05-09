@@ -153,3 +153,32 @@ MonoBehaviour:
     - id: 27
       name: AnimationEventDispatcher
       type: AnimationEventDispatcher
+  - name: MeleeAttack
+    indexes:
+    - id: 41
+      name: DistanceToAttack
+      type: ReactiveVariable<float>
+    - id: 42
+      name: CanAttack
+      type: AndExpression
+    - id: 43
+      name: IsAttacking
+      type: ReactiveVariable<bool>
+    - id: 44
+      name: AttackRequest
+      type: IEvent
+    - id: 45
+      name: AttackAction
+      type: IEvent
+    - id: 46
+      name: AttackEvent
+      type: IEvent
+    - id: 47
+      name: TriggerEnter
+      type: IEvent<Collider>
+    - id: 48
+      name: EntityTriggerDispatcher
+      type: EntityTriggerDispatcher
+    - id: 49
+      name: AttackDamage
+      type: ReactiveVariable<float>

@@ -5,13 +5,13 @@ public class BulletInstaller : SceneEntityInstallerBase
 {
     [SerializeField] private float _damage = 1f;
 
-    [SerializeField] private MoveByTransformMechanic _moveByTransformMechanic;
+    [SerializeField] private MoveToDirectionMechanic _moveToDirectionMechanic;
     [SerializeField] private DestroyByLifeTimeMechanic _destroyByLifeTimeMechanic;
 
 
     public override void Install(IEntity entity)
     {
-        _moveByTransformMechanic.Install(entity);
+        _moveToDirectionMechanic.Install(entity);
         _destroyByLifeTimeMechanic.Install(entity);
     }
 

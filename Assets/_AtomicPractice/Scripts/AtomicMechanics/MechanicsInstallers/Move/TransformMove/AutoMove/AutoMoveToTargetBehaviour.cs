@@ -2,21 +2,23 @@ using Atomic.Elements;
 using Atomic.Entities;
 using UnityEngine;
 
-public sealed class MoveByTransformBehaviour : IEntityInit, IEntityUpdate
+public sealed class AutoMoveToTargetBehaviour : IEntityInit, IEntityUpdate
 {
     private Transform _root;
     private ReactiveVariable<float> _speed;
-    private ReactiveVariable<Vector3> _direction;
     private AndExpression _canMove;
     private ReactiveVariable<bool> _isMoving;
+    private ReactiveVariable<Transform> _target;
+    private ReactiveVariable<Vector3> _moveDirection;
 
     public void Init(IEntity entity)
     {
         _root = entity.GetRootTransform();
         _speed = entity.GetMoveSpeed();
-        _direction = entity.GetMoveDirection();
+        _target = entity.GetTarget();
         _isMoving = entity.GetIsMoving();
         _canMove = entity.GetCanMove();
+        _moveDirection = entity.GetMoveDirection();
     }
 
 
@@ -24,8 +26,8 @@ public sealed class MoveByTransformBehaviour : IEntityInit, IEntityUpdate
     {
         if (_canMove.Value)
         {
-            var worldDirection = _direction.Value;
-
+            var worldDirection = _target.Value.position - _root.position;
+            _moveDirection.Value = worldDirection;
             if (worldDirection.sqrMagnitude > 0f)
             {
                 _isMoving.Value = true;
@@ -39,6 +41,7 @@ public sealed class MoveByTransformBehaviour : IEntityInit, IEntityUpdate
         else
         {
             _isMoving.Value = false;
+            _moveDirection.Value = Vector3.zero;
         }
     }
 }

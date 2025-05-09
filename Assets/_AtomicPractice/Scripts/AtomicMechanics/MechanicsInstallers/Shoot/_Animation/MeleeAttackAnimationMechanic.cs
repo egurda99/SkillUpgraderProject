@@ -4,7 +4,7 @@ using Atomic.Entities;
 using UnityEngine;
 
 [Serializable]
-public sealed class ShootAnimationMechanic : IEntityInstaller
+public sealed class MeleeAttackAnimationMechanic : IEntityInstaller
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private AnimationEventDispatcher _animationEventDispatcher;
@@ -16,6 +16,6 @@ public sealed class ShootAnimationMechanic : IEntityInstaller
         entity.AddAnimator(_animator);
         entity.AddAnimationEventDispatcher(_animationEventDispatcher);
 
-        entity.AddBehaviour(new ShootAnimationBehaviour());
+        entity.AddBehaviour(new MeleeAttackAnimationBehaviour());
     }
 }

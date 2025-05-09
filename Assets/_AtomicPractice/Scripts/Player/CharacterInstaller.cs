@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CharacterInstaller : SceneEntityInstallerBase
 {
-    [SerializeField] private MoveByTransformMechanic _moveByTransformMechanic;
+    [SerializeField] private MoveToDirectionMechanic _moveToDirectionMechanic;
     [SerializeField] private RotateByMouseMechanic _rotateByMouseMechanic;
     [SerializeField] private ShootForwardMechanic _shootForwardMechanic;
     [SerializeField] private LifeMechanic _lifeMechanic;
@@ -14,7 +14,7 @@ public class CharacterInstaller : SceneEntityInstallerBase
 
     public override void Install(IEntity entity)
     {
-        _moveByTransformMechanic.Install(entity);
+        _moveToDirectionMechanic.Install(entity);
         _lifeMechanic.Install(entity);
         _shootForwardMechanic.Install(entity);
         _rotateByMouseMechanic.Install(entity);

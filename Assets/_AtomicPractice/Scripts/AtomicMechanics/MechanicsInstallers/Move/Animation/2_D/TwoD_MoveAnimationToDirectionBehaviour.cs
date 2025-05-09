@@ -2,7 +2,7 @@ using Atomic.Elements;
 using Atomic.Entities;
 using UnityEngine;
 
-public sealed class TwoD_MoveAnimationBehaviour : IEntityInit, IEntityLateUpdate, IEntityDispose
+public sealed class TwoD_MoveAnimationToDirectionBehaviour : IEntityInit, IEntityLateUpdate, IEntityDispose
 {
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
     private static readonly int MoveHorizontal = Animator.StringToHash("Move_Horizontal");

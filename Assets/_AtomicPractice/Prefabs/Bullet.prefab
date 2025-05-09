@@ -215,9 +215,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 1
-  _moveByTransformMechanic:
+  _moveToDirectionMechanic:
     _rootTransform: {fileID: 1325598434542729995}
-    _speed: 10
+    _speed: 1
     _moveDirection: {x: 0, y: 0, z: 0}
     _isMoving: 0
     _canMove: 1
