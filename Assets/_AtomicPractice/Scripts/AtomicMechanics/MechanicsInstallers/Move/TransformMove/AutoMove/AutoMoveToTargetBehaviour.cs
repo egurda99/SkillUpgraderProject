@@ -10,6 +10,7 @@ public sealed class AutoMoveToTargetBehaviour : IEntityInit, IEntityUpdate
     private ReactiveVariable<bool> _isMoving;
     private ReactiveVariable<Transform> _target;
     private ReactiveVariable<Vector3> _moveDirection;
+    private ReactiveVariable<float> _stopDistance;
 
     public void Init(IEntity entity)
     {
@@ -19,6 +20,7 @@ public sealed class AutoMoveToTargetBehaviour : IEntityInit, IEntityUpdate
         _isMoving = entity.GetIsMoving();
         _canMove = entity.GetCanMove();
         _moveDirection = entity.GetMoveDirection();
+        _stopDistance = entity.GetStopDistance();
     }
 
 
@@ -27,15 +29,19 @@ public sealed class AutoMoveToTargetBehaviour : IEntityInit, IEntityUpdate
         if (_canMove.Value)
         {
             var worldDirection = _target.Value.position - _root.position;
-            _moveDirection.Value = worldDirection;
-            if (worldDirection.sqrMagnitude > 0f)
+
+            var sqrDistance = worldDirection.sqrMagnitude;
+            var stopThresholdSqr = _stopDistance.Value * _stopDistance.Value;
+            if (sqrDistance > stopThresholdSqr)
             {
                 _isMoving.Value = true;
-                _root.position += worldDirection * _speed.Value * deltaTime;
+                _moveDirection.Value = worldDirection.normalized;
+                _root.position += worldDirection.normalized * _speed.Value * deltaTime;
             }
             else
             {
                 _isMoving.Value = false;
+                _moveDirection.Value = Vector3.zero;
             }
         }
         else

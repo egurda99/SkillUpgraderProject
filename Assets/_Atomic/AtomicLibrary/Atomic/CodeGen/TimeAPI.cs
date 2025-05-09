@@ -16,6 +16,7 @@ namespace Atomic.Entities
         public const int ReloadEnded = 25; // ReactiveVariable<bool>
         public const int LifeTime = 29; // ReactiveVariable<float>
         public const int AmmoRefillTime = 40; // ReactiveVariable<float>
+        public const int CanStartTimer = 47; // AndExpression
 
 
         ///Extensions
@@ -90,5 +91,23 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetAmmoRefillTime(this IEntity obj, ReactiveVariable<float> value) => obj.SetValue(AmmoRefillTime, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static AndExpression GetCanStartTimer(this IEntity obj) => obj.GetValue<AndExpression>(CanStartTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetCanStartTimer(this IEntity obj, out AndExpression value) => obj.TryGetValue(CanStartTimer, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddCanStartTimer(this IEntity obj, AndExpression value) => obj.AddValue(CanStartTimer, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasCanStartTimer(this IEntity obj) => obj.HasValue(CanStartTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelCanStartTimer(this IEntity obj) => obj.DelValue(CanStartTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetCanStartTimer(this IEntity obj, AndExpression value) => obj.SetValue(CanStartTimer, value);
     }
 }

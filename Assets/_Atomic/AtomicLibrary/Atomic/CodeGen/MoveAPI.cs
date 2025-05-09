@@ -17,6 +17,7 @@ namespace Atomic.Entities
         public const int MoveDirection = 4; // ReactiveVariable<Vector3>
         public const int IsMoving = 5; // ReactiveVariable<bool>
         public const int CanMove = 6; // AndExpression
+        public const int StopDistance = 50; // ReactiveVariable<float>
 
 
         ///Extensions
@@ -109,5 +110,23 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetCanMove(this IEntity obj, AndExpression value) => obj.SetValue(CanMove, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ReactiveVariable<float> GetStopDistance(this IEntity obj) => obj.GetValue<ReactiveVariable<float>>(StopDistance);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetStopDistance(this IEntity obj, out ReactiveVariable<float> value) => obj.TryGetValue(StopDistance, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddStopDistance(this IEntity obj, ReactiveVariable<float> value) => obj.AddValue(StopDistance, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasStopDistance(this IEntity obj) => obj.HasValue(StopDistance);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelStopDistance(this IEntity obj) => obj.DelValue(StopDistance);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetStopDistance(this IEntity obj, ReactiveVariable<float> value) => obj.SetValue(StopDistance, value);
     }
 }

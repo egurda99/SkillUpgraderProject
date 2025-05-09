@@ -13,6 +13,8 @@ public class BulletInstaller : SceneEntityInstallerBase
     {
         _moveToDirectionMechanic.Install(entity);
         _destroyByLifeTimeMechanic.Install(entity);
+
+        entity.GetCanStartTimer().Append(() => true);
     }
 
     private void OnTriggerEnter(Collider other)

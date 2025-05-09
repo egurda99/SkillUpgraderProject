@@ -141,6 +141,9 @@ MonoBehaviour:
     _animator: {fileID: 361833063}
   _dieAnimationMechanic:
     _animator: {fileID: 361833063}
+  _meleeAttackAnimationMechanic:
+    _animator: {fileID: 361833063}
+    _animationEventDispatcher: {fileID: 361833064}
 --- !u!1 &18385282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,6 +1318,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7964997623459932075, guid: a76c89c6a539356478cffc6e1b88e8dc,
     type: 3}
   m_PrefabInstance: {fileID: 236932029}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &293231178
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1366530279}
+    m_Modifications:
+    - target: {fileID: 167524, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_Name
+      value: BloodExplosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 493160, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 493160, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 493160, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 493160, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.49999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 493160, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 493160, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 493160, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 493160, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 493160, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 493160, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 19977426, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19983692, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19995304, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9bf0b90e6d2294a4c8186ac5febf7653, type: 3}
+--- !u!4 &293231179 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 493160, guid: 9bf0b90e6d2294a4c8186ac5febf7653,
+    type: 3}
+  m_PrefabInstance: {fileID: 293231178}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &295733787
 PrefabInstance:
@@ -3635,6 +3713,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _moveToDirectionMechanic._speed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
+        type: 3}
+      propertyPath: _shootReloadMechanic._reloadTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6590868415860547441, guid: 3b5b2ae0f895574449961910366cbf8a,
         type: 3}
@@ -8111,6 +8194,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 625937916}
+  - {fileID: 293231179}
   - {fileID: 236932030}
   - {fileID: 1192262376}
   m_Father: {fileID: 0}
@@ -11700,7 +11784,8 @@ MonoBehaviour:
   _moveToTargetMechanic:
     _rootTransform: {fileID: 236932030}
     _target: {fileID: 625937916}
-    _speed: 1
+    _speed: 2
+    _stopDistance: 1
     _isMoving: 0
     _canMove: 1
   _lifeMechanic:
@@ -11711,6 +11796,14 @@ MonoBehaviour:
     _target: {fileID: 625937916}
     _rotateSpeed: 100
     _isRotating: 0
+  _meleeReloadMechanic:
+    _reloadTime: 1
+  _autoMeleeAttackMechanic:
+    _distanceToAttack: 2
+    _attackDamage: 1
+  _destroyByLifeTimeMechanic:
+    _lifeTime: 5
+    _rootTransform: {fileID: 236932030}
 --- !u!1001 &2122479467
 PrefabInstance:
   m_ObjectHideFlags: 0

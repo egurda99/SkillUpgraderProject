@@ -18,8 +18,6 @@ namespace Atomic.Entities
         public const int AttackRequest = 44; // IEvent
         public const int AttackAction = 45; // IEvent
         public const int AttackEvent = 46; // IEvent
-        public const int TriggerEnter = 47; // IEvent<Collider>
-        public const int EntityTriggerDispatcher = 48; // EntityTriggerDispatcher
         public const int AttackDamage = 49; // ReactiveVariable<float>
 
 
@@ -131,42 +129,6 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetAttackEvent(this IEntity obj, IEvent value) => obj.SetValue(AttackEvent, value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEvent<Collider> GetTriggerEnter(this IEntity obj) => obj.GetValue<IEvent<Collider>>(TriggerEnter);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryGetTriggerEnter(this IEntity obj, out IEvent<Collider> value) => obj.TryGetValue(TriggerEnter, out value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool AddTriggerEnter(this IEntity obj, IEvent<Collider> value) => obj.AddValue(TriggerEnter, value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool HasTriggerEnter(this IEntity obj) => obj.HasValue(TriggerEnter);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool DelTriggerEnter(this IEntity obj) => obj.DelValue(TriggerEnter);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SetTriggerEnter(this IEntity obj, IEvent<Collider> value) => obj.SetValue(TriggerEnter, value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static EntityTriggerDispatcher GetEntityTriggerDispatcher(this IEntity obj) => obj.GetValue<EntityTriggerDispatcher>(EntityTriggerDispatcher);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryGetEntityTriggerDispatcher(this IEntity obj, out EntityTriggerDispatcher value) => obj.TryGetValue(EntityTriggerDispatcher, out value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool AddEntityTriggerDispatcher(this IEntity obj, EntityTriggerDispatcher value) => obj.AddValue(EntityTriggerDispatcher, value);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool HasEntityTriggerDispatcher(this IEntity obj) => obj.HasValue(EntityTriggerDispatcher);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool DelEntityTriggerDispatcher(this IEntity obj) => obj.DelValue(EntityTriggerDispatcher);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SetEntityTriggerDispatcher(this IEntity obj, EntityTriggerDispatcher value) => obj.SetValue(EntityTriggerDispatcher, value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ReactiveVariable<float> GetAttackDamage(this IEntity obj) => obj.GetValue<ReactiveVariable<float>>(AttackDamage);

@@ -42,9 +42,6 @@ public sealed class ShootForwardBehaviour : IEntityInit, IEntityDispose
             var bulletGO = Object.Instantiate(_bulletPrefab, _firePoint.position, Quaternion.identity);
 
             var bulletEntity = bulletGO.GetComponent<SceneEntity>();
-
-            Debug.Log("Shooted");
-
             bulletEntity.GetMoveDirection().Value = _firePoint.forward;
             _shootEvent?.Invoke();
         }

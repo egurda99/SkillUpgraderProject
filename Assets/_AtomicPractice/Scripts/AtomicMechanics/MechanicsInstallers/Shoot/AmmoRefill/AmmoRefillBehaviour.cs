@@ -14,7 +14,7 @@ public sealed class AmmoRefillBehaviour : IEntityInit, IEntityUpdate
 
         _currentTime = _ammoRefillTime.Value;
         _isAmmoFull = entity.GetIsAmmoFull();
-        _refilled = entity.GetAmmoAdded();
+        _refilled = entity.GetAmmoRefilled();
     }
 
     public void OnUpdate(IEntity entity, float deltaTime)

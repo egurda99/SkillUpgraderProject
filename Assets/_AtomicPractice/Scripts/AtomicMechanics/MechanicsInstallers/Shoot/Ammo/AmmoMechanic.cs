@@ -16,7 +16,6 @@ public sealed class AmmoMechanic : IEntityInstaller
         entity.AddCurrentAmmo(_startAmmo);
         entity.AddMaxAmmo(_maxAmmo);
         entity.AddAmountAmmoAfterReload(_ammoAfterReload);
-        entity.AddNeedReload(new ReactiveVariable<bool>(true));
         entity.AddIsAmmoEmpty(new ReactiveVariable<bool>());
 
         entity.AddIsAmmoFull(new ReactiveVariable<bool>(false));

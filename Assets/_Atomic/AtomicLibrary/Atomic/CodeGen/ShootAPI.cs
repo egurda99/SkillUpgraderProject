@@ -29,7 +29,7 @@ namespace Atomic.Entities
         public const int CurrentAmmo = 36; // ReactiveVariable<int>
         public const int MaxAmmo = 37; // ReactiveVariable<int>
         public const int IsAmmoEmpty = 38; // ReactiveVariable<bool>
-        public const int AmmoAdded = 39; // IEvent
+        public const int AmmoRefilled = 39; // IEvent
 
 
         ///Extensions
@@ -340,21 +340,21 @@ namespace Atomic.Entities
         public static void SetIsAmmoEmpty(this IEntity obj, ReactiveVariable<bool> value) => obj.SetValue(IsAmmoEmpty, value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEvent GetAmmoAdded(this IEntity obj) => obj.GetValue<IEvent>(AmmoAdded);
+        public static IEvent GetAmmoRefilled(this IEntity obj) => obj.GetValue<IEvent>(AmmoRefilled);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryGetAmmoAdded(this IEntity obj, out IEvent value) => obj.TryGetValue(AmmoAdded, out value);
+        public static bool TryGetAmmoRefilled(this IEntity obj, out IEvent value) => obj.TryGetValue(AmmoRefilled, out value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool AddAmmoAdded(this IEntity obj, IEvent value) => obj.AddValue(AmmoAdded, value);
+        public static bool AddAmmoRefilled(this IEntity obj, IEvent value) => obj.AddValue(AmmoRefilled, value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool HasAmmoAdded(this IEntity obj) => obj.HasValue(AmmoAdded);
+        public static bool HasAmmoRefilled(this IEntity obj) => obj.HasValue(AmmoRefilled);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool DelAmmoAdded(this IEntity obj) => obj.DelValue(AmmoAdded);
+        public static bool DelAmmoRefilled(this IEntity obj) => obj.DelValue(AmmoRefilled);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SetAmmoAdded(this IEntity obj, IEvent value) => obj.SetValue(AmmoAdded, value);
+        public static void SetAmmoRefilled(this IEntity obj, IEvent value) => obj.SetValue(AmmoRefilled, value);
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using Atomic.Elements;
 using Atomic.Entities;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ public class DestroyByLifeTimeMechanic : IEntityInstaller
     {
         entity.AddLifeTime(_lifeTime);
         entity.AddRootTransform(_rootTransform);
+        entity.AddCanStartTimer(new AndExpression());
 
         entity.AddBehaviour(new DestroyByLifeTimeBehaviour());
     }

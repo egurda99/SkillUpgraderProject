@@ -73,7 +73,7 @@ MonoBehaviour:
       name: IsAmmoEmpty
       type: ReactiveVariable<bool>
     - id: 39
-      name: AmmoAdded
+      name: AmmoRefilled
       type: IEvent
   - name: Move
     indexes:
@@ -92,6 +92,9 @@ MonoBehaviour:
     - id: 6
       name: CanMove
       type: AndExpression
+    - id: 50
+      name: StopDistance
+      type: ReactiveVariable<float>
   - name: Life
     indexes:
     - id: 14
@@ -145,6 +148,9 @@ MonoBehaviour:
     - id: 40
       name: AmmoRefillTime
       type: ReactiveVariable<float>
+    - id: 47
+      name: CanStartTimer
+      type: AndExpression
   - name: Animation
     indexes:
     - id: 26
@@ -173,12 +179,6 @@ MonoBehaviour:
     - id: 46
       name: AttackEvent
       type: IEvent
-    - id: 47
-      name: TriggerEnter
-      type: IEvent<Collider>
-    - id: 48
-      name: EntityTriggerDispatcher
-      type: EntityTriggerDispatcher
     - id: 49
       name: AttackDamage
       type: ReactiveVariable<float>

@@ -95763,12 +95763,12 @@ AnimationClip:
   m_Events:
   - time: 0.43333334
     functionName: ReceiveEvent
-    data: AttackStarted
+    data: Attacked
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.46666667
+  - time: 1.4
     functionName: ReceiveEvent
     data: AttackEnded
     objectReferenceParameter: {fileID: 0}

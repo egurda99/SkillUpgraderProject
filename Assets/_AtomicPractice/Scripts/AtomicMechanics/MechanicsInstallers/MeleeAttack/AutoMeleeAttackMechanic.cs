@@ -4,19 +4,14 @@ using Atomic.Entities;
 using UnityEngine;
 
 [Serializable]
-public sealed class AutoMeleeAttackAfterReloadMechanic : IEntityInstaller
+public sealed class AutoMeleeAttackMechanic : IEntityInstaller
 {
     [SerializeField] private float _distanceToAttack = 1f;
     [SerializeField] private float _attackDamage = 1f;
 
-    [SerializeField] private EntityTriggerDispatcher _entityTriggerDispatcher;
-
-
     public void Install(IEntity entity)
     {
         entity.AddAttackDamage(_attackDamage);
-        entity.AddNeedReload(new ReactiveVariable<bool>(true));
-        entity.AddReloadEnded(new ReactiveVariable<bool>());
         entity.AddDistanceToAttack(_distanceToAttack);
 
         entity.AddCanAttack(new AndExpression());
@@ -26,9 +21,7 @@ public sealed class AutoMeleeAttackAfterReloadMechanic : IEntityInstaller
         entity.AddAttackAction(new BaseEvent());
         entity.AddAttackEvent(new BaseEvent());
 
-        entity.AddEntityTriggerDispatcher(_entityTriggerDispatcher);
 
-
-        entity.AddBehaviour(new AutoMeleeAttackAfterReloadBehaviour());
+        entity.AddBehaviour(new AutoMeleeAttackBehaviour());
     }
 }

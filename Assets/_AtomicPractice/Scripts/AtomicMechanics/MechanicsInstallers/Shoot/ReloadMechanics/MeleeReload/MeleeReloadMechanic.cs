@@ -4,15 +4,16 @@ using Atomic.Entities;
 using UnityEngine;
 
 [Serializable]
-public sealed class ReloadMechanic : IEntityInstaller
+public sealed class MeleeReloadMechanic : IEntityInstaller
 {
     [SerializeField] private float _reloadTime;
 
     public void Install(IEntity entity)
     {
         entity.AddReloadTime(_reloadTime);
+        entity.AddNeedReload(new ReactiveVariable<bool>(true));
         entity.AddReloadEnded(new ReactiveVariable<bool>());
         entity.AddReloaded(new BaseEvent());
-        entity.AddBehaviour(new ReloadBehaviour());
+        entity.AddBehaviour(new MeleeReloadBehaviour());
     }
 }

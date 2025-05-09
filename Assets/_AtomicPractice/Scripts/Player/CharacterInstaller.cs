@@ -9,7 +9,7 @@ public class CharacterInstaller : SceneEntityInstallerBase
     [SerializeField] private LifeMechanic _lifeMechanic;
     [SerializeField] private AmmoMechanic _ammoMechanic;
     [SerializeField] private AmmoRefillMechanic _ammoRefillMechanic;
-    [SerializeField] private ReloadMechanic _reloadMechanic;
+    [SerializeField] private ShootReloadMechanic _shootReloadMechanic;
 
 
     public override void Install(IEntity entity)
@@ -20,13 +20,13 @@ public class CharacterInstaller : SceneEntityInstallerBase
         _rotateByMouseMechanic.Install(entity);
         _ammoMechanic.Install(entity);
         _ammoRefillMechanic.Install(entity);
-        _reloadMechanic.Install(entity);
+        _shootReloadMechanic.Install(entity);
 
 
         entity.GetCanMove().Append(() => !entity.GetIsDead().Value);
         entity.GetCanShoot().Append(() => !entity.GetIsDead().Value);
         entity.GetCanShoot().Append(() => !entity.GetIsAmmoEmpty().Value);
-        entity.GetCanShoot().Append(() => entity.GetReloadEnded().Value);
+        entity.GetCanShoot().Append(() => !entity.GetNeedReload().Value);
         entity.GetCanRotate().Append(() => !entity.GetIsDead().Value);
     }
 }

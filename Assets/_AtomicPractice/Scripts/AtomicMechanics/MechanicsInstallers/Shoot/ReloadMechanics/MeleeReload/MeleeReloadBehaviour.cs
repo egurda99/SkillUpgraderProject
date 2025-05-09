@@ -1,13 +1,15 @@
 using Atomic.Elements;
 using Atomic.Entities;
+using UnityEngine;
 
-public sealed class ReloadBehaviour : IEntityInit, IEntityUpdate, IEntityDispose
+public sealed class MeleeReloadBehaviour : IEntityInit, IEntityUpdate, IEntityDispose
 {
     private IEvent _reloaded;
-    private IEvent _shootEvent;
+    private IEvent _attackEvent;
     private ReactiveVariable<float> _reloadTimer;
     private ReactiveVariable<bool> _reloadEnded;
     private float _currentTime;
+    private ReactiveVariable<bool> _needReload;
 
     public void Init(IEntity entity)
     {
@@ -15,27 +17,32 @@ public sealed class ReloadBehaviour : IEntityInit, IEntityUpdate, IEntityDispose
         _reloaded = entity.GetReloaded();
         _reloadEnded = entity.GetReloadEnded();
 
-        _shootEvent = entity.GetShootEvent();
+        _needReload = entity.GetNeedReload();
+        _attackEvent = entity.GetAttackEvent();
         _currentTime = _reloadTimer.Value;
 
-        _shootEvent.Subscribe(OnShootEvent);
+        _attackEvent.Subscribe(OnAttackEvent);
     }
 
-    private void OnShootEvent()
+    private void OnAttackEvent()
     {
-        _reloadEnded.Value = false;
+        _needReload.Value = true;
     }
+
 
     public void OnUpdate(IEntity entity, float deltaTime)
     {
-        if (!_reloadEnded.Value)
+        if (_needReload.Value)
         {
             _currentTime -= deltaTime;
+            _reloadEnded.Value = false;
 
             if (_currentTime <= 0)
             {
                 _reloaded?.Invoke();
+                Debug.Log("Reloaded");
                 _reloadEnded.Value = true;
+                _needReload.Value = false;
                 _currentTime = _reloadTimer.Value;
             }
         }
@@ -44,6 +51,6 @@ public sealed class ReloadBehaviour : IEntityInit, IEntityUpdate, IEntityDispose
 
     public void Dispose(IEntity entity)
     {
-        _shootEvent.Unsubscribe(OnShootEvent);
+        _attackEvent.Unsubscribe(OnAttackEvent);
     }
 }
