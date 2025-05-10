@@ -16,8 +16,8 @@ public sealed class AutoMeleeAttackBehaviour : IEntityInit, IEntityUpdate, IEnti
     private ReactiveVariable<float> _distanceToAttack;
     private ReactiveVariable<Transform> _target;
     private Transform _rootTransform;
-    private ReactiveVariable<bool> _isAttacking;
     private ReactiveVariable<bool> _needReload;
+    private IEvent _attackEvent;
 
     public void Init(IEntity entity)
     {
@@ -26,11 +26,11 @@ public sealed class AutoMeleeAttackBehaviour : IEntityInit, IEntityUpdate, IEnti
         _target = entity.GetTarget();
         _rootTransform = entity.GetRootTransform();
 
-        _isAttacking = entity.GetIsAttacking();
         _needReload = entity.GetNeedReload();
 
         _attackRequest = entity.GetAttackRequest();
         _attackAction = entity.GetAttackAction();
+        _attackEvent = entity.GetAttackEvent();
         _attackDamage = entity.GetAttackDamage();
 
 
@@ -53,6 +53,7 @@ public sealed class AutoMeleeAttackBehaviour : IEntityInit, IEntityUpdate, IEnti
                 takeDamageEvent.Invoke(_attackDamage.Value);
             }
 
+            _attackEvent?.Invoke();
             _needReload.Value = true;
         }
     }

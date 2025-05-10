@@ -167,9 +167,6 @@ MonoBehaviour:
     - id: 42
       name: CanAttack
       type: AndExpression
-    - id: 43
-      name: IsAttacking
-      type: ReactiveVariable<bool>
     - id: 44
       name: AttackRequest
       type: IEvent

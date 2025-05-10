@@ -1,6 +1,5 @@
 using Atomic.Elements;
 using Atomic.Entities;
-using UnityEngine;
 
 public sealed class MeleeReloadBehaviour : IEntityInit, IEntityUpdate, IEntityDispose
 {
@@ -40,7 +39,6 @@ public sealed class MeleeReloadBehaviour : IEntityInit, IEntityUpdate, IEntityDi
             if (_currentTime <= 0)
             {
                 _reloaded?.Invoke();
-                Debug.Log("Reloaded");
                 _reloadEnded.Value = true;
                 _needReload.Value = false;
                 _currentTime = _reloadTimer.Value;

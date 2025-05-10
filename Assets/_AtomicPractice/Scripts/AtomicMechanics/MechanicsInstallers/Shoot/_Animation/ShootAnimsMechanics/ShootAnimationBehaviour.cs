@@ -5,13 +5,11 @@ using UnityEngine;
 public sealed class ShootAnimationBehaviour : IEntityInit, IEntityDispose
 {
     private static readonly int Shoot = Animator.StringToHash("Shoot");
-    private static readonly int IsMoving = Animator.StringToHash("IsMoving");
-    private const int AimLayerIndex = 1;
-
     private Animator _animator;
     private AnimationEventDispatcher _animationEventDispatcher;
     private IEvent _shootRequsted;
     private IEvent _shootAction;
+    private AndExpression _canShoot;
 
     public void Init(IEntity entity)
     {
@@ -19,6 +17,7 @@ public sealed class ShootAnimationBehaviour : IEntityInit, IEntityDispose
         _animationEventDispatcher = entity.GetAnimationEventDispatcher();
         _shootRequsted = entity.GetShootRequest();
         _shootAction = entity.GetShootAction();
+        _canShoot = entity.GetCanShoot();
 
 
         _shootRequsted.Subscribe(OnShootRequsted);
@@ -30,18 +29,15 @@ public sealed class ShootAnimationBehaviour : IEntityInit, IEntityDispose
         if (eventName == "Shoot")
         {
             _shootAction.Invoke();
-            _animator.SetLayerWeight(AimLayerIndex, 0);
         }
     }
 
     private void OnShootRequsted()
     {
-        if (!_animator.GetBool(IsMoving))
+        if (_canShoot.Value)
         {
             _animator.SetTrigger(Shoot);
         }
-
-        _animator.SetLayerWeight(AimLayerIndex, 1);
     }
 
     public void Dispose(IEntity entity)

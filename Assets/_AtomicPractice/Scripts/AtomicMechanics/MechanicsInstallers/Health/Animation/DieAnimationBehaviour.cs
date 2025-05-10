@@ -18,7 +18,8 @@ public sealed class DieAnimationBehaviour : IEntityInit, IEntityDispose
 
     private void OnIsDeadChanged(bool value)
     {
-            _animator.SetBool(IsDead,value);
+        Debug.Log("Changed");
+        _animator.SetBool(IsDead, value);
     }
 
     public void Dispose(IEntity entity)
