@@ -7,6 +7,8 @@ public class CharacterVisualInstaller : SceneEntityInstallerBase
 
     [SerializeField] private ShootAnimationMechanic _shootAnimationMechanic;
     [SerializeField] private DieAnimationMechanic _dieAnimationMechanic;
+    [SerializeField] private ShootVFXMechanic _shootVFXMechanic;
+    [SerializeField] private TakeDamageVFXMechanic _takeDamageVFXMechanic;
 
 
     public override void Install(IEntity entity)
@@ -14,5 +16,7 @@ public class CharacterVisualInstaller : SceneEntityInstallerBase
         _twoDMoveAnimationToDirectionMechanic.Install(entity);
         _shootAnimationMechanic.Install(entity);
         _dieAnimationMechanic.Install(entity);
+        _shootVFXMechanic.Install(entity);
+        _takeDamageVFXMechanic.Install(entity);
     }
 }

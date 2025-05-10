@@ -1,13 +1,11 @@
-using System;
 using Atomic.Contexts;
 using Atomic.Elements;
 using Atomic.Entities;
 using UnityEngine;
 
-[Serializable]
 public sealed class PlayerInputController : IContextInit, IContextDispose
 {
-    [SerializeField] private SceneEntity _sceneEntity;
+    private readonly SceneEntity _sceneEntity;
 
     private KeyboardInput _keyboardInput;
 
@@ -16,6 +14,12 @@ public sealed class PlayerInputController : IContextInit, IContextDispose
 
     private IEvent _shootRequest;
     private ReactiveVariable<Vector3> _mouseTargetPosition;
+
+
+    public PlayerInputController(SceneEntity sceneEntity)
+    {
+        _sceneEntity = sceneEntity;
+    }
 
     public void Init(IContext context)
     {

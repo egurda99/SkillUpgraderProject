@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   local: 0
   namespace: Atomic.Entities
-  directoryPath: Assets/_Atomic/AtomicLibrary/Atomic/CodeGen
+  directoryPath: Assets/_AtomicPractice/AtomicLibrary/Atomic/CodeGen
   suffix: API
   imports:
   - Atomic.Elements
@@ -75,6 +75,9 @@ MonoBehaviour:
     - id: 39
       name: AmmoRefilled
       type: IEvent
+    - id: 43
+      name: ShootFX
+      type: ParticleSystem
   - name: Move
     indexes:
     - id: 2
@@ -109,6 +112,9 @@ MonoBehaviour:
     - id: 17
       name: HealAction
       type: IEvent<float>
+    - id: 48
+      name: TakeDamageFX
+      type: ParticleSystem
   - name: Rotation
     indexes:
     - id: 18

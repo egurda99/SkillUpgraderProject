@@ -23,7 +23,6 @@ public sealed class AutoMoveToTargetBehaviour : IEntityInit, IEntityUpdate
         _stopDistance = entity.GetStopDistance();
     }
 
-
     public void OnUpdate(IEntity entity, float deltaTime)
     {
         if (_canMove.Value)

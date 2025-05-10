@@ -7,6 +7,7 @@ public class ZombieVisualInstaller : SceneEntityInstallerBase
 
     [SerializeField] private DieAnimationMechanic _dieAnimationMechanic;
     [SerializeField] private MeleeAttackAnimationMechanic _meleeAttackAnimationMechanic;
+    [SerializeField] private TakeDamageVFXMechanic _takeDamageVFXMechanic;
 
 
     public override void Install(IEntity entity)
@@ -14,5 +15,6 @@ public class ZombieVisualInstaller : SceneEntityInstallerBase
         _twoDMoveAnimationToDirectionMechanic.Install(entity);
         _dieAnimationMechanic.Install(entity);
         _meleeAttackAnimationMechanic.Install(entity);
+        _takeDamageVFXMechanic.Install(entity);
     }
 }
