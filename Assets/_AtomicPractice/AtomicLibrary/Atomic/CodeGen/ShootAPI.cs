@@ -31,6 +31,7 @@ namespace Atomic.Entities
         public const int IsAmmoEmpty = 38; // ReactiveVariable<bool>
         public const int AmmoRefilled = 39; // IEvent
         public const int ShootFX = 43; // ParticleSystem
+        public const int CanRefill = 51; // AndExpression
 
 
         ///Extensions
@@ -375,5 +376,23 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetShootFX(this IEntity obj, ParticleSystem value) => obj.SetValue(ShootFX, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static AndExpression GetCanRefill(this IEntity obj) => obj.GetValue<AndExpression>(CanRefill);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetCanRefill(this IEntity obj, out AndExpression value) => obj.TryGetValue(CanRefill, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddCanRefill(this IEntity obj, AndExpression value) => obj.AddValue(CanRefill, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasCanRefill(this IEntity obj) => obj.HasValue(CanRefill);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelCanRefill(this IEntity obj) => obj.DelValue(CanRefill);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetCanRefill(this IEntity obj, AndExpression value) => obj.SetValue(CanRefill, value);
     }
 }

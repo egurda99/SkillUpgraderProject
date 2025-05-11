@@ -78,6 +78,9 @@ MonoBehaviour:
     - id: 43
       name: ShootFX
       type: ParticleSystem
+    - id: 51
+      name: CanRefill
+      type: AndExpression
   - name: Move
     indexes:
     - id: 2

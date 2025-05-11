@@ -12,6 +12,7 @@ public sealed class AmmoRefillMechanic : IEntityInstaller
     {
         entity.AddAmmoRefillTime(_ammoRefillTime);
         entity.AddAmmoRefilled(new BaseEvent());
+        entity.AddCanRefill(new AndExpression());
 
         entity.AddBehaviour(new AmmoRefillBehaviour());
     }

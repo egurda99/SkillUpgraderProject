@@ -12,9 +12,9 @@ public class GameContextInstaller : SceneContextInstallerBase
     private SceneEntity _sceneEntity;
 
     [Zenject.Inject]
-    public void Construct(SceneEntity player)
+    public void Construct(PlayerService service)
     {
-        _sceneEntity = player;
+        _sceneEntity = service.Player;
         _playerInputController = new PlayerInputController(_sceneEntity);
     }
 

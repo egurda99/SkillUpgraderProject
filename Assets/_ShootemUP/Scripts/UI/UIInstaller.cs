@@ -1,27 +1,29 @@
-using ShootEmUp;
 using UnityEngine;
 using Zenject;
 
-public sealed class UIInstaller : MonoBehaviour
+namespace ShootEmUp
 {
-    [SerializeField] private StartGameWidget _startGameWidget;
-    [SerializeField] private PauseGameWidget _pauseGameWidget;
-    [SerializeField] private TimerBeforeStartWidget _timerBeforeStartWidget;
-
-    private GameCycleWidgetsHandler _gameCycleWidgetsHandler;
-    private GameCycleManager _gameCycleManager;
-
-
-    [Inject]
-    public void Construct(GameCycleManager gameCycleManager)
+    public sealed class UIInstaller : MonoBehaviour
     {
-        _gameCycleManager = gameCycleManager;
-    }
+        [SerializeField] private StartGameWidget _startGameWidget;
+        [SerializeField] private PauseGameWidget _pauseGameWidget;
+        [SerializeField] private TimerBeforeStartWidget _timerBeforeStartWidget;
 
-    private void Awake()
-    {
-        _gameCycleWidgetsHandler =
-            new GameCycleWidgetsHandler(_startGameWidget, _pauseGameWidget, _gameCycleManager,
-                _timerBeforeStartWidget);
+        private GameCycleWidgetsHandler _gameCycleWidgetsHandler;
+        private GameCycleManager _gameCycleManager;
+
+
+        [Inject]
+        public void Construct(GameCycleManager gameCycleManager)
+        {
+            _gameCycleManager = gameCycleManager;
+        }
+
+        private void Awake()
+        {
+            _gameCycleWidgetsHandler =
+                new GameCycleWidgetsHandler(_startGameWidget, _pauseGameWidget, _gameCycleManager,
+                    _timerBeforeStartWidget);
+        }
     }
 }

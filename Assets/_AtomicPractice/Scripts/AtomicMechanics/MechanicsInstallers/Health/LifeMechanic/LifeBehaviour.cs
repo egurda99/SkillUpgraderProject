@@ -23,8 +23,6 @@ public class LifeBehaviour : IEntityInit, IEntityDispose
 
         _healEvent.Subscribe(OnHeal);
         _takeDamageEvent.Subscribe(OnTakeDamage);
-
-
     }
 
     private void OnHeal(float heal)
@@ -35,7 +33,6 @@ public class LifeBehaviour : IEntityInit, IEntityDispose
         }
 
         _hitPoints.Value += heal;
-
     }
 
     private void OnTakeDamage(float damage)
@@ -52,7 +49,8 @@ public class LifeBehaviour : IEntityInit, IEntityDispose
         {
             _hitPoints.Value = 0;
             _isDead.Value = true;
-            Debug.Log($"<color=red>Died!</color>");
+
+            Debug.Log("<color=red>Died!</color>");
         }
     }
 

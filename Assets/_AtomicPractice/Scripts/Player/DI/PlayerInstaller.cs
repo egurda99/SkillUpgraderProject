@@ -15,7 +15,7 @@ public sealed class PlayerInstaller : MonoInstaller<PlayerInstaller>
     {
         var player = Container.InstantiatePrefabForComponent<SceneEntity>(_playerPrefab, _spawnPoint.position,
             Quaternion.identity, _worldContainer);
-        Container.BindInterfacesAndSelfTo<SceneEntity>().FromInstance(player).AsSingle();
+        Container.Bind<PlayerService>().AsSingle().WithArguments(player);
 
         _playerCamera.Follow = player.transform;
     }

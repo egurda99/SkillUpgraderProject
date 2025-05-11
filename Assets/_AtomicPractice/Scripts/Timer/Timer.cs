@@ -1,6 +1,8 @@
 using System;
+using UnityEngine;
+using Zenject;
 
-public class Timer
+public class Timer : IInitializable, ITickable
 {
     private float _interval;
     private float _time;
@@ -8,26 +10,27 @@ public class Timer
 
     public event Action OnElapsed;
 
-    public Timer(float interval)
-    {
-        _interval = interval;
-        _time = 0f;
-        _isRunning = true;
-    }
 
+    void IInitializable.Initialize()
+    {
+        _time = 0;
+    }
 
     public void Start() => _isRunning = true;
     public void Stop() => _isRunning = false;
     public void Reset() => _time = 0f;
 
-    public void SetInterval(float interval) => _interval = interval;
+    public void SetInterval(float interval)
+    {
+        _interval = interval;
+    }
 
-    public void Update(float deltaTime)
+
+    public void Tick()
     {
         if (!_isRunning)
             return;
-
-        _time += deltaTime;
+        _time += Time.deltaTime;
         if (_time >= _interval)
         {
             _time = 0f;

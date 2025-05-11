@@ -31,8 +31,6 @@ namespace ShootEmUp
         {
             if (!_isWorking)
                 return;
-
-            _timer.UpdateTimer(deltaTime);
         }
 
         public void StartTimer()

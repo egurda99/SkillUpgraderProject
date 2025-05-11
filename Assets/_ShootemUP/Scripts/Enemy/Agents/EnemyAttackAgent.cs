@@ -43,10 +43,7 @@ namespace ShootEmUp
 
             if (!_targetHealth.IsAlive())
             {
-                return;
             }
-
-            _timer.UpdateTimer(fixedDeltaTime);
         }
 
         public void SetTarget(Transform target)

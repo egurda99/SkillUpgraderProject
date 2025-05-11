@@ -1,8 +1,10 @@
 using System;
+using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
-    public sealed class Timer
+    public sealed class Timer : ITickable
     {
         private float _timeForTimer;
 
@@ -15,9 +17,9 @@ namespace ShootEmUp
             _currentTime = 0;
         }
 
-        public void UpdateTimer(float deltaTime)
+        public void Tick()
         {
-            _currentTime += deltaTime;
+            _currentTime += Time.deltaTime;
             if (_currentTime >= _timeForTimer)
             {
                 _currentTime = 0;
