@@ -1,4 +1,4 @@
-using Zenject;
+using UnityEngine;
 
 namespace Lessons.Architecture.PM
 {
@@ -6,25 +6,27 @@ namespace Lessons.Architecture.PM
     {
         private PlayerPopupViewModel _playerPopupViewModel;
 
-        [Inject]
-        public void Construct(PlayerPopupSectionsFactory playerPopupSectionsFactory)
-        {
-            _playerPopupViewModel = new PlayerPopupViewModel(playerPopupSectionsFactory);
-        }
-
         protected override void OnShow()
         {
-            _playerPopupViewModel.Show();
+            if (ViewModel is PlayerPopupViewModel playerViewModel)
+            {
+                _playerPopupViewModel = playerViewModel;
+                _playerPopupViewModel.Show();
+            }
+            else
+            {
+                Debug.LogError("Invalid ViewModel passed to PlayerPopup");
+            }
         }
 
         protected override void OnHide()
         {
-            _playerPopupViewModel.Hide();
+            _playerPopupViewModel?.Hide();
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
-            _playerPopupViewModel.Dispose();
+            _playerPopupViewModel?.Dispose();
         }
     }
 }

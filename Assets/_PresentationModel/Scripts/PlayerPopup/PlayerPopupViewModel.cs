@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Lessons.Architecture.PM
 {
-    public sealed class PlayerPopupViewModel : IDisposable
+    public sealed class PlayerPopupViewModel : IPopupViewModel, IDisposable
     {
         private readonly CharacterStatsSectionViewModel _characterStatsSection;
         private readonly PlayerLevelSectionViewModel _playerLevelSection;

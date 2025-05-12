@@ -6,6 +6,7 @@ namespace Lessons.Architecture.PM
     {
         public override void InstallBindings()
         {
+            Container.BindInterfacesAndSelfTo<PopupViewModelFactory>().AsSingle();
             Container.Bind<PopupManager>().FromComponentInHierarchy().AsSingle();
         }
     }

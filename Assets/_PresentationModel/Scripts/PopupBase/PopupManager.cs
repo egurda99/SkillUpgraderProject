@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace Lessons.Architecture.PM
 {
@@ -9,6 +10,14 @@ namespace Lessons.Architecture.PM
     {
         [SerializeField] private PopupHolder[] _allPopups;
         private readonly Dictionary<PopupName, Popup> _activePopups = new();
+
+        private IPopupViewModelFactory _viewModelFactory;
+
+        [Inject]
+        public void Construct(IPopupViewModelFactory factory)
+        {
+            _viewModelFactory = factory;
+        }
 
         private void Awake()
         {
@@ -50,8 +59,10 @@ namespace Lessons.Architecture.PM
             }
 
             var popup = FindPopup(name);
+            var viewModel = _viewModelFactory.Create(name);
+
             popup.gameObject.SetActive(true);
-            popup.Show();
+            popup.Show(viewModel);
             _activePopups.Add(name, popup);
         }
 
@@ -66,6 +77,12 @@ namespace Lessons.Architecture.PM
             var popup = _activePopups[name];
             popup.Hide();
             popup.gameObject.SetActive(false);
+
+            if (popup.ViewModel is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+
             _activePopups.Remove(name);
         }
 
