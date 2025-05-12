@@ -188,3 +188,8 @@ MonoBehaviour:
     - id: 49
       name: AttackDamage
       type: ReactiveVariable<float>
+  - name: Physics
+    indexes:
+    - id: 52
+      name: TriggerEventDispatcher
+      type: TriggerEventDispatcher

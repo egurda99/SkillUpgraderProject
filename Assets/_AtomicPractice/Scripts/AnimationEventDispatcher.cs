@@ -7,6 +7,6 @@ public sealed class AnimationEventDispatcher : MonoBehaviour
 
     public void ReceiveEvent(string key)
     {
-        this.OnEventReceived?.Invoke(key);
+        OnEventReceived?.Invoke(key);
     }
 }
