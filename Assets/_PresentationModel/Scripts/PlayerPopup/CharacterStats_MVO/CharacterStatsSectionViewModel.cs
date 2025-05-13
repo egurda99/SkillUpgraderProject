@@ -10,7 +10,6 @@ namespace Lessons.Architecture.PM
         {
             _statsHolderModel = statsHolder;
             _statListAdapter = new StatListAdapter(statsListHandlerFactory.Create(), _statsHolderModel);
-            _statListAdapter.Initialize();
         }
 
         public void Show()

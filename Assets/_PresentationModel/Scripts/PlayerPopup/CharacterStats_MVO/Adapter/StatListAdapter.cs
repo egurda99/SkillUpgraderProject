@@ -12,10 +12,6 @@ namespace Lessons.Architecture.PM
         {
             _listHandler = listHandler;
             _characterStatsHolder = characterStatsHolder;
-        }
-
-        public void Initialize()
-        {
             _characterStatsHolder.OnStatRemoved
                 .Subscribe(OnStatRemoved)
                 .AddTo(_disposable);
@@ -23,8 +19,13 @@ namespace Lessons.Architecture.PM
             _characterStatsHolder.OnStatAdded
                 .Subscribe(OnStatAdded)
                 .AddTo(_disposable);
-        }
 
+
+            foreach (var stat in characterStatsHolder.Stats.Values)
+            {
+                _listHandler.AddStat(stat);
+            }
+        }
 
         public void Dispose()
         {
@@ -40,6 +41,7 @@ namespace Lessons.Architecture.PM
         public void Hide()
         {
             _listHandler.Hide();
+            _listHandler.Clear();
         }
 
 
@@ -51,16 +53,6 @@ namespace Lessons.Architecture.PM
         private void OnStatAdded(CharacterStat stat)
         {
             _listHandler.AddStat(stat);
-        }
-
-        public void Reload()
-        {
-            _listHandler.Clear();
-
-            foreach (var stat in _characterStatsHolder.GetStats())
-            {
-                _listHandler.AddStat(stat);
-            }
         }
     }
 }

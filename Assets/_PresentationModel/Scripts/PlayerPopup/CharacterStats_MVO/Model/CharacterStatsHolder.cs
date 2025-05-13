@@ -11,6 +11,8 @@ namespace Lessons.Architecture.PM
         public Subject<CharacterStat> OnStatAdded = new();
         public Subject<CharacterStat> OnStatRemoved = new();
 
+        public Dictionary<string, CharacterStat> Stats => _stats;
+
         private readonly Dictionary<string, CharacterStat> _stats = new();
 
         public void AddStat(CharacterStat stat)
