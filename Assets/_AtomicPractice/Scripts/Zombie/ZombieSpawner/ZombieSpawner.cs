@@ -1,5 +1,6 @@
 using System;
 using Atomic.Entities;
+using MyTimer;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
@@ -18,11 +19,12 @@ public sealed class ZombieSpawner : IInitializable, IDisposable
     private readonly GameOverController _gameController;
     private bool _isGameEnded;
     private readonly PlayerService _playerService;
+    private readonly Transform _zombieContainer;
 
     public event Action<SceneEntity> OnZombieSpawned;
 
     public ZombieSpawner(SceneEntity zombiePrefab, Transform[] spawnPoints, float spawnInterval,
-        GameOverController gameController, PlayerService playerService, Timer spawnTimer)
+        GameOverController gameController, PlayerService playerService, Timer spawnTimer, Transform zombieContainer)
     {
         _zombiePrefab = zombiePrefab;
         _spawnPoints = spawnPoints;
@@ -31,6 +33,7 @@ public sealed class ZombieSpawner : IInitializable, IDisposable
         _target = _playerService.Player.transform;
         _gameController = gameController;
         _spawnTimer = spawnTimer;
+        _zombieContainer = zombieContainer;
     }
 
 
@@ -62,7 +65,8 @@ public sealed class ZombieSpawner : IInitializable, IDisposable
 
 
         var index = Random.Range(0, _spawnPoints.Length);
-        var zombieGO = Object.Instantiate(_zombiePrefab, _spawnPoints[index].position, Quaternion.identity);
+        var zombieGO = Object.Instantiate(_zombiePrefab, _spawnPoints[index].position, Quaternion.identity,
+            _zombieContainer);
         OnZombieSpawned?.Invoke(zombieGO);
         zombieGO.GetTarget().Value = _target;
         _spawnTimer.Reset();

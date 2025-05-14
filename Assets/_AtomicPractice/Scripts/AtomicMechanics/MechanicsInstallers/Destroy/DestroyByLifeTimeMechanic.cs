@@ -15,6 +15,8 @@ public class DestroyByLifeTimeMechanic : IEntityInstaller
         entity.AddLifeTime(_lifeTime);
         entity.AddRootTransform(_rootTransform);
         entity.AddCanStartTimer(new AndExpression());
+        entity.AddLifetimeTimer(new Timer());
+
 
         entity.AddBehaviour(new DestroyByLifeTimeBehaviour());
     }

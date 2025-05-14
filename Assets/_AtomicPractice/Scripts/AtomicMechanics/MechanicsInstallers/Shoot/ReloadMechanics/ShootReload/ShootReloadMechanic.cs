@@ -14,6 +14,9 @@ public sealed class ShootReloadMechanic : IEntityInstaller
         entity.AddNeedReload(new ReactiveVariable<bool>(true));
         entity.AddReloadEnded(new ReactiveVariable<bool>());
         entity.AddReloaded(new BaseEvent());
+        entity.AddReloadTimer(new Timer());
+
+
         entity.AddBehaviour(new ShootReloadBehaviour());
     }
 }

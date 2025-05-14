@@ -1,5 +1,4 @@
 using System;
-using Atomic.Elements;
 using Atomic.Entities;
 using UnityEngine;
 
@@ -8,8 +7,6 @@ public sealed class MeleeAttackAnimationMechanic : IEntityInstaller
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private AnimationEventDispatcher _animationEventDispatcher;
-
-    private IEvent _shootRequested;
 
     public void Install(IEntity entity)
     {

@@ -5,27 +5,47 @@ public sealed class ShootReloadBehaviour : IEntityInit, IEntityUpdate, IEntityDi
 {
     private IEvent _reloaded;
     private IEvent _shootEvent;
-    private ReactiveVariable<float> _reloadTimer;
+    private ReactiveVariable<float> _reloadTime;
     private ReactiveVariable<bool> _reloadEnded;
-    private float _currentTime;
     private ReactiveVariable<bool> _needReload;
+    private Timer _timer;
 
     public void Init(IEntity entity)
     {
-        _reloadTimer = entity.GetReloadTime();
+        _reloadTime = entity.GetReloadTime();
         _reloaded = entity.GetReloaded();
         _reloadEnded = entity.GetReloadEnded();
 
         _needReload = entity.GetNeedReload();
         _shootEvent = entity.GetShootEvent();
-        _currentTime = _reloadTimer.Value;
 
+        _timer = entity.GetReloadTimer();
+
+        _timer.SetDuration(_reloadTime.Value);
+        _timer.Start();
+
+        _timer.OnEnded += OnReloadTimerEnded;
+        _timer.OnStarted += OnReloadTimerStarted;
         _shootEvent.Subscribe(OnShootEvent);
+    }
+
+    private void OnReloadTimerStarted()
+    {
+        _reloadEnded.Value = false;
+    }
+
+    private void OnReloadTimerEnded()
+    {
+        _reloaded?.Invoke();
+        _reloadEnded.Value = true;
+        _needReload.Value = false;
+        _timer.SetDuration(_reloadTime.Value);
     }
 
     private void OnShootEvent()
     {
         _needReload.Value = true;
+        _timer.Start();
     }
 
 
@@ -33,16 +53,7 @@ public sealed class ShootReloadBehaviour : IEntityInit, IEntityUpdate, IEntityDi
     {
         if (_needReload.Value)
         {
-            _currentTime -= deltaTime;
-            _reloadEnded.Value = false;
-
-            if (_currentTime <= 0)
-            {
-                _reloaded?.Invoke();
-                _reloadEnded.Value = true;
-                _needReload.Value = false;
-                _currentTime = _reloadTimer.Value;
-            }
+            _timer.Tick(deltaTime);
         }
     }
 
@@ -50,5 +61,6 @@ public sealed class ShootReloadBehaviour : IEntityInit, IEntityUpdate, IEntityDi
     public void Dispose(IEntity entity)
     {
         _shootEvent.Unsubscribe(OnShootEvent);
+        _timer.OnEnded -= OnReloadTimerEnded;
     }
 }

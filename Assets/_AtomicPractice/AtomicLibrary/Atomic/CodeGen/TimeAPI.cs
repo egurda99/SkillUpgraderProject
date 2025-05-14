@@ -17,6 +17,11 @@ namespace Atomic.Entities
         public const int LifeTime = 29; // ReactiveVariable<float>
         public const int AmmoRefillTime = 40; // ReactiveVariable<float>
         public const int CanStartTimer = 47; // AndExpression
+        public const int LifetimeTimer = 53; // Timer
+        public const int ReloadTimer = 54; // Timer
+        public const int AmmoRefillTimer = 55; // Timer
+        public const int StunTimer = 58; // Timer
+        public const int StunTime = 56; // ReactiveVariable<float>
 
 
         ///Extensions
@@ -109,5 +114,95 @@ namespace Atomic.Entities
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetCanStartTimer(this IEntity obj, AndExpression value) => obj.SetValue(CanStartTimer, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Timer GetLifetimeTimer(this IEntity obj) => obj.GetValue<Timer>(LifetimeTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetLifetimeTimer(this IEntity obj, out Timer value) => obj.TryGetValue(LifetimeTimer, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddLifetimeTimer(this IEntity obj, Timer value) => obj.AddValue(LifetimeTimer, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasLifetimeTimer(this IEntity obj) => obj.HasValue(LifetimeTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelLifetimeTimer(this IEntity obj) => obj.DelValue(LifetimeTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetLifetimeTimer(this IEntity obj, Timer value) => obj.SetValue(LifetimeTimer, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Timer GetReloadTimer(this IEntity obj) => obj.GetValue<Timer>(ReloadTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetReloadTimer(this IEntity obj, out Timer value) => obj.TryGetValue(ReloadTimer, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddReloadTimer(this IEntity obj, Timer value) => obj.AddValue(ReloadTimer, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasReloadTimer(this IEntity obj) => obj.HasValue(ReloadTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelReloadTimer(this IEntity obj) => obj.DelValue(ReloadTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetReloadTimer(this IEntity obj, Timer value) => obj.SetValue(ReloadTimer, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Timer GetAmmoRefillTimer(this IEntity obj) => obj.GetValue<Timer>(AmmoRefillTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetAmmoRefillTimer(this IEntity obj, out Timer value) => obj.TryGetValue(AmmoRefillTimer, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddAmmoRefillTimer(this IEntity obj, Timer value) => obj.AddValue(AmmoRefillTimer, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasAmmoRefillTimer(this IEntity obj) => obj.HasValue(AmmoRefillTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelAmmoRefillTimer(this IEntity obj) => obj.DelValue(AmmoRefillTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetAmmoRefillTimer(this IEntity obj, Timer value) => obj.SetValue(AmmoRefillTimer, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Timer GetStunTimer(this IEntity obj) => obj.GetValue<Timer>(StunTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetStunTimer(this IEntity obj, out Timer value) => obj.TryGetValue(StunTimer, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddStunTimer(this IEntity obj, Timer value) => obj.AddValue(StunTimer, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasStunTimer(this IEntity obj) => obj.HasValue(StunTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelStunTimer(this IEntity obj) => obj.DelValue(StunTimer);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetStunTimer(this IEntity obj, Timer value) => obj.SetValue(StunTimer, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ReactiveVariable<float> GetStunTime(this IEntity obj) => obj.GetValue<ReactiveVariable<float>>(StunTime);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetStunTime(this IEntity obj, out ReactiveVariable<float> value) => obj.TryGetValue(StunTime, out value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AddStunTime(this IEntity obj, ReactiveVariable<float> value) => obj.AddValue(StunTime, value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool HasStunTime(this IEntity obj) => obj.HasValue(StunTime);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool DelStunTime(this IEntity obj) => obj.DelValue(StunTime);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetStunTime(this IEntity obj, ReactiveVariable<float> value) => obj.SetValue(StunTime, value);
     }
 }

@@ -1,3 +1,4 @@
+using MyTimer;
 using Zenject;
 
 public class TimerInstaller : MonoInstaller<TimerInstaller>

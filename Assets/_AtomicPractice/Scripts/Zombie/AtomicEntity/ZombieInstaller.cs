@@ -29,6 +29,7 @@ public class ZombieInstaller : SceneEntityInstallerBase
         entity.GetCanAttack().Append(() => !entity.GetNeedReload().Value);
         entity.GetCanAttack().Append(() => entity.GetIsTargetAlive().Value);
         entity.GetCanMove().Append(() => !entity.GetIsDead().Value);
+        entity.GetCanMove().Append(() => entity.GetIsTargetAlive().Value);
         entity.GetCanRotate().Append(() => !entity.GetIsDead().Value);
         entity.GetCanStartTimer().Append(() => entity.GetIsDead().Value);
     }
