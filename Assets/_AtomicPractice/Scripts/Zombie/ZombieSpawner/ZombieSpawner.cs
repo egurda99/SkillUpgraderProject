@@ -21,6 +21,8 @@ public sealed class ZombieSpawner : IInitializable, IDisposable
     private readonly PlayerService _playerService;
     private readonly Transform _zombieContainer;
 
+    private Atomic.Elements.Timer _testTimer;
+
     public event Action<SceneEntity> OnZombieSpawned;
 
     public ZombieSpawner(SceneEntity zombiePrefab, Transform[] spawnPoints, float spawnInterval,
