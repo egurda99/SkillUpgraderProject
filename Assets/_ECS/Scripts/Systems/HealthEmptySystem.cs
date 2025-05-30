@@ -8,12 +8,12 @@ namespace Client.Systems
     {
         private readonly EcsFilterInject<Inc<Health>, Exc<DeathRequest, Inactive>> _filter;
         private readonly EcsPoolInject<DeathRequest> _deathPool;
-        
+
         public void Run(IEcsSystems systems)
         {
-            foreach (int entity in _filter.Value)
+            foreach (var entity in _filter.Value)
             {
-                Health health = _filter.Pools.Inc1.Get(entity);
+                var health = _filter.Pools.Inc1.Get(entity);
                 if (health.Value <= 0)
                 {
                     _deathPool.Value.Add(entity) = new DeathRequest();

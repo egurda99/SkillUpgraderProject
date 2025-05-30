@@ -7,7 +7,7 @@ using Leopotam.EcsLite.Di;
 using Leopotam.EcsLite.Entities;
 using Leopotam.EcsLite.ExtendedSystems;
 using Leopotam.EcsLite.Helpers;
-using UnityEngine;
+using Leopotam.EcsLite.UnityEditor;
 
 namespace Client
 {
@@ -41,33 +41,35 @@ namespace Client
         {
             base.Awake();
             _entityManager = new EntityManager();
-            _world = new EcsWorld ();
-            _events = new EcsWorld ();
-            _systems = new EcsSystems (_world);
+            _world = new EcsWorld();
+            _events = new EcsWorld();
+            _systems = new EcsSystems(_world);
             _systems.AddWorld(_events, EcsWorlds.EVENTS);
             _systems
                 // Game Logic
                 //.Add(new ExampleSystem())
+                .Add(new BulletSpawnSystem())
                 .Add(new MovementSystem())
                 .Add(new FireRequestSystem())
-                .Add(new SpawnRequestSystem())
+                .Add(new PrefabSpawnSystem())
                 .Add(new HealthEmptySystem())
                 .Add(new DeathRequestSystem())
                 .Add(new BulletCollisionRequestSystem())
                 .Add(new TakeDamageRequestSystem())
                 .Add(new BulletDestroySystem())
-
+                .Add(new AttackBlockSystem())
+                .Add(new AttackRangeCheckSystem())
+                .Add(new FindClosestEnemySystem())
 
                 //View:
                 .Add(new TransformViewSynchronizerSystem())
                 .Add(new AnimatorTakeDamageListenerSystem())
                 .Add(new AnimatorDeathListenerSystem())
                 //Editor:
-                #if UNITY_EDITOR
-                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
-                .Add(new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem(EcsWorlds.EVENTS))
-
-                #endif
+#if UNITY_EDITOR
+                .Add(new EcsWorldDebugSystem())
+                .Add(new EcsWorldDebugSystem(EcsWorlds.EVENTS))
+#endif
                 //Clean Up:
                 .Add(new OneFrameEventSystem())
                 .DelHere<DeathEvent>();
@@ -80,7 +82,7 @@ namespace Client
             _systems.Init();
         }
 
-        private void Update() 
+        private void Update()
         {
             _systems?.Run();
         }
@@ -88,13 +90,13 @@ namespace Client
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            if (_systems != null) 
+            if (_systems != null)
             {
                 _systems.Destroy();
                 _systems = null;
             }
-            
-            if (_world != null) 
+
+            if (_world != null)
             {
                 _world.Destroy();
                 _world = null;

@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 
 namespace Client.Components
 {
     [Serializable]
-    public struct MoveSpeed
+    public struct AttackCooldown
     {
         public float Value;
     }
