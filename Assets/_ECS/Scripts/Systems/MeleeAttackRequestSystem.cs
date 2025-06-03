@@ -41,10 +41,6 @@ namespace Client.Systems
                     continue;
                 }
 
-                var targetEntity = target.EntityId;
-
-                var targetPosition = positionPool.Get(targetEntity).Value;
-
                 var spawnEvent = _eventWorld.Value.NewEntity();
 
                 _meleeAttackEventPool.Value.Add(spawnEvent);
