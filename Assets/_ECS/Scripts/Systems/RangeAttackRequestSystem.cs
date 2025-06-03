@@ -4,9 +4,9 @@ using Leopotam.EcsLite.Di;
 
 namespace Client.Systems
 {
-    public sealed class FireRequestSystem : IEcsRunSystem
+    public sealed class RangeAttackRequestSystem : IEcsRunSystem
     {
-        private readonly EcsFilterInject<Inc<FireRequest, BulletWeapon, Target>, Exc<Inactive, AttackBlockDuration>>
+        private readonly EcsFilterInject<Inc<AttackRequest, BulletWeapon, Target>, Exc<Inactive, AttackBlockDuration>>
             _filter;
 
         private readonly EcsWorldInject _eventWorld = EcsWorlds.EVENTS;
@@ -15,13 +15,16 @@ namespace Client.Systems
         private readonly EcsPoolInject<Rotation> _rotationPool = EcsWorlds.EVENTS;
         private readonly EcsPoolInject<Prefab> _prefabPool = EcsWorlds.EVENTS;
         private readonly EcsPoolInject<MoveDirection> _directionPool = EcsWorlds.EVENTS;
+        private readonly EcsPoolInject<Team> _teamPool = EcsWorlds.EVENTS;
 
 
         public void Run(IEcsSystems systems)
         {
-            var world = systems.GetWorld(); // Основной мир (не events!)
+            var world = systems.GetWorld();
             var positionPool = world.GetPool<Position>();
             var attackCooldownPool = world.GetPool<AttackCooldown>();
+            var canAttackPool = world.GetPool<CanAttack>();
+            var teamPool = world.GetPool<Team>();
 
             var blockAttackPool = world.GetPool<AttackBlockDuration>();
 
@@ -36,14 +39,15 @@ namespace Client.Systems
 
                 if (!positionPool.Has(target.EntityId))
                 {
-                    _filter.Pools.Inc1.Del(entity);
+                    requestPool.Del(entity);
                     continue;
                 }
 
                 var targetEntity = target.EntityId;
 
-
                 var targetPosition = positionPool.Get(targetEntity).Value;
+
+                var currentTeam = teamPool.Get(entity);
 
                 var spawnEvent = _eventWorld.Value.NewEntity();
 
@@ -53,10 +57,16 @@ namespace Client.Systems
                 _prefabPool.Value.Add(spawnEvent) = new Prefab { Value = weapon.BulletPrefab };
                 _directionPool.Value.Add(spawnEvent) = new MoveDirection
                     { Value = (targetPosition - weapon.FirePoint.position).normalized };
+                _teamPool.Value.Add(spawnEvent) = new Team { Value = currentTeam.Value };
 
                 blockAttackPool.Add(entity) = new AttackBlockDuration { Timer = attackCooldownPool.Get(entity).Value };
 
                 requestPool.Del(entity);
+
+                if (canAttackPool.Has(entity))
+                {
+                    canAttackPool.Del(entity);
+                }
             }
         }
     }

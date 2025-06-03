@@ -13,10 +13,10 @@ namespace Client.Systems
 
         public void Run(IEcsSystems systems)
         {
-            foreach (int entity in _filter.Value)
+            foreach (var entity in _filter.Value)
             {
-                Animator animator = _filter.Pools.Inc1.Get(entity).Value;
-                animator.SetTrigger(_deathAnimatorTrigger);
+                var animator = _filter.Pools.Inc1.Get(entity).Value;
+                animator.SetBool(_deathAnimatorTrigger, true);
             }
         }
     }

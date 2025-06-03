@@ -12,7 +12,6 @@ namespace Client.Installer
         protected override void Install(Entity entity)
         {
             entity.AddData(new BulletTag());
-            //entity.AddData(new NotInited());
             entity.AddData(new Position { Value = transform.position });
             entity.AddData(new Rotation { Value = transform.rotation });
             entity.AddData(new MoveSpeed { Value = _moveSpeed });

@@ -5,17 +5,16 @@ using UnityEngine.UI;
 
 namespace Client.Installer
 {
-    public sealed class ArcherInstaller : EntityInstaller
+    public sealed class WarriorInstaller : EntityInstaller
     {
         [SerializeField] private float _moveSpeed = 5.0f;
-        [SerializeField] private float _attackRange = 5.0f;
+        [SerializeField] private float _damage = 1.0f;
+        [SerializeField] private float _attackRange = 2.0f;
         [SerializeField] private float _attack—ooldown = 3.0f;
         [SerializeField] private TeamMember _teamMember;
 
         [SerializeField] private int _health = 5;
         [SerializeField] private Animator _animator;
-        [SerializeField] private Transform _firePoint;
-        [SerializeField] private Entity _bulletPrefab;
 
         [Space] [Header("UI")] [SerializeField]
         private Image _hpImage;
@@ -35,11 +34,8 @@ namespace Client.Installer
             entity.AddData(new AnimatorView { Value = _animator });
             entity.AddData(new Health { Value = _health });
             entity.AddData(new DamageableTag());
-            entity.AddData(new BulletWeapon
-            {
-                FirePoint = _firePoint,
-                BulletPrefab = _bulletPrefab
-            });
+            entity.AddData(new MeleeWeapon { Damage = _damage });
+
             entity.AddData(new Team { Value = _teamMember });
             entity.AddData(new AttackRange { Value = _attackRange });
             entity.AddData(new AttackCooldown { Value = _attack—ooldown });

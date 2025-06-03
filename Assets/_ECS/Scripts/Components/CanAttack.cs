@@ -3,8 +3,7 @@ using System;
 namespace Client.Components
 {
     [Serializable]
-    public struct AttackRange
+    public struct CanAttack
     {
-        public float Value;
     }
 }

@@ -10,7 +10,7 @@ namespace Client.Systems
     {
         private readonly EcsWorldInject _eventWorld = EcsWorlds.EVENTS;
 
-        private readonly EcsFilterInject<Inc<SpawnRequest, Position, Rotation, Prefab, MoveDirection>> _filter =
+        private readonly EcsFilterInject<Inc<SpawnRequest, Position, Rotation, Prefab, MoveDirection, Team>> _filter =
             EcsWorlds.EVENTS;
 
         private readonly EcsCustomInject<EntityManager> _entityManager;
@@ -22,16 +22,17 @@ namespace Client.Systems
             {
                 var prefab = _filter.Pools.Inc4.Get(@event).Value;
                 var position = _filter.Pools.Inc2.Get(@event).Value;
-                var rotation = _filter.Pools.Inc3.Get(@event).Value;
                 var direction = _filter.Pools.Inc5.Get(@event).Value;
+                var team = _filter.Pools.Inc6.Get(@event).Value;
 
                 var lookRotation = Quaternion.LookRotation(direction);
                 var bulletEntity = _entityManager.Value.Create(prefab, position, lookRotation);
 
                 var movePool = mainWorld.GetPool<MoveDirection>();
+                var teamPool = mainWorld.GetPool<Team>();
 
                 movePool.Add(bulletEntity.Id) = new MoveDirection { Value = direction };
-
+                teamPool.Add(bulletEntity.Id) = new Team { Value = team };
                 _eventWorld.Value.DelEntity(@event);
             }
         }

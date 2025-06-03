@@ -3,8 +3,8 @@ using System;
 namespace Client.Components
 {
     [Serializable]
-    public struct AttackRange
+    public struct MeleeWeapon
     {
-        public float Value;
+        public float Damage;
     }
 }

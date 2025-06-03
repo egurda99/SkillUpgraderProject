@@ -50,7 +50,7 @@ namespace Client
                 //.Add(new ExampleSystem())
                 .Add(new BulletSpawnSystem())
                 .Add(new MovementSystem())
-                .Add(new FireRequestSystem())
+                .Add(new RangeAttackRequestSystem())
                 .Add(new PrefabSpawnSystem())
                 .Add(new HealthEmptySystem())
                 .Add(new DeathRequestSystem())
@@ -58,13 +58,19 @@ namespace Client
                 .Add(new TakeDamageRequestSystem())
                 .Add(new BulletDestroySystem())
                 .Add(new AttackBlockSystem())
-                .Add(new AttackRangeCheckSystem())
                 .Add(new FindClosestEnemySystem())
+                .Add(new AttackRangeCheckSystem())
+                .Add(new MoveDirectionToAttackTargetSystem())
+                .Add(new DeleteAfterAnimationEventSystem())
+                .Add(new MeleeAttackRequestSystem())
+                .Add(new MeleeAttackActionSystem())
 
                 //View:
                 .Add(new TransformViewSynchronizerSystem())
                 .Add(new AnimatorTakeDamageListenerSystem())
                 .Add(new AnimatorDeathListenerSystem())
+                .Add(new AnimatorMoveListenerSystem())
+                .Add(new AnimatorMeleeAttackListenerSystem())
                 //Editor:
 #if UNITY_EDITOR
                 .Add(new EcsWorldDebugSystem())
