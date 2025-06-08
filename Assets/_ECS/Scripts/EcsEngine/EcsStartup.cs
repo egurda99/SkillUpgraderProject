@@ -18,6 +18,9 @@ namespace Client
         private IEcsSystems _systems;
         private EntityManager _entityManager;
 
+
+        public EntityManager EntityManager => _entityManager;
+
         #region MyRegion
 
         public EcsEntityBuilder CreateEntity(string worldName = null)
@@ -64,6 +67,9 @@ namespace Client
                 .Add(new DeleteAfterAnimationEventSystem())
                 .Add(new MeleeAttackRequestSystem())
                 .Add(new MeleeAttackActionSystem())
+                .Add(new RotateToDirectionSystem())
+                .Add(new BaseDestroySystem())
+                .Add(new GameOverSystem())
 
                 //View:
                 .Add(new TransformViewSynchronizerSystem())

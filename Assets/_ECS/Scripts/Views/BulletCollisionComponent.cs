@@ -17,7 +17,6 @@ namespace Client.Views
 
         private void OnCollisionEnter(Collision collision)
         {
-            // if (collision.gameObject.TryGetComponent(out Entity target))
             if (collision.gameObject.TryGetComponent(out EntityProxy proxy))
             {
                 var target = proxy.Entity;

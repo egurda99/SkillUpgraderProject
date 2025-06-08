@@ -9,11 +9,16 @@ namespace Client.Systems
     {
         private readonly EcsFilterInject<Inc<Team, Position>, Exc<Inactive, BulletTag>> _filter;
         private readonly EcsPoolInject<Target> _targetPool;
+        private readonly EcsPoolInject<BaseTag> _basePool;
 
         public void Run(IEcsSystems systems)
         {
             foreach (var entity in _filter.Value)
             {
+                if (_basePool.Value.Has(entity))
+                    continue;
+
+
                 var currentTeam = _filter.Pools.Inc1.Get(entity);
                 var currentPos = _filter.Pools.Inc2.Get(entity);
 

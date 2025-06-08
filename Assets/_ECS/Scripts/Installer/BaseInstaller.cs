@@ -25,6 +25,7 @@ namespace Client.Installer
             entity.AddData(new Position { Value = transform.position });
 
             entity.AddData(new DamageableTag());
+            entity.AddData(new BaseTag());
 
             entity.AddData(new Team { Value = _teamMember });
         }

@@ -12,11 +12,10 @@ namespace Client.Systems
 
         public void Run(IEcsSystems systems)
         {
-            foreach (int entity in _filter.Value)
+            foreach (var entity in _filter.Value)
             {
                 _entityManager.Value.Destroy(entity);
             }
         }
     }
 }
-

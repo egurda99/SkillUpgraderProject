@@ -9,7 +9,7 @@ namespace Client.Systems
     {
         private static readonly int _moveValue = Animator.StringToHash("isMoving");
 
-        private readonly EcsFilterInject<Inc<AnimatorView, MoveDirection>> _filter;
+        private readonly EcsFilterInject<Inc<AnimatorView, MoveDirection>, Exc<Inactive>> _filter;
 
         public void Run(IEcsSystems systems)
         {
