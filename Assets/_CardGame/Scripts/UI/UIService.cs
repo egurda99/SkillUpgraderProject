@@ -4,20 +4,18 @@ namespace UI
 {
     public sealed class UIService : MonoBehaviour
     {
-        [SerializeField]
-        private HeroListView bluePlayer;
+        [SerializeField] private HeroListView _bluePlayer;
 
-        [SerializeField]
-        private HeroListView redPlayer;
+        [SerializeField] private HeroListView _redPlayer;
 
-        public HeroListView GetBluePlayer()
+        public HeroListView GetBluePlayerList()
         {
-            return this.bluePlayer;
+            return _bluePlayer;
         }
 
-        public HeroListView GetRedPlayer()
+        public HeroListView GetRedPlayerList()
         {
-            return this.redPlayer;
+            return _redPlayer;
         }
     }
 }

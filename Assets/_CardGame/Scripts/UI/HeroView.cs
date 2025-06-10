@@ -1,6 +1,6 @@
-using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,104 +11,90 @@ namespace UI
     //Менять нельзя!
     public sealed class HeroView : MonoBehaviour
     {
-        internal event UnityAction OnClicked
+        public event UnityAction OnClicked
         {
-            add { this.button.onClick.AddListener(value); }
-            remove { this.button.onClick.RemoveListener(value); }
+            add { button.onClick.AddListener(value); }
+            remove { button.onClick.RemoveListener(value); }
         }
 
-        [SerializeField]
-        private Image heroImage;
+        [SerializeField] private Image heroImage;
 
-        [SerializeField]
-        private TMP_Text stats;
+        [SerializeField] private TMP_Text stats;
 
-        [SerializeField]
-        private Button button;
+        [SerializeField] private Button button;
 
-        [Header("Active")]
-        [SerializeField, Space]
+        [Header("Active")] [SerializeField] [Space]
         private Image activeImage;
 
-        [SerializeField]
-        private Sprite activeIcon;
+        [SerializeField] private Sprite activeIcon;
 
-        [SerializeField]
-        private Sprite inactiveIcon;
+        [SerializeField] private Sprite inactiveIcon;
 
-        [SerializeField]
-        private GameObject activeBlur;
+        [SerializeField] private GameObject activeBlur;
 
-        [Header("Attack")]
-        [SerializeField]
-        private RectTransform center;
+        [Header("Attack")] [SerializeField] private RectTransform center;
 
-        [SerializeField]
-        private float forwardDuration = 0.2f;
+        [SerializeField] private float forwardDuration = 0.2f;
 
-        [SerializeField]
-        private AnimationCurve attackCurve;
+        [SerializeField] private AnimationCurve attackCurve;
 
-        [SerializeField]
-        private AnimationCurve scaleCurve;
+        [SerializeField] private AnimationCurve scaleCurve;
 
-        [SerializeField]
-        private float backDuration = 0.5f;
+        [SerializeField] private float backDuration = 0.5f;
 
-        [SerializeField]
-        private AudioClip punchSFX;
+        [SerializeField] private AudioClip punchSFX;
 
         private Sequence attackAnimation;
 
         private AudioPlayer audioPlayer;
-        
+
         private void Start()
         {
-            this.audioPlayer = AudioPlayer.Instance;
+            audioPlayer = AudioPlayer.Instance;
         }
 
-        [Sirenix.OdinInspector.Button]
+        [Button]
         public void SetIcon(Sprite icon)
         {
-            this.heroImage.sprite = icon;
+            heroImage.sprite = icon;
         }
 
-        [Sirenix.OdinInspector.Button]
+        [Button]
         public void SetStats(string stats)
         {
             this.stats.text = stats;
         }
 
-        [Sirenix.OdinInspector.Button]
+        [Button]
         public void SetActive(bool isActive)
         {
-            this.activeImage.sprite = isActive ? this.activeIcon : this.inactiveIcon;
-            this.activeBlur.SetActive(isActive);
+            activeImage.sprite = isActive ? activeIcon : inactiveIcon;
+            activeBlur.SetActive(isActive);
         }
 
-        [Sirenix.OdinInspector.Button]
+        [Button]
         public UniTask AnimateAttack(HeroView target)
         {
-            if (this.attackAnimation != null)
+            if (attackAnimation != null)
             {
                 return UniTask.CompletedTask;
             }
 
-            UniTaskCompletionSource tcs = new UniTaskCompletionSource();
-            
-            Vector3 sourcePosition = this.center.position;
-            Vector3 targetPosition = target.center.position;
+            var tcs = new UniTaskCompletionSource();
 
-            this.attackAnimation = DOTween
+            var sourcePosition = center.position;
+            var targetPosition = target.center.position;
+
+            attackAnimation = DOTween
                 .Sequence()
-                .Append(this.center.DOMove(targetPosition, this.forwardDuration).SetEase(this.attackCurve))
-                .Join(this.center.DOScale(1.25f, this.forwardDuration).SetEase(this.scaleCurve))
-                .AppendCallback(() => this.audioPlayer.PlaySound(this.punchSFX))
-                .Append(this.center.DOMove(sourcePosition, this.backDuration))
-                .Join(this.center.DOScale(1, this.backDuration))
+                .Append(center.DOMove(targetPosition, forwardDuration).SetEase(attackCurve))
+                .Join(center.DOScale(1.25f, forwardDuration).SetEase(scaleCurve))
+                .AppendCallback(() => audioPlayer.PlaySound(punchSFX))
+                .Append(center.DOMove(sourcePosition, backDuration))
+                .Join(center.DOScale(1, backDuration))
                 .OnComplete(() =>
                 {
-                    this.attackAnimation = null;
+                    attackAnimation = null;
                     tcs.TrySetResult();
                 });
 

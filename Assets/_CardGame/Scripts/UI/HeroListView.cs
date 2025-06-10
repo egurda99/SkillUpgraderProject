@@ -4,35 +4,24 @@ using UnityEngine;
 
 namespace UI
 {
-    [RequireComponent(typeof(Canvas))]
     public sealed class HeroListView : MonoBehaviour
     {
-        private const int FORWARD_LAYER = 10;
-        private const int BACK_LAYER = 0;
-
         public event Action<HeroView> OnHeroClicked;
 
-        [SerializeField]
-        private HeroView[] views;
+        [SerializeField] private HeroView[] views;
 
-        private Canvas canvas;
-
-        private void Awake()
-        {
-            this.canvas = this.GetComponent<Canvas>();
-        }
 
         private void OnEnable()
         {
-            foreach (var view in this.views)
+            foreach (var view in views)
             {
-                view.OnClicked += () => this.OnHeroClicked?.Invoke(view);
+                view.OnClicked += () => OnHeroClicked?.Invoke(view);
             }
         }
 
         private void OnDisable()
         {
-            Action<HeroView> @event = this.OnHeroClicked;
+            var @event = OnHeroClicked;
             if (@event == null)
             {
                 return;
@@ -40,23 +29,18 @@ namespace UI
 
             foreach (var @delegate in @event.GetInvocationList())
             {
-                this.OnHeroClicked -= (Action<HeroView>) @delegate;
+                OnHeroClicked -= (Action<HeroView>)@delegate;
             }
         }
 
         public IReadOnlyList<HeroView> GetViews()
         {
-            return this.views;
+            return views;
         }
 
         public HeroView GetView(int index)
         {
-            return this.views[index];
-        }
-
-        public void SetActive(bool isActive)
-        {
-            this.canvas.sortingOrder = isActive ? FORWARD_LAYER : BACK_LAYER;
+            return views[index];
         }
     }
 }
