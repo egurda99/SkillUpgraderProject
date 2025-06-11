@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using _CardGame.Services;
 using _CardGame.Teams;
+using Cysharp.Threading.Tasks;
 
 namespace _CardGame.EventTasks
 {
@@ -14,24 +15,32 @@ namespace _CardGame.EventTasks
             _activeTeamService = activeTeamService;
         }
 
-        public override async Task Run()
+        public override async UniTask Run()
         {
-            if (_taskCompletionSource != null)
-                await _taskCompletionSource.Task;
-
-            _activeTeamService.OnActiveTeamChanged += OnActiveTeamChanged;
-            _taskCompletionSource = new TaskCompletionSource<bool>();
+//             if (_taskCompletionSource != null)
+//                 await _taskCompletionSource.Task;
+//
+//             _taskCompletionSource = new TaskCompletionSource<bool>();
+//
+//             // _activeTeamService.OnActiveTeamChanged += OnActiveTeamChanged;
+//             _activeTeamService.ToggleActiveTeam();
+//             _taskCompletionSource.SetResult(true);
+// //
+//             await _taskCompletionSource.Task;
+//
+//             // _activeTeamService.OnActiveTeamChanged -= OnActiveTeamChanged;
+//             _taskCompletionSource = null;
+//
             _activeTeamService.ToggleActiveTeam();
-
-            await _taskCompletionSource.Task;
-            _taskCompletionSource = null;
-
-            _activeTeamService.OnActiveTeamChanged -= OnActiveTeamChanged;
+            await UniTask.Yield(); // Для совместимости с пайплайном
         }
 
         private void OnActiveTeamChanged(Team obj)
         {
-            _taskCompletionSource.SetResult(true);
+            if (_taskCompletionSource != null && !_taskCompletionSource.Task.IsCompleted)
+            {
+                _taskCompletionSource.SetResult(true);
+            }
         }
     }
 }

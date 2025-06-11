@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using _CardGame.Services;
 using _CardGame.Teams;
+using Cysharp.Threading.Tasks;
 using UI;
 
 namespace _CardGame.EventTasks
@@ -30,10 +31,10 @@ namespace _CardGame.EventTasks
             _activeCardService = activeCardService;
         }
 
-        public override async Task Run()
+        public override async UniTask Run()
         {
-            if (_taskCompletionSource != null)
-                await _taskCompletionSource.Task;
+            // if (_taskCompletionSource != null)
+            //     await _taskCompletionSource.Task;
 
             if (_activeTeamService.ActiveTeam == Team.Red)
             {
@@ -49,10 +50,11 @@ namespace _CardGame.EventTasks
 
             _eventBus.RaiseEvent(new ActiveHeroChosenEvent(_activeCardService.ActiveHeroView));
 
-            _taskCompletionSource = new TaskCompletionSource<bool>();
-            _taskCompletionSource.SetResult(true);
-            await _taskCompletionSource.Task;
-            _taskCompletionSource = null;
+            // _taskCompletionSource = new TaskCompletionSource<bool>();
+            // _taskCompletionSource.SetResult(true);
+            // await _taskCompletionSource.Task;
+            // _taskCompletionSource = null;
+            await UniTask.Yield();
         }
 
         public HeroView GetNextHero()

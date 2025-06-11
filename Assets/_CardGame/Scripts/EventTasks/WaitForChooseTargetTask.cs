@@ -1,4 +1,7 @@
 using System.Threading.Tasks;
+using _CardGame.Services;
+using _CardGame.Teams;
+using Cysharp.Threading.Tasks;
 using UI;
 
 namespace _CardGame.EventTasks
@@ -8,28 +11,41 @@ namespace _CardGame.EventTasks
         private TaskCompletionSource<bool> _taskCompletionSource;
         private readonly IEventBus _eventBus;
 
-        private readonly HeroListView _blueHeroList;
-        private HeroListView _redHeroList;
 
-        public WaitForChooseTargetTask(IEventBus eventBus, UIService uiService)
+        private HeroListView _activeHeroList;
+        private readonly ActiveTeamService _activeTeamService;
+        private readonly UIService _uiService;
+
+        public WaitForChooseTargetTask(IEventBus eventBus, UIService uiService, ActiveTeamService activeTeamService)
         {
             _eventBus = eventBus;
-            _blueHeroList = uiService.GetBluePlayerList();
-            _redHeroList = uiService.GetRedPlayerList();
+            _activeTeamService = activeTeamService;
+            _uiService = uiService;
         }
 
-        public override async Task Run()
+        public override async UniTask Run()
         {
             if (_taskCompletionSource != null)
                 await _taskCompletionSource.Task;
 
-            _blueHeroList.OnHeroClicked += OnHeroClicked;
+            if (_activeTeamService.ActiveTeam == Team.Red)
+            {
+                _activeHeroList = _uiService.GetBluePlayerList();
+            }
+
+            else
+            {
+                _activeHeroList = _uiService.GetRedPlayerList();
+            }
+
+
+            _activeHeroList.OnHeroClicked += OnHeroClicked;
 
             _taskCompletionSource = new TaskCompletionSource<bool>();
             await _taskCompletionSource.Task;
             _taskCompletionSource = null;
 
-            _blueHeroList.OnHeroClicked -= OnHeroClicked;
+            _activeHeroList.OnHeroClicked -= OnHeroClicked;
         }
 
         private void OnHeroClicked(HeroView hero)

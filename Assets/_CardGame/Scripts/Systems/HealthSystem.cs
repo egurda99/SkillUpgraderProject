@@ -7,6 +7,7 @@ namespace _CardGame.Systems
         public HealthSystem(HealthData data)
         {
             _healthData = data;
+            _healthData.ResetCurrentHealth();
         }
 
         public void TakeDamage(float amount)

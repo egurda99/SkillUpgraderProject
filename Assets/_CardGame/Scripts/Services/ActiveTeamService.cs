@@ -1,5 +1,6 @@
 using System;
 using _CardGame.Teams;
+using UnityEngine;
 
 namespace _CardGame.Services
 {
@@ -27,6 +28,9 @@ namespace _CardGame.Services
             _lastActiveTeam = _activeTeam;
             _activeTeam = _activeTeam == Team.Red ? Team.Blue : Team.Red;
             OnActiveTeamChanged?.Invoke(_activeTeam);
+
+            Debug.Log("[Active Team Service] Active team - " + _activeTeam);
+            Debug.Log("[Active Team Service] Last active team - " + _lastActiveTeam);
         }
     }
 }

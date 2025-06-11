@@ -1,9 +1,9 @@
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 namespace _CardGame.EventTasks
 {
     public abstract class BaseTask
     {
-        public abstract Task Run();
+        public abstract UniTask Run();
     }
 }

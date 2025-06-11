@@ -8,6 +8,7 @@ namespace UI
 
         [SerializeField] private HeroListView _redPlayer;
 
+
         public HeroListView GetBluePlayerList()
         {
             return _bluePlayer;
