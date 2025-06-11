@@ -13,6 +13,8 @@ namespace UI
 
         private readonly List<HeroViewClickHolder> _clickHolders = new();
 
+        public event Action OnAllHeroesDead;
+
         private void OnEnable()
         {
             foreach (var view in _views)
@@ -53,7 +55,16 @@ namespace UI
             if (_views.Contains(view))
             {
                 _views.Remove(view);
+                CheckIfAllDead();
                 Destroy(view.gameObject);
+            }
+        }
+
+        private void CheckIfAllDead()
+        {
+            if (_views.Count == 0)
+            {
+                OnAllHeroesDead?.Invoke();
             }
         }
 

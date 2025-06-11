@@ -9,7 +9,7 @@ using Zenject;
 
 namespace _CardGame.DI
 {
-    public class SceneInstaller : MonoInstaller<SceneInstaller>
+    public sealed class SceneInstaller : MonoInstaller<SceneInstaller>
     {
         public override void InstallBindings()
         {
@@ -23,6 +23,11 @@ namespace _CardGame.DI
             BindControllers();
 
             BindCardInstallers();
+
+            var helper = FindObjectOfType<InstallerHelper>();
+
+            Container.Bind<GameManager>().AsSingle().NonLazy();
+            Container.Bind<GameEndViewAdapter>().AsSingle().WithArguments(helper.GameEndView).NonLazy();
         }
 
 
@@ -58,6 +63,7 @@ namespace _CardGame.DI
             Container.BindInterfacesAndSelfTo<HeroesActivationStatusController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<HeroAttackController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<HeroesDeathCheckController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameEndController>().AsSingle().NonLazy();
         }
 
         private void BindServices()
