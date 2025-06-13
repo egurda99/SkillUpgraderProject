@@ -4,6 +4,7 @@ using _CardGame.EventTasks;
 using _CardGame.Installers;
 using _CardGame.Pipeline;
 using _CardGame.Services;
+using _CardGame.Systems;
 using UI;
 using Zenject;
 
@@ -33,7 +34,7 @@ namespace _CardGame.DI
 
         private void BindCardInstallers()
         {
-            var cardInstallers = FindObjectsOfType<CardInstaller>(true);
+            var cardInstallers = FindObjectsOfType<CardInstallerBase>(true);
 
             foreach (var cardInstaller in cardInstallers)
             {
@@ -64,6 +65,7 @@ namespace _CardGame.DI
             Container.BindInterfacesAndSelfTo<HeroAttackController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<HeroesDeathCheckController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<GameEndController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<EndTurnController>().AsSingle().NonLazy();
         }
 
         private void BindServices()
@@ -72,6 +74,7 @@ namespace _CardGame.DI
 
             Container.Bind<ActiveTeamService>().AsSingle().NonLazy();
             Container.Bind<ActiveCardService>().AsSingle();
+            Container.Bind<FrozenHeroesService>().AsSingle();
         }
 
         private void BindPipelines()

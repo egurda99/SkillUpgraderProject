@@ -21,6 +21,16 @@ namespace _CardGame.Controllers
             _blueTeam = uiService.GetBluePlayerList();
 
             _eventBus.Subscribe<AttackAnimationCompletedEvent>(OnAttackAnimationEnded);
+            _eventBus.Subscribe<TurnEndedEvent>(OnAttackAnimationEnded);
+        }
+
+        private void OnAttackAnimationEnded(TurnEndedEvent @event)
+        {
+            var currentHero = @event.CurrentHero;
+            var targetHero = @event.Target;
+
+            CheckHeroIsAlive(currentHero);
+            CheckHeroIsAlive(targetHero);
         }
 
         private void OnAttackAnimationEnded(AttackAnimationCompletedEvent @event)
@@ -34,7 +44,7 @@ namespace _CardGame.Controllers
 
         private void CheckHeroIsAlive(HeroView hero)
         {
-            if (hero.gameObject.GetComponent<CardInstaller>().CardView.HealthData.IsDead)
+            if (hero.gameObject.GetComponent<CardInstallerBase>().CardView.HealthData.IsDead)
             {
                 var currentTeam = GetTeamForHero(hero);
 
@@ -70,6 +80,7 @@ namespace _CardGame.Controllers
         public void Dispose()
         {
             _eventBus.Unsubscribe<AttackAnimationCompletedEvent>(OnAttackAnimationEnded);
+            _eventBus.Unsubscribe<TurnEndedEvent>(OnAttackAnimationEnded);
         }
     }
 }

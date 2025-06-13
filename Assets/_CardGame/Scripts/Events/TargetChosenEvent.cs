@@ -1,6 +1,6 @@
 using UI;
 
-namespace _CardGame.EventTasks
+namespace _CardGame.Events
 {
     public class TargetChosenEvent
     {

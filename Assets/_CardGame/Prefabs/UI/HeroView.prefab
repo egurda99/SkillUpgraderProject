@@ -282,7 +282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 383512545514860529}
   - component: {fileID: 8763992113062683896}
-  - component: {fileID: 4001621140167313723}
+  - component: {fileID: 642869487782907481}
   m_Layer: 5
   m_Name: HeroView
   m_TagString: Untagged
@@ -382,7 +382,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   backDuration: 0.5
   punchSFX: {fileID: 8300000, guid: 2d88ba13b6e704829a737e409185d1ea, type: 3}
---- !u!114 &4001621140167313723
+--- !u!114 &642869487782907481
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -391,7 +391,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 383512545514860528}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 422ab746c6d54afbaa0173373cd6a554, type: 3}
+  m_Script: {fileID: 11500000, guid: 79d40371ab2e48d3aa8889edeab3a704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _cardView:

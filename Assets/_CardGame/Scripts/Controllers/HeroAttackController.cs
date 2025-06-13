@@ -1,4 +1,5 @@
 using System;
+using _CardGame.Events;
 using _CardGame.EventTasks;
 using _CardGame.Installers;
 using _CardGame.Pipeline;
@@ -31,19 +32,12 @@ namespace _CardGame.Controllers
             var target = @event.Target;
             var currentHero = _activeCardService.ActiveHeroView;
 
-            var currentHeroAttackSystem = currentHero.gameObject.GetComponent<CardInstaller>().AttackSystem;
-            var currentHeroHealthSystem = currentHero.gameObject.GetComponent<CardInstaller>().HealthSystem;
 
-            var targetHealthSystem = target.gameObject.GetComponent<CardInstaller>().HealthSystem;
-            var targetAttackSystem = target.gameObject.GetComponent<CardInstaller>().AttackSystem;
+            var currentHeroAbility = currentHero.GetComponent<CardInstallerBase>().CardAbility;
 
-            if (currentHeroAttackSystem == null || targetHealthSystem == null)
-            {
-                throw new Exception("Dont have valid components");
-            }
+            currentHeroAbility.OnAttack(currentHero, target);
+            currentHeroAbility.OnAttacked(currentHero, target);
 
-            currentHeroAttackSystem.DealDamage(targetHealthSystem);
-            targetAttackSystem.DealDamage(currentHeroHealthSystem);
 
             _visualPipeline.AddTask(new AttackVisualTask(currentHero, target, _eventBus));
         }

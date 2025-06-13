@@ -38,6 +38,11 @@ namespace UI
             return _views.AsReadOnly();
         }
 
+        public int GetIndex(HeroView view)
+        {
+            return _views.IndexOf(view);
+        }
+
         public HeroView GetView(int index)
         {
             return _views[index];
@@ -75,6 +80,16 @@ namespace UI
 
             _views.Add(view);
             AddClickHolder(view);
+        }
+
+        public bool Contains(HeroView hero)
+        {
+            if (_views.Contains(hero))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void AddClickHolder(HeroView view)

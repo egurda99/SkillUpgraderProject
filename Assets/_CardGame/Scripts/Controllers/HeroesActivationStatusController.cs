@@ -1,5 +1,5 @@
 using System;
-using _CardGame.EventTasks;
+using _CardGame.Events;
 using _CardGame.Services;
 using UI;
 

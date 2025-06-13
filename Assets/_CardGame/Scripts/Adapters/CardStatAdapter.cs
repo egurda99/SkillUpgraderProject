@@ -16,9 +16,15 @@ namespace _CardGame.Adapters
             _attackData = attackData;
 
             _healthData.OnHealthChanged += OnHealthChanged;
+            SetStats(_healthData.CurrentHealth);
         }
 
         private void OnHealthChanged(float value)
+        {
+            SetStats(value);
+        }
+
+        private void SetStats(float value)
         {
             var stats = $"{_attackData.Damage} / {value}";
             _heroView.SetStats(stats);
