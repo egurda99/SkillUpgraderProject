@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _CardGame.Systems
 {
-    public sealed class HealthSystem : IHealthSystem
+    public sealed class DefaultHealthSystem : IHealthSystem
     {
         private readonly HealthData _healthData;
         private readonly GameObject _owner;
@@ -11,7 +11,7 @@ namespace _CardGame.Systems
         public event Action OnDamaged;
 
 
-        public HealthSystem(HealthData data, GameObject owner)
+        public DefaultHealthSystem(HealthData data, GameObject owner)
         {
             _healthData = data;
             _healthData.ResetCurrentHealth();

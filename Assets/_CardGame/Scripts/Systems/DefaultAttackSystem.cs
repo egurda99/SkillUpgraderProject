@@ -1,10 +1,10 @@
 namespace _CardGame.Systems
 {
-    public sealed class AttackSystem : IAttackSystem
+    public sealed class DefaultAttackSystem : IAttackSystem
     {
         private readonly AttackData _damageData;
 
-        public AttackSystem(AttackData damageData)
+        public DefaultAttackSystem(AttackData damageData)
         {
             _damageData = damageData;
         }

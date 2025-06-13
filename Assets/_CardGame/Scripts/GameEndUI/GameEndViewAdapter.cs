@@ -1,5 +1,4 @@
 using System;
-using _CardGame.Teams;
 using UnityEngine;
 
 namespace _CardGame

@@ -2,7 +2,7 @@ using UI;
 
 namespace _CardGame.Events
 {
-    public class ActiveHeroChosenEvent
+    public sealed class ActiveHeroChosenEvent
     {
         public readonly HeroView ActiveHeroView;
 

@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using _CardGame.Events;
 using _CardGame.Services;
 using _CardGame.Systems;
-using _CardGame.Teams;
 using Cysharp.Threading.Tasks;
 using UI;
 
@@ -71,7 +70,6 @@ namespace _CardGame.EventTasks
                     startIndex = (_previousBlueIndex + 1) % _views.Count;
             }
 
-
             for (var i = 0; i < _views.Count; i++)
             {
                 var index = (startIndex + i) % _views.Count;
@@ -83,7 +81,6 @@ namespace _CardGame.EventTasks
                     continue;
                 }
 
-
                 if (_activeTeamService.ActiveTeam == Team.Red)
                     _previousRedIndex = index;
                 else
@@ -92,7 +89,14 @@ namespace _CardGame.EventTasks
                 return candidate;
             }
 
-            return null;
+            var fallback = _views[0];
+
+            if (_activeTeamService.ActiveTeam == Team.Red)
+                _previousRedIndex = 0;
+            else
+                _previousBlueIndex = 0;
+
+            return fallback;
         }
     }
 }

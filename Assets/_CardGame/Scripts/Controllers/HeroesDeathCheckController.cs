@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using _CardGame.Events;
 using _CardGame.Installers;
-using _CardGame.Teams;
 using UI;
 
 namespace _CardGame.Controllers

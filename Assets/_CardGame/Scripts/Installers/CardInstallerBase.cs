@@ -38,12 +38,12 @@ namespace _CardGame.Installers
 
         protected virtual void InitAttackSystem()
         {
-            _attackSystem = new AttackSystem(_cardView.AttackData);
+            _attackSystem = new DefaultAttackSystem(_cardView.AttackData);
         }
 
         protected virtual void InitHealthSystem()
         {
-            _healthSystem = new HealthSystem(_cardView.HealthData, gameObject);
+            _healthSystem = new DefaultHealthSystem(_cardView.HealthData, gameObject);
         }
 
 

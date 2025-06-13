@@ -4,7 +4,7 @@ using UI;
 
 namespace _CardGame.EventTasks
 {
-    public class AttackVisualTask : BaseTask
+    public sealed class AttackVisualTask : BaseTask
     {
         private readonly HeroView _currentHero;
         private readonly HeroView _target;

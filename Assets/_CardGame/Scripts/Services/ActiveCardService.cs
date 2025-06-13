@@ -11,7 +11,6 @@ namespace _CardGame.Services
         public void SetActiveHeroView(HeroView activeHeroView)
         {
             _activeHeroView = activeHeroView;
-//            Debug.Log("[ActiveCardService] ActiveHeroName: " + _activeHeroView.name);
         }
     }
 }

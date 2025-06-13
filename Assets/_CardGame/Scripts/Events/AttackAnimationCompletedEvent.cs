@@ -2,7 +2,7 @@ using UI;
 
 namespace _CardGame.Events
 {
-    public class AttackAnimationCompletedEvent
+    public sealed class AttackAnimationCompletedEvent
     {
         public readonly HeroView CurrentHero;
         public readonly HeroView Target;

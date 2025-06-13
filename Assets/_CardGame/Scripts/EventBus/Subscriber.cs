@@ -1,13 +1,16 @@
 using System;
 
-public sealed class Subscriber<T>
+namespace _CardGame
 {
-    public Action<T> Handler;
-    public int Priority;
-
-    public Subscriber(Action<T> handler, int priority)
+    public sealed class Subscriber<T>
     {
-        Handler = handler;
-        Priority = priority;
+        public Action<T> Handler;
+        public int Priority;
+
+        public Subscriber(Action<T> handler, int priority)
+        {
+            Handler = handler;
+            Priority = priority;
+        }
     }
 }

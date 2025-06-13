@@ -1,4 +1,4 @@
-namespace _CardGame.Teams
+namespace _CardGame
 {
     public enum Team
     {

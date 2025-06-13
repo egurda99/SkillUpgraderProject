@@ -1,6 +1,5 @@
 using System;
 using _CardGame.Controllers;
-using _CardGame.Teams;
 
 namespace _CardGame
 {

@@ -2,7 +2,7 @@ using UI;
 
 namespace _CardGame.Events
 {
-    public class TargetChosenEvent
+    public sealed class TargetChosenEvent
     {
         public readonly HeroView Target;
 
