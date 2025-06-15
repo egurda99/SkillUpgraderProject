@@ -12,7 +12,6 @@ public sealed class PlayerInputController : IContextInit, IContextDispose
     private MouseInput _mouseInput;
     private ReactiveVariable<Vector3> _moveDirection;
 
-    private IEvent _shootRequest;
     private ReactiveVariable<Vector3> _mouseTargetPosition;
 
 
@@ -30,10 +29,8 @@ public sealed class PlayerInputController : IContextInit, IContextDispose
 
 
         _moveDirection = _sceneEntity.GetMoveDirection();
-        _shootRequest = _sceneEntity.GetShootRequest();
 
         _keyboardInput.OnMoveInputChanged += OnMoveInputChanged;
-        _mouseInput.OnFireClicked += OnFireClicked;
         _mouseInput.OnMouseWorldPositionChanged += OnMouseWorldPositionChanged;
     }
 
@@ -42,10 +39,6 @@ public sealed class PlayerInputController : IContextInit, IContextDispose
         _mouseTargetPosition.Value = direction;
     }
 
-    private void OnFireClicked()
-    {
-        _shootRequest?.Invoke();
-    }
 
     private void OnMoveInputChanged(Vector3 direction)
     {
@@ -55,7 +48,6 @@ public sealed class PlayerInputController : IContextInit, IContextDispose
     public void Dispose(IContext context)
     {
         _keyboardInput.OnMoveInputChanged -= OnMoveInputChanged;
-        _mouseInput.OnFireClicked -= OnFireClicked;
         _mouseInput.OnMouseWorldPositionChanged -= OnMouseWorldPositionChanged;
     }
 }
