@@ -4,13 +4,14 @@ using Zenject;
 
 namespace MyTimer
 {
-    public class Timer : IInitializable, ITickable
+    public sealed class Timer : IInitializable, ITickable
     {
         private float _interval;
         private float _time;
         private bool _isRunning;
 
         public event Action OnElapsed;
+        public event Action<float> OnCurrentTimeChanged;
 
 
         void IInitializable.Initialize()
@@ -27,15 +28,22 @@ namespace MyTimer
             _interval = interval;
         }
 
+        public void SetInterval(int interval)
+        {
+            _interval = interval;
+        }
+
 
         public void Tick()
         {
             if (!_isRunning)
                 return;
             _time += Time.deltaTime;
+            OnCurrentTimeChanged?.Invoke(_time);
             if (_time >= _interval)
             {
                 _time = 0f;
+                OnCurrentTimeChanged?.Invoke(_time);
                 OnElapsed?.Invoke();
             }
         }
