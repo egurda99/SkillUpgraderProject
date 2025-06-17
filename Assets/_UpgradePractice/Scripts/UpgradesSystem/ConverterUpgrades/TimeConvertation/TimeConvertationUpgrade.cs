@@ -17,6 +17,8 @@ namespace _UpgradePractice.Scripts
         public void Construct(ConverterInstaller converterInstaller)
         {
             _converterData = converterInstaller.View.Data;
+            var time = _timeConvertationUpgradeConfig.TimeConvertationTable.GetTime(Level);
+            _converterData.SetConvertationTime(time);
         }
 
         protected override void OnUpgrade()

@@ -3191,7 +3191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _view:
     _converterData:
-      "_\u0441onvertTime": 5
+      "_\u0441onvertTime": 10
       _inputZoneCapacity: 16
       _outputZoneCapacity: 15
       _exchangeRate:

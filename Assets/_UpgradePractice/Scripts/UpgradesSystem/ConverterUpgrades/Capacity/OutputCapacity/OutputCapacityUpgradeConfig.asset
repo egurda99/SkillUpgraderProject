@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48675734f8394e96b8ceb4d1c0b58e87, type: 3}
+  m_Name: OutputCapacityUpgradeConfig
+  m_EditorClassIdentifier: 
+  Id: OutputCapacity
+  MaxLevel: 10
+  PriceTable:
+    _basePrice: 100
+    _levels: 00000000c80000002c01000090010000f401000058020000bc0200002003000084030000e8030000
+  CapacityTable:
+    _startCapacity: 2
+    _endCapacity: 30
+    _curvePower: 1.71
+    _capacityStep: -5
+    _table: 02000000070000000c0000001000000014000000170000001a0000001c0000001d0000001e000000

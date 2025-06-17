@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f56a6fce797a45248157e897888506e6, type: 3}
+  m_Name: InputCapacityUpgradeConfig
+  m_EditorClassIdentifier: 
+  Id: InputCapacityUpgrade
+  MaxLevel: 10
+  PriceTable:
+    _basePrice: 100
+    _levels: 00000000c80000002c01000090010000f401000058020000bc0200002003000084030000e8030000
+  CapacityTable:
+    _startCapacity: 4
+    _endCapacity: 25
+    _curvePower: 1.61
+    _capacityStep: -4
+    _table: 04000000080000000b0000000e000000110000001300000015000000170000001800000019000000
