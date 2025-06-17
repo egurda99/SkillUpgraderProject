@@ -6,7 +6,21 @@ namespace _UpgradePractice.Scripts
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<ConverterInstaller>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<ConverterInstaller>().FromComponentInHierarchy().AsSingle();
+            BindMoneyStorage();
+            BindUpgradeManager();
+        }
+
+        private void BindMoneyStorage()
+        {
+            Container.Bind<MoneyStorage>().AsSingle();
+        }
+
+        private void BindUpgradeManager()
+        {
+            var helper = FindObjectOfType<SceneInstallerHelper>();
+
+            Container.Bind<UpgradesManager>().AsSingle().WithArguments(helper.UpgradeCatalog);
         }
     }
 }

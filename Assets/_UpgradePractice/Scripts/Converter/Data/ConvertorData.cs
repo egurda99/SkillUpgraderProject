@@ -24,5 +24,20 @@ namespace _UpgradePractice.Scripts
 
         public List<ResourceItem> InputList => _inputList;
         public List<ResourceItem> OutputList => _outputList;
+
+        public void SetConvertationTime(float time)
+        {
+            _ñonvertTime = time;
+        }
+
+        public void SetInputZoneCapacity(int inputZoneCapacity)
+        {
+            _inputZoneCapacity = inputZoneCapacity;
+        }
+
+        public void SetOutputZoneCapacity(int outputZoneCapacity)
+        {
+            _outputZoneCapacity = outputZoneCapacity;
+        }
     }
 }

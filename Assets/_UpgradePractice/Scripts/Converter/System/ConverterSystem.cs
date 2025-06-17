@@ -8,15 +8,9 @@ namespace _UpgradePractice.Scripts
     public sealed class ConverterSystem : IDisposable
     {
         private readonly ConverterData _data;
-        private readonly ConverterView _view;
-
-        private readonly CompositeCondition _canConvert = new();
         private readonly InputStorage _inputStorage;
         private readonly OutputStorage _outputStorage;
-        private readonly ConvertTimerController _timerController;
-
-        private bool _isConverting;
-        private bool _isReadyToConvert;
+        private readonly ConvertationMechanic _mechanic;
 
         public event Action<float> OnConvertProgressChanged;
         public event Action OnConvertCompleted;
@@ -28,27 +22,25 @@ namespace _UpgradePractice.Scripts
         public ConverterSystem(ConverterData data, Timer timer)
         {
             _data = data;
-            _timerController = new ConvertTimerController(timer, _data);
-
-            _timerController.OnElapsed += OnTimerEnded;
-            _timerController.OnProgressChanged += OnTimerTick;
-
             _inputStorage = new InputStorage(_data, this);
             _outputStorage = new OutputStorage(_data, this);
 
-            _canConvert.AppendCondition(() => _inputStorage.HasEnoughInput());
-            _canConvert.AppendCondition(() => _outputStorage.HasOutputSpace());
+            var timerController = new ConvertTimerController(timer, _data);
+            _mechanic = new ConvertationMechanic(_data, timerController);
+
+            _mechanic.SetConditions(
+                () => _inputStorage.HasEnoughInput(),
+                () => _outputStorage.HasOutputSpace()
+            );
+
+            _mechanic.OnStarted += OnMechanicOnOnStarted;
+            _mechanic.OnCompleted += ProcessConvert;
+            _mechanic.OnProgress += OnMechanicOnOnProgress;
         }
 
-        public void OnUpdate()
+        private void OnMechanicOnOnProgress(float value)
         {
-            if (!_isConverting)
-                TryStartConversion();
-
-            _timerController.Tick();
-
-            if (_isReadyToConvert)
-                CompleteConversion();
+            OnConvertProgressChanged?.Invoke(value);
         }
 
 
@@ -77,38 +69,17 @@ namespace _UpgradePractice.Scripts
             OnOutputChanged?.Invoke(output);
         }
 
-        private void TryStartConversion()
+        private void OnMechanicOnOnStarted()
         {
-            if (_canConvert.Invoke())
-            {
-                _timerController.UpdateConvertTime(_data.ÑonvertTime);
-                _timerController.Start();
-
-                _isConverting = true;
-                _isReadyToConvert = false;
-                OnConvertStarted?.Invoke();
-            }
+            OnConvertStarted?.Invoke();
         }
 
-        private void CompleteConversion()
+        public void OnUpdate()
         {
-            TryConvert();
-            OnConvertCompleted?.Invoke();
-            _isConverting = false;
-            _isReadyToConvert = false;
+            _mechanic.Tick();
         }
 
-        private void OnTimerEnded()
-        {
-            _isReadyToConvert = true;
-        }
-
-        private void OnTimerTick(float progress)
-        {
-            OnConvertProgressChanged?.Invoke(progress);
-        }
-
-        private void TryConvert()
+        private void ProcessConvert()
         {
             foreach (var rate in _data.ExchangeRate)
             {
@@ -125,15 +96,19 @@ namespace _UpgradePractice.Scripts
 
                 OnInputChanged?.Invoke(_inputStorage.GetTotalInputCount());
                 OnOutputChanged?.Invoke(_outputStorage.GetTotalOutputCount());
-
-                return;
+                break;
             }
+
+            OnConvertCompleted?.Invoke();
         }
 
 
         public void Dispose()
         {
-            _timerController.Dispose();
+            _mechanic.OnStarted -= OnMechanicOnOnStarted;
+            _mechanic.OnCompleted -= ProcessConvert;
+            _mechanic.OnProgress -= OnMechanicOnOnProgress;
+            _mechanic.Dispose();
         }
     }
 }

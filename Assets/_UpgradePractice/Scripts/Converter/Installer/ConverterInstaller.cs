@@ -21,10 +21,6 @@ namespace _UpgradePractice.Scripts
         private void Construct(Timer timer)
         {
             _timer = timer;
-        }
-
-        private void Awake()
-        {
             _system = new ConverterSystem(_view.Data, _timer);
 
             _converterVisualInstaller = new ConverterVisualInstaller(_view, _system);
