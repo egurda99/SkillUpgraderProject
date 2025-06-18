@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5297413692962414358
 RectTransform:
   m_ObjectHideFlags: 0
@@ -49,6 +49,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 595d48b457584735a2c93483f59232bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnPopupShow:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPopupHide:
+    m_PersistentCalls:
+      m_Calls: []
   _viewPrefab: {fileID: 1968364529213511130, guid: ff21a834ce4e6d5439ec22797784c699,
     type: 3}
   _container: {fileID: 3274658653494927500}

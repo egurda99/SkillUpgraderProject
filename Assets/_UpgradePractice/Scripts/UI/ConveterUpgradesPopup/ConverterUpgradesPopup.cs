@@ -1,17 +1,16 @@
 using System.Collections.Generic;
+using MyCodeBase;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace _UpgradePractice.Scripts
 {
-    public sealed class UpgradeListAdapter : MonoBehaviour
+    public sealed class ConverterUpgradesPopup : Popup
     {
         [SerializeField] private UpgradeView _viewPrefab;
 
         [SerializeField] private Transform _container;
-        [SerializeField] private Button _closeButton;
 
 
         private UpgradeCatalog _upgradeCatalog;
@@ -28,6 +27,19 @@ namespace _UpgradePractice.Scripts
         }
 
 
+        protected override void OnShow()
+        {
+            base.OnShow();
+            Show();
+        }
+
+        protected override void OnHide()
+        {
+            base.OnHide();
+            Hide();
+        }
+
+
         [Button]
         public void Show()
         {
@@ -38,7 +50,7 @@ namespace _UpgradePractice.Scripts
                 ShowUpgrade(config);
             }
 
-            _closeButton.onClick.AddListener(Hide);
+            // _closeButton.onClick.AddListener(Hide);
         }
 
         [Button]
@@ -50,7 +62,7 @@ namespace _UpgradePractice.Scripts
                 HideUpgrade(vh);
             }
 
-            _closeButton.onClick.RemoveListener(Hide);
+            //  _closeButton.onClick.RemoveListener(Hide);
             _viewHolders.Clear();
         }
 
