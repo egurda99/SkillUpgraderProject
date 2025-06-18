@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace _UpgradePractice.Scripts
@@ -10,6 +11,8 @@ namespace _UpgradePractice.Scripts
         [SerializeField] private UpgradeView _viewPrefab;
 
         [SerializeField] private Transform _container;
+        [SerializeField] private Button _closeButton;
+
 
         private UpgradeCatalog _upgradeCatalog;
 
@@ -34,6 +37,8 @@ namespace _UpgradePractice.Scripts
                 var config = upgrades[i];
                 ShowUpgrade(config);
             }
+
+            _closeButton.onClick.AddListener(Hide);
         }
 
         [Button]
@@ -45,6 +50,7 @@ namespace _UpgradePractice.Scripts
                 HideUpgrade(vh);
             }
 
+            _closeButton.onClick.RemoveListener(Hide);
             _viewHolders.Clear();
         }
 

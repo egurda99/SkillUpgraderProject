@@ -68,8 +68,6 @@ namespace _UpgradePractice.Scripts
             if (upgrade.Id != _upgradeConfig.Id)
                 return;
 
-            //  _currentUpgrade = upgrade;
-
             _view.SetPrice(_currentUpgrade.NextPrice.ToString());
             UpdateStatInfo();
 

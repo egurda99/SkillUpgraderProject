@@ -9152,16 +9152,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PopupUpgrades
       objectReference: {fileID: 0}
-    - target: {fileID: 1983242229988248098, guid: 6b77c6d97e6a5fd418c319de60d8e44e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3274658653494927500, guid: 6b77c6d97e6a5fd418c319de60d8e44e,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: -627.23914
-      objectReference: {fileID: 0}
     - target: {fileID: 5297413692962414358, guid: 6b77c6d97e6a5fd418c319de60d8e44e,
         type: 3}
       propertyPath: m_Pivot.x
