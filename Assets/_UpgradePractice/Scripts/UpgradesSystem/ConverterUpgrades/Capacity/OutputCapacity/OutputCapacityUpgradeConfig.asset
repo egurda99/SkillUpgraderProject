@@ -17,6 +17,10 @@ MonoBehaviour:
   PriceTable:
     _basePrice: 100
     _levels: 00000000c80000002c01000090010000f401000058020000bc0200002003000084030000e8030000
+  _metadata:
+    _sprite: {fileID: 21300000, guid: ceea7b0a07587d747a80a4a12730c781, type: 3}
+    _title: "Output \u0441apacity"
+    _description: Increased unloading area
   CapacityTable:
     _startCapacity: 2
     _endCapacity: 30

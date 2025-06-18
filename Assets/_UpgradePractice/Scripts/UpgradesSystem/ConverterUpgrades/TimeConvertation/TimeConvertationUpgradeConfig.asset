@@ -17,6 +17,10 @@ MonoBehaviour:
   PriceTable:
     _basePrice: 100
     _levels: 00000000c80000002c01000090010000f401000058020000bc0200002003000084030000e8030000
+  _metadata:
+    _sprite: {fileID: 21300000, guid: 67d433987961afb4d893febee716d8c3, type: 3}
+    _title: "Time \u0441onvertation"
+    _description: Speeding up the speed of resource conversion
   TimeConvertationTable:
     _startTime: 5
     _endTime: 1

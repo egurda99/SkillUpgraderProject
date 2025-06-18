@@ -15,6 +15,17 @@ namespace _UpgradePractice.Scripts
             return new InputCapacityUpgrade(this);
         }
 
+        public override float GetStatValue(int level)
+        {
+            if (level >= 1 && level <= MaxLevel)
+            {
+                return CapacityTable.GetCapacity(level);
+            }
+
+            return CapacityTable.GetCapacity(MaxLevel);
+        }
+
+
         protected override void OnValidate()
         {
             base.OnValidate();

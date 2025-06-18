@@ -15,6 +15,17 @@ namespace _UpgradePractice.Scripts
             return new TimeConvertationUpgrade(this);
         }
 
+        public override float GetStatValue(int level)
+        {
+            if (level >= 1 && level <= MaxLevel)
+            {
+                return TimeConvertationTable.GetTime(level);
+            }
+
+            return TimeConvertationTable.GetTime(MaxLevel);
+        }
+
+
         protected override void OnValidate()
         {
             base.OnValidate();

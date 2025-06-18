@@ -8,7 +8,14 @@ namespace _UpgradePractice.Scripts
         public int MaxLevel;
         public UpgradePriceTable PriceTable;
 
+
+        [SerializeField] private UpgradeMetaData _metadata;
+
+        public UpgradeMetaData Metadata => _metadata;
+
         public abstract Upgrade Create();
+
+        public abstract float GetStatValue(int level);
 
         public int GetNextPrice(int level)
         {

@@ -15,6 +15,8 @@ namespace _UpgradePractice.Scripts
         private readonly DiContainer _container;
         private readonly UpgradeCatalog _upgradeCatalog;
 
+        public UpgradeCatalog UpgradeCatalog => _upgradeCatalog;
+
         public UpgradesManager(MoneyStorage moneyStorage, DiContainer container, UpgradeCatalog upgradeCatalog)
         {
             _moneyStorage = moneyStorage;
