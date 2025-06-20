@@ -7,17 +7,9 @@ namespace InventoryPractice
         public InventoryItemConsumeObserver(Inventory inventory)
         {
             _inventory = inventory;
-        }
-
-        public void OnStartGame()
-        {
             _inventory.OnItemConsumed += OnItemConsumed;
         }
 
-        public void OnFinishGame()
-        {
-            _inventory.OnItemConsumed -= OnItemConsumed;
-        }
 
         public void OnItemConsumed(InventoryItem item)
         {
@@ -25,6 +17,11 @@ namespace InventoryPractice
             {
                 //  Hero.Instance.MaxHitPoints += component.Health;
             }
+        }
+
+        public void Dispose()
+        {
+            _inventory.OnItemConsumed -= OnItemConsumed;
         }
     }
 }

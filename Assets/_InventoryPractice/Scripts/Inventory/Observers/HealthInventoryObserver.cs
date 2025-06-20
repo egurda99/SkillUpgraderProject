@@ -1,3 +1,5 @@
+using System;
+
 namespace InventoryPractice
 {
     public sealed class HealthInventoryObserver : IInventoryObserver
@@ -7,37 +9,29 @@ namespace InventoryPractice
         public HealthInventoryObserver(Inventory inventory)
         {
             _inventory = inventory;
-        }
 
-        public void OnStartGame()
-        {
             _inventory.OnItemAdded += OnItemAdded;
             _inventory.OnItemRemoved += OnItemRemoved;
         }
 
-        public void OnFinishGame()
+        public void OnItemAdded(InventoryItem newItem)
         {
-            _inventory.OnItemAdded -= OnItemAdded;
-            _inventory.OnItemRemoved -= OnItemRemoved;
-        }
-
-        public void OnItemAdded(InventoryItem item)
-        {
-            var isEffectable = item.Flags.HasFlag(InventoryItemFlags.Effectable);
-            // bool isEffectable = (item.Flags & InventoryItemFlags.Effectable) == InventoryItemFlags.Effectable;
-            // 0011
-            //*0010
-            //=0010
+            var isEffectable = newItem.Flags.HasFlag(InventoryItemFlags.Effectable);
 
             if (!isEffectable)
             {
                 return;
             }
 
-            if (item.TryGetComponent(out HealthItemComponent component))
+            if (newItem.TryGetComponent(out HealthItemComponent component))
             {
                 // Hero.Instance.MaxHitPoints += component.Health;
             }
+        }
+
+        public void OnItemsAdded(InventoryItem newItem, int amount)
+        {
+            throw new NotImplementedException();
         }
 
         public void OnItemRemoved(InventoryItem item)
@@ -53,6 +47,17 @@ namespace InventoryPractice
             {
                 // Hero.Instance.MaxHitPoints -= component.Health;
             }
+        }
+
+        public void OnItemsRemoved(InventoryItem item, int amountToRemove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            _inventory.OnItemAdded -= OnItemAdded;
+            _inventory.OnItemRemoved -= OnItemRemoved;
         }
     }
 }

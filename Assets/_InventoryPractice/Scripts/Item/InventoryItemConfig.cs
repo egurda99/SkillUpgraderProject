@@ -4,7 +4,7 @@ namespace InventoryPractice
 {
     [CreateAssetMenu(
         fileName = "InventoryItemConfig",
-        menuName = "Lesson/Inventory/New InventoryItemConfig"
+        menuName = "Inventory/New InventoryItemConfig"
     )]
     public sealed class InventoryItemConfig : ScriptableObject
     {
