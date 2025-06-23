@@ -2,6 +2,6 @@ namespace MyCodeBase
 {
     public enum PopupName
     {
-        PLAYER_STATS = 0
+        INVENTORY = 0
     }
 }

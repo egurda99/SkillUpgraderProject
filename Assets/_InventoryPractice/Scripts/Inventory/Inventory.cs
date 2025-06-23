@@ -6,17 +6,16 @@ using UnityEngine;
 
 namespace InventoryPractice
 {
-    [Serializable]
     public sealed class Inventory
     {
-        [SerializeField] private int _slotsLimit = 20;
+        private int _slotsLimit = 20;
 
         [ShowInInspector] [ReadOnly] private List<InventoryItem> _items = new();
 
         public List<InventoryItem> Items => _items;
 
         public int SlotsLimit => _slotsLimit;
-        public int UsedSlots => _items.Count;
+        public int UsedSlots => _items.Sum(i => i.SlotSize);
         public bool HasFreeSlot => _items.Count < _slotsLimit;
 
 
@@ -28,15 +27,26 @@ namespace InventoryPractice
 
         public event Action<InventoryItem> OnItemConsumed;
 
+        public event Action OnInventoryListChanged;
+
+
+        public void Init(int slotsLimit)
+        {
+            _slotsLimit = slotsLimit;
+        }
+
         public void AddItem(InventoryItem item)
         {
             _items.Add(item);
+            OnInventoryListChanged?.Invoke();
         }
 
         public bool CanAddItem(InventoryItem item)
         {
+            var requiredSlots = item.SlotSize;
+
             if (!item.Flags.HasFlag(InventoryItemFlags.Stackable))
-                return _items.Count < _slotsLimit;
+                return UsedSlots + requiredSlots <= _slotsLimit;
 
             foreach (var i in _items)
             {
@@ -48,7 +58,7 @@ namespace InventoryPractice
                 }
             }
 
-            return _items.Count < _slotsLimit;
+            return UsedSlots + requiredSlots <= _slotsLimit;
         }
 
 
@@ -85,6 +95,7 @@ namespace InventoryPractice
         public void RemoveItem(InventoryItem item)
         {
             _items.Remove(item);
+            OnInventoryListChanged?.Invoke();
         }
 
         [Button]

@@ -8,6 +8,7 @@ namespace InventoryPractice
     public class InventoryItem
     {
         public string Id;
+        public int SlotSize;
 
         public InventoryItemMetaData MetaData;
         public InventoryItemFlags Flags;
@@ -57,7 +58,8 @@ namespace InventoryPractice
                     Description = MetaData.Description,
                     Icon = MetaData.Icon
                 },
-                Components = copiedComponents
+                Components = copiedComponents,
+                SlotSize = SlotSize
             };
         }
     }

@@ -1,13 +1,16 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 namespace InventoryPractice
 {
     public sealed class InventoryInstaller : MonoBehaviour, IDisposable
     {
+        [SerializeField] private int _slotsLimit;
         [SerializeField] private bool _useStackableInventory;
 
-        [SerializeField] private Inventory _inventory;
+        // [SerializeField] private Inventory _inventory;
+        private Inventory _inventory;
 
 
         private HealthInventoryObserver _healthInventoryObserver;
@@ -16,8 +19,20 @@ namespace InventoryPractice
 
         private IInventoryStackTypeObserver _inventoryStackTypeObserver;
 
+
+        public Inventory Inventory => _inventory;
+
+        [Inject]
+        public void Construct(Inventory inventory)
+        {
+            _inventory = inventory;
+        }
+
+
         private void Awake()
         {
+            _inventory.Init(_slotsLimit);
+
             if (_useStackableInventory)
             {
                 _inventoryStackTypeObserver = new StackableInventoryObserver(_inventory);
