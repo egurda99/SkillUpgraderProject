@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrototypeItem:
     Id: Lumber_item
-    SlotSize: 20
+    Weight: 5
     MetaData:
       Name: Lumber
       Description: Need for buildings

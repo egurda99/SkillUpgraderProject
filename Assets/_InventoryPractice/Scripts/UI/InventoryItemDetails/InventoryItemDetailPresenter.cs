@@ -52,7 +52,7 @@ namespace _InventoryPractice
 
         private void DropItem()
         {
-            _inventory.RemoveItem(_item);
+            _inventory.RemoveItemSlot(_item);
         }
 
         private void EquipItem()

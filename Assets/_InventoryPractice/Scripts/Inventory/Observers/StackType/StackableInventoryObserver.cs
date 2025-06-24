@@ -27,6 +27,8 @@ namespace InventoryPractice
                 {
                     var itemClone = newItem.Clone();
                     _inventory.AddItem(itemClone);
+
+                    _inventory.AddWeight(itemClone.Weight);
                 }
 
                 return;
@@ -46,6 +48,9 @@ namespace InventoryPractice
                     var toAdd = Mathf.Min(freeSpace, remainingAmount);
 
                     existingStack.AddValue(toAdd);
+
+                    var newWeight = existingItem.Weight * toAdd;
+                    _inventory.AddWeight(newWeight);
                     remainingAmount -= toAdd;
 
                     if (remainingAmount <= 0)
@@ -67,7 +72,24 @@ namespace InventoryPractice
                     stackableClone.SetValue(newStackSize);
                 }
 
+                var weightToAdd = newItemClone.Weight * newStackSize;
+
+                // ?? Добавим проверки перед добавлением
+                if (!_inventory.CanAddWeight(weightToAdd))
+                {
+                    Debug.LogWarning(
+                        $"Не удалось добавить стек {newItem.Id} — превышен лимит веса. Вес: {_inventory.CurrentWeight}");
+                    break;
+                }
+
+                if (!_inventory.HasFreeSlot)
+                {
+                    Debug.LogWarning($"Не удалось добавить стек {newItem.Id} — превышен лимит слотов.");
+                    break;
+                }
+
                 _inventory.AddItem(newItemClone);
+                _inventory.AddWeight(weightToAdd);
                 remainingAmount -= newStackSize;
             }
         }
@@ -78,6 +100,7 @@ namespace InventoryPractice
                 !newItem.TryGetComponent(out StackableItemComponent newStack))
             {
                 _inventory.AddItem(newItem);
+                _inventory.AddWeight(newItem.Weight);
                 return;
             }
 
@@ -92,6 +115,7 @@ namespace InventoryPractice
                     var toAdd = Mathf.Min(freeSpace, newStack.Value);
 
                     existingStack.AddValue(toAdd);
+                    _inventory.AddWeight(newItem.Weight * toAdd);
                     newStack.DecreaseValue(toAdd);
 
                     if (newStack.Value <= 0)
@@ -104,6 +128,7 @@ namespace InventoryPractice
 
             // Остаток — создаём новый стек
             _inventory.AddItem(newItem);
+            _inventory.AddWeight(newItem.Weight);
         }
 
         public void OnItemRemoved(InventoryItem item)
@@ -112,10 +137,12 @@ namespace InventoryPractice
                 !item.TryGetComponent(out StackableItemComponent stackableComponent))
             {
                 _inventory.RemoveItem(item);
+                _inventory.DecreaseWeight(item.Weight);
                 return;
             }
 
             stackableComponent.DecreaseValue(1);
+            _inventory.DecreaseWeight(item.Weight);
 
             if (stackableComponent.Value <= 0 && _inventory.Items.Contains(item))
             {
@@ -137,6 +164,7 @@ namespace InventoryPractice
                 foreach (var i in itemsToRemove)
                 {
                     _inventory.RemoveItem(i);
+                    _inventory.DecreaseWeight(i.Weight);
                 }
 
                 return;
@@ -160,6 +188,8 @@ namespace InventoryPractice
 
                 var removeValue = Mathf.Min(remainingRemoveValue, stack.Value);
                 stack.DecreaseValue(removeValue);
+                _inventory.DecreaseWeight(stackItem.Weight * removeValue);
+
                 remainingRemoveValue -= removeValue;
 
                 if (stack.Value <= 0)

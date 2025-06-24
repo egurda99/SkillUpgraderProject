@@ -11,8 +11,9 @@ namespace _InventoryPractice
     {
         [SerializeField] private Transform _container;
         [SerializeField] private Transform _detailContainer;
-        [SerializeField] private InventorySlotView _slotViewPrefab;
+        [Header("Views")] [SerializeField] private InventorySlotView _slotViewPrefab;
         [SerializeField] private InventoryItemDetailView _inventoryItemDetailView;
+        [SerializeField] private ValueWidgetView _valueWidgetView;
 
 
         private readonly List<ViewHolder> _viewHolders = new();
@@ -21,12 +22,14 @@ namespace _InventoryPractice
         private Inventory _inventory;
         private InventoryItemDetailView _detailView;
         private InventoryItemDetailPresenter _detailPresenter;
+        private WeightWidgetAdapter _weightAdapter;
 
         [Inject]
         public void Construct(Inventory inventory)
         {
             _inventory = inventory;
             _detailPresenter = new InventoryItemDetailPresenter(_inventory);
+            _weightAdapter = new WeightWidgetAdapter(_valueWidgetView, inventory);
 
             _inventory.OnInventoryListChanged += RefreshInventory;
         }
@@ -117,6 +120,7 @@ namespace _InventoryPractice
         {
             base.Dispose();
             _inventory.OnInventoryListChanged -= RefreshInventory;
+            _weightAdapter.Dispose();
         }
 
         private readonly struct ViewHolder

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrototypeItem:
     Id: Wood_item
-    SlotSize: 1
+    Weight: 1
     MetaData:
       Name: Wood
       Description: Need to crafr lumbers

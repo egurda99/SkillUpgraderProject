@@ -31,6 +31,12 @@ namespace InventoryPractice
 
         public event Action OnInventoryListChanged;
 
+        public event Action<int> OnWeightChanged;
+
+
+        private int _currentWeight;
+
+        public int CurrentWeight => _currentWeight;
 
         public void Init(int slotsLimit, int weightLimit)
         {
@@ -41,6 +47,8 @@ namespace InventoryPractice
         public void AddItem(InventoryItem item)
         {
             _items.Add(item);
+            // AddWeight(item.Weight);
+
             OnInventoryListChanged?.Invoke();
         }
 
@@ -48,20 +56,19 @@ namespace InventoryPractice
         {
             var requiredWeight = item.Weight;
 
-            if (!item.Flags.HasFlag(InventoryItemFlags.Stackable))
+            if (!item.Flags.HasFlag(InventoryItemFlags.Stackable) && HasFreeSlot)
                 return UsedWeight + requiredWeight <= _weightLimit;
 
             foreach (var i in _items)
             {
-                if (i.Id == item.Id &&
-                    i.TryGetComponent(out StackableItemComponent stack) &&
-                    !stack.IsFull)
+                if (i.Id == item.Id && i.TryGetComponent(out StackableItemComponent stack) && !stack.IsFull &&
+                    CanAddWeight(i.Weight))
                 {
                     return true;
                 }
             }
 
-            return UsedWeight + requiredWeight <= _weightLimit;
+            return CanAddWeight(requiredWeight);
         }
 
 
@@ -94,10 +101,25 @@ namespace InventoryPractice
             }
         }
 
+        public bool CanAddWeight(int weight)
+        {
+            var requiredWeight = weight + _currentWeight;
+
+            return requiredWeight <= _weightLimit;
+        }
+
 
         public void RemoveItem(InventoryItem item)
         {
             _items.Remove(item);
+            //  DecreaseWeight(item.Weight);
+            OnInventoryListChanged?.Invoke();
+        }
+
+        public void RemoveItemSlot(InventoryItem item)
+        {
+            _items.Remove(item);
+            DecreaseWeight(item.Weight);
             OnInventoryListChanged?.Invoke();
         }
 
@@ -188,17 +210,6 @@ namespace InventoryPractice
             return sum;
         }
 
-        public int GetTotalItemCount(InventoryItem inventoryItem)
-        {
-            var sum = 0;
-            foreach (var i in _items)
-            {
-                if (i.Id == inventoryItem.Id && i.TryGetComponent(out StackableItemComponent s))
-                    sum += i.GetComponent<StackableItemComponent>().Value;
-            }
-
-            return sum;
-        }
 
         public bool HasItem(InventoryItem inventoryItem)
         {
@@ -213,24 +224,26 @@ namespace InventoryPractice
 
         private int GetMaxAddableAmount(InventoryItem item, int amount)
         {
-            var freeSlots = _slotsLimit - UsedWeight;
+            var freeSlots = _slotsLimit - _items.Count;
+            var freeSpace = _weightLimit - _currentWeight;
 
             if (!item.Flags.HasFlag(InventoryItemFlags.Stackable))
             {
-                var requiredSlots = amount * item.Weight;
-
-                if (requiredSlots <= freeSlots)
-                    return amount;
-
-                var maxAmount = freeSlots / item.Weight;
-                return maxAmount;
+                var maxAmountBySlots = freeSlots;
+                var maxAmountByWeightt = Mathf.FloorToInt(freeSpace / item.Weight);
+                return Mathf.Min(amount, Mathf.Min(maxAmountBySlots, maxAmountByWeightt));
             }
 
+            var itemStack = item.GetComponent<StackableItemComponent>();
+            var stackSize = itemStack.StackSize;
+            var itemWeight = item.Weight;
 
-            var remainingToAdd = amount;
+            var maxAmountByWeight = Mathf.FloorToInt(freeSpace / itemWeight);
+            var remainingToAdd = Mathf.Min(amount, maxAmountByWeight);
+
             var totalAddable = 0;
 
-
+            // Пополняем существующие неполные стеки
             foreach (var inventoryItem in _items)
             {
                 if (inventoryItem.Id == item.Id &&
@@ -248,19 +261,33 @@ namespace InventoryPractice
                 }
             }
 
+            // Добавим новые стаки
+            var maxNewStacksByWeight = Mathf.FloorToInt(freeSpace / (itemWeight * stackSize));
+            var maxNewStacksBySlots = freeSlots;
 
-            var itemStack = item.GetComponent<StackableItemComponent>();
-            var stackSize = itemStack.StackSize;
-            var slotsNeededPerStack = item.Weight;
+            var possibleNewStacks = Mathf.Min(maxNewStacksByWeight, maxNewStacksBySlots);
+            var possibleItemsFromNewStacks = possibleNewStacks * stackSize;
 
-            var maxNewStacks = freeSlots / slotsNeededPerStack;
-            var possibleItemsViaNewStacks = maxNewStacks * stackSize;
-
-            var willAddFromNewStacks = Mathf.Min(possibleItemsViaNewStacks, remainingToAdd);
+            var willAddFromNewStacks = Mathf.Min(possibleItemsFromNewStacks, remainingToAdd);
 
             totalAddable += willAddFromNewStacks;
 
             return totalAddable;
+        }
+
+        public void AddWeight(int weight)
+        {
+            _currentWeight += weight;
+            OnWeightChanged?.Invoke(_currentWeight);
+            Debug.Log($"<color=orange>Current weight: {_currentWeight}</color>");
+        }
+
+        public void DecreaseWeight(int weight)
+        {
+            _currentWeight -= weight;
+            OnWeightChanged?.Invoke(_currentWeight);
+
+            Debug.Log($"<color=orange>Current weight: {_currentWeight}</color>");
         }
     }
 }
