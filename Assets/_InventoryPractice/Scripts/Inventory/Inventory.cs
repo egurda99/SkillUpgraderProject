@@ -202,16 +202,31 @@ namespace InventoryPractice
             return _items.Any(item => item.Id == inventoryItem.Id);
         }
 
+        public void FireItemsChangedEvent()
+        {
+            OnInventoryListChanged?.Invoke();
+        }
+
 
         private int GetMaxAddableAmount(InventoryItem item, int amount)
         {
+            var freeSlots = _slotsLimit - UsedSlots;
+
             if (!item.Flags.HasFlag(InventoryItemFlags.Stackable))
             {
-                var freeSlots = _slotsLimit - _items.Count;
-                return Math.Min(amount, freeSlots);
+                var requiredSlots = amount * item.SlotSize;
+
+                if (requiredSlots <= freeSlots)
+                    return amount;
+
+                var maxAmount = freeSlots / item.SlotSize;
+                return maxAmount;
             }
 
+
             var remainingToAdd = amount;
+            var totalAddable = 0;
+
 
             foreach (var inventoryItem in _items)
             {
@@ -219,28 +234,30 @@ namespace InventoryPractice
                     inventoryItem.TryGetComponent(out StackableItemComponent existingStack) &&
                     !existingStack.IsFull)
                 {
-                    var freeSpace = existingStack.StackSize - existingStack.Value;
-                    remainingToAdd -= freeSpace;
+                    var canAdd = existingStack.StackSize - existingStack.Value;
+                    var willAdd = Mathf.Min(canAdd, remainingToAdd);
+
+                    totalAddable += willAdd;
+                    remainingToAdd -= willAdd;
+
                     if (remainingToAdd <= 0)
-                        return amount;
+                        return totalAddable;
                 }
             }
 
 
-            var stackSize = item.GetComponent<StackableItemComponent>().StackSize;
-            var newStacksNeeded = Mathf.CeilToInt((float)Math.Max(remainingToAdd, 0) / stackSize);
+            var itemStack = item.GetComponent<StackableItemComponent>();
+            var stackSize = itemStack.StackSize;
+            var slotsNeededPerStack = item.SlotSize;
 
-            var freeSlotsLeft = _slotsLimit - _items.Count;
+            var maxNewStacks = freeSlots / slotsNeededPerStack;
+            var possibleItemsViaNewStacks = maxNewStacks * stackSize;
 
-            if (newStacksNeeded <= freeSlotsLeft)
-            {
-                return amount;
-            }
+            var willAddFromNewStacks = Mathf.Min(possibleItemsViaNewStacks, remainingToAdd);
 
-            var canAddInNewStacks = freeSlotsLeft * stackSize;
-            var canAddTotal = amount - Math.Max(remainingToAdd, 0) + canAddInNewStacks;
+            totalAddable += willAddFromNewStacks;
 
-            return Math.Max(canAddTotal, 0);
+            return totalAddable;
         }
     }
 }

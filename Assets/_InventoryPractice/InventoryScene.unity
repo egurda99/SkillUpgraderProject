@@ -581,7 +581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a99b8875384004ba1d6aed15661502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slotsLimit: 20
+  _slotsLimit: 15
   _useStackableInventory: 1
 --- !u!1 &1907822852
 GameObject:

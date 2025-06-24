@@ -49,7 +49,10 @@ namespace InventoryPractice
                     remainingAmount -= toAdd;
 
                     if (remainingAmount <= 0)
+                    {
+                        _inventory.FireItemsChangedEvent();
                         return;
+                    }
                 }
             }
 
@@ -78,7 +81,7 @@ namespace InventoryPractice
                 return;
             }
 
-            // Пытаемся найти подходящий неполный стек
+            // find not full stack
             foreach (var i in _inventory.Items)
             {
                 if (i.Id == newItem.Id &&
@@ -93,7 +96,8 @@ namespace InventoryPractice
 
                     if (newStack.Value <= 0)
                     {
-                        return; // всё ушло в существующий стек, не добавляем
+                        _inventory.FireItemsChangedEvent();
+                        return;
                     }
                 }
             }
@@ -111,14 +115,14 @@ namespace InventoryPractice
                 return;
             }
 
-            // Уменьшаем количество
             stackableComponent.DecreaseValue(1);
 
-            // Если количество <= 0, то удаляем только если item ещё есть в инвентаре
             if (stackableComponent.Value <= 0 && _inventory.Items.Contains(item))
             {
                 _inventory.RemoveItem(item);
             }
+
+            _inventory.FireItemsChangedEvent();
         }
 
         public void OnItemsRemoved(InventoryItem item, int amountToRemove)
@@ -138,7 +142,7 @@ namespace InventoryPractice
                 return;
             }
 
-            // Для стакаемых — идем по всем подходящим стекам
+            // for stack items
             var stackItems = _inventory.Items
                 .Where(i => i.Id == item.Id && i.TryGetComponent(out StackableItemComponent s) && s.Value > 0)
                 .Reverse()
@@ -169,6 +173,8 @@ namespace InventoryPractice
                 Debug.LogWarning(
                     $"Недостаточно предметов {item.Id} для удаления {amountToRemove}. Осталось удалить: {remainingRemoveValue}");
             }
+
+            _inventory.FireItemsChangedEvent();
         }
 
         public void Dispose()

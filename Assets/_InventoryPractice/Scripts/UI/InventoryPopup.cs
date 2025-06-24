@@ -7,7 +7,7 @@ using Zenject;
 
 namespace _InventoryPractice
 {
-    public class InventoryView : Popup
+    public class InventoryPopup : Popup
     {
         [SerializeField] private Transform _container;
         [SerializeField] private Transform _detailContainer;
@@ -50,8 +50,6 @@ namespace _InventoryPractice
             base.OnShow();
 
             _isActive = true;
-            // _detailView = Instantiate(_inventoryItemDetailView, _detailContainer);
-            // _detailPresenter.SetView(_detailView);
             Show();
         }
 
