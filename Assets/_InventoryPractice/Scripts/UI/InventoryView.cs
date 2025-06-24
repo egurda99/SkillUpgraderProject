@@ -10,16 +10,23 @@ namespace _InventoryPractice
     public class InventoryView : Popup
     {
         [SerializeField] private Transform _container;
-        [SerializeField] private InventorySlotView _viewPrefab;
+        [SerializeField] private Transform _detailContainer;
+        [SerializeField] private InventorySlotView _slotViewPrefab;
+        [SerializeField] private InventoryItemDetailView _inventoryItemDetailView;
+
 
         private readonly List<ViewHolder> _viewHolders = new();
 
+        private bool _isActive;
         private Inventory _inventory;
+        private InventoryItemDetailView _detailView;
+        private InventoryItemDetailPresenter _detailPresenter;
 
         [Inject]
         public void Construct(Inventory inventory)
         {
             _inventory = inventory;
+            _detailPresenter = new InventoryItemDetailPresenter(_inventory);
 
             _inventory.OnInventoryListChanged += RefreshInventory;
         }
@@ -31,6 +38,9 @@ namespace _InventoryPractice
 
         private void Refresh()
         {
+            if (!_isActive)
+                return;
+
             Hide();
             Show();
         }
@@ -38,12 +48,17 @@ namespace _InventoryPractice
         protected override void OnShow()
         {
             base.OnShow();
+
+            _isActive = true;
+            // _detailView = Instantiate(_inventoryItemDetailView, _detailContainer);
+            // _detailPresenter.SetView(_detailView);
             Show();
         }
 
         protected override void OnHide()
         {
             base.OnHide();
+            _isActive = false;
             Hide();
         }
 
@@ -52,10 +67,14 @@ namespace _InventoryPractice
         public void Show()
         {
             var allItems = _inventory.Items;
+
+            _detailView = Instantiate(_inventoryItemDetailView, _detailContainer);
+            _detailPresenter.SetView(_detailView);
+
             for (int i = 0, count = allItems.Count; i < count; i++)
             {
-                var config = allItems[i];
-                ShowItem(config);
+                var item = allItems[i];
+                ShowItem(item);
             }
         }
 
@@ -68,22 +87,32 @@ namespace _InventoryPractice
                 HideItem(vh);
             }
 
+
+            _detailPresenter.Stop();
+
+            if (_detailView != null)
+            {
+                Destroy(_detailView.gameObject);
+            }
+
             _viewHolders.Clear();
         }
 
         private void ShowItem(InventoryItem item)
         {
-            var view = Instantiate(_viewPrefab, _container);
-            var presenter = new InventorySlotPresenter(item, view, _inventory);
-            presenter.Start();
+            var view = Instantiate(_slotViewPrefab, _container);
 
-            _viewHolders.Add(new ViewHolder(view, presenter));
+            var slotPresenter = new InventorySlotPresenter(item, view, _inventory, _detailPresenter);
+            slotPresenter.Start();
+
+
+            _viewHolders.Add(new ViewHolder(view, slotPresenter));
         }
 
         private void HideItem(ViewHolder vh)
         {
-            vh.Presenter.Stop();
-            Destroy(vh.View.gameObject);
+            vh.SlotPresenter.Stop();
+            Destroy(vh.SlotView.gameObject);
         }
 
         public override void Dispose()
@@ -94,13 +123,13 @@ namespace _InventoryPractice
 
         private readonly struct ViewHolder
         {
-            public readonly InventorySlotView View;
-            public readonly InventorySlotPresenter Presenter;
+            public readonly InventorySlotView SlotView;
+            public readonly InventorySlotPresenter SlotPresenter;
 
-            public ViewHolder(InventorySlotView view, InventorySlotPresenter presenter)
+            public ViewHolder(InventorySlotView slotView, InventorySlotPresenter slotPresenter)
             {
-                View = view;
-                Presenter = presenter;
+                SlotView = slotView;
+                SlotPresenter = slotPresenter;
             }
         }
     }

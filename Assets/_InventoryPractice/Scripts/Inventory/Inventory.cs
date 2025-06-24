@@ -148,6 +148,26 @@ namespace InventoryPractice
             Debug.Log($"Consume Item = {itemConfig.PrototypeItem.Id}");
         }
 
+        [Button]
+        public void ConsumeItem(InventoryItem item)
+        {
+            var isConsumable = (item.Flags & InventoryItemFlags.Consumable) == InventoryItemFlags.Consumable;
+
+            if (!isConsumable)
+            {
+                return;
+            }
+
+            if (!HasItem(item))
+            {
+                return;
+            }
+
+            RemoveItem(item);
+            OnItemConsumed?.Invoke(item);
+            Debug.Log($"Consume Item = {item}");
+        }
+
         private int GetTotalItemCount(string itemId)
         {
             var sum = 0;

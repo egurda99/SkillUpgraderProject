@@ -272,12 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ad3acd635fdd6849844fa0a87fc0f1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &455788834 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6834867928533767199, guid: 3a148360ff0324d149a8141687e071a4,
-    type: 3}
-  m_PrefabInstance: {fileID: 6125525194101901168}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &676391702
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,7 +581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a99b8875384004ba1d6aed15661502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slotsLimit: 40
+  _slotsLimit: 20
   _useStackableInventory: 1
 --- !u!1 &1907822852
 GameObject:
@@ -1156,27 +1150,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
---- !u!114 &1869321301222560819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8682904341390637784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e480a39f4964cb3854cdb038f518bf6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnPopupShow:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPopupHide:
-    m_PersistentCalls:
-      m_Calls: []
-  _container: {fileID: 2850094239909218510}
-  _viewPrefab: {fileID: 571337810954650907, guid: 61e751880b924e44cade49d2a6d4baf8,
-    type: 3}
 --- !u!114 &1976191388640389451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1468,11 +1441,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PopupInventory
       objectReference: {fileID: 0}
-    - target: {fileID: 83346047380956681, guid: 3a148360ff0324d149a8141687e071a4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2283411161749034779, guid: 3a148360ff0324d149a8141687e071a4,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1573,30 +1541,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6239818026985548739, guid: 3a148360ff0324d149a8141687e071a4,
-        type: 3}
-      propertyPath: m_Content
-      value: 
-      objectReference: {fileID: 455788834}
     - target: {fileID: 6834867928533767199, guid: 3a148360ff0324d149a8141687e071a4,
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6964513798999443682, guid: 3a148360ff0324d149a8141687e071a4,
-        type: 3}
-      propertyPath: _inventoryInstaller
-      value: 
-      objectReference: {fileID: 1665886726}
-    - target: {fileID: 7662062400831271122, guid: 3a148360ff0324d149a8141687e071a4,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: -34.34
-      objectReference: {fileID: 0}
-    - target: {fileID: 7662062400831271122, guid: 3a148360ff0324d149a8141687e071a4,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -27
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1779,7 +1727,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7415049164883266506}
-  - component: {fileID: 1869321301222560819}
   m_Layer: 5
   m_Name: PopupEquipment
   m_TagString: Untagged

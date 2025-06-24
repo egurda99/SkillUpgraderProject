@@ -17,8 +17,8 @@ MonoBehaviour:
     SlotSize: 1
     MetaData:
       Name: Wood
-      Description: Need for buildings
-      Icon: {fileID: 21300000, guid: 4bb9a3a13af13f54daf83a1c1fe525a9, type: 3}
+      Description: Need to crafr lumbers
+      Icon: {fileID: 21300000, guid: bf8f65cc6b0f9604ca2746f98224453c, type: 3}
     Flags: 8
     Components:
     - rid: 8518610834734973016
