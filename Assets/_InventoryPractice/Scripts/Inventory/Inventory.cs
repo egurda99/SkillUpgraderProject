@@ -9,15 +9,17 @@ namespace InventoryPractice
     public sealed class Inventory
     {
         private int _slotsLimit = 20;
+        private int _weightLimit = 100;
 
         [ShowInInspector] [ReadOnly] private List<InventoryItem> _items = new();
 
         public List<InventoryItem> Items => _items;
 
         public int SlotsLimit => _slotsLimit;
-        public int UsedSlots => _items.Sum(i => i.SlotSize);
+        public int UsedWeight => _items.Sum(i => i.Weight);
         public bool HasFreeSlot => _items.Count < _slotsLimit;
 
+        public int WeightLimit => _weightLimit;
 
         public event Action<InventoryItem> OnItemAdded;
         public event Action<InventoryItem, int> OnItemsAdded;
@@ -30,9 +32,10 @@ namespace InventoryPractice
         public event Action OnInventoryListChanged;
 
 
-        public void Init(int slotsLimit)
+        public void Init(int slotsLimit, int weightLimit)
         {
             _slotsLimit = slotsLimit;
+            _weightLimit = weightLimit;
         }
 
         public void AddItem(InventoryItem item)
@@ -43,10 +46,10 @@ namespace InventoryPractice
 
         public bool CanAddItem(InventoryItem item)
         {
-            var requiredSlots = item.SlotSize;
+            var requiredWeight = item.Weight;
 
             if (!item.Flags.HasFlag(InventoryItemFlags.Stackable))
-                return UsedSlots + requiredSlots <= _slotsLimit;
+                return UsedWeight + requiredWeight <= _weightLimit;
 
             foreach (var i in _items)
             {
@@ -58,7 +61,7 @@ namespace InventoryPractice
                 }
             }
 
-            return UsedSlots + requiredSlots <= _slotsLimit;
+            return UsedWeight + requiredWeight <= _weightLimit;
         }
 
 
@@ -210,16 +213,16 @@ namespace InventoryPractice
 
         private int GetMaxAddableAmount(InventoryItem item, int amount)
         {
-            var freeSlots = _slotsLimit - UsedSlots;
+            var freeSlots = _slotsLimit - UsedWeight;
 
             if (!item.Flags.HasFlag(InventoryItemFlags.Stackable))
             {
-                var requiredSlots = amount * item.SlotSize;
+                var requiredSlots = amount * item.Weight;
 
                 if (requiredSlots <= freeSlots)
                     return amount;
 
-                var maxAmount = freeSlots / item.SlotSize;
+                var maxAmount = freeSlots / item.Weight;
                 return maxAmount;
             }
 
@@ -248,7 +251,7 @@ namespace InventoryPractice
 
             var itemStack = item.GetComponent<StackableItemComponent>();
             var stackSize = itemStack.StackSize;
-            var slotsNeededPerStack = item.SlotSize;
+            var slotsNeededPerStack = item.Weight;
 
             var maxNewStacks = freeSlots / slotsNeededPerStack;
             var possibleItemsViaNewStacks = maxNewStacks * stackSize;

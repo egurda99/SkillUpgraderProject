@@ -7,6 +7,7 @@ namespace InventoryPractice
     public sealed class InventoryInstaller : MonoBehaviour, IDisposable
     {
         [SerializeField] private int _slotsLimit;
+        [SerializeField] private int _weightLimit = 100;
         [SerializeField] private bool _useStackableInventory;
 
         // [SerializeField] private Inventory _inventory;
@@ -31,7 +32,7 @@ namespace InventoryPractice
 
         private void Awake()
         {
-            _inventory.Init(_slotsLimit);
+            _inventory.Init(_slotsLimit, _weightLimit);
 
             if (_useStackableInventory)
             {
