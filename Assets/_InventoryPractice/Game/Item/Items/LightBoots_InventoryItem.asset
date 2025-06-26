@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc3248f0f194b09962eddad9c8853d3, type: 3}
+  m_Name: LightBoots_InventoryItem
+  m_EditorClassIdentifier: 
+  PrototypeItem:
+    Id: LightBoots_item
+    Weight: 3
+    MetaData:
+      Name: Light Boots
+      Description: Defend your legs a bit
+      Icon: {fileID: 21300000, guid: 0ca59f8e6f8759e45a08e76db66c7be6, type: 3}
+    Flags: 4
+    Components:
+    - rid: 8518610968407441531
+  references:
+    version: 2
+    RefIds:
+    - rid: 8518610968407441531
+      type: {class: EquipableItemComponent, ns: InventoryPractice, asm: Assembly-CSharp}
+      data:
+        _equipType: 2
+        _healthValue: 5
+        _powerValue: 0
+        _aguilityValue: 1
+        _armorValue: 5
