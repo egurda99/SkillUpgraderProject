@@ -7,10 +7,12 @@ namespace _InventoryPractice
         private IInventoryItemDetailView _view;
         private readonly Inventory _inventory;
         private InventoryItem _item;
+        private readonly Equipment _equipment;
 
-        public InventoryItemDetailPresenter(Inventory inventory)
+        public InventoryItemDetailPresenter(Inventory inventory, Equipment equipment)
         {
             _inventory = inventory;
+            _equipment = equipment;
         }
 
         public void SetView(IInventoryItemDetailView view)
@@ -19,7 +21,7 @@ namespace _InventoryPractice
             _view.Hide();
         }
 
-        public void Start(InventoryItem item, string amountText)
+        public void ShowItemInfo(InventoryItem item, string amountText)
         {
             Stop();
 
@@ -32,33 +34,71 @@ namespace _InventoryPractice
 
             _view.ShowUseButton(_item.Flags.HasFlag(InventoryItemFlags.Consumable));
             _view.ShowEquipButton(_item.Flags.HasFlag(InventoryItemFlags.Equipable));
+            _view.ShowUnEquipButton(false);
             _view.ShowDropButton(true);
 
             _view.SetUseActionListener(ConsumeItem);
             _view.SetEquipActionListener(EquipItem);
             _view.SetDropActionListener(DropItem);
-
             _view.Show();
         }
+
+        public void ShowEquippedSlotInfo(InventoryItem item)
+        {
+            Stop();
+
+            _item = item;
+            _view.SetIcon(_item.MetaData.Icon);
+            _view.SetName(_item.MetaData.Name);
+            _view.SetDescription(_item.MetaData.Description);
+            _view.SetWeight($"Weight: {_item.Weight}");
+            _view.SetAmount(" ");
+
+            _view.ShowUnEquipButton(true);
+            _view.ShowEquipButton(false);
+            _view.ShowDropButton(true);
+            _view.ShowUseButton(_item.Flags.HasFlag(InventoryItemFlags.Consumable));
+
+            _view.SetUnEquipActionListener(UnEquipItem);
+            _view.SetDropActionListener(DropItemFromEquipped);
+            _view.Show();
+        }
+
 
         public void Stop()
         {
             if (_view == null)
                 return;
-
+            _view.Hide();
             _view.RemoveDropActionListener(DropItem);
+            _view.RemoveDropActionListener(DropItemFromEquipped);
             _view.RemoveEquipActionListener(EquipItem);
             _view.RemoveUseActionListener(ConsumeItem);
+            _view.RemoveUnEquipActionListener(UnEquipItem);
         }
 
         private void DropItem()
         {
             _inventory.RemoveItemSlot(_item);
+            _view.Hide();
+        }
+
+        private void DropItemFromEquipped()
+        {
+            _equipment.DropItemFromEquipped(_item);
+            _view.Hide();
         }
 
         private void EquipItem()
         {
             _inventory.EquipItem(_item);
+            _view.Hide();
+        }
+
+        private void UnEquipItem()
+        {
+            _equipment.Unequip(_item);
+            _view.Hide();
         }
 
         private void ConsumeItem()

@@ -196,6 +196,7 @@ namespace InventoryPractice
         public void Dispose()
         {
             _inventory.OnItemAdded -= OnItemAdded;
+            _inventory.OnItemsAdded -= OnItemsAdded;
             _inventory.OnItemRemoved -= OnItemRemoved;
             _inventory.OnItemsRemoved -= OnItemsRemoved;
         }

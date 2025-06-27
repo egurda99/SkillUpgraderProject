@@ -22,10 +22,11 @@ namespace _InventoryPractice
 
         public void Start()
         {
-            RefreshView();
-
             _equipment.OnEquipItem += OnEquipItem;
             _equipment.OnUnEquipItem += OnUnEquipedItem;
+            _equipment.OnDropItem += OnUnEquipedItem;
+
+            RefreshView();
         }
 
 
@@ -33,13 +34,16 @@ namespace _InventoryPractice
         {
             _equipment.OnEquipItem -= OnEquipItem;
             _equipment.OnUnEquipItem -= OnUnEquipedItem;
+            _equipment.OnDropItem -= OnUnEquipedItem;
         }
 
-        private void OnUnEquipedItem(EquipType type, InventoryItem item)
+        private void OnUnEquipedItem(EquipType type, InventoryItem item, int index)
         {
-            var slotView = FindSlotView(type, item);
-            slotView?.SetDefaultSprite();
+            var slotView = _view.GetSlotView(type, index);
+            slotView.SetDefaultSprite();
+            slotView.RemoveAllButtonListeners();
         }
+
 
         private void OnEquipItem(EquipType type, InventoryItem item)
         {
@@ -54,59 +58,39 @@ namespace _InventoryPractice
 
         private void RefreshView()
         {
-            foreach (var pair in _equipment.EquippedItems)
-            {
-                var type = pair.Key;
-                var items = pair.Value;
-
-                for (var i = 0; i < items.Count; i++)
-                {
-                    var item = items[i];
-                    var slotView = _view.GetSlotView(type, i);
-
-                    slotView.SetSprite(item.MetaData.Icon);
-
-                    slotView.RemoveAllButtonListeners();
-                    slotView.AddButtonListener(() => OnSlotClicked(item));
-                }
-            }
-
             foreach (EquipType type in Enum.GetValues(typeof(EquipType)))
             {
                 var limit = _equipment.GetSlotLimit(type);
                 var items = _equipment.GetEquippedItems(type);
 
-                for (var i = items.Count; i < limit; i++)
+                for (var i = 0; i < limit; i++)
                 {
+                    var item = i < items.Count ? items[i] : null;
                     var slotView = _view.GetSlotView(type, i);
-                    slotView.SetDefaultSprite();
 
-                    slotView.RemoveAllButtonListeners();
+                    if (slotView == null)
+                    {
+                        continue;
+                    }
+
+                    if (item != null)
+                    {
+                        slotView.SetSprite(item.MetaData.Icon);
+                        slotView.RemoveAllButtonListeners();
+                        slotView.AddButtonListener(() => OnSlotClicked(item));
+                    }
+                    else
+                    {
+                        slotView.SetDefaultSprite();
+                        slotView.RemoveAllButtonListeners();
+                    }
                 }
             }
         }
 
-        // private void OnSlotClicked()
-        // {
-        //     _detailPresenter.Start(_item, " ");
-        // }
-
         private void OnSlotClicked(InventoryItem item)
         {
-            _detailPresenter.Start(item, " ");
-        }
-
-
-        private IEquipmentSlotView FindSlotView(EquipType type, InventoryItem item)
-        {
-            var items = _equipment.GetEquippedItems(type);
-            for (var i = 0; i < items.Count + 1; i++)
-            {
-                var view = _view.GetSlotView(type, i);
-                if (view != null) return view;
-            }
-
-            return null;
+            _detailPresenter.ShowEquippedSlotInfo(item);
         }
     }
 }

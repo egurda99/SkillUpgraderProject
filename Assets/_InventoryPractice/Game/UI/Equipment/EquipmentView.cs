@@ -23,12 +23,5 @@ namespace _InventoryPractice
                 _ => null
             };
         }
-
-
-        private void ClearView(EquipmentSlotView slotView)
-        {
-            slotView.SetDefaultSprite();
-            slotView.RemoveAllButtonListeners();
-        }
     }
 }

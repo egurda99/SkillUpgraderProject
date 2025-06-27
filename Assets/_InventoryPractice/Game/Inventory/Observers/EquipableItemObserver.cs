@@ -1,6 +1,7 @@
 namespace InventoryPractice
 {
-    public sealed class EquipableItemObserver : IInventoryItemEquipObserver, IUnEquipedObserver
+    public sealed class EquipableItemObserver : IInventoryItemEquipObserver, IUnEquipedObserver,
+        IEquippedItemDropObserver
     {
         private readonly Inventory _inventory;
         private readonly Equipment _equipment;
@@ -14,9 +15,15 @@ namespace InventoryPractice
 
             _inventory.OnItemEquipped += OnItemEquipped;
             _equipment.OnUnEquipItem += OnUnEquiped;
+            _equipment.OnDropItem += OnDropItemFromEquipment;
         }
 
-        public void OnUnEquiped(EquipType equipType, InventoryItem item)
+        public void OnDropItemFromEquipment(EquipType equipType, InventoryItem item, int index)
+        {
+            DecreasePlayerStats(item.GetComponent<EquipableItemComponent>());
+        }
+
+        public void OnUnEquiped(EquipType equipType, InventoryItem item, int index)
         {
             _inventory.AddItemSlot(item);
             DecreasePlayerStats(item.GetComponent<EquipableItemComponent>());
@@ -51,6 +58,7 @@ namespace InventoryPractice
         {
             _inventory.OnItemEquipped -= OnItemEquipped;
             _equipment.OnUnEquipItem -= OnUnEquiped;
+            _equipment.OnDropItem -= OnDropItemFromEquipment;
         }
     }
 }

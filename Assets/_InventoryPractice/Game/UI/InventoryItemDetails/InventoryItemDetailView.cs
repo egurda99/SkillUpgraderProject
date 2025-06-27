@@ -15,6 +15,7 @@ namespace _InventoryPractice
 
         [SerializeField] private Button _useButton;
         [SerializeField] private Button _equipButton;
+        [SerializeField] private Button _unEquipButton;
         [SerializeField] private Button _dropButton;
 
 
@@ -63,6 +64,11 @@ namespace _InventoryPractice
             _equipButton.gameObject.SetActive(show);
         }
 
+        public void ShowUnEquipButton(bool show)
+        {
+            _unEquipButton.gameObject.SetActive(show);
+        }
+
         public void ShowDropButton(bool show)
         {
             _dropButton.gameObject.SetActive(show);
@@ -96,6 +102,16 @@ namespace _InventoryPractice
         public void RemoveDropActionListener(UnityAction action)
         {
             _dropButton.onClick.RemoveListener(action);
+        }
+
+        public void SetUnEquipActionListener(UnityAction action)
+        {
+            _unEquipButton.onClick.AddListener(action);
+        }
+
+        public void RemoveUnEquipActionListener(UnityAction action)
+        {
+            _unEquipButton.onClick.RemoveListener(action);
         }
     }
 }

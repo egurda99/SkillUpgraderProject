@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace MyCodeBase
 {
-    public class Popup : MonoBehaviour, IDisposable
+    public class Popup : MonoBehaviour
     {
         [SerializeField] private UnityEvent OnPopupShow;
 
@@ -35,6 +35,11 @@ namespace MyCodeBase
 
         protected virtual void OnHide()
         {
+        }
+
+        private void OnDestroy()
+        {
+            Dispose();
         }
 
         public virtual void Dispose()

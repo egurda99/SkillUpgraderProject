@@ -9,6 +9,5 @@ namespace _InventoryPractice
         void SetDefaultSprite();
         void AddButtonListener(UnityAction action);
         void RemoveAllButtonListeners();
-        void RemoveButtonListener(UnityAction action);
     }
 }

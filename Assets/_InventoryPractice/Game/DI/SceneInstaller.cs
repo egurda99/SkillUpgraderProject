@@ -1,3 +1,4 @@
+using _InventoryPractice;
 using Zenject;
 
 namespace InventoryPractice
@@ -9,6 +10,8 @@ namespace InventoryPractice
             Container.Bind<Inventory>().AsSingle();
             Container.Bind<Equipment>().AsSingle();
             Container.Bind<PlayerStats>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<DetailsItemPresenterFactory>().AsSingle();
+            Container.Bind<InventoryPopupViewModelFactory>().AsSingle();
         }
     }
 }

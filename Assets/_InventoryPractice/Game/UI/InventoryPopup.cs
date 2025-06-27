@@ -1,153 +1,60 @@
-using System.Collections.Generic;
-using InventoryPractice;
 using MyCodeBase;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
 namespace _InventoryPractice
 {
-    public class InventoryPopup : Popup
+    public sealed class InventoryPopup : Popup
     {
-        [SerializeField] private Transform _container;
+        [SerializeField] private Transform _slotsContainer;
         [SerializeField] private Transform _detailContainer;
+
         [Header("Views")] [SerializeField] private InventorySlotView _slotViewPrefab;
         [SerializeField] private InventoryItemDetailView _inventoryItemDetailView;
         [SerializeField] private ValueWidgetView _valueWidgetView;
         [SerializeField] private EquipmentView _equipmentView;
+        [SerializeField] private StatsView _statsView;
 
-
-        private readonly List<ViewHolder> _viewHolders = new();
-
-        private bool _isActive;
-        private Inventory _inventory;
-        private InventoryItemDetailView _detailView;
-        private InventoryItemDetailPresenter _detailPresenter;
-        private WeightWidgetAdapter _weightAdapter;
-        private EquipmentPresenter _equipmentPresenter;
+        private InventoryPopupViewModel _viewModel;
+        private InventoryPopupViewModelFactory _viewModelFactory;
 
         [Inject]
-        public void Construct(Inventory inventory, Equipment equipment)
+        public void Construct(InventoryPopupViewModelFactory viewModelFactory)
         {
-            _inventory = inventory;
-            _detailPresenter = new InventoryItemDetailPresenter(_inventory);
-            _weightAdapter = new WeightWidgetAdapter(_valueWidgetView, inventory);
-            _equipmentPresenter = new EquipmentPresenter(equipment, _equipmentView, _detailPresenter);
-
-            _inventory.OnInventoryListChanged += RefreshInventory;
-        }
-
-        private void RefreshInventory()
-        {
-            Refresh();
-        }
-
-        private void Refresh()
-        {
-            if (!_isActive)
-                return;
-
-            Hide();
-            Show();
+            _viewModelFactory = viewModelFactory;
         }
 
         protected override void OnShow()
         {
             base.OnShow();
 
-            _isActive = true;
-            Show();
-            ShowEquipment();
-        }
+            _viewModel = _viewModelFactory.Create(
+                _inventoryItemDetailView,
+                _detailContainer,
+                _valueWidgetView,
+                _equipmentView,
+                _statsView,
+                _slotsContainer,
+                _slotViewPrefab
+            );
 
-        private void ShowEquipment()
-        {
-            _equipmentPresenter.Start();
+            _viewModel.Show();
         }
 
         protected override void OnHide()
         {
             base.OnHide();
-            _isActive = false;
-            Hide();
-            HideEquipment();
+
+            _viewModel.Hide();
+            _viewModel.Dispose();
+            _viewModel = null;
         }
 
-        private void HideEquipment()
-        {
-            _equipmentPresenter.Stop();
-        }
-
-
-        [Button]
-        public void Show()
-        {
-            var allItems = _inventory.Items;
-
-            _detailView = Instantiate(_inventoryItemDetailView, _detailContainer);
-            _detailPresenter.SetView(_detailView);
-
-            for (int i = 0, count = allItems.Count; i < count; i++)
-            {
-                var item = allItems[i];
-                ShowItem(item);
-            }
-        }
-
-        [Button]
-        public void Hide()
-        {
-            for (int i = 0, count = _viewHolders.Count; i < count; i++)
-            {
-                var vh = _viewHolders[i];
-                HideItem(vh);
-            }
-
-
-            _detailPresenter.Stop();
-
-            if (_detailView != null)
-            {
-                Destroy(_detailView.gameObject);
-            }
-
-            _viewHolders.Clear();
-        }
-
-        private void ShowItem(InventoryItem item)
-        {
-            var view = Instantiate(_slotViewPrefab, _container);
-
-            var slotPresenter = new InventorySlotPresenter(item, view, _detailPresenter);
-            slotPresenter.Start();
-
-
-            _viewHolders.Add(new ViewHolder(view, slotPresenter));
-        }
-
-        private void HideItem(ViewHolder vh)
-        {
-            vh.SlotPresenter.Stop();
-            Destroy(vh.SlotView.gameObject);
-        }
 
         public override void Dispose()
         {
             base.Dispose();
-            _inventory.OnInventoryListChanged -= RefreshInventory;
-            _weightAdapter.Dispose();
-        }
-
-        private readonly struct ViewHolder
-        {
-            public readonly InventorySlotView SlotView;
-            public readonly InventorySlotPresenter SlotPresenter;
-
-            public ViewHolder(InventorySlotView slotView, InventorySlotPresenter slotPresenter)
-            {
-                SlotView = slotView;
-                SlotPresenter = slotPresenter;
-            }
+            _viewModel?.Dispose();
         }
     }
 }

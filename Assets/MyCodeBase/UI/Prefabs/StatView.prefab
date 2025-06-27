@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 279433424239167299}
   - component: {fileID: 4756060215362427850}
   - component: {fileID: 3824958975097535890}
+  - component: {fileID: -3884357160592019523}
   m_Layer: 5
   m_Name: StatView
   m_TagString: Untagged
@@ -213,6 +214,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-3884357160592019523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777386723296070169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2e3598d15514102936a2648d5075979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 9211272789094655795}
 --- !u!1 &6501018098198533314
 GameObject:
   m_ObjectHideFlags: 0

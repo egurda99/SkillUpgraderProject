@@ -220,7 +220,6 @@ namespace InventoryPractice
 
             RemoveItemSlot(item);
             OnItemEquipped?.Invoke(item);
-            Debug.Log($"Equip item = {item}");
         }
 
         private int GetTotalItemCount(string itemId)

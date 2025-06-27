@@ -29,11 +29,7 @@ namespace _InventoryPractice
         public void AddButtonListener(UnityAction action)
         {
             _button.onClick.AddListener(action);
-        }
-
-        public void RemoveButtonListener(UnityAction action)
-        {
-            _button.onClick.RemoveListener(action);
+            _button.onClick.AddListener(() => Debug.Log("Clicked"));
         }
 
         public void RemoveAllButtonListeners()

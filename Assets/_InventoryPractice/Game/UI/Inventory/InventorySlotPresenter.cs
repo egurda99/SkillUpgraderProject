@@ -42,7 +42,7 @@ namespace _InventoryPractice
 
         private void OnSlotClicked()
         {
-            _detailPresenter.Start(_item, _amountText);
+            _detailPresenter.ShowItemInfo(_item, _amountText);
         }
 
 

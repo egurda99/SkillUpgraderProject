@@ -19,6 +19,7 @@ namespace InventoryPractice
         public void OnItemAdded(InventoryItem newItem)
         {
             _inventory.AddItem(newItem);
+            _inventory.AddWeight(newItem.Weight);
         }
 
         public void OnItemsAdded(InventoryItem newItem, int amount)
@@ -27,12 +28,14 @@ namespace InventoryPractice
             {
                 var itemClone = newItem.Clone();
                 _inventory.AddItem(itemClone);
+                _inventory.AddWeight(itemClone.Weight);
             }
         }
 
         public void OnItemRemoved(InventoryItem item)
         {
             _inventory.RemoveItem(item);
+            _inventory.DecreaseWeight(item.Weight);
         }
 
         public void OnItemsRemoved(InventoryItem item, int amountToRemove)
@@ -45,6 +48,7 @@ namespace InventoryPractice
             foreach (var i in itemsToRemove)
             {
                 _inventory.RemoveItem(i);
+                _inventory.DecreaseWeight(i.Weight);
             }
         }
 
