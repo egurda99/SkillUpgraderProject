@@ -17,6 +17,16 @@ namespace _InventoryPractice
             _playerStats.OnArmorChanged += OnArmorChanged;
             _playerStats.OnHealthChanged += OnHealthChanged;
             _playerStats.OnPowerChanged += OnPowerChanged;
+
+            SetDefaultStats();
+        }
+
+        private void SetDefaultStats()
+        {
+            _statsView.SetPower(_playerStats.Power.ToString());
+            _statsView.SetHealth(_playerStats.Health.ToString());
+            _statsView.SetAgility(_playerStats.Aguility.ToString());
+            _statsView.SetArmor(_playerStats.Armor.ToString());
         }
 
         private void OnPowerChanged(int obj)

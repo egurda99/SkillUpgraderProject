@@ -10,10 +10,20 @@ namespace InventoryPractice
         [SerializeField] private int _aguility;
         [SerializeField] private int _armor;
 
+        public int Power => _power;
+
+        public int Health => _health;
+
+        public int Aguility => _aguility;
+
+        public int Armor => _armor;
+
+
         public event Action<int> OnPowerChanged;
         public event Action<int> OnHealthChanged;
         public event Action<int> OnAguilityChanged;
         public event Action<int> OnArmorChanged;
+
 
         public void AddPower(int power)
         {
