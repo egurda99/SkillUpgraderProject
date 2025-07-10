@@ -4,7 +4,7 @@ using UnityEngine;
 namespace InventoryPractice
 {
     [Serializable]
-    public sealed class StackableItemComponent : IItemComponent
+    public class StackableItemComponent : IItemComponent
     {
         [SerializeField] private int _stackSize;
         [SerializeField] private int _value;
@@ -12,7 +12,6 @@ namespace InventoryPractice
         public int StackSize => _stackSize;
 
         public int Value => _value;
-
 
         public bool IsFull
         {

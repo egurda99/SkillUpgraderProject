@@ -18,7 +18,7 @@ public class GameContextInstaller : SceneContextInstallerBase
         _playerInputController = new PlayerInputController(_sceneEntity);
     }
 
-    public override void Install(IContext context)
+    public override void Install(Atomic.Contexts.IContext context)
     {
         context.AddKeyboardInput(_keyboardInput);
         context.AddMouseInput(_mouseInput);

@@ -57,19 +57,22 @@ namespace InventoryPractice
         {
             var requiredWeight = item.Weight;
 
-            if (!item.Flags.HasFlag(InventoryItemFlags.Stackable) && HasFreeSlot)
-                return UsedWeight + requiredWeight <= _weightLimit;
+            var isStackable = item.Flags.HasFlag(InventoryItemFlags.Stackable);
+
+            if (!isStackable)
+            {
+                return HasFreeSlot && CanAddWeight(requiredWeight);
+            }
 
             foreach (var i in _items)
             {
-                if (i.Id == item.Id && i.TryGetComponent(out StackableItemComponent stack) && !stack.IsFull &&
-                    CanAddWeight(i.Weight))
+                if (i.Id == item.Id && i.TryGetComponent(out StackableItemComponent stack) && !stack.IsFull)
                 {
-                    return true;
+                    return CanAddWeight(requiredWeight);
                 }
             }
 
-            return CanAddWeight(requiredWeight);
+            return HasFreeSlot && CanAddWeight(requiredWeight);
         }
 
 
@@ -222,7 +225,7 @@ namespace InventoryPractice
             OnItemEquipped?.Invoke(item);
         }
 
-        private int GetTotalItemCount(string itemId)
+        public int GetTotalItemCount(string itemId)
         {
             var sum = 0;
 
@@ -237,6 +240,38 @@ namespace InventoryPractice
             }
 
             return sum;
+        }
+
+        public int GetStacksOfItem(string itemId)
+        {
+            var totalValue = 0;
+            var stackSize = -1;
+            var nonStackableCount = 0;
+
+            foreach (var item in _items)
+            {
+                if (item.Id != itemId)
+                    continue;
+
+                if (item.TryGetComponent(out StackableItemComponent stackable))
+                {
+                    if (stackSize == -1)
+                        stackSize = stackable.StackSize;
+
+                    totalValue += stackable.Value;
+                }
+                else
+                {
+                    nonStackableCount++;
+                }
+            }
+
+            if (stackSize > 0)
+            {
+                return Mathf.CeilToInt((float)totalValue / stackSize);
+            }
+
+            return nonStackableCount;
         }
 
 

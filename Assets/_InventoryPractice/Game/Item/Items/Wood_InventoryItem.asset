@@ -21,12 +21,12 @@ MonoBehaviour:
       Icon: {fileID: 21300000, guid: bf8f65cc6b0f9604ca2746f98224453c, type: 3}
     Flags: 8
     Components:
-    - rid: 8518610834734973016
+    - rid: 8338750303779422296
   references:
     version: 2
     RefIds:
-    - rid: 8518610834734973016
-      type: {class: StackableItemComponent, ns: InventoryPractice, asm: Assembly-CSharp}
+    - rid: 8338750303779422296
+      type: {class: StackableItemComponent, ns: InventoryPractice, asm: Game}
       data:
-        _stackSize: 5
+        _stackSize: 4
         _value: 1
