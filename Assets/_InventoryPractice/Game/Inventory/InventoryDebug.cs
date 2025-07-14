@@ -18,7 +18,7 @@ namespace InventoryPractice
         [Button]
         public void AddItem(InventoryItemConfig itemConfig)
         {
-            _inventory.AddItem(itemConfig);
+            _inventory.AddItemToInventory(itemConfig);
         }
 
         [Button]

@@ -48,7 +48,6 @@ namespace InventoryPractice
         public void AddItem(InventoryItem item)
         {
             _items.Add(item);
-            // AddWeight(item.Weight);
 
             OnInventoryListChanged?.Invoke();
         }
@@ -56,7 +55,6 @@ namespace InventoryPractice
         public bool CanAddItem(InventoryItem item)
         {
             var requiredWeight = item.Weight;
-
             var isStackable = item.Flags.HasFlag(InventoryItemFlags.Stackable);
 
             if (!isStackable)
@@ -66,7 +64,9 @@ namespace InventoryPractice
 
             foreach (var i in _items)
             {
-                if (i.Id == item.Id && i.TryGetComponent(out StackableItemComponent stack) && !stack.IsFull)
+                if (i.Id == item.Id &&
+                    i.TryGetComponent(out StackableItemComponent stack) &&
+                    !stack.IsFull)
                 {
                     return CanAddWeight(requiredWeight);
                 }
@@ -75,12 +75,20 @@ namespace InventoryPractice
             return HasFreeSlot && CanAddWeight(requiredWeight);
         }
 
-
         [Button]
-        public void AddItem(InventoryItemConfig itemConfig)
+        public void AddItemToInventory(InventoryItemConfig itemConfig)
         {
             var item = itemConfig.PrototypeItem.Clone();
 
+            if (CanAddItem(item))
+            {
+                OnItemAdded?.Invoke(item);
+            }
+        }
+
+        [Button]
+        public void AddItemToInventory(InventoryItem item)
+        {
             if (CanAddItem(item))
             {
                 OnItemAdded?.Invoke(item);

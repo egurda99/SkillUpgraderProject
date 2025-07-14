@@ -4,7 +4,7 @@ using UnityEngine;
 namespace InventoryPractice
 {
     [Serializable]
-    public sealed class EquipableItemComponent : IItemComponent
+    public class EquipableItemComponent : IItemComponent
     {
         [SerializeField] private EquipType _equipType;
         [SerializeField] private int _healthValue;
@@ -23,7 +23,7 @@ namespace InventoryPractice
         public int ArmorValue => _armorValue;
 
 
-        public IItemComponent Clone()
+        public virtual IItemComponent Clone()
         {
             return new EquipableItemComponent
             {

@@ -18,7 +18,7 @@ namespace InventoryPractice
             get { return Value >= StackSize; }
         }
 
-        public IItemComponent Clone()
+        public virtual IItemComponent Clone()
         {
             return new StackableItemComponent
             {

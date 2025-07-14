@@ -28,7 +28,7 @@ MonoBehaviour:
     - rid: 8338750303779422289
       type: {class: EquipableItemComponent, ns: InventoryPractice, asm: Game}
       data:
-        _equipType: 0
+        _equipType: 2
         _healthValue: 0
         _powerValue: 0
         _aguilityValue: 0

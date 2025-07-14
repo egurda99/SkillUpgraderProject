@@ -1,0 +1,22 @@
+{
+    "name": "StatsTests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:304d5984d6c97824fbf789a5fcc554b9",
+        "GUID:382f5adf1f03e91438e4d4063a986811",
+        "GUID:ac24659b53e09664eb6c3926a02e1d7c"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

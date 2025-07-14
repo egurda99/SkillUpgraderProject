@@ -1319,8 +1319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a99b8875384004ba1d6aed15661502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slotsLimit: 16
-  _weightLimit: 100
+  _slotsLimit: 1
+  _weightLimit: 3
   _useStackableInventory: 1
 --- !u!114 &1731327052 stripped
 MonoBehaviour:
