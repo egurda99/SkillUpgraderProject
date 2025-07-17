@@ -1,5 +1,3 @@
-
-
 // [Serializable]
 // public sealed class ResourcesSaveLoader : SaveLoader<ResourceService, ResourcesData>
 // {
@@ -31,7 +29,7 @@
 //         {
 //             if (resourceDataDict.TryGetValue(sceneResource.ID, out var resourceData))
 //             {
-//                 sceneResource.Setup(resourceData.ResourceType, resourceData.Amount, resourceData.Id);
+//                 sceneResource.SetupChests(resourceData.ResourceType, resourceData.Amount, resourceData.Id);
 //             }
 //         }
 //
@@ -40,6 +38,7 @@
 //
 //     protected override void SetupDefaultData(ResourceService service)
 //     {
-//         Debug.Log("<color=yellow>Setup default data</color>");
+//         Debug.Log("<color=yellow>SetupChests default data</color>");
 //     }
 // }
+

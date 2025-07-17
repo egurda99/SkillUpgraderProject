@@ -33,7 +33,7 @@ namespace MyCodeBase
     //         foreach (var unitData in data.UnitsDataList)
     //         {
     //             var unit = _unitSpawner.SpawnUnitByType(unitData.Type, unitData.Position, unitData.EulerAngles);
-    //             unit.Setup(unitData.Type, unitData.Id, unitData.HitPoints);
+    //             unit.SetupChests(unitData.Type, unitData.Id, unitData.HitPoints);
     //             units.Add(unit);
     //         }
     //
@@ -42,7 +42,7 @@ namespace MyCodeBase
     //
     //     protected override void SetupDefaultData(UnitManager service)
     //     {
-    //         Debug.Log("<color=yellow>Setup default data</color>");
+    //         Debug.Log("<color=yellow>SetupChests default data</color>");
     //     }
     // }
 }

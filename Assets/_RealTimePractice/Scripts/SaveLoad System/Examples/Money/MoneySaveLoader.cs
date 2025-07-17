@@ -16,13 +16,13 @@ public sealed class MoneySaveLoader : SaveLoader<MoneyStorage, MoneyData>
 
     protected override void SetupData(MoneyStorage service, MoneyData data)
     {
-        Debug.Log($"<color=yellow>Setup data = {data.Money}</color>");
+        Debug.Log($"<color=yellow>SetupChests data = {data.Money}</color>");
         service.SetupMoney(data.Money);
     }
 
     protected override void SetupDefaultData(MoneyStorage service)
     {
-        Debug.Log($"<color=yellow>Setup default data = {100}</color>");
+        Debug.Log($"<color=yellow>SetupChests default data = {100}</color>");
         service.SetupMoney(100);
     }
 }
