@@ -117,6 +117,64 @@ namespace TestsPractice
         }
 
         [Test]
+        public void WhenHaveTwoFullStackableItems_AndRemoveOneAndHalfStackItem_ThenHaveOneStackItem()
+        {
+            // Arrange // 2 full stacks
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+
+            // Act
+
+            _inventory.RemoveItem(_woodItem);
+            _inventory.RemoveItem(_woodItem);
+            _inventory.RemoveItem(_woodItem);
+            _inventory.RemoveItem(_woodItem);
+            _inventory.RemoveItem(_woodItem);
+
+            // Assert
+
+            Assert.IsTrue(_inventory.HasItem(_woodItem));
+            Assert.AreEqual(1, _inventory.GetStacksOfItem(_woodItem.Id));
+            Assert.AreEqual(3, _inventory.GetTotalItemCount(_woodItem.Id));
+        }
+
+        [Test]
+        public void WhenHaveTwoFullAndOneHalfStackableItems_AndRemoveOneAndHalfStackItem_ThenHaveTwoStackItem()
+        {
+            //Arrange
+            // 3.5  stacks
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+
+            _inventory.AddItem(_woodItem);
+            _inventory.AddItem(_woodItem);
+            // Act
+            _inventory.RemoveItem(_woodItem);
+            _inventory.RemoveItem(_woodItem);
+            _inventory.RemoveItem(_woodItem);
+            _inventory.RemoveItem(_woodItem);
+
+
+            // Assert
+
+            Assert.IsTrue(_inventory.HasItem(_woodItem));
+            Assert.AreEqual(2, _inventory.GetStacksOfItem(_woodItem.Id));
+            Assert.AreEqual(6, _inventory.GetTotalItemCount(_woodItem.Id));
+        }
+
+        [Test]
         public void WhenInventoryWeightLimitExceeded_AndAddNonStackItem_ThenItemIsNotAdded()
         {
             // Arrange
