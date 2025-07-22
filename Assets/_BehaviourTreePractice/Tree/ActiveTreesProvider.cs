@@ -12,19 +12,21 @@ namespace BehaviourTreePractice
         public event Action<Tree> OnTreeAdded;
         public event Action<Tree> OnTreeRemoved;
 
+        public event Action<IReadOnlyList<Tree>> ActiveTreesChanged;
+
 
         public void OnTreeSpawned(Tree tree)
         {
             _trees.Add(tree);
             tree.OnTreeDespawned += OnTreeDespawned;
-            OnTreeAdded?.Invoke(tree);
+            ActiveTreesChanged?.Invoke(_trees);
         }
 
         public void OnTreeDespawned(Tree tree)
         {
             _trees.Remove(tree);
             tree.OnTreeDespawned -= OnTreeDespawned;
-            OnTreeRemoved?.Invoke(tree);
+            ActiveTreesChanged?.Invoke(_trees);
         }
     }
 }

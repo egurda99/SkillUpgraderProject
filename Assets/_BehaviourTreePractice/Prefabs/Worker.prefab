@@ -44,8 +44,8 @@ GameObject:
   - component: {fileID: 3006422773680130874}
   - component: {fileID: 4832296492088289794}
   - component: {fileID: 4021686100700815505}
-  - component: {fileID: 6590868415860547441}
   - component: {fileID: 546769738648086389}
+  - component: {fileID: 2587155674333572967}
   m_Layer: 0
   m_Name: Worker
   m_TagString: Untagged
@@ -68,6 +68,7 @@ Transform:
   m_Children:
   - {fileID: 1649549970664807929}
   - {fileID: 6186486720209164713}
+  - {fileID: 6361393735910437310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4832296492088289794
@@ -85,7 +86,7 @@ MonoBehaviour:
   autoRefresh: 1
   installOnAwake: 1
   installPipeline:
-  - {fileID: 6590868415860547441}
+  - {fileID: 2587155674333572967}
   - {fileID: 6182722759315053326}
   onInstalled:
     m_PersistentCalls:
@@ -102,27 +103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603a745f80e14d1d8cd57cf70a50187f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6590868415860547441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6378945258768650400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e76f42b316e5df4896727779ddce61c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveToDirectionMechanic:
-    _rootTransform: {fileID: 3006422773680130874}
-    _speed: 3
-    _moveDirection: {x: 0, y: 0, z: 0}
-    _isMoving: 0
-    _canMove: 1
-  _rotateByMouseMechanic:
-    _rootTransform: {fileID: 3006422773680130874}
-    _rotateSpeed: 300
 --- !u!114 &546769738648086389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +116,107 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _limitAmount: 10
+--- !u!114 &2587155674333572967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6378945258768650400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7bf23e7c5464e198844941221239dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveToDirectionMechanic:
+    _rootTransform: {fileID: 3006422773680130874}
+    _speed: 3
+    _moveDirection: {x: 0, y: 0, z: 0}
+    _isMoving: 0
+    _canMove: 1
+  _rotateToMoveDirectionMechanic:
+    _rootTransform: {fileID: 0}
+    _rotateSpeed: 300
+    _isRotating: 0
+--- !u!1 &7949218368538335881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6361393735910437310}
+  - component: {fileID: 8483830389980822118}
+  m_Layer: 0
+  m_Name: '[BehaviourTree]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6361393735910437310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7949218368538335881}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3006422773680130874}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8483830389980822118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7949218368538335881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startWhenEnabled: 1
+  asynchronousLoad: 0
+  pauseWhenDisabled: 0
+  restartWhenComplete: 1
+  logTaskChanges: 0
+  group: 0
+  resetValuesOnRestart: 0
+  externalBehavior: {fileID: 0}
+  mBehaviorSource:
+    behaviorName: WorkerBehavior
+    behaviorDescription: 
+    mTaskData:
+      types: []
+      parentIndex: 
+      startIndex: 
+      variableStartIndex: 
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(184.332626,15.00238)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(4.332613,170.5579)"},"ID":1,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(284.999939,139.047623)","Comment":"Patrol"},"ID":2,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"_BehaviourTreePractice.SetWaypointNode","NodeData":{"Offset":"(-61.11165,196.813156)"},"ID":3,"Name":"Set
+        Waypoint Node","Instant":true,"BehaviorTree_blackboard":0},{"Type":"_BehaviourTreePractice.MoveToPositionNode","NodeData":{"Offset":"(132.396957,204.034363)"},"ID":4,"Name":"Move
+        To Position Node","Instant":true,"BehaviorTree_blackboard":1},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(292.074219,209.195618)"},"ID":5,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3}},{"Type":"_BehaviourTreePractice.SetNextWaypointIndexNode","NodeData":{"Offset":"(498.228577,202.224121)"},"ID":6,"Name":"Set
+        Next Waypoint Index Node","Instant":true,"BehaviorTree_blackboard":2}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"Waypoints","IsShared":true,"List`1mValue":[]},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"WaypointIndex","IsShared":true,"Int32mValue":0},{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"MovePosition","IsShared":true,"Vector3mValue":"(0,0,0)"},{"Type":"_BehaviourTreePractice.SharedSceneEntity","Name":"Unit","IsShared":true,"SceneEntitymValue":3},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"StoppingDistance","IsShared":true,"SinglemValue":0.1}]}'
+      fieldSerializationData:
+        typeName: []
+        fieldNameHash: 
+        startIndex: 
+        dataPosition: 
+        unityObjects:
+        - {fileID: 8483830389980822118}
+        - {fileID: 8483830389980822118}
+        - {fileID: 8483830389980822118}
+        - {fileID: 4832296492088289794}
+        byteData: 
+        byteDataArray: 
+      Version: 1.7.7
+  gizmoViewMode: 2
+  showBehaviorDesignerGizmo: 1
 --- !u!1 &8550233314304206884
 GameObject:
   m_ObjectHideFlags: 0

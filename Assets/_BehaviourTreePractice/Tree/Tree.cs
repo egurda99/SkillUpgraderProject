@@ -13,10 +13,36 @@ namespace BehaviourTreePractice
         [ShowInInspector] [ReadOnly] private bool _isTreeOccupied;
         [ShowInInspector] [ReadOnly] private bool _canTransferResource;
         [ShowInInspector] [ReadOnly] private Timer _timer;
-
-
         public event Action<Tree> OnTreeDespawned;
+        public event Action<bool> OnTreeOccupiedStatusChanged;
 
+        public bool IsTreeOccupied => _isOccupied || _isReserved;
+
+        private bool _isOccupied;
+        private bool _isReserved;
+
+        public Transform Transform => transform;
+
+        public void SetOccupied(bool value)
+        {
+            _isOccupied = value;
+            OnTreeOccupiedStatusChanged?.Invoke(IsTreeOccupied);
+        }
+
+        public void Reserve()
+        {
+            _isReserved = true;
+            OnTreeOccupiedStatusChanged?.Invoke(IsTreeOccupied);
+        }
+
+        public void Release()
+        {
+            if (_isReserved)
+            {
+                _isReserved = false;
+                OnTreeOccupiedStatusChanged?.Invoke(IsTreeOccupied);
+            }
+        }
 
         private void Update()
         {
@@ -43,12 +69,20 @@ namespace BehaviourTreePractice
             _timer.Stop();
         }
 
-        private void OnTriggerStay(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (!other.TryGetComponent<InventoryProxy>(out var proxy))
                 return;
 
             _isTreeOccupied = true;
+            OnTreeOccupiedStatusChanged.Invoke(_isTreeOccupied);
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (!other.TryGetComponent<InventoryProxy>(out var proxy))
+                return;
+
 
             var inventory = proxy.DebugInventory;
 
@@ -62,6 +96,7 @@ namespace BehaviourTreePractice
         private void OnTriggerExit(Collider other)
         {
             _isTreeOccupied = false;
+            OnTreeOccupiedStatusChanged.Invoke(_isTreeOccupied);
         }
 
 
