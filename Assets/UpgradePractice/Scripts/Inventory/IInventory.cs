@@ -7,5 +7,6 @@ namespace _UpgradePractice.Scripts
 
         void DecreaseItem(ResourceType type, int amount);
         ResourceItem PeekItem(ResourceType type);
+        bool IsFull { get; }
     }
 }

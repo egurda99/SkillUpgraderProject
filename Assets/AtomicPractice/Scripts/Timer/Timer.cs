@@ -1,13 +1,15 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
 namespace MyTimer
 {
+    [Serializable]
     public sealed class Timer : IInitializable, ITickable
     {
         private float _interval;
-        private float _time;
+        [ShowInInspector] [ReadOnly] private float _time;
         private bool _isRunning;
 
         public event Action OnElapsed;

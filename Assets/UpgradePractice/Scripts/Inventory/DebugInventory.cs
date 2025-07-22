@@ -7,7 +7,12 @@ namespace _UpgradePractice.Scripts
 {
     public sealed class DebugInventory : MonoBehaviour, IInventory
     {
+        [SerializeField] private int _limitAmount = 10;
+
+        [ShowInInspector] [ReadOnly] private bool _isFull;
         [ShowInInspector] [ReadOnly] private readonly List<ResourceItem> _itemsList = new();
+
+        bool IInventory.IsFull => _isFull;
 
         [Button]
         public void AddItem(ResourceItem item)
@@ -15,7 +20,19 @@ namespace _UpgradePractice.Scripts
             var existing = _itemsList.FirstOrDefault(i => i.Type == item.Type);
             if (existing != null)
             {
-                existing.Amount += item.Amount;
+                if (existing.Amount < _limitAmount)
+                {
+                    existing.Amount += item.Amount;
+                    if (existing.Amount >= _limitAmount)
+                    {
+                        _isFull = true;
+                    }
+                }
+
+                else
+                {
+                    _isFull = true;
+                }
             }
             else
             {
@@ -57,6 +74,12 @@ namespace _UpgradePractice.Scripts
                 return;
 
             item.Amount -= amount;
+
+            if (item.Amount < _limitAmount)
+            {
+                _isFull = false;
+            }
+
 
             if (item.Amount <= 0)
                 _itemsList.Remove(item);
