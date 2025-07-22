@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   local: 0
   namespace: Atomic.Entities
-  directoryPath: Assets/_AtomicPractice/AtomicLibrary/Atomic/CodeGen
+  directoryPath: Assets/AtomicPractice/AtomicLibrary/Atomic/CodeGen
   suffix: API
   imports:
   - Atomic.Elements
