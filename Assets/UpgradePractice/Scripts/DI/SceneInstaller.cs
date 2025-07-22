@@ -8,7 +8,7 @@ namespace _UpgradePractice.Scripts
         {
             Container.BindInterfacesAndSelfTo<ConverterInstaller>().FromComponentInHierarchy().AsSingle();
             BindMoneyStorage();
-            BindUpgradeManager();
+            //   BindUpgradeManager();
         }
 
         private void BindMoneyStorage()

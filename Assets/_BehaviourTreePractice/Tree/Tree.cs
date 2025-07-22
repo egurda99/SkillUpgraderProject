@@ -1,8 +1,8 @@
+using System;
 using _UpgradePractice.Scripts;
 using MyTimer;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Zenject;
 
 namespace BehaviourTreePractice
 {
@@ -14,10 +14,23 @@ namespace BehaviourTreePractice
         [ShowInInspector] [ReadOnly] private bool _canTransferResource;
         [ShowInInspector] [ReadOnly] private Timer _timer;
 
-        [Inject]
-        public void Construct(Timer timer)
+
+        public event Action<Tree> OnTreeDespawned;
+
+
+        private void Update()
         {
-            _timer = timer;
+            if (_timer == null)
+            {
+                return;
+            }
+
+            _timer.Tick();
+        }
+
+        public void Init()
+        {
+            _timer = new Timer();
             _timer.SetInterval(_durationForTransfer);
             _timer.OnElapsed += OnTimerFinished;
             _timer.Start();
@@ -71,6 +84,7 @@ namespace BehaviourTreePractice
 
             if (_resourceItem.Amount <= 0)
             {
+                OnTreeDespawned?.Invoke(this);
                 Destroy(gameObject);
             }
 

@@ -28,6 +28,11 @@ namespace _UpgradePractice.Scripts
 
         private void Update()
         {
+            if (_system == null)
+            {
+                return;
+            }
+
             _system.OnUpdate();
         }
 

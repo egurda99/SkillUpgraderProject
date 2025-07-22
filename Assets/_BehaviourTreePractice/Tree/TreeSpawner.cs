@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MyTimer;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -10,21 +11,31 @@ namespace BehaviourTreePractice
     {
         [SerializeField] private GameObject _treePrefab;
         [SerializeField] private Transform _container;
+        [SerializeField] private int _treesLimit = 5;
 
 
-        private readonly float _spawnInterval = 2f;
+        [SerializeField] private float _spawnInterval = 2f;
 
         [SerializeField] private List<Transform> _zonePoints = new();
 
-        private Timer _timer;
+        [ShowInInspector] [ReadOnly] private Timer _timer;
+        [ShowInInspector] [ReadOnly] private ActiveTreesProvider _activeTreesProvider;
+        private DiContainer _diContainer;
 
         [Inject]
-        public void Construct(Timer timer)
+        public void Construct(Timer timer, ActiveTreesProvider activeTreesProvider, DiContainer diContainer)
         {
+            _activeTreesProvider = activeTreesProvider;
             _timer = timer;
             _timer.SetInterval(_spawnInterval);
             _timer.OnElapsed += SpawnTree;
             _timer.Start();
+            _diContainer = diContainer;
+        }
+
+        private void Update()
+        {
+            _timer.Tick();
         }
 
         private void OnDestroy()
@@ -34,12 +45,18 @@ namespace BehaviourTreePractice
 
         private void SpawnTree()
         {
-            if (_treePrefab == null || _zonePoints.Count < 3)
+            if (_treePrefab == null || _zonePoints.Count < 3 || _activeTreesProvider.Trees.Count >= _treesLimit)
                 return;
 
             var point = GetRandomPointInPolygon();
             point.y = 0f;
-            Instantiate(_treePrefab, point, Quaternion.identity, _container);
+
+            var tree = Instantiate(_treePrefab, point, Quaternion.identity, _container);
+            //var tree = _diContainer.InstantiatePrefab(_treePrefab, point, Quaternion.identity, _container);
+
+            var treeComponent = tree.GetComponent<Tree>();
+            treeComponent.Init();
+            _activeTreesProvider.OnTreeSpawned(treeComponent);
             _timer.Reset();
             _timer.Start();
         }
