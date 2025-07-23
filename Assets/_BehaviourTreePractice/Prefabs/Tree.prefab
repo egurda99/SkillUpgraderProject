@@ -135,7 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _resourceItem:
     Type: 0
-    Amount: 10
+    Amount: 8
   _durationForTransfer: 1
 --- !u!135 &161492320304407590
 SphereCollider:

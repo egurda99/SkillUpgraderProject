@@ -1,6 +1,7 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 using UnityEngine;
+using static _BehaviourTreePractice.BlackboardKeys;
 
 namespace _BehaviourTreePractice
 {
@@ -13,8 +14,8 @@ namespace _BehaviourTreePractice
 
         public override void OnAwake()
         {
-            _patrolPoints = (SharedTransformList)_blackboard.GetVariable(BlackboardKeys.WAYPOINTS);
-            _waypointIndex = (SharedInt)_blackboard.GetVariable(BlackboardKeys.WAYPOINT_INDEX);
+            _patrolPoints = (SharedTransformList)_blackboard.GetVariable(WAYPOINTS);
+            _waypointIndex = (SharedInt)_blackboard.GetVariable(WAYPOINT_INDEX);
         }
 
         public override TaskStatus OnUpdate()
@@ -25,7 +26,7 @@ namespace _BehaviourTreePractice
             _waypointIndex.Value++;
             _waypointIndex.Value %= _patrolPoints.Value.Count;
 
-            _blackboard.SetVariable(BlackboardKeys.WAYPOINT_INDEX, _waypointIndex);
+            _blackboard.SetVariable(WAYPOINT_INDEX, _waypointIndex);
             return TaskStatus.Success;
         }
     }

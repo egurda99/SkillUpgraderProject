@@ -46,14 +46,14 @@ namespace BehaviourTreePractice
                 var blackBoard = player.GetComponentInChildren<BehaviorTree>();
                 var treeSensor = player.GetComponentInChildren<FindClosestTreeSensor>();
 
-                treeSensor.Init(id);
+                //treeSensor.Init(id);
 
                 var inventory = player.GetComponent<DebugInventory>();
 
                 var backpackObserver = new BackpackObserver(inventory, blackBoard);
                 backpackObserver.Initialize();
 
-                var treeObserver = new TreeSensorObserver(treeSensor, blackBoard);
+                var treeObserver = new TreeSensorObserver(treeSensor, blackBoard, id);
                 treeObserver.Initialize();
 
                 var sharedList = new SharedTransformList { Value = _waypoints };

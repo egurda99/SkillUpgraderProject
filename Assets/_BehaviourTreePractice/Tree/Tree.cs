@@ -11,7 +11,6 @@ namespace BehaviourTreePractice
     {
         [SerializeField] private ResourceItem _resourceItem;
         [SerializeField] private float _durationForTransfer = 1f;
-        [ShowInInspector] [ReadOnly] private bool _isTreeOccupied;
         [ShowInInspector] [ReadOnly] private bool _canTransferResource;
         [ShowInInspector] [ReadOnly] private Timer _timer;
         public event Action<Tree> OnTreeDespawned;
@@ -19,30 +18,35 @@ namespace BehaviourTreePractice
 
         public bool IsTreeOccupied => _isReserved;
 
-        private bool _isReserved;
+        [ShowInInspector] [ReadOnly] private bool _isReserved;
         [ShowInInspector] [ReadOnly] private string _reservedBy;
 
         public Transform Transform => transform;
 
-        public bool TryReserve(string reserver)
+        public bool TryReserve(string id)
         {
-            if (_isReserved && _reservedBy == reserver)
-                return true;
-
-            if (_isReserved)
+            if (IsTreeOccupied && id != _reservedBy)
                 return false;
 
+            _reservedBy = id;
             _isReserved = true;
-            _isTreeOccupied = true;
-            _reservedBy = reserver;
+            OnTreeOccupiedStatusChanged?.Invoke(true);
             return true;
         }
 
         public void Release()
         {
-            _isReserved = false;
-            _isTreeOccupied = false;
+            if (!IsTreeOccupied)
+                return;
+
             _reservedBy = null;
+            _isReserved = false;
+            OnTreeOccupiedStatusChanged?.Invoke(false);
+        }
+
+        public bool IsTreeOccupiedByAnother(string id)
+        {
+            return _reservedBy != null && _reservedBy != id;
         }
 
         private void Update()
@@ -83,8 +87,6 @@ namespace BehaviourTreePractice
             if (!other.TryGetComponent<SceneEntityProxy>(out var entityProxy))
                 return;
 
-            if (entityProxy.GetEntityID().Value != _reservedBy)
-                return;
 
             var inventory = proxy.DebugInventory;
 
@@ -96,7 +98,8 @@ namespace BehaviourTreePractice
 
         private void TryTransfer(ResourceType type, IInventory inventory)
         {
-            if (_resourceItem.Amount <= 0 || inventory.IsFull) return;
+            if (_resourceItem.Amount <= 0 || inventory.IsFull)
+                return;
 
             inventory.AddItem(new ResourceItem(_resourceItem.Type, 1));
             _resourceItem.Amount--;
@@ -109,6 +112,11 @@ namespace BehaviourTreePractice
 
             _canTransferResource = false;
             _timer.Start();
+        }
+
+        public bool IsReservedBy(string idValue)
+        {
+            return _reservedBy == idValue;
         }
     }
 }

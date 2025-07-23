@@ -27,8 +27,11 @@ namespace _BehaviourTreePractice
 
         public override TaskStatus OnUpdate()
         {
-            if (_minedTree == null || _isBackpackFull.Value || _tree.Value != _minedTree)
+            if (_minedTree == null)
                 return TaskStatus.Success;
+
+            if (_isBackpackFull.Value || _tree.Value != _minedTree)
+                return TaskStatus.Failure;
 
 
             return TaskStatus.Running;
