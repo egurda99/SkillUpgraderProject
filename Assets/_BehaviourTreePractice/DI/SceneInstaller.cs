@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _BehaviourTreePractice;
 using _UpgradePractice.Scripts;
 using Atomic.Entities;
 using BehaviorDesigner.Runtime;
@@ -11,9 +12,11 @@ namespace BehaviourTreePractice
     public sealed class SceneInstaller : MonoInstaller<SceneInstaller>
     {
         [SerializeField] private SceneEntity _workerPrefab;
-        [SerializeField] private Transform[] _spawnPoints;
-        [SerializeField] private List<Transform> _waypoints;
         [SerializeField] private Transform _botsContainer;
+        [SerializeField] private Transform[] _spawnPoints;
+
+        [Header("FOR AI")] [SerializeField] private List<Transform> _waypoints;
+        [SerializeField] private Transform _conveyor;
 
 
         public override void InstallBindings()
@@ -38,10 +41,26 @@ namespace BehaviourTreePractice
                 var player = Container.InstantiatePrefabForComponent<SceneEntity>(_workerPrefab, spawnPoint.position,
                     Quaternion.identity, _botsContainer);
 
+                var id = player.GetEntityID();
+
                 var blackBoard = player.GetComponentInChildren<BehaviorTree>();
+                var treeSensor = player.GetComponentInChildren<FindClosestTreeSensor>();
+
+                treeSensor.Init(id);
+
+                var inventory = player.GetComponent<DebugInventory>();
+
+                var backpackObserver = new BackpackObserver(inventory, blackBoard);
+                backpackObserver.Initialize();
+
+                var treeObserver = new TreeSensorObserver(treeSensor, blackBoard);
+                treeObserver.Initialize();
+
                 var sharedList = new SharedTransformList { Value = _waypoints };
+                var sharedVector3 = new SharedVector3 { Value = _conveyor.position };
 
                 blackBoard.SetVariable(WAYPOINTS, sharedList);
+                blackBoard.SetVariable(CONVEYOR_POSITION, sharedVector3);
             }
         }
 

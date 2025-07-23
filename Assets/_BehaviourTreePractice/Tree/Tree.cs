@@ -1,5 +1,6 @@
 using System;
 using _UpgradePractice.Scripts;
+using Atomic.Entities;
 using MyTimer;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -16,42 +17,37 @@ namespace BehaviourTreePractice
         public event Action<Tree> OnTreeDespawned;
         public event Action<bool> OnTreeOccupiedStatusChanged;
 
-        public bool IsTreeOccupied => _isOccupied || _isReserved;
+        public bool IsTreeOccupied => _isReserved;
 
-        private bool _isOccupied;
         private bool _isReserved;
+        [ShowInInspector] [ReadOnly] private string _reservedBy;
 
         public Transform Transform => transform;
 
-        public void SetOccupied(bool value)
+        public bool TryReserve(string reserver)
         {
-            _isOccupied = value;
-            OnTreeOccupiedStatusChanged?.Invoke(IsTreeOccupied);
-        }
+            if (_isReserved && _reservedBy == reserver)
+                return true;
 
-        public void Reserve()
-        {
+            if (_isReserved)
+                return false;
+
             _isReserved = true;
-            OnTreeOccupiedStatusChanged?.Invoke(IsTreeOccupied);
+            _isTreeOccupied = true;
+            _reservedBy = reserver;
+            return true;
         }
 
         public void Release()
         {
-            if (_isReserved)
-            {
-                _isReserved = false;
-                OnTreeOccupiedStatusChanged?.Invoke(IsTreeOccupied);
-            }
+            _isReserved = false;
+            _isTreeOccupied = false;
+            _reservedBy = null;
         }
 
         private void Update()
         {
-            if (_timer == null)
-            {
-                return;
-            }
-
-            _timer.Tick();
+            _timer?.Tick();
         }
 
         public void Init()
@@ -69,20 +65,26 @@ namespace BehaviourTreePractice
             _timer.Stop();
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerExit(Collider other)
         {
             if (!other.TryGetComponent<InventoryProxy>(out var proxy))
                 return;
+            if (!other.TryGetComponent<SceneEntityProxy>(out var entityProxy))
+                return;
 
-            _isTreeOccupied = true;
-            OnTreeOccupiedStatusChanged.Invoke(_isTreeOccupied);
+            if (entityProxy.GetEntityID().Value == _reservedBy)
+                Release();
         }
 
         private void OnTriggerStay(Collider other)
         {
             if (!other.TryGetComponent<InventoryProxy>(out var proxy))
                 return;
+            if (!other.TryGetComponent<SceneEntityProxy>(out var entityProxy))
+                return;
 
+            if (entityProxy.GetEntityID().Value != _reservedBy)
+                return;
 
             var inventory = proxy.DebugInventory;
 
@@ -92,29 +94,11 @@ namespace BehaviourTreePractice
             }
         }
 
-
-        private void OnTriggerExit(Collider other)
-        {
-            _isTreeOccupied = false;
-            OnTreeOccupiedStatusChanged.Invoke(_isTreeOccupied);
-        }
-
-
         private void TryTransfer(ResourceType type, IInventory inventory)
         {
-            if (_resourceItem.Amount <= 0)
-            {
-                return;
-            }
+            if (_resourceItem.Amount <= 0 || inventory.IsFull) return;
 
-            if (inventory.IsFull)
-            {
-                return;
-            }
-
-
-            var oneUnit = new ResourceItem(_resourceItem.Type, 1);
-            inventory.AddItem(oneUnit);
+            inventory.AddItem(new ResourceItem(_resourceItem.Type, 1));
             _resourceItem.Amount--;
 
             if (_resourceItem.Amount <= 0)

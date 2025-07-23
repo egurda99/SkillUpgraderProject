@@ -8,12 +8,9 @@ namespace _BehaviourTreePractice
 
         public const string WAYPOINTS = "Waypoints";
         public const string WAYPOINT_INDEX = "WaypointIndex";
-        public const string CURRENT_TIME = "CurrentTime";
-        public const string PATROL_IDLE_TIME = "PatrolIdleTime";
+        public const string TREE = "Tree";
+        public const string IS_BACKPACK_FULL = "isBackpackFull";
 
-        public const string ENEMY = "Enemy";
-        public const string NEAR_ENEMY_DISTANCE = "NearEnemyDistance";
-        public const string AT_ENEMY_DISTANCE = "AtEnemyDistance";
-
+        public const string CONVEYOR_POSITION = "ConveyorPosition";
     }
 }

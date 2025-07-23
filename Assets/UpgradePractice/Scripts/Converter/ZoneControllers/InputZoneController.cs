@@ -12,7 +12,18 @@ namespace _UpgradePractice.Scripts
             _converterSystem = _converterInstaller.System;
         }
 
-        private void OnTriggerEnter(Collider other)
+        // private void OnTriggerEnter(Collider other)
+        // {
+        //     if (!other.TryGetComponent<InventoryProxy>(out var proxy))
+        //         return;
+        //
+        //     var inventory = proxy.DebugInventory;
+        //
+        //     TryTransfer(ResourceType.Wood, inventory);
+        //     //  TryTransfer(ResourceType.Lumber, inventory);
+        // }
+
+        private void OnTriggerStay(Collider other)
         {
             if (!other.TryGetComponent<InventoryProxy>(out var proxy))
                 return;
@@ -20,8 +31,8 @@ namespace _UpgradePractice.Scripts
             var inventory = proxy.DebugInventory;
 
             TryTransfer(ResourceType.Wood, inventory);
-            //  TryTransfer(ResourceType.Lumber, inventory);
         }
+
 
         private void TryTransfer(ResourceType type, IInventory inventory)
         {

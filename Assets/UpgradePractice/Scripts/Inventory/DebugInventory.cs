@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
@@ -13,6 +14,13 @@ namespace _UpgradePractice.Scripts
         [ShowInInspector] [ReadOnly] private readonly List<ResourceItem> _itemsList = new();
 
         bool IInventory.IsFull => _isFull;
+        public event Action<bool> OnBackpackFilledStateChanged;
+        public event Action OnDestroyed;
+
+        private void OnDestroy()
+        {
+            OnDestroyed?.Invoke();
+        }
 
         [Button]
         public void AddItem(ResourceItem item)
@@ -26,12 +34,14 @@ namespace _UpgradePractice.Scripts
                     if (existing.Amount >= _limitAmount)
                     {
                         _isFull = true;
+                        OnBackpackFilledStateChanged?.Invoke(_isFull);
                     }
                 }
 
                 else
                 {
                     _isFull = true;
+                    OnBackpackFilledStateChanged?.Invoke(_isFull);
                 }
             }
             else
@@ -78,6 +88,7 @@ namespace _UpgradePractice.Scripts
             if (item.Amount < _limitAmount)
             {
                 _isFull = false;
+                OnBackpackFilledStateChanged?.Invoke(_isFull);
             }
 
 

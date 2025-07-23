@@ -50,5 +50,10 @@ namespace _BehaviourTreePractice
 
             return TaskStatus.Running;
         }
+
+        public void SetBlackboard(BehaviorTree tree)
+        {
+            _blackboard = tree;
+        }
     }
 }

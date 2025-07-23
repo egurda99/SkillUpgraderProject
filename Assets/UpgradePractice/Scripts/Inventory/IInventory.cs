@@ -1,3 +1,5 @@
+using System;
+
 namespace _UpgradePractice.Scripts
 {
     public interface IInventory
@@ -8,5 +10,8 @@ namespace _UpgradePractice.Scripts
         void DecreaseItem(ResourceType type, int amount);
         ResourceItem PeekItem(ResourceType type);
         bool IsFull { get; }
+
+        event Action<bool> OnBackpackFilledStateChanged;
+        event Action OnDestroyed;
     }
 }

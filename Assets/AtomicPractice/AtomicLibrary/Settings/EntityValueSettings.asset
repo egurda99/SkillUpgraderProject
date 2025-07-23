@@ -218,3 +218,8 @@ MonoBehaviour:
     - id: 66
       name: CanRefill
       type: AndExpression
+  - name: ID
+    indexes:
+    - id: 32
+      name: EntityID
+      type: ReactiveVariable<string>

@@ -33,6 +33,50 @@ Transform:
   - {fileID: 8844571131220122627}
   m_Father: {fileID: 3006422773680130874}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4835832913639163827
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 485924595974011634}
+  - component: {fileID: 6032949743467541832}
+  m_Layer: 0
+  m_Name: '[Sensor]'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &485924595974011634
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4835832913639163827}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3006422773680130874}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6032949743467541832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4835832913639163827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7eb4289b1fd439bbb73d9f1183dd77a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6378945258768650400
 GameObject:
   m_ObjectHideFlags: 0
@@ -69,6 +113,7 @@ Transform:
   - {fileID: 1649549970664807929}
   - {fileID: 6186486720209164713}
   - {fileID: 6361393735910437310}
+  - {fileID: 485924595974011634}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4832296492088289794
@@ -130,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveToDirectionMechanic:
     _rootTransform: {fileID: 3006422773680130874}
-    _speed: 3
+    _speed: 12
     _moveDirection: {x: 0, y: 0, z: 0}
     _isMoving: 0
     _canMove: 1
@@ -138,6 +183,7 @@ MonoBehaviour:
     _rootTransform: {fileID: 0}
     _rotateSpeed: 300
     _isRotating: 0
+  _id: Entity_SceneEntity_6_-144838
 --- !u!1 &7949218368538335881
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,16 +244,27 @@ MonoBehaviour:
       parentIndex: 
       startIndex: 
       variableStartIndex: 
-      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(184.332626,15.00238)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(4.332613,170.5579)"},"ID":1,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(284.999939,139.047623)","Comment":"Patrol"},"ID":2,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"_BehaviourTreePractice.SetWaypointNode","NodeData":{"Offset":"(-61.11165,196.813156)"},"ID":3,"Name":"Set
-        Waypoint Node","Instant":true,"BehaviorTree_blackboard":0},{"Type":"_BehaviourTreePractice.MoveToPositionNode","NodeData":{"Offset":"(132.396957,204.034363)"},"ID":4,"Name":"Move
-        To Position Node","Instant":true,"BehaviorTree_blackboard":1},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(292.074219,209.195618)"},"ID":5,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3}},{"Type":"_BehaviourTreePractice.SetNextWaypointIndexNode","NodeData":{"Offset":"(498.228577,202.224121)"},"ID":6,"Name":"Set
-        Next Waypoint Index Node","Instant":true,"BehaviorTree_blackboard":2}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"Waypoints","IsShared":true,"List`1mValue":[]},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"WaypointIndex","IsShared":true,"Int32mValue":0},{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"MovePosition","IsShared":true,"Vector3mValue":"(0,0,0)"},{"Type":"_BehaviourTreePractice.SharedSceneEntity","Name":"Unit","IsShared":true,"SceneEntitymValue":3},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"StoppingDistance","IsShared":true,"SinglemValue":0.1}]}'
+      JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(184.332626,15.00238)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(4.332613,170.5579)"},"ID":1,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-650,129.999954)","Comment":"Unload
+        To Conveyor"},"ID":2,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"_BehaviourTreePractice.IsBackpackFullNode","NodeData":{"Offset":"(-380.138,165.608673)"},"ID":3,"Name":"Is
+        Backpack Full Node","Instant":true,"BehaviorTree_blackboard":0},{"Type":"_BehaviourTreePractice.MoveToConveyorNode","NodeData":{"Offset":"(-145.137878,183.941986)"},"ID":4,"Name":"Move
+        To Conveyor Node","Instant":true,"BehaviorTree_blackboard":1}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-261.0658,140.372742)","Comment":"ChopTree"},"ID":5,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"_BehaviourTreePractice.HasTreeNode","NodeData":{"Offset":"(-149.338013,161.8183)"},"ID":6,"Name":"Has
+        Tree Node","Instant":true,"BehaviorTree_blackboard":2},{"Type":"_BehaviourTreePractice.MoveToTreeNode","NodeData":{"Offset":"(42.85704,164.501144)"},"ID":7,"Name":"Move
+        To Tree Node","Instant":true,"BehaviorTree_blackboard":3},{"Type":"_BehaviourTreePractice.MineTreeNode","NodeData":{"Offset":"(216.676315,153.75209)"},"ID":8,"Name":"Mine
+        Tree Node","Instant":true,"BehaviorTree_blackboard":4}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(284.999939,139.047623)","Comment":"Patrol"},"ID":9,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"_BehaviourTreePractice.SetWaypointNode","NodeData":{"Offset":"(-61.11165,196.813156)"},"ID":10,"Name":"Set
+        Waypoint Node","Instant":true,"BehaviorTree_blackboard":5},{"Type":"_BehaviourTreePractice.MoveToPositionNode","NodeData":{"Offset":"(132.396957,204.034363)"},"ID":11,"Name":"Move
+        To Position Node","Instant":true,"BehaviorTree_blackboard":6},{"Type":"BehaviorDesigner.Runtime.Tasks.Wait","NodeData":{"Offset":"(292.074219,209.195618)"},"ID":12,"Name":"Wait","Instant":true,"SharedFloatwaitTime":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedBoolrandomWait":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedFloatrandomWaitMin":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":1},"SharedFloatrandomWaitMax":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":3}},{"Type":"_BehaviourTreePractice.SetNextWaypointIndexNode","NodeData":{"Offset":"(498.228577,202.224121)"},"ID":13,"Name":"Set
+        Next Waypoint Index Node","Instant":true,"BehaviorTree_blackboard":7}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedTransformList","Name":"Waypoints","IsShared":true,"List`1mValue":[]},{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":"WaypointIndex","IsShared":true,"Int32mValue":0},{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"MovePosition","IsShared":true,"Vector3mValue":"(0,0,0)"},{"Type":"_BehaviourTreePractice.SharedSceneEntity","Name":"Unit","IsShared":true,"SceneEntitymValue":8},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"StoppingDistance","IsShared":true,"SinglemValue":0.1},{"Type":"_BehaviourTreePractice.SharedTree","Name":"Tree","IsShared":true},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"isBackpackFull","IsShared":true,"BooleanmValue":false},{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":"ConveyorPosition","IsShared":true,"Vector3mValue":"(0,0,0)"}]}'
       fieldSerializationData:
         typeName: []
         fieldNameHash: 
         startIndex: 
         dataPosition: 
         unityObjects:
+        - {fileID: 8483830389980822118}
+        - {fileID: 8483830389980822118}
+        - {fileID: 8483830389980822118}
+        - {fileID: 8483830389980822118}
+        - {fileID: 8483830389980822118}
         - {fileID: 8483830389980822118}
         - {fileID: 8483830389980822118}
         - {fileID: 8483830389980822118}
