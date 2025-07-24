@@ -52,7 +52,6 @@ namespace BehaviourTreePractice
             point.y = 0f;
 
             var tree = Instantiate(_treePrefab, point, Quaternion.identity, _container);
-            //var tree = _diContainer.InstantiatePrefab(_treePrefab, point, Quaternion.identity, _container);
 
             var treeComponent = tree.GetComponent<Tree>();
             treeComponent.Init();

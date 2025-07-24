@@ -25,7 +25,7 @@ namespace BehaviourTreePractice
             BindMoneyStorage();
             BindTreesProvider();
 
-            SpawnBots();
+            ConfigureBots();
         }
 
         private void BindTreesProvider()
@@ -33,7 +33,7 @@ namespace BehaviourTreePractice
             Container.Bind<ActiveTreesProvider>().AsSingle();
         }
 
-        private void SpawnBots()
+        private void ConfigureBots()
         {
             for (var index = 0; index < _spawnPoints.Length; index++)
             {
