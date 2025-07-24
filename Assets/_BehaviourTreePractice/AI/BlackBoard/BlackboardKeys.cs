@@ -9,6 +9,7 @@ namespace _BehaviourTreePractice
         public const string WAYPOINTS = "Waypoints";
         public const string WAYPOINT_INDEX = "WaypointIndex";
         public const string TREE = "Tree";
+        public const string IS_CONVEYOR_FULL = "isConveyorFull";
         public const string IS_BACKPACK_FULL = "isBackpackFull";
 
         public const string CONVEYOR_POSITION = "ConveyorPosition";

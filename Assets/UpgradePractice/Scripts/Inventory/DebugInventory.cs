@@ -15,12 +15,6 @@ namespace _UpgradePractice.Scripts
 
         bool IInventory.IsFull => _isFull;
         public event Action<bool> OnBackpackFilledStateChanged;
-        public event Action OnDestroyed;
-
-        private void OnDestroy()
-        {
-            OnDestroyed?.Invoke();
-        }
 
         [Button]
         public void AddItem(ResourceItem item)

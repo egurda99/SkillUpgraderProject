@@ -1,24 +1,21 @@
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
-using UnityEngine;
 using static _BehaviourTreePractice.BlackboardKeys;
 
 namespace _BehaviourTreePractice
 {
-    public sealed class HasTreeNode : Action
+    public sealed class IsConveyorFullConditionNode : Conditional
     {
-        [SerializeField] private BehaviorTree _blackboard;
-
-        private SharedTree _treeTarget;
+        private SharedBool _isFull;
 
         public override void OnAwake()
         {
-            _treeTarget = (SharedTree)_blackboard.GetVariable(TREE);
+            _isFull = (SharedBool)GlobalVariables.Instance.GetVariable(IS_CONVEYOR_FULL);
         }
 
         public override TaskStatus OnUpdate()
         {
-            if (_treeTarget.Value == null)
+            if (_isFull.Value == false)
                 return TaskStatus.Failure;
 
             return TaskStatus.Success;

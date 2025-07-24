@@ -25,7 +25,6 @@ namespace _BehaviourTreePractice
             if (_isInitialized)
                 return;
             _isInitialized = true;
-            _inventory.OnDestroyed += Dispose;
             _inventory.OnBackpackFilledStateChanged += OnBackpackFilledStateChanged;
         }
 
@@ -37,7 +36,6 @@ namespace _BehaviourTreePractice
 
         public void Dispose()
         {
-            _inventory.OnDestroyed -= Dispose;
             _inventory.OnBackpackFilledStateChanged -= OnBackpackFilledStateChanged;
         }
     }

@@ -46,15 +46,16 @@ namespace BehaviourTreePractice
                 var blackBoard = player.GetComponentInChildren<BehaviorTree>();
                 var treeSensor = player.GetComponentInChildren<FindClosestTreeSensor>();
 
-                //treeSensor.Init(id);
 
                 var inventory = player.GetComponent<DebugInventory>();
 
                 var backpackObserver = new BackpackObserver(inventory, blackBoard);
-                backpackObserver.Initialize();
+                Container.BindInterfacesTo<BackpackObserver>().FromInstance(backpackObserver).AsCached();
+
 
                 var treeObserver = new TreeSensorObserver(treeSensor, blackBoard, id);
-                treeObserver.Initialize();
+
+                Container.BindInterfacesTo<TreeSensorObserver>().FromInstance(treeObserver).AsCached();
 
                 var sharedList = new SharedTransformList { Value = _waypoints };
                 var sharedVector3 = new SharedVector3 { Value = _conveyor.position };
@@ -67,6 +68,7 @@ namespace BehaviourTreePractice
         private void BindConverter()
         {
             Container.BindInterfacesAndSelfTo<ConverterInstaller>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesTo<ConveyorInputObserver>().AsSingle();
         }
 
         private void BindMoneyStorage()

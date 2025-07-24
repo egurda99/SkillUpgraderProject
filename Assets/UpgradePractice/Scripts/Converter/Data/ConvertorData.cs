@@ -25,6 +25,7 @@ namespace _UpgradePractice.Scripts
         public List<ResourceItem> InputList => _inputList;
         public List<ResourceItem> OutputList => _outputList;
 
+
         public void SetConvertationTime(float time)
         {
             _ñonvertTime = time;

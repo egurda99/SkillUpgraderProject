@@ -36,9 +36,6 @@ namespace BehaviourTreePractice
 
         public void Release()
         {
-            if (!IsTreeOccupied)
-                return;
-
             _reservedBy = null;
             _isReserved = false;
             OnTreeOccupiedStatusChanged?.Invoke(false);
@@ -71,13 +68,7 @@ namespace BehaviourTreePractice
 
         private void OnTriggerExit(Collider other)
         {
-            if (!other.TryGetComponent<InventoryProxy>(out var proxy))
-                return;
-            if (!other.TryGetComponent<SceneEntityProxy>(out var entityProxy))
-                return;
-
-            if (entityProxy.GetEntityID().Value == _reservedBy)
-                Release();
+            Release();
         }
 
         private void OnTriggerStay(Collider other)

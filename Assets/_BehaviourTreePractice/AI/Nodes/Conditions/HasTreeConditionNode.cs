@@ -5,20 +5,20 @@ using static _BehaviourTreePractice.BlackboardKeys;
 
 namespace _BehaviourTreePractice
 {
-    public sealed class IsBackpackFullNode : Action
+    public sealed class HasTreeConditionNode : Conditional
     {
         [SerializeField] private BehaviorTree _blackboard;
 
-        private SharedBool _isFull;
+        private SharedTree _treeTarget;
 
         public override void OnAwake()
         {
-            _isFull = (SharedBool)_blackboard.GetVariable(IS_BACKPACK_FULL);
+            _treeTarget = (SharedTree)_blackboard.GetVariable(TREE);
         }
 
         public override TaskStatus OnUpdate()
         {
-            if (_isFull.Value == false)
+            if (_treeTarget.Value == null)
                 return TaskStatus.Failure;
 
             return TaskStatus.Success;

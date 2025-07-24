@@ -12,6 +12,5 @@ namespace _UpgradePractice.Scripts
         bool IsFull { get; }
 
         event Action<bool> OnBackpackFilledStateChanged;
-        event Action OnDestroyed;
     }
 }

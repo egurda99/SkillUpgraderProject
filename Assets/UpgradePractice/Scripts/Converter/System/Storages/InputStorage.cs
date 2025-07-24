@@ -7,7 +7,6 @@ namespace _UpgradePractice.Scripts
     public sealed class InputStorage
     {
         private readonly List<ResourceItem> _inputList;
-        private readonly int _capacity;
         private readonly ConverterData _data;
         private readonly ConverterSystem _system;
 
