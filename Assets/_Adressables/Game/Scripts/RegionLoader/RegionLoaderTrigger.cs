@@ -19,7 +19,7 @@ namespace _Adressables
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!_isLoaded && other.CompareTag("Player"))
+            if (!_isLoaded && other.CompareTag("Player")) // for test
             {
                 _isLoaded = true;
                 _regionLoader.LoadRegion(_regionKey);
