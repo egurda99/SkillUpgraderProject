@@ -6,43 +6,52 @@ namespace SampleGame
 {
     public sealed class PauseScreen : MonoBehaviour
     {
-        [SerializeField]
-        private Button resumeButton;
+        [SerializeField] private Button resumeButton;
 
-        [SerializeField]
-        private Button exitButton;
+        [SerializeField] private Button exitButton;
 
         private MenuLoader menuLoader;
+        private GameLoader gameLoader;
 
         [Inject]
         public void Construct(MenuLoader menuLoader, GameLoader gameLoader)
         {
             this.menuLoader = menuLoader;
-            this.gameObject.SetActive(false);
+            this.gameLoader = gameLoader;
+            gameObject.SetActive(false);
         }
 
         private void OnEnable()
         {
-            this.resumeButton.onClick.AddListener(this.Hide);
-            this.exitButton.onClick.AddListener(this.menuLoader.LoadMenu);
+            resumeButton.onClick.AddListener(Hide);
+            //   this.exitButton.onClick.AddListener(this.menuLoader.LoadMenu);
+            exitButton.onClick.AddListener(OnExitButtonClick);
+        }
+
+        private async void OnExitButtonClick()
+        {
+            Time.timeScale = 1;
+            await menuLoader.LoadMenuAsync();
+            await gameLoader.UnloadGameAsync();
         }
 
         private void OnDisable()
         {
-            this.resumeButton.onClick.RemoveListener(this.Hide);
-            this.exitButton.onClick.RemoveListener(this.menuLoader.LoadMenu);
+            resumeButton.onClick.RemoveListener(Hide);
+            //this.exitButton.onClick.RemoveListener(this.menuLoader.LoadMenu);
+            exitButton.onClick.RemoveListener(OnExitButtonClick);
         }
 
         public void Show()
         {
             Time.timeScale = 0; //KISS
-            this.gameObject.SetActive(true);
+            gameObject.SetActive(true);
         }
 
         public void Hide()
         {
             Time.timeScale = 1; //KISS
-            this.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }

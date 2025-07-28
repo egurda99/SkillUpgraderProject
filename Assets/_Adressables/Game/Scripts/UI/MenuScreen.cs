@@ -1,4 +1,4 @@
-using SampleGame;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -7,32 +7,39 @@ namespace SampleGame
 {
     public sealed class MenuScreen : MonoBehaviour
     {
-        [SerializeField]
-        private Button startButton;
+        [SerializeField] private Button startButton;
 
-        [SerializeField]
-        private Button exitButton;
-        
+        [SerializeField] private Button exitButton;
+
         private ApplicationExiter applicationExiter;
         private GameLoader gameLoader;
-        
+        private MenuLoader menuLoader;
+
         [Inject]
-        public void Construct(ApplicationExiter applicationFinisher, GameLoader gameLoader)
+        public void Construct(ApplicationExiter applicationFinisher, GameLoader gameLoader, MenuLoader menuLoader)
         {
             this.gameLoader = gameLoader;
-            this.applicationExiter = applicationFinisher;
+            this.menuLoader = menuLoader;
+            applicationExiter = applicationFinisher;
         }
 
         private void OnEnable()
         {
-            this.startButton.onClick.AddListener(this.gameLoader.LoadGame);
-            this.exitButton.onClick.AddListener(this.applicationExiter.ExitApp);
+            startButton.onClick.AddListener(OnStartClicked);
+            exitButton.onClick.AddListener(applicationExiter.ExitApp);
         }
 
         private void OnDisable()
         {
-            this.startButton.onClick.RemoveListener(this.gameLoader.LoadGame);
-            this.exitButton.onClick.RemoveListener(this.applicationExiter.ExitApp);
+            // startButton.onClick.RemoveListener(gameLoader.LoadGame);
+            startButton.onClick.RemoveListener(OnStartClicked);
+            exitButton.onClick.RemoveListener(applicationExiter.ExitApp);
+        }
+
+        private void OnStartClicked()
+        {
+            gameLoader.LoadGameAsync().Forget();
+            menuLoader.UnloadMenuAsync().Forget();
         }
     }
 }

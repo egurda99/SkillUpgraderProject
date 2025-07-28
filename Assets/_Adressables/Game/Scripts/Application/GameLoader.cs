@@ -1,19 +1,38 @@
-using UnityEngine.SceneManagement;
+using AssetManager;
+using Cysharp.Threading.Tasks;
 
 namespace SampleGame
 {
     public sealed class GameLoader
     {
-        //TODO: Сделать через Addressables
-        public void UnloadGame()
+        private readonly AddressableAssetManager _assetManager;
+
+        // //TODO: Сделать через Addressables
+        // public void UnloadGame()
+        // {
+        //     SceneManager.UnloadSceneAsync("Game");
+        // }
+        //
+        // //TODO: Сделать через Addressables
+        // public void LoadGame()
+        // {
+        //     SceneManager.LoadScene("Game");
+        // }
+
+
+        public GameLoader(AddressableAssetManager assetManager)
         {
-            SceneManager.UnloadSceneAsync("Game");
+            _assetManager = assetManager;
         }
-        
-        //TODO: Сделать через Addressables
-        public void LoadGame()
+
+        public async UniTask LoadGameAsync()
         {
-            SceneManager.LoadScene("Game");
+            await _assetManager.LoadSceneAsync("Game");
+        }
+
+        public async UniTask UnloadGameAsync()
+        {
+            await _assetManager.UnloadSceneAsync("Game");
         }
     }
 }
