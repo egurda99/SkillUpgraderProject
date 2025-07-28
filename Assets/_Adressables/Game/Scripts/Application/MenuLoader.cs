@@ -1,19 +1,12 @@
 using AssetManager;
 using Cysharp.Threading.Tasks;
-using UnityEngine.SceneManagement;
+using static AssetManager.SceneKeys;
 
 namespace SampleGame
 {
     public sealed class MenuLoader
     {
         private readonly AddressableAssetManager _assetManager;
-
-        //TODO: Сделать через Addressables
-        public void LoadMenu()
-        {
-            SceneManager.LoadScene("Menu");
-        }
-
 
         public MenuLoader(AddressableAssetManager assetManager)
         {
@@ -22,12 +15,12 @@ namespace SampleGame
 
         public async UniTask LoadMenuAsync()
         {
-            await _assetManager.LoadSceneAsync("Menu");
+            await _assetManager.LoadSceneAsync(MENU);
         }
 
         public async UniTask UnloadMenuAsync()
         {
-            await _assetManager.UnloadSceneAsync("Menu");
+            await _assetManager.UnloadSceneAsync(MENU);
         }
     }
 }

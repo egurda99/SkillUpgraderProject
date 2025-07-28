@@ -1,24 +1,12 @@
 using AssetManager;
 using Cysharp.Threading.Tasks;
+using static AssetManager.SceneKeys;
 
 namespace SampleGame
 {
     public sealed class GameLoader
     {
         private readonly AddressableAssetManager _assetManager;
-
-        // //TODO: Сделать через Addressables
-        // public void UnloadGame()
-        // {
-        //     SceneManager.UnloadSceneAsync("Game");
-        // }
-        //
-        // //TODO: Сделать через Addressables
-        // public void LoadGame()
-        // {
-        //     SceneManager.LoadScene("Game");
-        // }
-
 
         public GameLoader(AddressableAssetManager assetManager)
         {
@@ -27,12 +15,12 @@ namespace SampleGame
 
         public async UniTask LoadGameAsync()
         {
-            await _assetManager.LoadSceneAsync("Game");
+            await _assetManager.LoadSceneAsync(GAME);
         }
 
         public async UniTask UnloadGameAsync()
         {
-            await _assetManager.UnloadSceneAsync("Game");
+            await _assetManager.UnloadSceneAsync(GAME);
         }
     }
 }

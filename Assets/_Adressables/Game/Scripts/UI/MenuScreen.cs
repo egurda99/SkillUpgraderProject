@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -31,15 +30,20 @@ namespace SampleGame
 
         private void OnDisable()
         {
-            // startButton.onClick.RemoveListener(gameLoader.LoadGame);
             startButton.onClick.RemoveListener(OnStartClicked);
             exitButton.onClick.RemoveListener(applicationExiter.ExitApp);
         }
 
-        private void OnStartClicked()
+        // private void OnStartClicked()
+        // {
+        //     gameLoader.LoadGameAsync().Forget();
+        //     menuLoader.UnloadMenuAsync().Forget();
+        // }
+
+        private async void OnStartClicked() // как лучше? верхний вариант или текущий?
         {
-            gameLoader.LoadGameAsync().Forget();
-            menuLoader.UnloadMenuAsync().Forget();
+            await gameLoader.LoadGameAsync();
+            await menuLoader.UnloadMenuAsync();
         }
     }
 }

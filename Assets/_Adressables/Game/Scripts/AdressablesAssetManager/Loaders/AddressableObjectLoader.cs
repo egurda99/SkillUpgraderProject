@@ -90,7 +90,10 @@ namespace AssetManager
         public void Dispose()
         {
             foreach (var handle in _loadedObjects.Values)
-                Addressables.Release(handle);
+            {
+                if (handle.IsValid())
+                    Addressables.Release(handle);
+            }
 
             _loadedObjects.Clear();
         }

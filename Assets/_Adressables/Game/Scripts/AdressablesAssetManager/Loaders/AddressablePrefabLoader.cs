@@ -86,7 +86,10 @@ namespace AssetManager
         public void Dispose()
         {
             foreach (var handle in _loadedPrefabs.Values)
-                Addressables.Release(handle);
+            {
+                if (handle.IsValid())
+                    Addressables.Release(handle);
+            }
 
             _loadedPrefabs.Clear();
         }
