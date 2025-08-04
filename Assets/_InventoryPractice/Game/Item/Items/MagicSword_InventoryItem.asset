@@ -28,7 +28,7 @@ MonoBehaviour:
     - rid: 8518610968407441531
       type: {class: EquipableItemComponent, ns: InventoryPractice, asm: Assembly-CSharp}
       data:
-        _equipType: 0
+        _equipType: 1
         _healthValue: 5
         _powerValue: 7
         _aguilityValue: 3

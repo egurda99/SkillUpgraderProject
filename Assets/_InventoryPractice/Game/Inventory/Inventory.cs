@@ -119,7 +119,7 @@ namespace InventoryPractice
             else
             {
                 // Если добавляется новый предмет
-                if (_items[targetIndex] == null)
+                if (_items[targetIndex].Id == "null")
                 {
                     _items[targetIndex] = draggedItem;
                     OnItemAdded?.Invoke(draggedItem);
@@ -304,7 +304,7 @@ namespace InventoryPractice
                 return;
             }
 
-            RemoveItemSlot(item);
+            // RemoveItemSlot(item);
             // AddItem(CreateNullableItem());
             OnItemEquipped?.Invoke(item);
         }

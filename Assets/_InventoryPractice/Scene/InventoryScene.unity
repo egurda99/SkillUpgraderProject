@@ -1637,7 +1637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2227,6 +2227,16 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3268306900943426047, guid: 3a148360ff0324d149a8141687e071a4,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3480750145276604967, guid: 3a148360ff0324d149a8141687e071a4,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4409542557592300330, guid: 3a148360ff0324d149a8141687e071a4,
         type: 3}
       propertyPath: m_Color.b
@@ -2294,10 +2304,25 @@ PrefabInstance:
       objectReference: {fileID: 153571922}
     - target: {fileID: 6964513798999443682, guid: 3a148360ff0324d149a8141687e071a4,
         type: 3}
+      propertyPath: _dragController
+      value: 
+      objectReference: {fileID: 1202783631}
+    - target: {fileID: 6964513798999443682, guid: 3a148360ff0324d149a8141687e071a4,
+        type: 3}
       propertyPath: _slotsContainer
       value: 
       objectReference: {fileID: 1384583503}
+    - target: {fileID: 7058623145454885934, guid: 3a148360ff0324d149a8141687e071a4,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7299825220262627391, guid: 3a148360ff0324d149a8141687e071a4,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7620442828768258650, guid: 3a148360ff0324d149a8141687e071a4,
         type: 3}
       propertyPath: m_RaycastTarget
       value: 1
@@ -2306,6 +2331,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8105289560467771619, guid: 3a148360ff0324d149a8141687e071a4,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8193260407915108117, guid: 3a148360ff0324d149a8141687e071a4,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8257821093158898187, guid: 3a148360ff0324d149a8141687e071a4,
         type: 3}

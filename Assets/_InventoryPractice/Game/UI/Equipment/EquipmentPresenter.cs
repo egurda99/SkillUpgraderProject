@@ -51,6 +51,7 @@ namespace _InventoryPractice
             var slotView = _view.GetSlotView(type, index);
 
             slotView.SetSprite(item.MetaData.Icon);
+            slotView.SetItem(item);
 
             slotView.RemoveAllButtonListeners();
             slotView.AddButtonListener(() => OnSlotClicked(item));
@@ -67,6 +68,7 @@ namespace _InventoryPractice
                 {
                     var item = i < items.Count ? items[i] : null;
                     var slotView = _view.GetSlotView(type, i);
+                    slotView.SetEquipType(type);
                     slotView.SetIndex(i);
                     slotView.SetEquipment(_equipment);
 
@@ -79,8 +81,6 @@ namespace _InventoryPractice
                     {
                         slotView.SetSprite(item.MetaData.Icon);
                         slotView.SetItem(item);
-                        slotView.SetEquipment(_equipment);
-                        slotView.SetEquipType(item.GetComponent<EquipableItemComponent>().EquipType);
                         slotView.RemoveAllButtonListeners();
                         slotView.AddButtonListener(() => OnSlotClicked(item));
                     }

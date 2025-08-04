@@ -69,10 +69,12 @@ namespace _InventoryPractice
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            Debug.Log($"<color=orange>item: {_item}</color>");
             if (_item == null)
                 return;
 
-            DragController.Instance.StartDrag(_item, _icon.sprite);
+            DragController.Instance.StartDrag(_item, _icon.sprite, DragSourceType.Equipment);
+            // DragController.Instance.SetDragFromEquipment(true);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -82,6 +84,7 @@ namespace _InventoryPractice
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            Debug.Log($"<color=orange>item: {_item}</color>");
             DragController.Instance.EndDrag();
         }
 
@@ -93,11 +96,11 @@ namespace _InventoryPractice
                 return;
 
             var draggedItem = DragController.Instance.DraggedItem;
-            _equipment.HandleDropItem(draggedItem, _index);
-            Debug.Log($"<color=red>HandleDrop : {draggedItem} , {_equipType}</color>");
+            // _equipment.EquipItemFromDrop(draggedItem, _index, _equipType);
+            // Debug.Log($"<color=red>HandleDrop : {draggedItem} , {_equipType}</color>");
 
             if (DragController.Instance.HasItem)
-                DragController.Instance.EndDrag();
+                DragController.Instance.EndDragAfterSuccessDropAtEquipment(_index, _equipType);
         }
     }
 }

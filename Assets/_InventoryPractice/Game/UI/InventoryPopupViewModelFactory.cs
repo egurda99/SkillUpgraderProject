@@ -1,3 +1,4 @@
+using _InventoryPractice.Game;
 using InventoryPractice;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ namespace _InventoryPractice
             Transform detailContainer,
             ValueWidgetView weightView,
             EquipmentView equipmentView,
-            StatsView statsView, Transform slotsContainer, InventorySlotView slotPrefab)
+            StatsView statsView, Transform slotsContainer, InventorySlotView slotPrefab, DragController dragController)
         {
             return new InventoryPopupViewModel(
                 _inventory,
@@ -40,7 +41,8 @@ namespace _InventoryPractice
                 equipmentView,
                 statsView,
                 slotsContainer,
-                slotPrefab
+                slotPrefab,
+                dragController
             );
         }
     }

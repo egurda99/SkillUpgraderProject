@@ -17,7 +17,6 @@ namespace _InventoryPractice
 
         [SerializeField] private Button _button;
 
-
         private InventoryItem _item;
         private Inventory _inventory;
 
@@ -40,7 +39,7 @@ namespace _InventoryPractice
             if (_item == null)
                 return;
 
-            DragController.Instance.StartDrag(_item, _icon.sprite);
+            DragController.Instance.StartDrag(_item, _icon.sprite, DragSourceType.Inventory);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -65,13 +64,15 @@ namespace _InventoryPractice
 
             if (!DragController.Instance.HasItem)
                 return;
+            //
+            //
+            // var draggedItem = DragController.Instance.DraggedItem;
+            // _inventory.HandleDrop(draggedItem, SlotIndex);
+            // Debug.Log($"<color=red>HandleDrop : {draggedItem} , {SlotIndex}</color>");
 
-            var draggedItem = DragController.Instance.DraggedItem;
-            _inventory.HandleDrop(draggedItem, SlotIndex);
-            Debug.Log($"<color=red>HandleDrop : {draggedItem} , {SlotIndex}</color>");
 
             if (DragController.Instance.HasItem)
-                DragController.Instance.EndDrag();
+                DragController.Instance.EndDragAfterSuccessDropAtInventory(SlotIndex);
         }
 
 

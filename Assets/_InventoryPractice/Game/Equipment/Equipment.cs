@@ -13,7 +13,7 @@ namespace InventoryPractice
         public event Action<EquipType, InventoryItem> OnEquipItem;
         public event Action<EquipType, InventoryItem, int> OnUnEquipItem;
         public event Action<EquipType, InventoryItem, int> OnDropOutItem;
-        public event Action<InventoryItem, int> OnItemEquipDrop;
+        public event Action<InventoryItem, int, EquipType> OnItemEquipDrop;
 
         public Equipment()
         {
@@ -23,46 +23,26 @@ namespace InventoryPractice
             _slotLimits[EquipType.Boots] = 1;
         }
 
-        public void HandleDropItem(InventoryItem draggedItem, int index)
+        public void EquipItemFromDrop(InventoryItem item, int index, EquipType slotEquipType)
         {
-            OnItemEquipDrop?.Invoke(draggedItem, index);
-            // var limit = GetSlotLimit(equipType);
-            //
-            // if (!_equippedItems.TryGetValue(equipType, out var list))
-            // {
-            //     list = new List<InventoryItem>(new InventoryItem[limit]);
-            //     _equippedItems[equipType] = list;
-            // }
-            //
-            // // Если уже экипирован — ничего не делаем
-            // if (list.Contains(draggedItem))
-            //     return;
-            //
-            // // Найти первый пустой слот
-            // for (var i = 0; i < list.Count; i++)
-            // {
-            //     if (list[i] == null)
-            //     {
-            //         list[i] = draggedItem;
-            //         OnEquipItem?.Invoke(equipType, draggedItem);
-            //         return;
-            //     }
-            // }
-            //
-            // // Нет свободных — заменим первый
-            // var removed = list[0];
-            // list[0] = draggedItem;
-            //
-            // OnUnEquipItem?.Invoke(equipType, removed, 0);
-            // OnEquipItem?.Invoke(equipType, draggedItem);
+            OnItemEquipDrop?.Invoke(item, index, slotEquipType);
         }
 
-        public void Equip(InventoryItem item, int index = 0)
+        public void Equip(InventoryItem item, EquipType slotEquipType = EquipType.None, int index = 0)
         {
             if (item == null || !item.TryGetComponent(out EquipableItemComponent equipComponent))
                 return;
 
             var type = equipComponent.EquipType;
+
+            var itemType = equipComponent.EquipType;
+
+            if (slotEquipType != EquipType.None && itemType != slotEquipType)
+            {
+                return;
+            }
+
+
             var limit = GetSlotLimit(type);
 
             if (!_equippedItems.TryGetValue(type, out var list))
@@ -74,6 +54,8 @@ namespace InventoryPractice
             // Если уже экипирован — ничего не делаем
             if (list.Contains(item))
                 return;
+
+
             // Найти первый пустой слот
             if (index == 0)
             {
@@ -105,18 +87,6 @@ namespace InventoryPractice
                 return;
             }
 
-
-            // // Найти первый пустой слот
-            //
-            // for (var i = 0; i < list.Count; i++)
-            // {
-            //     if (list[i] == null)
-            //     {
-            //         list[i] = item;
-            //         OnEquipItem?.Invoke(type, item);
-            //         return;
-            //     }
-            // }
 
             // Нет свободных — заменим первый
             var removed = list[0];

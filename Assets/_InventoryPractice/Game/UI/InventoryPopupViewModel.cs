@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using _InventoryPractice.Game;
 using InventoryPractice;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace _InventoryPractice
         public StatsViewAdapter StatsViewAdapter { get; }
 
         public InventorySlotListAdapter SlotListAdapter { get; }
+        public SuccessDragObserver SuccessDragObserver { get; }
 
         private readonly Inventory _inventory;
         private readonly InventoryItemDetailPresenter _detailPresenter;
@@ -22,8 +24,7 @@ namespace _InventoryPractice
 
         public InventoryItemDetailPresenter DetailPresenter => _detailPresenter;
 
-        public InventoryPopupViewModel(
-            Inventory inventory,
+        public InventoryPopupViewModel(Inventory inventory,
             Equipment equipment,
             PlayerStats playerStats,
             DetailsItemPresenterFactory detailsItemPresenterFactory,
@@ -33,7 +34,7 @@ namespace _InventoryPractice
             EquipmentView equipmentView,
             StatsView statsView,
             Transform slotsContainer,
-            InventorySlotView slotPrefab)
+            InventorySlotView slotPrefab, DragController dragController)
         {
             _inventory = inventory;
             _detailPresenter = detailsItemPresenterFactory.Create();
@@ -43,6 +44,7 @@ namespace _InventoryPractice
             WeightAdapter = new WeightWidgetAdapter(weightView, inventory);
             StatsViewAdapter = new StatsViewAdapter(statsView, playerStats);
             SlotListAdapter = new InventorySlotListAdapter(slotsContainer, slotPrefab, _detailPresenter, inventory);
+            SuccessDragObserver = new SuccessDragObserver(dragController, _inventory, equipment);
 
             _inventory.OnInventoryListChanged += HandleInventoryChanged;
         }
@@ -83,6 +85,7 @@ namespace _InventoryPractice
             _inventory.OnInventoryListChanged -= HandleInventoryChanged;
             WeightAdapter.Dispose();
             StatsViewAdapter.Dispose();
+            SuccessDragObserver.Dispose();
         }
     }
 }
