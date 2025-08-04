@@ -24,8 +24,8 @@ namespace _InventoryPractice.Game
         {
             if (type == DragSourceType.Inventory)
             {
-                _inventory.HandleDrop(item, slotIndex);
-                Debug.Log($"<color=red>HandleDrop : {item} , {slotIndex}</color>");
+                _inventory.HandleDraggedItem(item, slotIndex);
+                Debug.Log($"<color=red>HandleDraggedItem : {item} , {slotIndex}</color>");
             }
 
             else if (type == DragSourceType.Equipment)
@@ -39,7 +39,7 @@ namespace _InventoryPractice.Game
             if (type == DragSourceType.Equipment)
             {
                 _equipment.EquipItemFromDrop(item, index, equipType);
-                Debug.Log($"<color=red>HandleDrop : {item} , {equipType}</color>");
+                Debug.Log($"<color=red>HandleDraggedItem : {item} , {equipType}</color>");
             }
         }
 

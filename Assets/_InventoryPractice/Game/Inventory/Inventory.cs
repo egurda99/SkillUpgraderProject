@@ -12,6 +12,7 @@ namespace InventoryPractice
         [ShowInInspector] [ReadOnly] private int _weightLimit = 100;
 
         [ShowInInspector] [ReadOnly] private List<InventoryItem> _items = new();
+        private ItemFactory _itemFactory;
 
         public List<InventoryItem> Items => _items;
 
@@ -37,6 +38,8 @@ namespace InventoryPractice
 
 
         [ShowInInspector] [ReadOnly] private int _currentWeight;
+        private MaxAddableCalculator _maxAddableCalculator;
+        private DraggedItemHandler _draggedItemHandler;
 
         public int CurrentWeight => _currentWeight;
 
@@ -59,7 +62,11 @@ namespace InventoryPractice
             _slotsLimit = slotsLimit;
             _weightLimit = weightLimit;
 
-            var nullableItem = CreateNullableItem();
+            _itemFactory = new ItemFactory();
+            _maxAddableCalculator = new MaxAddableCalculator(this);
+            _draggedItemHandler = new DraggedItemHandler(this);
+
+            var nullableItem = _itemFactory.CreateNullableItem();
 
 
             for (var i = 0; i < _slotsLimit; i++)
@@ -68,74 +75,12 @@ namespace InventoryPractice
 
         public InventoryItem CreateNullableItem()
         {
-            var nullableItem = new InventoryItem
-            {
-                Id = "null",
-                Weight = 0,
-                Flags = InventoryItemFlags.None,
-                MetaData = new InventoryItemMetaData
-                {
-                    Name = "Lumber",
-                    Description = "Piece of lumber",
-                    Icon = null
-                },
-                Components = Array.Empty<IItemComponent>()
-            };
-            return nullableItem;
-        }
-
-        public void HandleDrop(InventoryItem draggedItem, int targetIndex)
-        {
-            if (targetIndex < 0 || targetIndex >= _slotsLimit)
-            {
-                Debug.LogWarning("Неверный индекс слота");
-                return;
-            }
-
-            // Перетаскиваем из слота в слот
-            var currentIndex = _items.IndexOf(draggedItem);
-
-            if (currentIndex == targetIndex)
-                return;
-
-            // Если предмет уже был в инвентаре — переместить
-            if (currentIndex != -1)
-            {
-                var previousItem = _items[targetIndex];
-
-                if (_items[currentIndex].Id == "null")
-                {
-                    _items[currentIndex] = CreateNullableItem();
-                }
-
-                else
-                {
-                    _items[currentIndex] = previousItem;
-                }
-
-                _items[targetIndex] = draggedItem;
-                FireItemsChangedEvent();
-            }
-            else
-            {
-                // Если добавляется новый предмет
-                if (_items[targetIndex].Id == "null")
-                {
-                    _items[targetIndex] = draggedItem;
-                    OnItemAdded?.Invoke(draggedItem);
-                    FireItemsChangedEvent();
-                }
-                else
-                {
-                    Debug.LogWarning("Слот занят, не удалось вставить предмет");
-                }
-            }
+            return _itemFactory.CreateNullableItem();
         }
 
         public void AddItem(InventoryItem item)
         {
             _items.Add(item);
-            // AddWeight(item.Weight);
 
             OnInventoryListChanged?.Invoke();
         }
@@ -176,7 +121,7 @@ namespace InventoryPractice
         {
             var item = itemConfig.PrototypeItem.Clone();
 
-            var amountToAdd = GetMaxAddableAmount(item, amount);
+            var amountToAdd = _maxAddableCalculator.GetMaxAddableAmount(item, amount);
 
             if (amountToAdd > 0)
             {
@@ -304,8 +249,6 @@ namespace InventoryPractice
                 return;
             }
 
-            // RemoveItemSlot(item);
-            // AddItem(CreateNullableItem());
             OnItemEquipped?.Invoke(item);
         }
 
@@ -338,61 +281,6 @@ namespace InventoryPractice
         }
 
 
-        private int GetMaxAddableAmount(InventoryItem item, int amount)
-        {
-            var usedSlots = _items.Count(i => i.Id != "null"); // только занятые
-            var freeSlots = _slotsLimit - usedSlots;
-
-            var freeSpace = _weightLimit - _currentWeight;
-
-            if (!item.Flags.HasFlag(InventoryItemFlags.Stackable))
-            {
-                var maxAmountBySlots = freeSlots;
-                var maxAmountByWeightt = Mathf.FloorToInt(freeSpace / item.Weight);
-                return Mathf.Min(amount, Mathf.Min(maxAmountBySlots, maxAmountByWeightt));
-            }
-
-            var itemStack = item.GetComponent<StackableItemComponent>();
-            var stackSize = itemStack.StackSize;
-            var itemWeight = item.Weight;
-
-            var maxAmountByWeight = Mathf.FloorToInt(freeSpace / itemWeight);
-            var remainingToAdd = Mathf.Min(amount, maxAmountByWeight);
-
-            var totalAddable = 0;
-
-            // Пополняем существующие неполные стеки
-            foreach (var inventoryItem in _items)
-            {
-                if (inventoryItem.Id == item.Id &&
-                    inventoryItem.TryGetComponent(out StackableItemComponent existingStack) &&
-                    !existingStack.IsFull)
-                {
-                    var canAdd = existingStack.StackSize - existingStack.Value;
-                    var willAdd = Mathf.Min(canAdd, remainingToAdd);
-
-                    totalAddable += willAdd;
-                    remainingToAdd -= willAdd;
-
-                    if (remainingToAdd <= 0)
-                        return totalAddable;
-                }
-            }
-
-            // Добавим новые стаки
-            var maxNewStacksByWeight = Mathf.FloorToInt(freeSpace / (itemWeight * stackSize));
-            var maxNewStacksBySlots = freeSlots;
-
-            var possibleNewStacks = Mathf.Min(maxNewStacksByWeight, maxNewStacksBySlots);
-            var possibleItemsFromNewStacks = possibleNewStacks * stackSize;
-
-            var willAddFromNewStacks = Mathf.Min(possibleItemsFromNewStacks, remainingToAdd);
-
-            totalAddable += willAddFromNewStacks;
-
-            return totalAddable;
-        }
-
         public void AddWeight(int weight)
         {
             _currentWeight += weight;
@@ -418,6 +306,11 @@ namespace InventoryPractice
                     return;
                 }
             }
+        }
+
+        public void HandleDraggedItem(InventoryItem item, int slotIndex)
+        {
+            _draggedItemHandler.HandleDraggedItem(item, slotIndex);
         }
     }
 }
