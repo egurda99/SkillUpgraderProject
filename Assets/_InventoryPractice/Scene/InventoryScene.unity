@@ -1038,6 +1038,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1202783630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1202783632}
+  - component: {fileID: 1202783631}
+  m_Layer: 0
+  m_Name: DragCOntroller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1202783631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202783630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f54d9a895e643d4a4b0e8798d268bcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dragItemViewPrefab: {fileID: 1058610851960108337, guid: b31940b3d71707c4fa1d7e8489565b48,
+    type: 3}
+  _container: {fileID: 1212552845}
+--- !u!4 &1202783632
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202783630}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1212552845}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &1212552845 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1925204151093518587, guid: 3a148360ff0324d149a8141687e071a4,
+    type: 3}
+  m_PrefabInstance: {fileID: 6125525194101901168}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1379638577
 GameObject:
   m_ObjectHideFlags: 0
@@ -1444,6 +1497,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7084f826094c8685ad019f3c37abd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _woodItemConfig: {fileID: 11400000, guid: 791b33f10f213814ea2ec702f30fc531, type: 2}
+  _armorConfig: {fileID: 11400000, guid: c59989aa670c58e4a976c17a8e482bed, type: 2}
+  _lightArmorConfig: {fileID: 11400000, guid: b530d0d3a2b00074f967593a01e6d247, type: 2}
+  _weaponConfig: {fileID: 11400000, guid: aed0bc70667a3ef459efb5b8a22101ce, type: 2}
+  _heavyWeaponConfig: {fileID: 11400000, guid: 1de33f9ee6eb6b049a0458c245ed86bc, type: 2}
+  _shieldConfig: {fileID: 11400000, guid: 03f557d1979dcfc49a37cd394e55388f, type: 2}
+  _lumberConfig: {fileID: 11400000, guid: a27a9c02c4e5ac64291a96f8d34f1098, type: 2}
 --- !u!4 &1948494496
 Transform:
   m_ObjectHideFlags: 0
@@ -2257,6 +2317,10 @@ PrefabInstance:
     - {fileID: 8789914568795873677, guid: 3a148360ff0324d149a8141687e071a4, type: 3}
     - {fileID: 8406539454964172119, guid: 3a148360ff0324d149a8141687e071a4, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1925204151093518587, guid: 3a148360ff0324d149a8141687e071a4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1202783632}
     - targetCorrespondingSourceObject: {fileID: 2136262878666491070, guid: 3a148360ff0324d149a8141687e071a4,
         type: 3}
       insertIndex: -1

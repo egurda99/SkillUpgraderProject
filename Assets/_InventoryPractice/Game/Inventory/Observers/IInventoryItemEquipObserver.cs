@@ -4,6 +4,6 @@ namespace InventoryPractice
 {
     public interface IInventoryItemEquipObserver : IDisposable
     {
-        void OnItemEquipped(InventoryItem item);
+        void OnHandleItemEquipDropped(InventoryItem item, int index);
     }
 }

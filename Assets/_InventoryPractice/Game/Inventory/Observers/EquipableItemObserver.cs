@@ -14,19 +14,35 @@ namespace InventoryPractice
             _playerStats = playerStats;
 
             _inventory.OnItemEquipped += OnItemEquipped;
+            _equipment.OnItemEquipDrop += OnHandleItemEquipDropped;
             _equipment.OnUnEquipItem += OnUnEquiped;
-            _equipment.OnDropItem += OnDropItemFromEquipment;
+            _equipment.OnDropOutItem += OnDropOutItemFromEquipment;
         }
 
-        public void OnDropItemFromEquipment(EquipType equipType, InventoryItem item, int index)
+        public void OnHandleItemEquipDropped(InventoryItem item, int index)
+        {
+            if (item.TryGetComponent(out EquipableItemComponent component))
+            {
+                _inventory.RemoveItemSlot(item);
+                _equipment.Equip(item, index);
+                AddValuesToPlayerStats(component);
+            }
+        }
+
+        public void OnDropOutItemFromEquipment(EquipType equipType, InventoryItem item, int index)
         {
             DecreasePlayerStats(item.GetComponent<EquipableItemComponent>());
         }
 
         public void OnUnEquiped(EquipType equipType, InventoryItem item, int index)
         {
+            _inventory.RemoveNullableItem();
             _inventory.AddItemSlot(item);
-            DecreasePlayerStats(item.GetComponent<EquipableItemComponent>());
+
+            if (item.TryGetComponent(out EquipableItemComponent component))
+            {
+                DecreasePlayerStats(component);
+            }
         }
 
         private void DecreasePlayerStats(EquipableItemComponent component)
@@ -58,7 +74,8 @@ namespace InventoryPractice
         {
             _inventory.OnItemEquipped -= OnItemEquipped;
             _equipment.OnUnEquipItem -= OnUnEquiped;
-            _equipment.OnDropItem -= OnDropItemFromEquipment;
+            _equipment.OnDropOutItem -= OnDropOutItemFromEquipment;
+            _equipment.OnItemEquipDrop -= OnHandleItemEquipDropped;
         }
     }
 }

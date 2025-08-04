@@ -26,6 +26,7 @@ namespace InventoryPractice
                 for (var i = 0; i < amount; i++)
                 {
                     var itemClone = newItem.Clone();
+                    _inventory.RemoveNullableItem();
                     _inventory.AddItem(itemClone);
 
                     _inventory.AddWeight(itemClone.Weight);
@@ -74,6 +75,7 @@ namespace InventoryPractice
 
                 var weightToAdd = newItemClone.Weight * newStackSize;
 
+                _inventory.RemoveNullableItem();
                 _inventory.AddItem(newItemClone);
                 _inventory.AddWeight(weightToAdd);
                 remainingAmount -= newStackSize;
@@ -122,6 +124,7 @@ namespace InventoryPractice
             if (!item.Flags.HasFlag(InventoryItemFlags.Stackable) ||
                 !item.TryGetComponent(out StackableItemComponent stackableComponent))
             {
+                _inventory.AddItem(_inventory.CreateNullableItem());
                 _inventory.RemoveItem(item);
                 _inventory.DecreaseWeight(item.Weight);
                 return;
@@ -132,6 +135,7 @@ namespace InventoryPractice
 
             if (stackableComponent.Value <= 0 && _inventory.Items.Contains(item))
             {
+                _inventory.AddItem(_inventory.CreateNullableItem());
                 _inventory.RemoveItem(item);
             }
 
@@ -150,6 +154,7 @@ namespace InventoryPractice
                 foreach (var i in itemsToRemove)
                 {
                     _inventory.RemoveItem(i);
+                    _inventory.AddItem(_inventory.CreateNullableItem());
                     _inventory.DecreaseWeight(i.Weight);
                 }
 
@@ -181,6 +186,7 @@ namespace InventoryPractice
                 if (stack.Value <= 0)
                 {
                     _inventory.RemoveItem(stackItem);
+                    _inventory.AddItem(_inventory.CreateNullableItem());
                 }
             }
 

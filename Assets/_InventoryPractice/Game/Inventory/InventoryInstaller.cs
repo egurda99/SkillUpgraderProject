@@ -11,6 +11,7 @@ namespace InventoryPractice
         [SerializeField] private int _weightLimit = 100;
         [SerializeField] private bool _useStackableInventory;
 
+
         private Inventory _inventory;
         private Equipment _equipment;
 

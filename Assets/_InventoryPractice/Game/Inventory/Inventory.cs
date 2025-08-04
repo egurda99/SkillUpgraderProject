@@ -8,15 +8,16 @@ namespace InventoryPractice
 {
     public sealed class Inventory
     {
-        private int _slotsLimit = 20;
-        private int _weightLimit = 100;
+        [ShowInInspector] [ReadOnly] private int _slotsLimit = 20;
+        [ShowInInspector] [ReadOnly] private int _weightLimit = 100;
 
         [ShowInInspector] [ReadOnly] private List<InventoryItem> _items = new();
 
         public List<InventoryItem> Items => _items;
 
         public int SlotsLimit => _slotsLimit;
-        public int UsedWeight => _items.Sum(i => i.Weight);
+
+
         public bool HasFreeSlot => _items.Count < _slotsLimit;
 
         public int WeightLimit => _weightLimit;
@@ -35,14 +36,100 @@ namespace InventoryPractice
         public event Action<int> OnWeightChanged;
 
 
-        private int _currentWeight;
+        [ShowInInspector] [ReadOnly] private int _currentWeight;
 
         public int CurrentWeight => _currentWeight;
+
+        public int UsedWeight
+        {
+            get
+            {
+                var sum = 0;
+                foreach (var i in _items)
+                {
+                    if (i != null) sum += Mathf.RoundToInt(i.Weight);
+                }
+
+                return sum;
+            }
+        }
 
         public void Init(int slotsLimit, int weightLimit)
         {
             _slotsLimit = slotsLimit;
             _weightLimit = weightLimit;
+
+            var nullableItem = CreateNullableItem();
+
+
+            for (var i = 0; i < _slotsLimit; i++)
+                _items.Add(nullableItem);
+        }
+
+        public InventoryItem CreateNullableItem()
+        {
+            var nullableItem = new InventoryItem
+            {
+                Id = "null",
+                Weight = 0,
+                Flags = InventoryItemFlags.None,
+                MetaData = new InventoryItemMetaData
+                {
+                    Name = "Lumber",
+                    Description = "Piece of lumber",
+                    Icon = null
+                },
+                Components = Array.Empty<IItemComponent>()
+            };
+            return nullableItem;
+        }
+
+        public void HandleDrop(InventoryItem draggedItem, int targetIndex)
+        {
+            if (targetIndex < 0 || targetIndex >= _slotsLimit)
+            {
+                Debug.LogWarning("Неверный индекс слота");
+                return;
+            }
+
+            // Перетаскиваем из слота в слот
+            var currentIndex = _items.IndexOf(draggedItem);
+
+            if (currentIndex == targetIndex)
+                return;
+
+            // Если предмет уже был в инвентаре — переместить
+            if (currentIndex != -1)
+            {
+                var previousItem = _items[targetIndex];
+
+                if (_items[currentIndex].Id == "null")
+                {
+                    _items[currentIndex] = CreateNullableItem();
+                }
+
+                else
+                {
+                    _items[currentIndex] = previousItem;
+                }
+
+                _items[targetIndex] = draggedItem;
+                FireItemsChangedEvent();
+            }
+            else
+            {
+                // Если добавляется новый предмет
+                if (_items[targetIndex] == null)
+                {
+                    _items[targetIndex] = draggedItem;
+                    OnItemAdded?.Invoke(draggedItem);
+                    FireItemsChangedEvent();
+                }
+                else
+                {
+                    Debug.LogWarning("Слот занят, не удалось вставить предмет");
+                }
+            }
         }
 
         public void AddItem(InventoryItem item)
@@ -113,7 +200,6 @@ namespace InventoryPractice
         public void RemoveItem(InventoryItem item)
         {
             _items.Remove(item);
-            //  DecreaseWeight(item.Weight);
             OnInventoryListChanged?.Invoke();
         }
 
@@ -219,6 +305,7 @@ namespace InventoryPractice
             }
 
             RemoveItemSlot(item);
+            // AddItem(CreateNullableItem());
             OnItemEquipped?.Invoke(item);
         }
 
@@ -253,7 +340,9 @@ namespace InventoryPractice
 
         private int GetMaxAddableAmount(InventoryItem item, int amount)
         {
-            var freeSlots = _slotsLimit - _items.Count;
+            var usedSlots = _items.Count(i => i.Id != "null"); // только занятые
+            var freeSlots = _slotsLimit - usedSlots;
+
             var freeSpace = _weightLimit - _currentWeight;
 
             if (!item.Flags.HasFlag(InventoryItemFlags.Stackable))
@@ -317,6 +406,18 @@ namespace InventoryPractice
             OnWeightChanged?.Invoke(_currentWeight);
 
             Debug.Log($"<color=orange>Current weight: {_currentWeight}</color>");
+        }
+
+        public void RemoveNullableItem()
+        {
+            foreach (var item in _items)
+            {
+                if (item.Id == "null")
+                {
+                    _items.Remove(item);
+                    return;
+                }
+            }
         }
     }
 }

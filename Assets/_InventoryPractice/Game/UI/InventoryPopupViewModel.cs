@@ -20,8 +20,6 @@ namespace _InventoryPractice
         private readonly InventoryItemDetailPresenter _detailPresenter;
         private bool _isActive;
 
-        // public event Action OnItemsChanged;
-
         public InventoryItemDetailPresenter DetailPresenter => _detailPresenter;
 
         public InventoryPopupViewModel(
@@ -44,7 +42,7 @@ namespace _InventoryPractice
             EquipmentPresenter = new EquipmentPresenter(equipment, equipmentView, _detailPresenter);
             WeightAdapter = new WeightWidgetAdapter(weightView, inventory);
             StatsViewAdapter = new StatsViewAdapter(statsView, playerStats);
-            SlotListAdapter = new InventorySlotListAdapter(slotsContainer, slotPrefab, _detailPresenter);
+            SlotListAdapter = new InventorySlotListAdapter(slotsContainer, slotPrefab, _detailPresenter, inventory);
 
             _inventory.OnInventoryListChanged += HandleInventoryChanged;
         }
@@ -56,6 +54,7 @@ namespace _InventoryPractice
             ItemDetailAdapter.Show();
             EquipmentPresenter.Start();
             SlotListAdapter.ShowItems(Items);
+            WeightAdapter.UpdateWeightWidget(_inventory.CurrentWeight);
         }
 
         public void Hide()

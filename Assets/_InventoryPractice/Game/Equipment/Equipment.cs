@@ -12,7 +12,8 @@ namespace InventoryPractice
 
         public event Action<EquipType, InventoryItem> OnEquipItem;
         public event Action<EquipType, InventoryItem, int> OnUnEquipItem;
-        public event Action<EquipType, InventoryItem, int> OnDropItem;
+        public event Action<EquipType, InventoryItem, int> OnDropOutItem;
+        public event Action<InventoryItem, int> OnItemEquipDrop;
 
         public Equipment()
         {
@@ -22,7 +23,41 @@ namespace InventoryPractice
             _slotLimits[EquipType.Boots] = 1;
         }
 
-        public void Equip(InventoryItem item)
+        public void HandleDropItem(InventoryItem draggedItem, int index)
+        {
+            OnItemEquipDrop?.Invoke(draggedItem, index);
+            // var limit = GetSlotLimit(equipType);
+            //
+            // if (!_equippedItems.TryGetValue(equipType, out var list))
+            // {
+            //     list = new List<InventoryItem>(new InventoryItem[limit]);
+            //     _equippedItems[equipType] = list;
+            // }
+            //
+            // // Если уже экипирован — ничего не делаем
+            // if (list.Contains(draggedItem))
+            //     return;
+            //
+            // // Найти первый пустой слот
+            // for (var i = 0; i < list.Count; i++)
+            // {
+            //     if (list[i] == null)
+            //     {
+            //         list[i] = draggedItem;
+            //         OnEquipItem?.Invoke(equipType, draggedItem);
+            //         return;
+            //     }
+            // }
+            //
+            // // Нет свободных — заменим первый
+            // var removed = list[0];
+            // list[0] = draggedItem;
+            //
+            // OnUnEquipItem?.Invoke(equipType, removed, 0);
+            // OnEquipItem?.Invoke(equipType, draggedItem);
+        }
+
+        public void Equip(InventoryItem item, int index = 0)
         {
             if (item == null || !item.TryGetComponent(out EquipableItemComponent equipComponent))
                 return;
@@ -39,17 +74,49 @@ namespace InventoryPractice
             // Если уже экипирован — ничего не делаем
             if (list.Contains(item))
                 return;
-
             // Найти первый пустой слот
-            for (var i = 0; i < list.Count; i++)
+            if (index == 0)
             {
-                if (list[i] == null)
+                for (var i = 0; i < list.Count; i++)
                 {
-                    list[i] = item;
+                    if (list[i] == null)
+                    {
+                        list[i] = item;
+                        OnEquipItem?.Invoke(type, item);
+                        return;
+                    }
+                }
+            }
+
+            else
+            {
+                if (list[index] == null)
+                {
+                    list[index] = item;
                     OnEquipItem?.Invoke(type, item);
                     return;
                 }
+
+                var removedItem = list[index];
+                list[index] = item;
+
+                OnUnEquipItem?.Invoke(type, removedItem, 1);
+                OnEquipItem?.Invoke(type, item);
+                return;
             }
+
+
+            // // Найти первый пустой слот
+            //
+            // for (var i = 0; i < list.Count; i++)
+            // {
+            //     if (list[i] == null)
+            //     {
+            //         list[i] = item;
+            //         OnEquipItem?.Invoke(type, item);
+            //         return;
+            //     }
+            // }
 
             // Нет свободных — заменим первый
             var removed = list[0];
@@ -81,7 +148,7 @@ namespace InventoryPractice
                 if (index >= 0)
                 {
                     list[index] = null;
-                    OnDropItem?.Invoke(type, item, index);
+                    OnDropOutItem?.Invoke(type, item, index);
                     return;
                 }
             }

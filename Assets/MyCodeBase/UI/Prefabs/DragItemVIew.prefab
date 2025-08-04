@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -90,9 +90,9 @@ GameObject:
   - component: {fileID: 4132568265795791448}
   - component: {fileID: 1666139540617524228}
   - component: {fileID: 4407753173332635416}
-  - component: {fileID: 571337810954650907}
+  - component: {fileID: 1058610851960108337}
   m_Layer: 5
-  m_Name: ItemSlotView
+  m_Name: DragItemVIew
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -210,9 +210,9 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
---- !u!114 &571337810954650907
+--- !u!114 &1058610851960108337
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -221,12 +221,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3920558214090242251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e0292bca3c74df48e28042032cf1b82, type: 3}
+  m_Script: {fileID: 11500000, guid: 071fd1263a194cbdb8165be60b7ee93c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 793862492627177851}
-  _amountText: {fileID: 8047422193585628933}
-  _button: {fileID: 1666139540617524228}
 --- !u!1 &6722309034161815730
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,14 +284,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 01ef59f39398ce842a91abd8759bbf3d, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 3e7760c6237bc714997318bd0be9a767, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -367,7 +365,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 12
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -6,12 +6,31 @@ namespace InventoryPractice
 {
     public sealed class InventoryDebug : MonoBehaviour
     {
-        private Inventory _inventory;
+        [SerializeField] private InventoryItemConfig _woodItemConfig;
+        [SerializeField] private InventoryItemConfig _armorConfig;
+        [SerializeField] private InventoryItemConfig _lightArmorConfig;
+        [SerializeField] private InventoryItemConfig _weaponConfig;
+        [SerializeField] private InventoryItemConfig _heavyWeaponConfig;
+        [SerializeField] private InventoryItemConfig _shieldConfig;
+        [SerializeField] private InventoryItemConfig _lumberConfig;
+
+        [ShowInInspector] [ReadOnly] private Inventory _inventory;
 
         [Inject]
         public void Construct(Inventory inventory)
         {
             _inventory = inventory;
+        }
+
+        private void Start()
+        {
+            _inventory.AddItems(_woodItemConfig, 12);
+            _inventory.AddItems(_armorConfig, 2);
+            _inventory.AddItems(_lightArmorConfig, 2);
+            _inventory.AddItems(_weaponConfig, 2);
+            _inventory.AddItems(_heavyWeaponConfig, 2);
+            _inventory.AddItems(_shieldConfig, 1);
+            _inventory.AddItems(_lumberConfig, 3);
         }
 
 

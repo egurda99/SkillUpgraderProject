@@ -23,8 +23,8 @@ namespace _InventoryPractice
         public void Start()
         {
             _equipment.OnEquipItem += OnEquipItem;
-            _equipment.OnUnEquipItem += OnUnEquipedItem;
-            _equipment.OnDropItem += OnUnEquipedItem;
+            _equipment.OnUnEquipItem += OnUnEquipedOutItem;
+            _equipment.OnDropOutItem += OnUnEquipedOutItem;
 
             RefreshView();
         }
@@ -33,11 +33,11 @@ namespace _InventoryPractice
         public void Stop()
         {
             _equipment.OnEquipItem -= OnEquipItem;
-            _equipment.OnUnEquipItem -= OnUnEquipedItem;
-            _equipment.OnDropItem -= OnUnEquipedItem;
+            _equipment.OnUnEquipItem -= OnUnEquipedOutItem;
+            _equipment.OnDropOutItem -= OnUnEquipedOutItem;
         }
 
-        private void OnUnEquipedItem(EquipType type, InventoryItem item, int index)
+        private void OnUnEquipedOutItem(EquipType type, InventoryItem item, int index)
         {
             var slotView = _view.GetSlotView(type, index);
             slotView.SetDefaultSprite();
@@ -67,6 +67,8 @@ namespace _InventoryPractice
                 {
                     var item = i < items.Count ? items[i] : null;
                     var slotView = _view.GetSlotView(type, i);
+                    slotView.SetIndex(i);
+                    slotView.SetEquipment(_equipment);
 
                     if (slotView == null)
                     {
@@ -76,6 +78,9 @@ namespace _InventoryPractice
                     if (item != null)
                     {
                         slotView.SetSprite(item.MetaData.Icon);
+                        slotView.SetItem(item);
+                        slotView.SetEquipment(_equipment);
+                        slotView.SetEquipType(item.GetComponent<EquipableItemComponent>().EquipType);
                         slotView.RemoveAllButtonListeners();
                         slotView.AddButtonListener(() => OnSlotClicked(item));
                     }
