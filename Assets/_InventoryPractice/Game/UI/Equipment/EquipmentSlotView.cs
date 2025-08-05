@@ -1,4 +1,3 @@
-using _InventoryPractice.Game;
 using InventoryPractice;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,22 +13,14 @@ namespace _InventoryPractice
         [SerializeField] private Image _icon;
         [SerializeField] private Image _defaultIcon;
         [SerializeField] private Button _button;
-        private InventoryItem _item;
 
-        private Equipment _equipment;
         private EquipType _equipType;
         private int _index;
 
+        public event UnityAction<int, EquipType, PointerEventData> BeginDragEvent;
+        public event UnityAction<PointerEventData> EndDragEvent;
+        public event UnityAction<int, EquipType, PointerEventData> DropEvent;
 
-        public void SetItem(InventoryItem item)
-        {
-            _item = item;
-        }
-
-        public void SetEquipment(Equipment equipment)
-        {
-            _equipment = equipment;
-        }
 
         public void SetEquipType(EquipType equipType)
         {
@@ -69,38 +60,21 @@ namespace _InventoryPractice
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            Debug.Log($"<color=orange>item: {_item}</color>");
-            if (_item == null)
-                return;
-
-            DragController.Instance.StartDrag(_item, _icon.sprite, DragSourceType.Equipment);
-            // DragController.Instance.SetDragFromEquipment(true);
+            BeginDragEvent?.Invoke(_index, _equipType, eventData);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            // Следование мыши делает DragItemView
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            Debug.Log($"<color=orange>item: {_item}</color>");
-            DragController.Instance.EndDrag();
+            EndDragEvent?.Invoke(eventData);
         }
 
         public void OnDrop(PointerEventData eventData)
         {
-            Debug.Log($"<color=red>Has item : {DragController.Instance.HasItem}</color>");
-
-            if (!DragController.Instance.HasItem)
-                return;
-
-            var draggedItem = DragController.Instance.DraggedItem;
-            // _equipment.EquipItemFromDrop(draggedItem, _index, _equipType);
-            // Debug.Log($"<color=red>HandleDrop : {draggedItem} , {_equipType}</color>");
-
-            if (DragController.Instance.HasItem)
-                DragController.Instance.EndDragAfterSuccessDropAtEquipment(_index, _equipType);
+            DropEvent?.Invoke(_index, _equipType, eventData);
         }
     }
 }

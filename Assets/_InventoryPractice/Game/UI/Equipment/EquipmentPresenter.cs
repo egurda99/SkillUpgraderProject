@@ -1,5 +1,8 @@
 using System;
+using System.Linq;
+using _InventoryPractice.Game;
 using InventoryPractice;
+using UnityEngine.EventSystems;
 
 namespace _InventoryPractice
 {
@@ -11,13 +14,15 @@ namespace _InventoryPractice
         private readonly InventoryItemDetailPresenter _detailPresenter;
         private string _amountText;
         private readonly Equipment _equipment;
+        private readonly DragController _dragController;
 
         public EquipmentPresenter(Equipment equipment, IEquipmentView view,
-            InventoryItemDetailPresenter detailPresenter)
+            InventoryItemDetailPresenter detailPresenter, DragController dragController)
         {
             _equipment = equipment;
             _view = view;
             _detailPresenter = detailPresenter;
+            _dragController = dragController;
         }
 
         public void Start()
@@ -51,7 +56,6 @@ namespace _InventoryPractice
             var slotView = _view.GetSlotView(type, index);
 
             slotView.SetSprite(item.MetaData.Icon);
-            slotView.SetItem(item);
 
             slotView.RemoveAllButtonListeners();
             slotView.AddButtonListener(() => OnSlotClicked(item));
@@ -70,17 +74,17 @@ namespace _InventoryPractice
                     var slotView = _view.GetSlotView(type, i);
                     slotView.SetEquipType(type);
                     slotView.SetIndex(i);
-                    slotView.SetEquipment(_equipment);
 
                     if (slotView == null)
-                    {
                         continue;
-                    }
+
+                    slotView.BeginDragEvent += OnBeginDrag;
+                    slotView.EndDragEvent += OnEndDrag;
+                    slotView.DropEvent += OnDrop;
 
                     if (item != null)
                     {
                         slotView.SetSprite(item.MetaData.Icon);
-                        slotView.SetItem(item);
                         slotView.RemoveAllButtonListeners();
                         slotView.AddButtonListener(() => OnSlotClicked(item));
                     }
@@ -96,6 +100,31 @@ namespace _InventoryPractice
         private void OnSlotClicked(InventoryItem item)
         {
             _detailPresenter.ShowEquippedSlotInfo(item);
+        }
+
+        private void OnBeginDrag(int index, EquipType type, PointerEventData data)
+        {
+            var item = _equipment.GetEquippedItems(type).ElementAtOrDefault(index);
+            if (item == null)
+                return;
+
+            _dragController.StartDrag(item, item.MetaData.Icon, DragSourceType.Equipment);
+        }
+
+        private void OnEndDrag(PointerEventData data)
+        {
+            _dragController.EndDrag();
+        }
+
+        private void OnDrop(int index, EquipType type, PointerEventData data)
+        {
+            if (!_dragController.HasItem)
+                return;
+
+            var draggedItem = _dragController.DraggedItem;
+            _equipment.EquipItemFromDrop(draggedItem, index, type);
+
+            _dragController.EndDragAfterSuccessDropAtEquipment(index, type);
         }
     }
 }

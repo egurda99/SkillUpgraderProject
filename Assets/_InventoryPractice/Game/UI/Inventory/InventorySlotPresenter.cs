@@ -7,18 +7,20 @@ namespace _InventoryPractice
     public sealed class InventorySlotPresenter
     {
         private readonly InventoryItem _item;
-        private readonly InventorySlotView _view;
+        private readonly IInventorySlotView _view;
         private readonly InventoryItemDetailPresenter _detailPresenter;
         private readonly int _slotIndex;
+        private readonly DragController _dragController;
 
         public InventorySlotPresenter(InventoryItem item,
-            InventorySlotView view,
-            InventoryItemDetailPresenter detailPresenter, int index)
+            IInventorySlotView view,
+            InventoryItemDetailPresenter detailPresenter, int index, DragController dragController)
         {
             _item = item;
             _view = view;
             _detailPresenter = detailPresenter;
             _slotIndex = index;
+            _dragController = dragController;
         }
 
         public void Start()
@@ -61,20 +63,20 @@ namespace _InventoryPractice
             if (_item == null)
                 return;
 
-            DragController.Instance.StartDrag(_item, _item.MetaData.Icon, DragSourceType.Inventory);
+            _dragController.StartDrag(_item, _item.MetaData.Icon, DragSourceType.Inventory);
         }
 
         private void OnEndDrag(PointerEventData eventData)
         {
-            DragController.Instance.EndDrag();
+            _dragController.EndDrag();
         }
 
         private void OnDrop(PointerEventData eventData)
         {
-            if (!DragController.Instance.HasItem)
+            if (!_dragController.HasItem)
                 return;
 
-            DragController.Instance.EndDragAfterSuccessDropAtInventory(_slotIndex);
+            _dragController.EndDragAfterSuccessDropAtInventory(_slotIndex);
         }
 
         private string GetAmountText(InventoryItem item)

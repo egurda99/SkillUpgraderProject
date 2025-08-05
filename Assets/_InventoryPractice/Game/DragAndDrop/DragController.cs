@@ -6,8 +6,6 @@ namespace _InventoryPractice.Game
 {
     public sealed class DragController : MonoBehaviour
     {
-        public static DragController Instance;
-
         [SerializeField] private DragItemView _dragItemViewPrefab;
         [SerializeField] private Transform _container;
 
@@ -21,12 +19,6 @@ namespace _InventoryPractice.Game
 
         public event Action<InventoryItem, DragSourceType, int, EquipType> OnSuccessDragEventAtEquipment;
         public event Action<InventoryItem, DragSourceType, int> OnSuccessDragEventAtInventory;
-
-        private void Awake()
-        {
-            Instance = this;
-        }
-
 
         public void StartDrag(InventoryItem item, Sprite icon, DragSourceType source)
         {

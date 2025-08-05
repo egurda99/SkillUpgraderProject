@@ -40,10 +40,11 @@ namespace _InventoryPractice
             _detailPresenter = detailsItemPresenterFactory.Create();
 
             ItemDetailAdapter = new InventoryDetailAdapter(detailContainer, detailView, _detailPresenter);
-            EquipmentPresenter = new EquipmentPresenter(equipment, equipmentView, _detailPresenter);
+            EquipmentPresenter = new EquipmentPresenter(equipment, equipmentView, _detailPresenter, dragController);
             WeightAdapter = new WeightWidgetAdapter(weightView, inventory);
             StatsViewAdapter = new StatsViewAdapter(statsView, playerStats);
-            SlotListAdapter = new InventorySlotListAdapter(slotsContainer, slotPrefab, _detailPresenter, inventory);
+            SlotListAdapter = new InventorySlotListAdapter(slotsContainer, slotPrefab, _detailPresenter, inventory,
+                dragController);
             SuccessDragObserver = new SuccessDragObserver(dragController, _inventory, equipment);
 
             _inventory.OnInventoryListChanged += HandleInventoryChanged;
@@ -71,8 +72,6 @@ namespace _InventoryPractice
 
         private void HandleInventoryChanged()
         {
-            // OnItemsChanged?.Invoke();
-
             if (!_isActive)
                 return;
 

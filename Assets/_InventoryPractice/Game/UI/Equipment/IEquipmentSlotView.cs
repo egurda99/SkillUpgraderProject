@@ -1,6 +1,7 @@
 using InventoryPractice;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace _InventoryPractice
 {
@@ -8,11 +9,13 @@ namespace _InventoryPractice
     {
         void SetSprite(Sprite sprite);
         void SetEquipType(EquipType equipType);
-        void SetEquipment(Equipment equipment);
         void SetDefaultSprite();
-        void SetItem(InventoryItem item);
         void AddButtonListener(UnityAction action);
         void RemoveAllButtonListeners();
         void SetIndex(int i);
+
+        event UnityAction<int, EquipType, PointerEventData> BeginDragEvent;
+        event UnityAction<PointerEventData> EndDragEvent;
+        event UnityAction<int, EquipType, PointerEventData> DropEvent;
     }
 }
