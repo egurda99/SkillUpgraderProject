@@ -30,9 +30,9 @@ namespace _InventoryPractice
 
         public void SetSprite(Sprite sprite)
         {
-            _icon.sprite = sprite;
             _defaultIcon.enabled = false;
             _icon.enabled = true;
+            _icon.sprite = sprite;
         }
 
         public void SetDefaultSprite()

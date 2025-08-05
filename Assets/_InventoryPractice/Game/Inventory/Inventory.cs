@@ -19,8 +19,8 @@ namespace InventoryPractice
         public int SlotsLimit => _slotsLimit;
 
 
-        public bool HasFreeSlot => _items.Count < _slotsLimit;
-
+        //  public bool HasFreeSlot => _items.Count < _slotsLimit;
+        public bool HasFreeSlot => _items.Any(item => item.Id == "null");
         public int WeightLimit => _weightLimit;
 
         public event Action<InventoryItem> OnItemAdded;
@@ -71,6 +71,58 @@ namespace InventoryPractice
 
             for (var i = 0; i < _slotsLimit; i++)
                 _items.Add(nullableItem);
+        }
+
+        public void ReplaceFirstNullable(InventoryItem newItem)
+        {
+            var index = _items.FindIndex(i => i.Id == "null");
+            if (index != -1)
+            {
+                _items[index] = newItem;
+            }
+            else
+            {
+                Debug.LogWarning("Нет свободной ячейки для добавления предмета");
+            }
+
+            OnInventoryListChanged?.Invoke();
+        }
+
+        public InventoryItem ReplaceItemAt(InventoryItem newItem, int index, bool hardReplace = false)
+        {
+            if (index < 0 || index >= _items.Count)
+            {
+                Debug.LogWarning($"Индекс {index} выходит за пределы инвентаря");
+                return null;
+            }
+
+            if (_items[index].Id == "null")
+            {
+                _items[index] = newItem;
+                OnInventoryListChanged?.Invoke();
+                return null;
+            }
+
+            if (hardReplace)
+            {
+                _items[index] = newItem;
+                OnInventoryListChanged?.Invoke();
+                return null;
+            }
+
+            OnInventoryListChanged?.Invoke();
+            return _items[index];
+        }
+
+        public void ReplaceItemWithNullable(InventoryItem item)
+        {
+            var index = _items.IndexOf(item);
+            if (index != -1)
+            {
+                _items[index] = CreateNullableItem();
+            }
+
+            OnInventoryListChanged?.Invoke();
         }
 
         public InventoryItem CreateNullableItem()

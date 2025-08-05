@@ -25,8 +25,6 @@ namespace _InventoryPractice
 
         public void Start()
         {
-            _view.BeginDragEvent += OnBeginDrag;
-            _view.EndDragEvent += OnEndDrag;
             _view.DropEvent += OnDrop;
 
             _view.SetSprite(_item?.MetaData.Icon);
@@ -36,17 +34,20 @@ namespace _InventoryPractice
             if (_item.Id == "null")
                 return;
 
+            _view.BeginDragEvent += OnBeginDrag;
+            _view.EndDragEvent += OnEndDrag;
             _view.AddButtonListener(OnSlotClicked);
         }
 
         public void Stop()
         {
-            _view.BeginDragEvent -= OnBeginDrag;
-            _view.EndDragEvent -= OnEndDrag;
             _view.DropEvent -= OnDrop;
 
             if (_item.Id == "null")
                 return;
+
+            _view.BeginDragEvent -= OnBeginDrag;
+            _view.EndDragEvent -= OnEndDrag;
             _view.RemoveButtonListener(OnSlotClicked);
         }
 
@@ -63,7 +64,7 @@ namespace _InventoryPractice
             if (_item == null)
                 return;
 
-            _dragController.StartDrag(_item, _item.MetaData.Icon, DragSourceType.Inventory);
+            _dragController.StartDrag(_item, _item.MetaData.Icon, DragSourceType.Inventory, GetAmountText(_item));
         }
 
         private void OnEndDrag(PointerEventData eventData)

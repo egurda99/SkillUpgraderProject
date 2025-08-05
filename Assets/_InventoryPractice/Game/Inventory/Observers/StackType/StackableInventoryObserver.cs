@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -26,12 +27,12 @@ namespace InventoryPractice
                 for (var i = 0; i < amount; i++)
                 {
                     var itemClone = newItem.Clone();
-                    _inventory.RemoveNullableItem();
-                    _inventory.AddItem(itemClone);
+                    _inventory.ReplaceFirstNullable(itemClone);
 
                     _inventory.AddWeight(itemClone.Weight);
                 }
 
+                // _inventory.FireItemsChangedEvent();
                 return;
             }
 
@@ -75,11 +76,12 @@ namespace InventoryPractice
 
                 var weightToAdd = newItemClone.Weight * newStackSize;
 
-                _inventory.RemoveNullableItem();
-                _inventory.AddItem(newItemClone);
+                _inventory.ReplaceFirstNullable(newItemClone);
                 _inventory.AddWeight(weightToAdd);
                 remainingAmount -= newStackSize;
             }
+
+            // _inventory.FireItemsChangedEvent();
         }
 
         public void OnItemAdded(InventoryItem newItem)
@@ -87,8 +89,9 @@ namespace InventoryPractice
             if (!newItem.Flags.HasFlag(InventoryItemFlags.Stackable) ||
                 !newItem.TryGetComponent(out StackableItemComponent newStack))
             {
-                _inventory.AddItem(newItem);
+                _inventory.ReplaceFirstNullable(newItem);
                 _inventory.AddWeight(newItem.Weight);
+                // _inventory.FireItemsChangedEvent();
                 return;
             }
 
@@ -115,8 +118,9 @@ namespace InventoryPractice
             }
 
             // create new stack
-            _inventory.AddItem(newItem);
+            _inventory.ReplaceFirstNullable(newItem);
             _inventory.AddWeight(newItem.Weight);
+            //  _inventory.FireItemsChangedEvent();
         }
 
         public void OnItemRemoved(InventoryItem item)
@@ -124,9 +128,9 @@ namespace InventoryPractice
             if (!item.Flags.HasFlag(InventoryItemFlags.Stackable) ||
                 !item.TryGetComponent(out StackableItemComponent stackableComponent))
             {
-                _inventory.AddItem(_inventory.CreateNullableItem());
-                _inventory.RemoveItem(item);
+                _inventory.ReplaceItemWithNullable(item);
                 _inventory.DecreaseWeight(item.Weight);
+                // _inventory.FireItemsChangedEvent();
                 return;
             }
 
@@ -135,37 +139,37 @@ namespace InventoryPractice
 
             if (stackableComponent.Value <= 0 && _inventory.Items.Contains(item))
             {
-                _inventory.AddItem(_inventory.CreateNullableItem());
-                _inventory.RemoveItem(item);
+                _inventory.ReplaceItemWithNullable(item);
             }
 
-            _inventory.FireItemsChangedEvent();
+            // _inventory.FireItemsChangedEvent();
         }
 
         public void OnItemsRemoved(InventoryItem item, int amountToRemove)
         {
             if (!item.Flags.HasFlag(InventoryItemFlags.Stackable))
             {
-                var itemsToRemove = _inventory.Items
-                    .Where(i => i.Id == item.Id)
-                    .Take(amountToRemove)
-                    .ToList();
+                var itemsToRemove = new List<InventoryItem>();
+                foreach (var inventoryItem in _inventory.Items.Where(i => i.Id == item.Id)
+                             .Take(amountToRemove))
+                    itemsToRemove.Add(inventoryItem);
 
                 foreach (var i in itemsToRemove)
                 {
-                    _inventory.RemoveItem(i);
-                    _inventory.AddItem(_inventory.CreateNullableItem());
+                    _inventory.ReplaceItemWithNullable(item);
                     _inventory.DecreaseWeight(i.Weight);
+                    //     _inventory.FireItemsChangedEvent();
                 }
 
                 return;
             }
 
             // for stack items
-            var stackItems = _inventory.Items
-                .Where(i => i.Id == item.Id && i.TryGetComponent(out StackableItemComponent s) && s.Value > 0)
-                .Reverse()
-                .ToList();
+            var stackItems = new List<InventoryItem>();
+            foreach (var inventoryItem in _inventory.Items.Where(i =>
+                             i.Id == item.Id && i.TryGetComponent(out StackableItemComponent s) && s.Value > 0)
+                         .Reverse())
+                stackItems.Add(inventoryItem);
 
             var remainingRemoveValue = amountToRemove;
 
@@ -185,8 +189,7 @@ namespace InventoryPractice
 
                 if (stack.Value <= 0)
                 {
-                    _inventory.RemoveItem(stackItem);
-                    _inventory.AddItem(_inventory.CreateNullableItem());
+                    _inventory.ReplaceItemWithNullable(item);
                 }
             }
 
@@ -196,7 +199,7 @@ namespace InventoryPractice
                     $"Недостаточно предметов {item.Id} для удаления {amountToRemove}. Осталось удалить: {remainingRemoveValue}");
             }
 
-            _inventory.FireItemsChangedEvent();
+            //  _inventory.FireItemsChangedEvent();
         }
 
         public void Dispose()

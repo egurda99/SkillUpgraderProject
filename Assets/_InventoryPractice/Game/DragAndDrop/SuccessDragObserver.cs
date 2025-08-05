@@ -26,9 +26,9 @@ namespace _InventoryPractice.Game
                 _inventory.HandleDraggedItem(item, slotIndex);
             }
 
-            else if (type == DragSourceType.Equipment)
+            else if (type == DragSourceType.Equipment && _inventory.HasFreeSlot)
             {
-                _equipment.Unequip(item);
+                _equipment.TryUnequipToSlot(item, slotIndex);
             }
         }
 
@@ -36,7 +36,7 @@ namespace _InventoryPractice.Game
         {
             if (type == DragSourceType.Equipment)
             {
-                _equipment.EquipItemFromDrop(item, index, equipType);
+                _equipment.EquipItemFromDragAndDrop(item, index, equipType);
             }
         }
 

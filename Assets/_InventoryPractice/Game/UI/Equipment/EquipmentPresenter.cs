@@ -28,10 +28,18 @@ namespace _InventoryPractice
         public void Start()
         {
             _equipment.OnEquipItem += OnEquipItem;
+            _equipment.OnUnEquipItemView += OnUnEquipedItemView;
             _equipment.OnUnEquipItem += OnUnEquipedOutItem;
             _equipment.OnDropOutItem += OnUnEquipedOutItem;
 
             RefreshView();
+        }
+
+        private void OnUnEquipedItemView(EquipType type, InventoryItem item, int index)
+        {
+            var slotView = _view.GetSlotView(type, index);
+            slotView.SetDefaultSprite();
+            slotView.RemoveAllButtonListeners();
         }
 
 
@@ -40,6 +48,7 @@ namespace _InventoryPractice
             _equipment.OnEquipItem -= OnEquipItem;
             _equipment.OnUnEquipItem -= OnUnEquipedOutItem;
             _equipment.OnDropOutItem -= OnUnEquipedOutItem;
+            _equipment.OnUnEquipItemView -= OnUnEquipedItemView;
         }
 
         private void OnUnEquipedOutItem(EquipType type, InventoryItem item, int index)
@@ -108,7 +117,7 @@ namespace _InventoryPractice
             if (item == null)
                 return;
 
-            _dragController.StartDrag(item, item.MetaData.Icon, DragSourceType.Equipment);
+            _dragController.StartDrag(item, item.MetaData.Icon, DragSourceType.Equipment, "");
         }
 
         private void OnEndDrag(PointerEventData data)
@@ -122,7 +131,7 @@ namespace _InventoryPractice
                 return;
 
             var draggedItem = _dragController.DraggedItem;
-            _equipment.EquipItemFromDrop(draggedItem, index, type);
+            _equipment.EquipItemFromDragAndDrop(draggedItem, index, type);
 
             _dragController.EndDragAfterSuccessDropAtEquipment(index, type);
         }

@@ -11,9 +11,12 @@ namespace InventoryPractice
         public IReadOnlyDictionary<EquipType, List<InventoryItem>> EquippedItems => _equippedItems;
 
         public event Action<EquipType, InventoryItem> OnEquipItem;
+        public event Action<InventoryItem, int, EquipType> OnItemEquipByDragAndDrop;
+
+        public event Action<EquipType, InventoryItem, int> OnUnEquipItemView;
         public event Action<EquipType, InventoryItem, int> OnUnEquipItem;
+        public event Action<InventoryItem, int> OnUnEquipItemToConcreteSlot;
         public event Action<EquipType, InventoryItem, int> OnDropOutItem;
-        public event Action<InventoryItem, int, EquipType> OnItemEquipDrop;
 
         public Equipment()
         {
@@ -23,9 +26,9 @@ namespace InventoryPractice
             _slotLimits[EquipType.Boots] = 1;
         }
 
-        public void EquipItemFromDrop(InventoryItem item, int index, EquipType slotEquipType)
+        public void EquipItemFromDragAndDrop(InventoryItem item, int index, EquipType slotEquipType)
         {
-            OnItemEquipDrop?.Invoke(item, index, slotEquipType);
+            OnItemEquipByDragAndDrop?.Invoke(item, index, slotEquipType);
         }
 
         public void Equip(InventoryItem item, EquipType slotEquipType = EquipType.None, int index = 0)
@@ -109,6 +112,34 @@ namespace InventoryPractice
                 }
             }
         }
+
+        public void UnEquipFromDrop(InventoryItem item)
+        {
+            foreach (var (type, list) in _equippedItems)
+            {
+                var index = list.IndexOf(item);
+                if (index >= 0)
+                {
+                    list[index] = null;
+                    OnUnEquipItemView?.Invoke(type, item, index); // inventory model dont react
+                    return;
+                }
+            }
+        }
+
+        public void TryUnequipToSlot(InventoryItem item, int inventorySlotIndex)
+        {
+            foreach (var (type, list) in _equippedItems)
+            {
+                var index = list.IndexOf(item);
+                if (index >= 0)
+                {
+                    OnUnEquipItemToConcreteSlot?.Invoke(item, inventorySlotIndex);
+                    return;
+                }
+            }
+        }
+
 
         public void DropItemFromEquipped(InventoryItem item)
         {

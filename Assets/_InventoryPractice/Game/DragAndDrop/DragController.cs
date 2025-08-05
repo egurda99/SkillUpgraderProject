@@ -20,13 +20,14 @@ namespace _InventoryPractice.Game
         public event Action<InventoryItem, DragSourceType, int, EquipType> OnSuccessDragEventAtEquipment;
         public event Action<InventoryItem, DragSourceType, int> OnSuccessDragEventAtInventory;
 
-        public void StartDrag(InventoryItem item, Sprite icon, DragSourceType source)
+        public void StartDrag(InventoryItem item, Sprite icon, DragSourceType source, string amount)
         {
             Debug.Log($"<color=red>Started: {item.Id}</color>");
             SourceType = source;
             DraggedItem = item;
             _currentView = Instantiate(_dragItemViewPrefab, _container);
             _currentView.SetIcon(icon);
+            _currentView.SetAmount(amount);
         }
 
         public void EndDrag()
