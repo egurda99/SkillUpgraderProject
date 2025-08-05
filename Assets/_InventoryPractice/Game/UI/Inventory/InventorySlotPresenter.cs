@@ -64,7 +64,8 @@ namespace _InventoryPractice
             if (_item == null)
                 return;
 
-            _dragController.StartDrag(_item, _item.MetaData.Icon, DragSourceType.Inventory, GetAmountText(_item));
+            _dragController.StartDragFromInventory(_item, _item.MetaData.Icon, DragSourceType.Inventory,
+                GetAmountText(_item), _slotIndex);
         }
 
         private void OnEndDrag(PointerEventData eventData)

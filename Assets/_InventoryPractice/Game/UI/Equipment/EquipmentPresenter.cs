@@ -28,12 +28,14 @@ namespace _InventoryPractice
         public void Start()
         {
             _equipment.OnEquipItem += OnEquipItem;
+            _equipment.OnEquipItemView += OnEquipItemView;
             _equipment.OnUnEquipItemView += OnUnEquipedItemView;
             _equipment.OnUnEquipItem += OnUnEquipedOutItem;
             _equipment.OnDropOutItem += OnUnEquipedOutItem;
 
             RefreshView();
         }
+
 
         private void OnUnEquipedItemView(EquipType type, InventoryItem item, int index)
         {
@@ -49,6 +51,7 @@ namespace _InventoryPractice
             _equipment.OnUnEquipItem -= OnUnEquipedOutItem;
             _equipment.OnDropOutItem -= OnUnEquipedOutItem;
             _equipment.OnUnEquipItemView -= OnUnEquipedItemView;
+            _equipment.OnEquipItemView -= OnEquipItemView;
         }
 
         private void OnUnEquipedOutItem(EquipType type, InventoryItem item, int index)
@@ -60,6 +63,17 @@ namespace _InventoryPractice
 
 
         private void OnEquipItem(EquipType type, InventoryItem item)
+        {
+            var index = _equipment.GetEquippedItems(type).IndexOf(item);
+            var slotView = _view.GetSlotView(type, index);
+
+            slotView.SetSprite(item.MetaData.Icon);
+
+            slotView.RemoveAllButtonListeners();
+            slotView.AddButtonListener(() => OnSlotClicked(item));
+        }
+
+        private void OnEquipItemView(EquipType type, InventoryItem item, int arg3)
         {
             var index = _equipment.GetEquippedItems(type).IndexOf(item);
             var slotView = _view.GetSlotView(type, index);

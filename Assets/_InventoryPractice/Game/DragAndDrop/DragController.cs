@@ -13,9 +13,12 @@ namespace _InventoryPractice.Game
 
 
         private DragItemView _currentView;
+        private int _slotIndex;
 
         public InventoryItem DraggedItem { get; private set; }
         public bool HasItem => DraggedItem != null;
+
+        public int SlotIndex => _slotIndex;
 
         public event Action<InventoryItem, DragSourceType, int, EquipType> OnSuccessDragEventAtEquipment;
         public event Action<InventoryItem, DragSourceType, int> OnSuccessDragEventAtInventory;
@@ -28,6 +31,18 @@ namespace _InventoryPractice.Game
             _currentView = Instantiate(_dragItemViewPrefab, _container);
             _currentView.SetIcon(icon);
             _currentView.SetAmount(amount);
+        }
+
+        public void StartDragFromInventory(InventoryItem item, Sprite icon, DragSourceType source, string amount,
+            int slotIndex)
+        {
+            Debug.Log($"<color=red>Started: {item.Id}</color>");
+            SourceType = source;
+            DraggedItem = item;
+            _currentView = Instantiate(_dragItemViewPrefab, _container);
+            _currentView.SetIcon(icon);
+            _currentView.SetAmount(amount);
+            _slotIndex = slotIndex;
         }
 
         public void EndDrag()
@@ -52,7 +67,8 @@ namespace _InventoryPractice.Game
         {
             Debug.Log($"<color=red>EndedAtEquipment: {_currentView}</color>");
 
-            OnSuccessDragEventAtEquipment?.Invoke(DraggedItem, DragSourceType.Equipment, index, equipType);
+            //OnSuccessDragEventAtEquipment?.Invoke(DraggedItem, DragSourceType.Equipment, index, equipType);
+            OnSuccessDragEventAtEquipment?.Invoke(DraggedItem, SourceType, index, equipType);
             EndDrag();
         }
     }

@@ -38,6 +38,11 @@ namespace _InventoryPractice.Game
             {
                 _equipment.EquipItemFromDragAndDrop(item, index, equipType);
             }
+
+            else if (type == DragSourceType.Inventory)
+            {
+                //
+            }
         }
 
         public void Dispose()

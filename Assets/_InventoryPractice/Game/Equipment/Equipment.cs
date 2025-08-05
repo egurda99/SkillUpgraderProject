@@ -14,6 +14,7 @@ namespace InventoryPractice
         public event Action<InventoryItem, int, EquipType> OnItemEquipByDragAndDrop;
 
         public event Action<EquipType, InventoryItem, int> OnUnEquipItemView;
+        public event Action<EquipType, InventoryItem, int> OnEquipItemView;
         public event Action<EquipType, InventoryItem, int> OnUnEquipItem;
         public event Action<InventoryItem, int> OnUnEquipItemToConcreteSlot;
         public event Action<EquipType, InventoryItem, int> OnDropOutItem;
@@ -54,9 +55,20 @@ namespace InventoryPractice
                 _equippedItems[type] = list;
             }
 
-            // ≈сли уже экипирован Ч ничего не делаем
-            if (list.Contains(item))
+            var currentIndex = list.IndexOf(item); // for change slots positions in one equipType
+            if (currentIndex != -1)
+            {
+                // ≈сли больше одного слота Ч можно помен€ть местами
+                if (limit > 1 && index != currentIndex && index >= 0 && index < limit)
+                {
+                    (list[currentIndex], list[index]) = (list[index], list[currentIndex]);
+
+                    OnEquipItemView?.Invoke(type, list[index], index); // новый на новой позиции
+                    OnEquipItemView?.Invoke(type, list[currentIndex], currentIndex); // старый на другой позиции
+                }
+
                 return;
+            }
 
 
             // Ќайти первый пустой слот
