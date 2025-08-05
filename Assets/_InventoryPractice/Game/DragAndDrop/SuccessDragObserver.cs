@@ -1,6 +1,5 @@
 using System;
 using InventoryPractice;
-using UnityEngine;
 
 namespace _InventoryPractice.Game
 {
@@ -25,7 +24,6 @@ namespace _InventoryPractice.Game
             if (type == DragSourceType.Inventory)
             {
                 _inventory.HandleDraggedItem(item, slotIndex);
-                Debug.Log($"<color=red>HandleDraggedItem : {item} , {slotIndex}</color>");
             }
 
             else if (type == DragSourceType.Equipment)
@@ -39,7 +37,6 @@ namespace _InventoryPractice.Game
             if (type == DragSourceType.Equipment)
             {
                 _equipment.EquipItemFromDrop(item, index, equipType);
-                Debug.Log($"<color=red>HandleDraggedItem : {item} , {equipType}</color>");
             }
         }
 

@@ -1,5 +1,3 @@
-using _InventoryPractice.Game;
-using InventoryPractice;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,73 +15,36 @@ namespace _InventoryPractice
 
         [SerializeField] private Button _button;
 
-        private InventoryItem _item;
-        private Inventory _inventory;
-
-        public int SlotIndex { get; private set; }
-
-
-        public void SetItem(InventoryItem item)
-        {
-            _item = item;
-        }
-
-        public void SetInventory(Inventory inventory)
-        {
-            _inventory = inventory;
-        }
-
+        public event UnityAction<PointerEventData> BeginDragEvent;
+        public event UnityAction<PointerEventData> EndDragEvent;
+        public event UnityAction<PointerEventData> DropEvent;
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (_item == null)
-                return;
-
-            DragController.Instance.StartDrag(_item, _icon.sprite, DragSourceType.Inventory);
-        }
-
-        public void OnDrag(PointerEventData eventData)
-        {
-            // Следование мыши делает DragItemView
+            BeginDragEvent?.Invoke(eventData);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            DragController.Instance.EndDrag();
-        }
-
-
-        public void SetSlotIndex(int index)
-        {
-            SlotIndex = index;
+            EndDragEvent?.Invoke(eventData);
         }
 
         public void OnDrop(PointerEventData eventData)
         {
-            Debug.Log($"<color=red>Has item : {DragController.Instance.HasItem}</color>");
-
-            if (!DragController.Instance.HasItem)
-                return;
-            //
-            //
-            // var draggedItem = DragController.Instance.DraggedItem;
-            // _inventory.HandleDrop(draggedItem, SlotIndex);
-            // Debug.Log($"<color=red>HandleDrop : {draggedItem} , {SlotIndex}</color>");
-
-
-            if (DragController.Instance.HasItem)
-                DragController.Instance.EndDragAfterSuccessDropAtInventory(SlotIndex);
+            DropEvent?.Invoke(eventData);
         }
 
 
         public void SetSprite(Sprite sprite)
         {
             _icon.sprite = sprite;
+            _icon.enabled = sprite != null;
         }
 
         public void SetAmount(string value)
         {
             _amountText.text = value;
+            _amountText.enabled = !string.IsNullOrEmpty(value);
         }
 
         public void AddButtonListener(UnityAction action)
@@ -94,6 +55,10 @@ namespace _InventoryPractice
         public void RemoveButtonListener(UnityAction action)
         {
             _button.onClick.RemoveListener(action);
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
         }
     }
 }

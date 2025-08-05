@@ -33,10 +33,6 @@ namespace _InventoryPractice
             {
                 var item = _inventory.Items[i];
                 ShowItem(item, i);
-
-                //
-                // var item = i < items.Count ? items[i] : null;
-                // ShowItem(item, i);
             }
         }
 
@@ -54,30 +50,9 @@ namespace _InventoryPractice
         private void ShowItem(InventoryItem item, int index)
         {
             var view = Object.Instantiate(_slotPrefab, _container);
-            view.SetSlotIndex(index);
-            view.SetInventory(_inventory);
-            view.SetItem(item);
-
-            // if (item != null)
-            // {
-            //     var presenter = new InventorySlotPresenter(item, view, _detailPresenter);
-            //     presenter.Start();
-            //     _viewHolders.Add(new ViewHolder(view, presenter));
-            // }
-
-            if (item != null && item.Id != "null")
-            {
-                var presenter = new InventorySlotPresenter(item, view, _detailPresenter);
-                presenter.Start();
-                _viewHolders.Add(new ViewHolder(view, presenter));
-            }
-            else
-            {
-                // Пустой слот, без презентера
-                // view.SetSprite(null);
-                // view.SetAmount(string.Empty);
-                _viewHolders.Add(new ViewHolder(view, null));
-            }
+            var presenter = new InventorySlotPresenter(item, view, _detailPresenter, index);
+            presenter.Start();
+            _viewHolders.Add(new ViewHolder(view, presenter));
         }
 
         private readonly struct ViewHolder
