@@ -27,10 +27,86 @@ namespace InventoryPractice
             _slotLimits[EquipType.Boots] = 1;
         }
 
-        public void EquipItemFromDragAndDrop(InventoryItem item, int index, EquipType slotEquipType)
+        public void EquipItemByDragAndDropFromInventory(InventoryItem item, int index, EquipType slotEquipType,
+            int slotIndex)
         {
-            OnItemEquipByDragAndDrop?.Invoke(item, index, slotEquipType);
+            var type = item.GetComponent<EquipableItemComponent>().EquipType;
+
+            if (slotEquipType != EquipType.None && type != slotEquipType)
+            {
+                return;
+            }
+
+            var limit = GetSlotLimit(type);
+
+            if (!_equippedItems.TryGetValue(type, out var list))
+            {
+                list = new List<InventoryItem>(new InventoryItem[limit]);
+                _equippedItems[type] = list;
+            }
+
+            var currentIndex = list.IndexOf(item); // for change slots positions in one equipType
+            if (currentIndex != -1)
+            {
+                // ≈сли больше одного слота Ч можно помен€ть местами
+                if (limit > 1 && index != currentIndex && index >= 0 && index < limit)
+                {
+                    (list[currentIndex], list[index]) = (list[index], list[currentIndex]);
+
+                    if (list[currentIndex] == null || list[index] == null)
+                        return;
+
+                    OnEquipItemView?.Invoke(type, list[index], index); // новый на новой позиции
+                    OnEquipItemView?.Invoke(type, list[currentIndex], currentIndex); // старый на другой позиции
+                }
+
+                return;
+            }
+
+
+            // Ќайти первый пустой слот
+            if (index == 0)
+            {
+                for (var i = 0; i < list.Count; i++)
+                {
+                    if (list[i] == null)
+                    {
+                        list[i] = item;
+                        OnEquipItem?.Invoke(type, item);
+                        return;
+                    }
+                }
+            }
+
+            else
+            {
+                if (list[index] == null)
+                {
+                    list[index] = item;
+                    OnEquipItem?.Invoke(type, item);
+                    return;
+                }
+
+                var removedItem = list[index];
+                list[index] = item;
+
+                //               OnUnEquipItem?.Invoke(type, removedItem, 1);
+                OnUnEquipItemToConcreteSlot?.Invoke(removedItem, slotIndex);
+
+                OnEquipItem?.Invoke(type, item);
+                return;
+            }
+
+
+            // Ќет свободных Ч заменим первый
+            var removed = list[0];
+            list[0] = item;
+
+            //    OnUnEquipItem?.Invoke(type, removed, 0);
+            OnUnEquipItemToConcreteSlot?.Invoke(removed, slotIndex);
+            OnEquipItem?.Invoke(type, item);
         }
+
 
         public void Equip(InventoryItem item, EquipType slotEquipType = EquipType.None, int index = 0)
         {

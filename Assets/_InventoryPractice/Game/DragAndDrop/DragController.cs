@@ -20,7 +20,7 @@ namespace _InventoryPractice.Game
 
         public int SlotIndex => _slotIndex;
 
-        public event Action<InventoryItem, DragSourceType, int, EquipType> OnSuccessDragEventAtEquipment;
+        public event Action<InventoryItem, DragSourceType, int, EquipType, int> OnSuccessDragEventAtEquipment;
         public event Action<InventoryItem, DragSourceType, int> OnSuccessDragEventAtInventory;
 
         public void StartDrag(InventoryItem item, Sprite icon, DragSourceType source, string amount)
@@ -50,6 +50,7 @@ namespace _InventoryPractice.Game
             SourceType = DragSourceType.None;
 
             DraggedItem = null;
+            _slotIndex = -1;
             if (_currentView != null)
                 Destroy(_currentView.gameObject);
         }
@@ -67,8 +68,7 @@ namespace _InventoryPractice.Game
         {
             Debug.Log($"<color=red>EndedAtEquipment: {_currentView}</color>");
 
-            //OnSuccessDragEventAtEquipment?.Invoke(DraggedItem, DragSourceType.Equipment, index, equipType);
-            OnSuccessDragEventAtEquipment?.Invoke(DraggedItem, SourceType, index, equipType);
+            OnSuccessDragEventAtEquipment?.Invoke(DraggedItem, SourceType, index, equipType, _slotIndex);
             EndDrag();
         }
     }

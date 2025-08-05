@@ -364,5 +364,27 @@ namespace InventoryPractice
         {
             _draggedItemHandler.HandleDraggedItem(item, slotIndex);
         }
+
+        [Button]
+        public void SortInventory()
+        {
+            var nullableItem = CreateNullableItem();
+
+            var nonNullItems = new List<InventoryItem>();
+            foreach (var inventoryItem in _items.Where(item => item.Id != "null")
+                         .OrderBy(item => item.Id))
+                nonNullItems.Add(inventoryItem);
+
+            // —читаем, сколько пустых €чеек нужно добавить в конец
+            var nullCount = _slotsLimit - nonNullItems.Count;
+
+            // ќбновл€ем список предметов
+            var list = new List<InventoryItem>();
+            foreach (var item in nonNullItems.Concat(Enumerable.Repeat(nullableItem, nullCount))) list.Add(item);
+            _items = list;
+
+            // ќбновл€ем событие
+            OnInventoryListChanged?.Invoke();
+        }
     }
 }

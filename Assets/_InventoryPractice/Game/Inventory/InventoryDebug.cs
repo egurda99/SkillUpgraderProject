@@ -63,5 +63,11 @@ namespace InventoryPractice
         {
             _inventory.ConsumeItem(itemConfig);
         }
+
+        [Button]
+        public void SortInventory()
+        {
+            _inventory.SortInventory();
+        }
     }
 }

@@ -75,6 +75,12 @@ namespace _InventoryPractice
 
         private void OnEquipItemView(EquipType type, InventoryItem item, int arg3)
         {
+            if (item == null)
+            {
+                OnUnEquipedOutItem(type, item, arg3);
+                return;
+            }
+
             var index = _equipment.GetEquippedItems(type).IndexOf(item);
             var slotView = _view.GetSlotView(type, index);
 
@@ -143,9 +149,6 @@ namespace _InventoryPractice
         {
             if (!_dragController.HasItem)
                 return;
-
-            var draggedItem = _dragController.DraggedItem;
-            _equipment.EquipItemFromDragAndDrop(draggedItem, index, type);
 
             _dragController.EndDragAfterSuccessDropAtEquipment(index, type);
         }

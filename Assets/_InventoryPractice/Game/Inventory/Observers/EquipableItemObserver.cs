@@ -17,7 +17,7 @@ namespace InventoryPractice
             _inventory.OnItemEquipped += OnItemEquipEvent;
             _equipment.OnEquipItem += HandleOnItemEquipped;
 
-            _equipment.OnItemEquipByDragAndDrop += OnHandleItemEquipByDragAndDragAndDropped;
+
             _equipment.OnUnEquipItem += OnUnEquiped;
             _equipment.OnDropOutItem += OnDropOutItemFromEquipment;
         }
@@ -29,14 +29,6 @@ namespace InventoryPractice
             {
                 _inventory.RemoveItemSlot(item);
                 AddValuesToPlayerStats(component);
-            }
-        }
-
-        public void OnHandleItemEquipByDragAndDragAndDropped(InventoryItem item, int index, EquipType slotType)
-        {
-            if (item.TryGetComponent(out EquipableItemComponent component))
-            {
-                _equipment.Equip(item, slotType, index);
             }
         }
 
@@ -113,7 +105,6 @@ namespace InventoryPractice
             _inventory.OnItemEquipped -= OnItemEquipEvent;
             _equipment.OnUnEquipItem -= OnUnEquiped;
             _equipment.OnDropOutItem -= OnDropOutItemFromEquipment;
-            _equipment.OnItemEquipByDragAndDrop -= OnHandleItemEquipByDragAndDragAndDropped;
             _equipment.OnEquipItem -= HandleOnItemEquipped;
             _equipment.OnUnEquipItemToConcreteSlot -= OnUnEquippedToSlot;
         }
