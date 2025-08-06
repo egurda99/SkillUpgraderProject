@@ -88,12 +88,8 @@ namespace InventoryPractice
                 }
 
                 var removedItem = list[index];
-                list[index] = item;
 
-                //               OnUnEquipItem?.Invoke(type, removedItem, 1);
                 OnUnEquipItemToConcreteSlot?.Invoke(removedItem, slotIndex);
-
-                OnEquipItem?.Invoke(type, item);
                 return;
             }
 

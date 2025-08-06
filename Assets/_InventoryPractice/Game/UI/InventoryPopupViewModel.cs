@@ -45,7 +45,7 @@ namespace _InventoryPractice
             StatsViewAdapter = new StatsViewAdapter(statsView, playerStats);
             SlotListAdapter = new InventorySlotListAdapter(slotsContainer, slotPrefab, _detailPresenter, inventory,
                 dragController);
-            SuccessDragObserver = new SuccessDragObserver(dragController, _inventory, equipment, ItemDetailAdapter);
+            SuccessDragObserver = new SuccessDragObserver(dragController, _inventory, equipment);
 
             _inventory.OnInventoryListChanged += HandleInventoryChanged;
         }
