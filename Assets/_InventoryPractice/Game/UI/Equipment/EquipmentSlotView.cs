@@ -1,3 +1,4 @@
+using System;
 using InventoryPractice;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,8 +11,6 @@ namespace _InventoryPractice
     public sealed class EquipmentSlotView : MonoBehaviour, IEquipmentSlotView, IBeginDragHandler, IDragHandler,
         IEndDragHandler, IDropHandler
     {
-        // [SerializeField] private Image _icon;
-        // [SerializeField] private Image _defaultIcon;
         [SerializeField] private ImageEquipmentSlot _imageEquipmentSlot;
 
         [SerializeField] private Button _button;
@@ -19,9 +18,9 @@ namespace _InventoryPractice
         private EquipType _equipType;
         private int _index;
 
-        public event UnityAction<int, EquipType, PointerEventData, IEquipmentSlotView> BeginDragEvent;
-        public event UnityAction<PointerEventData, IEquipmentSlotView> EndDragEvent;
-        public event UnityAction<int, EquipType, PointerEventData> DropEvent;
+        public event Action<int, EquipType, PointerEventData, IEquipmentSlotView> BeginDragEvent;
+        public event Action<PointerEventData, IEquipmentSlotView> EndDragEvent;
+        public event Action<int, EquipType, PointerEventData> DropEvent;
 
         public void SetDragState()
         {
@@ -31,6 +30,11 @@ namespace _InventoryPractice
         public void SetNormalState()
         {
             _imageEquipmentSlot.SetNormalState();
+        }
+
+        public void SetHighlightedState()
+        {
+            _imageEquipmentSlot.Highlight();
         }
 
 
@@ -84,6 +88,11 @@ namespace _InventoryPractice
         public void OnDrop(PointerEventData eventData)
         {
             DropEvent?.Invoke(_index, _equipType, eventData);
+        }
+
+        private void OnDestroy()
+        {
+            _imageEquipmentSlot.KillTween();
         }
     }
 }

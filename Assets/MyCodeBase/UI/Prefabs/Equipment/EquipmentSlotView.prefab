@@ -139,7 +139,9 @@ MonoBehaviour:
     _defaultIcon: {fileID: 1244458829440617257}
     _background: {fileID: 5811450081768523074}
     _onDragColor: {r: 0.75686276, g: 0.75686276, b: 0.75686276, a: 1}
+    _equipColor: {r: 1, g: 0.5584553, b: 0, a: 1}
     _normalColor: {r: 1, g: 1, b: 1, a: 1}
+    _transitionDuration: 0.55
   _button: {fileID: 2896444115670094717}
 --- !u!1 &754486272356047735
 GameObject:

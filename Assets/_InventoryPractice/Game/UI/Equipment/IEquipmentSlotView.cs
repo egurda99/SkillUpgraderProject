@@ -1,3 +1,4 @@
+using System;
 using InventoryPractice;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,10 +15,11 @@ namespace _InventoryPractice
         void RemoveAllButtonListeners();
         void SetIndex(int i);
 
-        event UnityAction<int, EquipType, PointerEventData, IEquipmentSlotView> BeginDragEvent;
-        event UnityAction<PointerEventData, IEquipmentSlotView> EndDragEvent;
-        event UnityAction<int, EquipType, PointerEventData> DropEvent;
+        event Action<int, EquipType, PointerEventData, IEquipmentSlotView> BeginDragEvent;
+        event Action<PointerEventData, IEquipmentSlotView> EndDragEvent;
+        event Action<int, EquipType, PointerEventData> DropEvent;
         void SetDragState();
         void SetNormalState();
+        void SetHighlightedState();
     }
 }

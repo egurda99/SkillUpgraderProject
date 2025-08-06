@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,9 +23,9 @@ namespace _InventoryPractice
             _imageInventorySlot.SetNormalState();
         }
 
-        public event UnityAction<PointerEventData> BeginDragEvent;
-        public event UnityAction<PointerEventData> EndDragEvent;
-        public event UnityAction<PointerEventData> DropEvent;
+        public event Action<PointerEventData> BeginDragEvent;
+        public event Action<PointerEventData> EndDragEvent;
+        public event Action<PointerEventData> DropEvent;
 
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -70,6 +71,11 @@ namespace _InventoryPractice
 
         public void OnDrag(PointerEventData eventData)
         {
+        }
+
+        private void OnDestroy()
+        {
+            _imageInventorySlot.KillTween();
         }
     }
 }

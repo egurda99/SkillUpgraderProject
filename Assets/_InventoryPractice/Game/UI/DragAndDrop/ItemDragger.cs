@@ -15,6 +15,9 @@ namespace _InventoryPractice
         private DragItemView _currentView;
         private int _slotIndex;
 
+        public event Action<InventoryItem, DragSourceType> OnDragStarted;
+        public event Action<InventoryItem> OnDragFinished;
+
         public InventoryItem DraggedItem { get; private set; }
         public bool HasItem => DraggedItem != null;
 
@@ -31,6 +34,7 @@ namespace _InventoryPractice
             _currentView = Instantiate(_dragItemViewPrefab, _container);
             _currentView.SetIcon(icon);
             _currentView.SetAmount(amount);
+            OnDragStarted?.Invoke(item, source);
         }
 
         public void StartDragFromInventory(InventoryItem item, Sprite icon, DragSourceType source, string amount,
@@ -43,11 +47,13 @@ namespace _InventoryPractice
             _currentView.SetIcon(icon);
             _currentView.SetAmount(amount);
             _slotIndex = slotIndex;
+            OnDragStarted?.Invoke(item, source);
         }
 
         public void EndDrag()
         {
             SourceType = DragSourceType.None;
+            OnDragFinished?.Invoke(DraggedItem);
 
             DraggedItem = null;
             _slotIndex = -1;

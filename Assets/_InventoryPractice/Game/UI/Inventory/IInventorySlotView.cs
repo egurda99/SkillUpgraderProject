@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -13,8 +14,8 @@ namespace _InventoryPractice
         void SetDragState();
         void SetNormalState();
 
-        event UnityAction<PointerEventData> BeginDragEvent;
-        event UnityAction<PointerEventData> EndDragEvent;
-        event UnityAction<PointerEventData> DropEvent;
+        event Action<PointerEventData> BeginDragEvent;
+        event Action<PointerEventData> EndDragEvent;
+        event Action<PointerEventData> DropEvent;
     }
 }

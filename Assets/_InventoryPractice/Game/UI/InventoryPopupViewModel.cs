@@ -21,6 +21,7 @@ namespace _InventoryPractice
         private readonly InventoryItemDetailPresenter _detailPresenter;
         private bool _isActive;
 
+        private readonly EquipmentDragObserver _equipmentDragObserver;
         public InventoryItemDetailPresenter DetailPresenter => _detailPresenter;
 
         public InventoryPopupViewModel(Inventory inventory,
@@ -45,6 +46,7 @@ namespace _InventoryPractice
             SlotListAdapter = new InventorySlotListAdapter(slotsContainer, slotPrefab, _detailPresenter, inventory,
                 itemDragger);
             SuccessDragHandler = new SuccessDragHandler(itemDragger, _inventory, equipment);
+            _equipmentDragObserver = new EquipmentDragObserver(itemDragger, equipmentView);
 
             _inventory.OnInventoryListChanged += HandleInventoryChanged;
         }
@@ -85,6 +87,7 @@ namespace _InventoryPractice
             StatsViewAdapter.Dispose();
             SuccessDragHandler.Dispose();
             _detailPresenter.Dispose();
+            _equipmentDragObserver.Dispose();
         }
     }
 }
