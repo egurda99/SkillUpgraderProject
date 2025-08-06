@@ -1,3 +1,4 @@
+using System;
 using TestsPractice;
 
 namespace InventoryPractice
@@ -17,7 +18,7 @@ namespace InventoryPractice
 
             _inventory.OnItemEquipped += OnItemEquipped;
             _equipment.OnUnEquipItem += OnUnEquiped;
-            _equipment.OnDropItem += OnDropItemFromEquipment;
+            _equipment.OnDropOutItem += OnDropItemFromEquipment;
         }
 
         public void OnDropItemFromEquipment(EquipType equipType, InventoryItem item, int index)
@@ -60,7 +61,12 @@ namespace InventoryPractice
         {
             _inventory.OnItemEquipped -= OnItemEquipped;
             _equipment.OnUnEquipItem -= OnUnEquiped;
-            _equipment.OnDropItem -= OnDropItemFromEquipment;
+            _equipment.OnDropOutItem -= OnDropItemFromEquipment;
+        }
+
+        public void OnDropOutItemFromEquipment(EquipType equipType, InventoryItem item, int index)
+        {
+            throw new NotImplementedException();
         }
     }
 }

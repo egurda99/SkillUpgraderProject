@@ -69,6 +69,7 @@ namespace InventoryPractice
             var nullableItem = _itemFactory.CreateNullableItem();
 
 
+            _items.Clear();
             for (var i = 0; i < _slotsLimit; i++)
                 _items.Add(nullableItem);
         }

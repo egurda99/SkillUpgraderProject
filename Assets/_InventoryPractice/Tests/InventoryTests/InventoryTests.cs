@@ -223,15 +223,15 @@ namespace TestsPractice
         public void WhenInventorySlotsSizeExceeded_AndAddStackableItem_ThenItemAdded()
         {
             // Arrange
-            var inventory = new Inventory();
-            inventory.Init(1, 1000);
-            inventory.AddItem(_woodItem);
+
+            _inventory.Init(1, 1000);
+            _inventory.AddItemToInventory(_woodItem);
 
             // Act
-            var canAdd = inventory.CanAddItem(_woodItem);
+            var canAdd = _inventory.CanAddItem(_woodItem);
 
             // Assert
-            Assert.IsFalse(inventory.HasFreeSlot); // нет слота
+            Assert.IsFalse(_inventory.HasFreeSlot); // нет слота
             Assert.IsTrue(canAdd);
         }
 
@@ -239,15 +239,15 @@ namespace TestsPractice
         public void WhenInventorySlotsSizeExceeded_AndAddStackableItem_ThenItemNotAdded()
         {
             // Arrange
-            var inventory = new Inventory();
-            inventory.Init(1, 1000);
-            inventory.AddItem(TestItemFactory.CreateWood(stackSize: 4, value: 4));
+
+            _inventory.Init(1, 1000);
+            _inventory.AddItemToInventory(TestItemFactory.CreateWood(stackSize: 4, value: 4));
 
             // Act
-            var canAdd = inventory.CanAddItem(TestItemFactory.CreateWood());
+            var canAdd = _inventory.CanAddItem(TestItemFactory.CreateWood());
 
             // Assert
-            Assert.IsFalse(inventory.HasFreeSlot); // нет слота
+            Assert.IsFalse(_inventory.HasFreeSlot); // нет слота
             Assert.IsFalse(canAdd);
         }
     }

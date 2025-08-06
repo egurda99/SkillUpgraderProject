@@ -29,7 +29,7 @@ MonoBehaviour:
       type: {class: EquipableItemComponent, ns: InventoryPractice, asm: Game}
       data:
         _equipType: 1
-        _healthValue: 0
-        _powerValue: 0
-        _aguilityValue: 0
-        _armorValue: 0
+        _healthValue: 3
+        _powerValue: 3
+        _aguilityValue: 3
+        _armorValue: 3

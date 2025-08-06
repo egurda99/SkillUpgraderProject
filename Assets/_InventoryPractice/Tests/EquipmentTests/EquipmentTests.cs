@@ -94,7 +94,7 @@ namespace TestsPractice
             // Arrange
 
             var eventCalled = false;
-            _equipment.OnDropItem += (_, droppedItem, _) =>
+            _equipment.OnDropOutItem += (_, droppedItem, _) =>
             {
                 if (droppedItem == _heavyArmorItem)
                     eventCalled = true;
