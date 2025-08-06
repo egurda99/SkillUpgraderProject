@@ -13,18 +13,18 @@ namespace _InventoryPractice
             _view = view;
             _inventory = inventory;
 
-            _inventory.OnWeightChanged += OnWeightChanged;
-            OnWeightChanged(_inventory.UsedWeight);
+            _inventory.OnWeightChanged += UpdateWeightWidget;
+            UpdateWeightWidget(_inventory.UsedWeight);
         }
 
-        private void OnWeightChanged(int value)
+        public void UpdateWeightWidget(int value)
         {
             _view.SetText($"{value}/{_inventory.WeightLimit}");
         }
 
         public void Dispose()
         {
-            _inventory.OnWeightChanged -= OnWeightChanged;
+            _inventory.OnWeightChanged -= UpdateWeightWidget;
         }
     }
 }

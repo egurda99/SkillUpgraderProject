@@ -8,17 +8,19 @@ namespace InventoryPractice
 {
     public sealed class Inventory
     {
-        private int _slotsLimit = 20;
-        private int _weightLimit = 100;
+        [ShowInInspector] [ReadOnly] private int _slotsLimit = 20;
+        [ShowInInspector] [ReadOnly] private int _weightLimit = 100;
 
         [ShowInInspector] [ReadOnly] private List<InventoryItem> _items = new();
+        private ItemFactory _itemFactory;
 
         public List<InventoryItem> Items => _items;
 
         public int SlotsLimit => _slotsLimit;
-        public int UsedWeight => _items.Sum(i => i.Weight);
-        public bool HasFreeSlot => _items.Count < _slotsLimit;
 
+
+        //  public bool HasFreeSlot => _items.Count < _slotsLimit;
+        public bool HasFreeSlot => _items.Any(item => item.Id == "null");
         public int WeightLimit => _weightLimit;
 
         public event Action<InventoryItem> OnItemAdded;
@@ -35,14 +37,97 @@ namespace InventoryPractice
         public event Action<int> OnWeightChanged;
 
 
-        private int _currentWeight;
+        [ShowInInspector] [ReadOnly] private int _currentWeight;
+        private MaxAddableCalculator _maxAddableCalculator;
+        private DraggedItemHandler _draggedItemHandler;
 
         public int CurrentWeight => _currentWeight;
+
+        public int UsedWeight
+        {
+            get
+            {
+                var sum = 0;
+                foreach (var i in _items)
+                {
+                    if (i != null) sum += Mathf.RoundToInt(i.Weight);
+                }
+
+                return sum;
+            }
+        }
 
         public void Init(int slotsLimit, int weightLimit)
         {
             _slotsLimit = slotsLimit;
             _weightLimit = weightLimit;
+
+            _itemFactory = new ItemFactory();
+            _maxAddableCalculator = new MaxAddableCalculator(this);
+            _draggedItemHandler = new DraggedItemHandler(this);
+
+            var nullableItem = _itemFactory.CreateNullableItem();
+
+
+            for (var i = 0; i < _slotsLimit; i++)
+                _items.Add(nullableItem);
+        }
+
+        public void ReplaceFirstNullable(InventoryItem newItem)
+        {
+            var index = _items.FindIndex(i => i.Id == "null");
+            if (index != -1)
+            {
+                _items[index] = newItem;
+            }
+            else
+            {
+                Debug.LogWarning("Нет свободной ячейки для добавления предмета");
+            }
+
+            OnInventoryListChanged?.Invoke();
+        }
+
+        public InventoryItem ReplaceItemAt(InventoryItem newItem, int index, bool hardReplace = false)
+        {
+            if (index < 0 || index >= _items.Count)
+            {
+                Debug.LogWarning($"Индекс {index} выходит за пределы инвентаря");
+                return null;
+            }
+
+            if (_items[index].Id == "null")
+            {
+                _items[index] = newItem;
+                OnInventoryListChanged?.Invoke();
+                return null;
+            }
+
+            if (hardReplace)
+            {
+                _items[index] = newItem;
+                OnInventoryListChanged?.Invoke();
+                return null;
+            }
+
+            OnInventoryListChanged?.Invoke();
+            return _items[index];
+        }
+
+        public void ReplaceItemWithNullable(InventoryItem item)
+        {
+            var index = _items.IndexOf(item);
+            if (index != -1)
+            {
+                _items[index] = CreateNullableItem();
+            }
+
+            OnInventoryListChanged?.Invoke();
+        }
+
+        public InventoryItem CreateNullableItem()
+        {
+            return _itemFactory.CreateNullableItem();
         }
 
         public void AddItem(InventoryItem item)
@@ -100,7 +185,7 @@ namespace InventoryPractice
         {
             var item = itemConfig.PrototypeItem.Clone();
 
-            var amountToAdd = GetMaxAddableAmount(item, amount);
+            var amountToAdd = _maxAddableCalculator.GetMaxAddableAmount(item, amount);
 
             if (amountToAdd > 0)
             {
@@ -124,7 +209,6 @@ namespace InventoryPractice
         public void RemoveItem(InventoryItem item)
         {
             _items.Remove(item);
-            //  DecreaseWeight(item.Weight);
             OnInventoryListChanged?.Invoke();
         }
 
@@ -229,7 +313,6 @@ namespace InventoryPractice
                 return;
             }
 
-            RemoveItemSlot(item);
             OnItemEquipped?.Invoke(item);
         }
 
@@ -294,59 +377,6 @@ namespace InventoryPractice
         }
 
 
-        private int GetMaxAddableAmount(InventoryItem item, int amount)
-        {
-            var freeSlots = _slotsLimit - _items.Count;
-            var freeSpace = _weightLimit - _currentWeight;
-
-            if (!item.Flags.HasFlag(InventoryItemFlags.Stackable))
-            {
-                var maxAmountBySlots = freeSlots;
-                var maxAmountByWeightt = Mathf.FloorToInt(freeSpace / item.Weight);
-                return Mathf.Min(amount, Mathf.Min(maxAmountBySlots, maxAmountByWeightt));
-            }
-
-            var itemStack = item.GetComponent<StackableItemComponent>();
-            var stackSize = itemStack.StackSize;
-            var itemWeight = item.Weight;
-
-            var maxAmountByWeight = Mathf.FloorToInt(freeSpace / itemWeight);
-            var remainingToAdd = Mathf.Min(amount, maxAmountByWeight);
-
-            var totalAddable = 0;
-
-            // Пополняем существующие неполные стеки
-            foreach (var inventoryItem in _items)
-            {
-                if (inventoryItem.Id == item.Id &&
-                    inventoryItem.TryGetComponent(out StackableItemComponent existingStack) &&
-                    !existingStack.IsFull)
-                {
-                    var canAdd = existingStack.StackSize - existingStack.Value;
-                    var willAdd = Mathf.Min(canAdd, remainingToAdd);
-
-                    totalAddable += willAdd;
-                    remainingToAdd -= willAdd;
-
-                    if (remainingToAdd <= 0)
-                        return totalAddable;
-                }
-            }
-
-            // Добавим новые стаки
-            var maxNewStacksByWeight = Mathf.FloorToInt(freeSpace / (itemWeight * stackSize));
-            var maxNewStacksBySlots = freeSlots;
-
-            var possibleNewStacks = Mathf.Min(maxNewStacksByWeight, maxNewStacksBySlots);
-            var possibleItemsFromNewStacks = possibleNewStacks * stackSize;
-
-            var willAddFromNewStacks = Mathf.Min(possibleItemsFromNewStacks, remainingToAdd);
-
-            totalAddable += willAddFromNewStacks;
-
-            return totalAddable;
-        }
-
         public void AddWeight(int weight)
         {
             _currentWeight += weight;
@@ -360,6 +390,45 @@ namespace InventoryPractice
             OnWeightChanged?.Invoke(_currentWeight);
 
             Debug.Log($"<color=orange>Current weight: {_currentWeight}</color>");
+        }
+
+        public void RemoveNullableItem()
+        {
+            foreach (var item in _items)
+            {
+                if (item.Id == "null")
+                {
+                    _items.Remove(item);
+                    return;
+                }
+            }
+        }
+
+        public void HandleDraggedItem(InventoryItem item, int slotIndex)
+        {
+            _draggedItemHandler.HandleDraggedItem(item, slotIndex);
+        }
+
+        [Button]
+        public void SortInventory()
+        {
+            var nullableItem = CreateNullableItem();
+
+            var nonNullItems = new List<InventoryItem>();
+            foreach (var inventoryItem in _items.Where(item => item.Id != "null")
+                         .OrderBy(item => item.Id))
+                nonNullItems.Add(inventoryItem);
+
+            // Считаем, сколько пустых ячеек нужно добавить в конец
+            var nullCount = _slotsLimit - nonNullItems.Count;
+
+            // Обновляем список предметов
+            var list = new List<InventoryItem>();
+            foreach (var item in nonNullItems.Concat(Enumerable.Repeat(nullableItem, nullCount))) list.Add(item);
+            _items = list;
+
+            // Обновляем событие
+            OnInventoryListChanged?.Invoke();
         }
     }
 }

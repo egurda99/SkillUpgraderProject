@@ -27,7 +27,7 @@ namespace _InventoryPractice
             Transform detailContainer,
             ValueWidgetView weightView,
             EquipmentView equipmentView,
-            StatsView statsView, Transform slotsContainer, InventorySlotView slotPrefab)
+            StatsView statsView, Transform slotsContainer, InventorySlotView slotPrefab, ItemDragger itemDragger)
         {
             return new InventoryPopupViewModel(
                 _inventory,
@@ -40,7 +40,8 @@ namespace _InventoryPractice
                 equipmentView,
                 statsView,
                 slotsContainer,
-                slotPrefab
+                slotPrefab,
+                itemDragger
             );
         }
     }

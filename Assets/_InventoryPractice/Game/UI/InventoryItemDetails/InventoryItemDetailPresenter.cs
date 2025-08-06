@@ -1,8 +1,9 @@
+using System;
 using InventoryPractice;
 
 namespace _InventoryPractice
 {
-    public sealed class InventoryItemDetailPresenter
+    public sealed class InventoryItemDetailPresenter : IDisposable
     {
         private IInventoryItemDetailView _view;
         private readonly Inventory _inventory;
@@ -13,6 +14,19 @@ namespace _InventoryPractice
         {
             _inventory = inventory;
             _equipment = equipment;
+
+            _inventory.OnInventoryListChanged += Hide;
+            _equipment.OnEquipItemView += Hide;
+        }
+
+        private void Hide(EquipType arg1, InventoryItem arg2, int arg3)
+        {
+            Stop();
+        }
+
+        private void Hide()
+        {
+            Stop();
         }
 
         public void SetView(IInventoryItemDetailView view)
@@ -104,6 +118,12 @@ namespace _InventoryPractice
         private void ConsumeItem()
         {
             _inventory.ConsumeItem(_item);
+        }
+
+        public void Dispose()
+        {
+            _inventory.OnInventoryListChanged -= Hide;
+            _equipment.OnEquipItemView -= Hide;
         }
     }
 }

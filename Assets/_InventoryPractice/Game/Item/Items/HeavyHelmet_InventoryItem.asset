@@ -21,15 +21,15 @@ MonoBehaviour:
       Icon: {fileID: 21300000, guid: 8811afdccf7740c46a7b902e4cad0803, type: 3}
     Flags: 4
     Components:
-    - rid: 8338750303779422287
+    - rid: 8518610968407441531
   references:
     version: 2
     RefIds:
-    - rid: 8338750303779422287
-      type: {class: EquipableItemComponent, ns: InventoryPractice, asm: Game}
+    - rid: 8518610968407441531
+      type: {class: EquipableItemComponent, ns: InventoryPractice, asm: Assembly-CSharp}
       data:
-        _equipType: 3
-        _healthValue: 0
-        _powerValue: 0
+        _equipType: 4
+        _healthValue: 9
+        _powerValue: 1
         _aguilityValue: 0
-        _armorValue: 0
+        _armorValue: 9

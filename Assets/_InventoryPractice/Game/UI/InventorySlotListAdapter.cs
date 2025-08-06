@@ -11,40 +11,49 @@ namespace _InventoryPractice
 
         private readonly List<ViewHolder> _viewHolders = new();
         private readonly InventoryItemDetailPresenter _detailPresenter;
+        private readonly Inventory _inventory;
+        private int _maxSlotCount;
+        private readonly ItemDragger _itemDragger;
 
-        public InventorySlotListAdapter(
-            Transform container,
-            InventorySlotView slotPrefab, InventoryItemDetailPresenter detailPresenter)
+        public InventorySlotListAdapter(Transform container,
+            InventorySlotView slotPrefab, InventoryItemDetailPresenter detailPresenter, Inventory inventory,
+            ItemDragger itemDragger)
         {
             _container = container;
             _slotPrefab = slotPrefab;
             _detailPresenter = detailPresenter;
+            _inventory = inventory;
+            _itemDragger = itemDragger;
         }
 
         public void ShowItems(IReadOnlyList<InventoryItem> items)
         {
             HideItems();
+            _maxSlotCount = _inventory.SlotsLimit;
 
-            foreach (var item in items)
-                ShowItem(item);
+
+            for (var i = 0; i < _maxSlotCount; i++)
+            {
+                var item = _inventory.Items[i];
+                ShowItem(item, i);
+            }
         }
 
         public void HideItems()
         {
             foreach (var vh in _viewHolders)
             {
-                vh.Presenter.Stop();
+                vh.Presenter?.Stop();
                 Object.Destroy(vh.View.gameObject);
             }
 
             _viewHolders.Clear();
         }
 
-        private void ShowItem(InventoryItem item)
+        private void ShowItem(InventoryItem item, int index)
         {
             var view = Object.Instantiate(_slotPrefab, _container);
-            var presenter = new InventorySlotPresenter(item, view, _detailPresenter);
-
+            var presenter = new InventorySlotPresenter(item, view, _detailPresenter, index, _itemDragger);
             presenter.Start();
             _viewHolders.Add(new ViewHolder(view, presenter));
         }

@@ -15,17 +15,15 @@ namespace _InventoryPractice
         public StatsViewAdapter StatsViewAdapter { get; }
 
         public InventorySlotListAdapter SlotListAdapter { get; }
+        public SuccessDragHandler SuccessDragHandler { get; }
 
         private readonly Inventory _inventory;
         private readonly InventoryItemDetailPresenter _detailPresenter;
         private bool _isActive;
 
-        // public event Action OnItemsChanged;
-
         public InventoryItemDetailPresenter DetailPresenter => _detailPresenter;
 
-        public InventoryPopupViewModel(
-            Inventory inventory,
+        public InventoryPopupViewModel(Inventory inventory,
             Equipment equipment,
             PlayerStats playerStats,
             DetailsItemPresenterFactory detailsItemPresenterFactory,
@@ -35,16 +33,18 @@ namespace _InventoryPractice
             EquipmentView equipmentView,
             StatsView statsView,
             Transform slotsContainer,
-            InventorySlotView slotPrefab)
+            InventorySlotView slotPrefab, ItemDragger itemDragger)
         {
             _inventory = inventory;
             _detailPresenter = detailsItemPresenterFactory.Create();
 
             ItemDetailAdapter = new InventoryDetailAdapter(detailContainer, detailView, _detailPresenter);
-            EquipmentPresenter = new EquipmentPresenter(equipment, equipmentView, _detailPresenter);
+            EquipmentPresenter = new EquipmentPresenter(equipment, equipmentView, _detailPresenter, itemDragger);
             WeightAdapter = new WeightWidgetAdapter(weightView, inventory);
             StatsViewAdapter = new StatsViewAdapter(statsView, playerStats);
-            SlotListAdapter = new InventorySlotListAdapter(slotsContainer, slotPrefab, _detailPresenter);
+            SlotListAdapter = new InventorySlotListAdapter(slotsContainer, slotPrefab, _detailPresenter, inventory,
+                itemDragger);
+            SuccessDragHandler = new SuccessDragHandler(itemDragger, _inventory, equipment);
 
             _inventory.OnInventoryListChanged += HandleInventoryChanged;
         }
@@ -56,6 +56,7 @@ namespace _InventoryPractice
             ItemDetailAdapter.Show();
             EquipmentPresenter.Start();
             SlotListAdapter.ShowItems(Items);
+            WeightAdapter.UpdateWeightWidget(_inventory.CurrentWeight);
         }
 
         public void Hide()
@@ -70,8 +71,6 @@ namespace _InventoryPractice
 
         private void HandleInventoryChanged()
         {
-            // OnItemsChanged?.Invoke();
-
             if (!_isActive)
                 return;
 
@@ -84,6 +83,8 @@ namespace _InventoryPractice
             _inventory.OnInventoryListChanged -= HandleInventoryChanged;
             WeightAdapter.Dispose();
             StatsViewAdapter.Dispose();
+            SuccessDragHandler.Dispose();
+            _detailPresenter.Dispose();
         }
     }
 }

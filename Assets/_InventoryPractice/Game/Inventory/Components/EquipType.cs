@@ -2,9 +2,10 @@ namespace InventoryPractice
 {
     public enum EquipType
     {
-        Hand = 0,
-        Armor = 1,
-        Boots = 2,
-        Helmet = 3
+        None = 0,
+        Hand = 1,
+        Armor = 2,
+        Boots = 3,
+        Helmet = 4
     }
 }

@@ -2,6 +2,6 @@ namespace InventoryPractice
 {
     public interface IEquippedItemDropObserver
     {
-        void OnDropItemFromEquipment(EquipType equipType, InventoryItem item, int index);
+        void OnDropOutItemFromEquipment(EquipType equipType, InventoryItem item, int index);
     }
 }

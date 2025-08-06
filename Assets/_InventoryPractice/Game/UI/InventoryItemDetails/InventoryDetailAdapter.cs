@@ -10,8 +10,6 @@ namespace _InventoryPractice
 
         private InventoryItemDetailView _view;
 
-        // public InventoryItemDetailPresenter Presenter => _presenter;
-
         public InventoryDetailAdapter(Transform container, InventoryItemDetailView prefab,
             InventoryItemDetailPresenter presenter)
         {
