@@ -25,6 +25,7 @@ namespace TestsPractice
         public void Setup()
         {
             _inventory = new Inventory();
+            _inventory.Init(16, 1000);
             _playerStats = new PlayerStatsDebug();
             _equipment = new Equipment();
 
@@ -165,6 +166,10 @@ namespace TestsPractice
             _inventory.EquipItem(_magicSwordItem);
             _inventory.Init(4, 100);
 
+            _inventory.AddItemToInventory(_shieldItem);
+            _inventory.AddItemToInventory(_shieldItem);
+            _inventory.AddItemToInventory(_heavySwordItem);
+            _inventory.AddItemToInventory(_lightArmorItem);
             // Act
             _equipment.Unequip(_magicSwordItem);
 
