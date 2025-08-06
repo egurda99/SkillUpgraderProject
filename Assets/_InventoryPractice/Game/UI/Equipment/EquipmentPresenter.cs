@@ -130,18 +130,20 @@ namespace _InventoryPractice
             _detailPresenter.ShowEquippedSlotInfo(item);
         }
 
-        private void OnBeginDrag(int index, EquipType type, PointerEventData data)
+        private void OnBeginDrag(int index, EquipType type, PointerEventData data, IEquipmentSlotView view)
         {
             var item = _equipment.GetEquippedItems(type).ElementAtOrDefault(index);
             if (item == null)
                 return;
 
             _itemDragger.StartDrag(item, item.MetaData.Icon, DragSourceType.Equipment, "");
+            view.SetDragState();
         }
 
-        private void OnEndDrag(PointerEventData data)
+        private void OnEndDrag(PointerEventData data, IEquipmentSlotView view)
         {
             _itemDragger.EndDrag();
+            view.SetNormalState();
         }
 
         private void OnDrop(int index, EquipType type, PointerEventData data)

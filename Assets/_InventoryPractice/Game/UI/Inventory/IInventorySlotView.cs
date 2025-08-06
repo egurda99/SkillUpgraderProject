@@ -10,6 +10,8 @@ namespace _InventoryPractice
         void SetAmount(string value);
         void AddButtonListener(UnityAction action);
         void RemoveButtonListener(UnityAction action);
+        void SetDragState();
+        void SetNormalState();
 
         event UnityAction<PointerEventData> BeginDragEvent;
         event UnityAction<PointerEventData> EndDragEvent;

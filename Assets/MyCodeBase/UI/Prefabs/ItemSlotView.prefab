@@ -224,7 +224,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e0292bca3c74df48e28042032cf1b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 793862492627177851}
+  _imageInventorySlot:
+    _icon: {fileID: 793862492627177851}
+    _background: {fileID: 8920234005666737117}
+    _onDragColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
+    _normalColor: {r: 1, g: 1, b: 1, a: 1}
   _amountText: {fileID: 8047422193585628933}
   _button: {fileID: 1666139540617524228}
 --- !u!1 &6722309034161815730

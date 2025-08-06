@@ -10,16 +10,28 @@ namespace _InventoryPractice
     public sealed class EquipmentSlotView : MonoBehaviour, IEquipmentSlotView, IBeginDragHandler, IDragHandler,
         IEndDragHandler, IDropHandler
     {
-        [SerializeField] private Image _icon;
-        [SerializeField] private Image _defaultIcon;
+        // [SerializeField] private Image _icon;
+        // [SerializeField] private Image _defaultIcon;
+        [SerializeField] private ImageEquipmentSlot _imageEquipmentSlot;
+
         [SerializeField] private Button _button;
 
         private EquipType _equipType;
         private int _index;
 
-        public event UnityAction<int, EquipType, PointerEventData> BeginDragEvent;
-        public event UnityAction<PointerEventData> EndDragEvent;
+        public event UnityAction<int, EquipType, PointerEventData, IEquipmentSlotView> BeginDragEvent;
+        public event UnityAction<PointerEventData, IEquipmentSlotView> EndDragEvent;
         public event UnityAction<int, EquipType, PointerEventData> DropEvent;
+
+        public void SetDragState()
+        {
+            _imageEquipmentSlot.SetDragState();
+        }
+
+        public void SetNormalState()
+        {
+            _imageEquipmentSlot.SetNormalState();
+        }
 
 
         public void SetEquipType(EquipType equipType)
@@ -30,15 +42,12 @@ namespace _InventoryPractice
 
         public void SetSprite(Sprite sprite)
         {
-            _defaultIcon.enabled = false;
-            _icon.enabled = true;
-            _icon.sprite = sprite;
+            _imageEquipmentSlot.SetSprite(sprite);
         }
 
         public void SetDefaultSprite()
         {
-            _defaultIcon.enabled = true;
-            _icon.enabled = false;
+            _imageEquipmentSlot.SetDefaultSprite();
         }
 
 
@@ -60,7 +69,7 @@ namespace _InventoryPractice
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            BeginDragEvent?.Invoke(_index, _equipType, eventData);
+            BeginDragEvent?.Invoke(_index, _equipType, eventData, this);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -69,7 +78,7 @@ namespace _InventoryPractice
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            EndDragEvent?.Invoke(eventData);
+            EndDragEvent?.Invoke(eventData, this);
         }
 
         public void OnDrop(PointerEventData eventData)

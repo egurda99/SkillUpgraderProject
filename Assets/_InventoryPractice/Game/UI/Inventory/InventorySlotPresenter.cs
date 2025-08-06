@@ -65,11 +65,14 @@ namespace _InventoryPractice
 
             _itemDragger.StartDragFromInventory(_item, _item.MetaData.Icon, DragSourceType.Inventory,
                 GetAmountText(_item), _slotIndex);
+
+            _view.SetDragState();
         }
 
         private void OnEndDrag(PointerEventData eventData)
         {
             _itemDragger.EndDrag();
+            _view.SetNormalState();
         }
 
         private void OnDrop(PointerEventData eventData)

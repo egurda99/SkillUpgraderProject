@@ -10,10 +10,17 @@ namespace _InventoryPractice
     public sealed class InventorySlotView : MonoBehaviour, IInventorySlotView, IBeginDragHandler, IDragHandler,
         IEndDragHandler, IDropHandler
     {
-        [SerializeField] private Image _icon;
+        [SerializeField] private ImageInventorySlot _imageInventorySlot;
+
+
         [SerializeField] private TextMeshProUGUI _amountText;
 
         [SerializeField] private Button _button;
+
+        public void SetNormalState()
+        {
+            _imageInventorySlot.SetNormalState();
+        }
 
         public event UnityAction<PointerEventData> BeginDragEvent;
         public event UnityAction<PointerEventData> EndDragEvent;
@@ -37,8 +44,7 @@ namespace _InventoryPractice
 
         public void SetSprite(Sprite sprite)
         {
-            _icon.sprite = sprite;
-            _icon.enabled = sprite != null;
+            _imageInventorySlot.SetSprite(sprite);
         }
 
         public void SetAmount(string value)
@@ -55,6 +61,11 @@ namespace _InventoryPractice
         public void RemoveButtonListener(UnityAction action)
         {
             _button.onClick.RemoveListener(action);
+        }
+
+        public void SetDragState()
+        {
+            _imageInventorySlot.SetDragState();
         }
 
         public void OnDrag(PointerEventData eventData)

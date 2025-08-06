@@ -14,8 +14,10 @@ namespace _InventoryPractice
         void RemoveAllButtonListeners();
         void SetIndex(int i);
 
-        event UnityAction<int, EquipType, PointerEventData> BeginDragEvent;
-        event UnityAction<PointerEventData> EndDragEvent;
+        event UnityAction<int, EquipType, PointerEventData, IEquipmentSlotView> BeginDragEvent;
+        event UnityAction<PointerEventData, IEquipmentSlotView> EndDragEvent;
         event UnityAction<int, EquipType, PointerEventData> DropEvent;
+        void SetDragState();
+        void SetNormalState();
     }
 }
