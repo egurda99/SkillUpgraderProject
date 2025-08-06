@@ -1,4 +1,3 @@
-using _InventoryPractice.Game;
 using InventoryPractice;
 using UnityEngine.EventSystems;
 
@@ -10,17 +9,17 @@ namespace _InventoryPractice
         private readonly IInventorySlotView _view;
         private readonly InventoryItemDetailPresenter _detailPresenter;
         private readonly int _slotIndex;
-        private readonly DragController _dragController;
+        private readonly ItemDragger _itemDragger;
 
         public InventorySlotPresenter(InventoryItem item,
             IInventorySlotView view,
-            InventoryItemDetailPresenter detailPresenter, int index, DragController dragController)
+            InventoryItemDetailPresenter detailPresenter, int index, ItemDragger itemDragger)
         {
             _item = item;
             _view = view;
             _detailPresenter = detailPresenter;
             _slotIndex = index;
-            _dragController = dragController;
+            _itemDragger = itemDragger;
         }
 
         public void Start()
@@ -64,21 +63,21 @@ namespace _InventoryPractice
             if (_item == null)
                 return;
 
-            _dragController.StartDragFromInventory(_item, _item.MetaData.Icon, DragSourceType.Inventory,
+            _itemDragger.StartDragFromInventory(_item, _item.MetaData.Icon, DragSourceType.Inventory,
                 GetAmountText(_item), _slotIndex);
         }
 
         private void OnEndDrag(PointerEventData eventData)
         {
-            _dragController.EndDrag();
+            _itemDragger.EndDrag();
         }
 
         private void OnDrop(PointerEventData eventData)
         {
-            if (!_dragController.HasItem)
+            if (!_itemDragger.HasItem)
                 return;
 
-            _dragController.EndDragAfterSuccessDropAtInventory(_slotIndex);
+            _itemDragger.EndDragAfterSuccessDropAtInventory(_slotIndex);
         }
 
         private string GetAmountText(InventoryItem item)

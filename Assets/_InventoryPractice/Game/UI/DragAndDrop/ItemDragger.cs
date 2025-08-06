@@ -2,9 +2,9 @@ using System;
 using InventoryPractice;
 using UnityEngine;
 
-namespace _InventoryPractice.Game
+namespace _InventoryPractice
 {
-    public sealed class DragController : MonoBehaviour
+    public sealed class ItemDragger : MonoBehaviour
     {
         [SerializeField] private DragItemView _dragItemViewPrefab;
         [SerializeField] private Transform _container;
@@ -25,7 +25,7 @@ namespace _InventoryPractice.Game
 
         public void StartDrag(InventoryItem item, Sprite icon, DragSourceType source, string amount)
         {
-            Debug.Log($"<color=red>Started: {item.Id}</color>");
+            // Debug.Log($"<color=red>Started: {item.Id}</color>");
             SourceType = source;
             DraggedItem = item;
             _currentView = Instantiate(_dragItemViewPrefab, _container);
@@ -36,7 +36,7 @@ namespace _InventoryPractice.Game
         public void StartDragFromInventory(InventoryItem item, Sprite icon, DragSourceType source, string amount,
             int slotIndex)
         {
-            Debug.Log($"<color=red>Started: {item.Id}</color>");
+            //  Debug.Log($"<color=red>Started: {item.Id}</color>");
             SourceType = source;
             DraggedItem = item;
             _currentView = Instantiate(_dragItemViewPrefab, _container);
@@ -58,7 +58,7 @@ namespace _InventoryPractice.Game
 
         public void EndDragAfterSuccessDropAtInventory(int slotIndex)
         {
-            Debug.Log($"<color=red>EndedAtInventory: {_currentView}</color>");
+            // Debug.Log($"<color=red>EndedAtInventory: {_currentView}</color>");
 
             OnSuccessDragEventAtInventory?.Invoke(DraggedItem, SourceType, slotIndex);
             EndDrag();
@@ -66,7 +66,7 @@ namespace _InventoryPractice.Game
 
         public void EndDragAfterSuccessDropAtEquipment(int index, EquipType equipType)
         {
-            Debug.Log($"<color=red>EndedAtEquipment: {_currentView}</color>");
+            //  Debug.Log($"<color=red>EndedAtEquipment: {_currentView}</color>");
 
             OnSuccessDragEventAtEquipment?.Invoke(DraggedItem, SourceType, index, equipType, _slotIndex);
             EndDrag();

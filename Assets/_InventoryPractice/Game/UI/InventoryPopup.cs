@@ -1,4 +1,3 @@
-using _InventoryPractice.Game;
 using MyCodeBase;
 using UnityEngine;
 using Zenject;
@@ -15,7 +14,7 @@ namespace _InventoryPractice
         [SerializeField] private ValueWidgetView _valueWidgetView;
         [SerializeField] private EquipmentView _equipmentView;
         [SerializeField] private StatsView _statsView;
-        [SerializeField] private DragController _dragController;
+        [SerializeField] private ItemDragger _itemDragger;
 
 
         private InventoryPopupViewModel _viewModel;
@@ -39,7 +38,7 @@ namespace _InventoryPractice
                 _statsView,
                 _slotsContainer,
                 _slotViewPrefab,
-                _dragController
+                _itemDragger
             );
 
             _viewModel.Show();

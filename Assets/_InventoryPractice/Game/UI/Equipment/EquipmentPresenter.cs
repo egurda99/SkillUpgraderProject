@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using _InventoryPractice.Game;
 using InventoryPractice;
 using UnityEngine.EventSystems;
 
@@ -14,15 +13,15 @@ namespace _InventoryPractice
         private readonly InventoryItemDetailPresenter _detailPresenter;
         private string _amountText;
         private readonly Equipment _equipment;
-        private readonly DragController _dragController;
+        private readonly ItemDragger _itemDragger;
 
         public EquipmentPresenter(Equipment equipment, IEquipmentView view,
-            InventoryItemDetailPresenter detailPresenter, DragController dragController)
+            InventoryItemDetailPresenter detailPresenter, ItemDragger itemDragger)
         {
             _equipment = equipment;
             _view = view;
             _detailPresenter = detailPresenter;
-            _dragController = dragController;
+            _itemDragger = itemDragger;
         }
 
         public void Start()
@@ -137,20 +136,20 @@ namespace _InventoryPractice
             if (item == null)
                 return;
 
-            _dragController.StartDrag(item, item.MetaData.Icon, DragSourceType.Equipment, "");
+            _itemDragger.StartDrag(item, item.MetaData.Icon, DragSourceType.Equipment, "");
         }
 
         private void OnEndDrag(PointerEventData data)
         {
-            _dragController.EndDrag();
+            _itemDragger.EndDrag();
         }
 
         private void OnDrop(int index, EquipType type, PointerEventData data)
         {
-            if (!_dragController.HasItem)
+            if (!_itemDragger.HasItem)
                 return;
 
-            _dragController.EndDragAfterSuccessDropAtEquipment(index, type);
+            _itemDragger.EndDragAfterSuccessDropAtEquipment(index, type);
         }
     }
 }

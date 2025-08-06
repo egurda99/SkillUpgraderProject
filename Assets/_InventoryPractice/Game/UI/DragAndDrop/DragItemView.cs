@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _InventoryPractice.Game
+namespace _InventoryPractice
 {
     public sealed class DragItemView : MonoBehaviour
     {

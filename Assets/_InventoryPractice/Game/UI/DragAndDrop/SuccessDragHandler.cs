@@ -1,22 +1,22 @@
 using System;
 using InventoryPractice;
 
-namespace _InventoryPractice.Game
+namespace _InventoryPractice
 {
-    public sealed class SuccessDragObserver : IDisposable
+    public sealed class SuccessDragHandler : IDisposable
     {
-        private readonly DragController _dragController;
+        private readonly ItemDragger _itemDragger;
         private readonly Inventory _inventory;
         private readonly Equipment _equipment;
 
-        public SuccessDragObserver(DragController dragController, Inventory inventory, Equipment equipment)
+        public SuccessDragHandler(ItemDragger itemDragger, Inventory inventory, Equipment equipment)
         {
-            _dragController = dragController;
+            _itemDragger = itemDragger;
             _inventory = inventory;
             _equipment = equipment;
 
-            _dragController.OnSuccessDragEventAtEquipment += HandleEquipmentDragEvent;
-            _dragController.OnSuccessDragEventAtInventory += HandleInventoryDragEvent;
+            _itemDragger.OnSuccessDragEventAtEquipment += HandleEquipmentDragEvent;
+            _itemDragger.OnSuccessDragEventAtInventory += HandleInventoryDragEvent;
         }
 
         private void HandleInventoryDragEvent(InventoryItem item, DragSourceType type, int slotIndex)
@@ -54,8 +54,8 @@ namespace _InventoryPractice.Game
 
         public void Dispose()
         {
-            _dragController.OnSuccessDragEventAtEquipment -= HandleEquipmentDragEvent;
-            _dragController.OnSuccessDragEventAtInventory -= HandleInventoryDragEvent;
+            _itemDragger.OnSuccessDragEventAtEquipment -= HandleEquipmentDragEvent;
+            _itemDragger.OnSuccessDragEventAtInventory -= HandleInventoryDragEvent;
         }
     }
 }

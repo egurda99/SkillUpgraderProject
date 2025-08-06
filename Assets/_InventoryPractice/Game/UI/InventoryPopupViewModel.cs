@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using _InventoryPractice.Game;
 using InventoryPractice;
 using UnityEngine;
 
@@ -16,7 +15,7 @@ namespace _InventoryPractice
         public StatsViewAdapter StatsViewAdapter { get; }
 
         public InventorySlotListAdapter SlotListAdapter { get; }
-        public SuccessDragObserver SuccessDragObserver { get; }
+        public SuccessDragHandler SuccessDragHandler { get; }
 
         private readonly Inventory _inventory;
         private readonly InventoryItemDetailPresenter _detailPresenter;
@@ -34,18 +33,18 @@ namespace _InventoryPractice
             EquipmentView equipmentView,
             StatsView statsView,
             Transform slotsContainer,
-            InventorySlotView slotPrefab, DragController dragController)
+            InventorySlotView slotPrefab, ItemDragger itemDragger)
         {
             _inventory = inventory;
             _detailPresenter = detailsItemPresenterFactory.Create();
 
             ItemDetailAdapter = new InventoryDetailAdapter(detailContainer, detailView, _detailPresenter);
-            EquipmentPresenter = new EquipmentPresenter(equipment, equipmentView, _detailPresenter, dragController);
+            EquipmentPresenter = new EquipmentPresenter(equipment, equipmentView, _detailPresenter, itemDragger);
             WeightAdapter = new WeightWidgetAdapter(weightView, inventory);
             StatsViewAdapter = new StatsViewAdapter(statsView, playerStats);
             SlotListAdapter = new InventorySlotListAdapter(slotsContainer, slotPrefab, _detailPresenter, inventory,
-                dragController);
-            SuccessDragObserver = new SuccessDragObserver(dragController, _inventory, equipment);
+                itemDragger);
+            SuccessDragHandler = new SuccessDragHandler(itemDragger, _inventory, equipment);
 
             _inventory.OnInventoryListChanged += HandleInventoryChanged;
         }
@@ -84,7 +83,7 @@ namespace _InventoryPractice
             _inventory.OnInventoryListChanged -= HandleInventoryChanged;
             WeightAdapter.Dispose();
             StatsViewAdapter.Dispose();
-            SuccessDragObserver.Dispose();
+            SuccessDragHandler.Dispose();
             _detailPresenter.Dispose();
         }
     }

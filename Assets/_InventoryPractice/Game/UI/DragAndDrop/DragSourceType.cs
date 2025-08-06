@@ -1,4 +1,4 @@
-namespace _InventoryPractice.Game
+namespace _InventoryPractice
 {
     public enum DragSourceType
     {

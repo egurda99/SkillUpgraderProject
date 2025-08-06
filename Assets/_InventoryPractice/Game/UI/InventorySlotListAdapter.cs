@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using _InventoryPractice.Game;
 using InventoryPractice;
 using UnityEngine;
 
@@ -14,17 +13,17 @@ namespace _InventoryPractice
         private readonly InventoryItemDetailPresenter _detailPresenter;
         private readonly Inventory _inventory;
         private int _maxSlotCount;
-        private readonly DragController _dragController;
+        private readonly ItemDragger _itemDragger;
 
         public InventorySlotListAdapter(Transform container,
             InventorySlotView slotPrefab, InventoryItemDetailPresenter detailPresenter, Inventory inventory,
-            DragController dragController)
+            ItemDragger itemDragger)
         {
             _container = container;
             _slotPrefab = slotPrefab;
             _detailPresenter = detailPresenter;
             _inventory = inventory;
-            _dragController = dragController;
+            _itemDragger = itemDragger;
         }
 
         public void ShowItems(IReadOnlyList<InventoryItem> items)
@@ -54,7 +53,7 @@ namespace _InventoryPractice
         private void ShowItem(InventoryItem item, int index)
         {
             var view = Object.Instantiate(_slotPrefab, _container);
-            var presenter = new InventorySlotPresenter(item, view, _detailPresenter, index, _dragController);
+            var presenter = new InventorySlotPresenter(item, view, _detailPresenter, index, _itemDragger);
             presenter.Start();
             _viewHolders.Add(new ViewHolder(view, presenter));
         }
