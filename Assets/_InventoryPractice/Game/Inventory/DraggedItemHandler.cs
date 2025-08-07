@@ -41,7 +41,15 @@ namespace InventoryPractice
                 }
 
                 _inventory.Items[targetIndex] = draggedItem;
-                _inventory.FireItemsChangedEvent();
+
+                if (previousItem.Id != "null")
+                {
+                    _inventory.FireItemsChangedEventByDragAndDrop(targetIndex, currentIndex);
+                    return;
+                }
+
+
+                _inventory.FireItemsChangedEventByDragAndDrop(targetIndex);
             }
             else
             {

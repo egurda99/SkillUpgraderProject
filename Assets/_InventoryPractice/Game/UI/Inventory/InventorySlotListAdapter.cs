@@ -58,6 +58,14 @@ namespace _InventoryPractice
             _viewHolders.Add(new ViewHolder(view, presenter));
         }
 
+        private InventorySlotPresenter GetPresenterByIndex(int index)
+        {
+            if (index < 0 || index >= _viewHolders.Count)
+                return null;
+
+            return _viewHolders[index].Presenter;
+        }
+
         private readonly struct ViewHolder
         {
             public readonly InventorySlotView View;
@@ -68,6 +76,18 @@ namespace _InventoryPractice
                 View = view;
                 Presenter = presenter;
             }
+        }
+
+        public void ShowItemWithEffect(int slotIndex, int secondItemIndex)
+        {
+            var presenter = GetPresenterByIndex(slotIndex);
+            presenter.DoWiggleEffect();
+
+            if (secondItemIndex == -1)
+                return;
+
+            var secondPresenter = GetPresenterByIndex(secondItemIndex);
+            secondPresenter.DoWiggleEffect();
         }
     }
 }

@@ -49,7 +49,9 @@ namespace _InventoryPractice
             _equipmentDragObserver = new EquipmentDragObserver(itemDragger, equipmentView);
 
             _inventory.OnInventoryListChanged += HandleInventoryChanged;
+            _inventory.OnInventoryListChangedByDragAndDrop += HandleInventoryChanged;
         }
+
 
         public void Show()
         {
@@ -80,9 +82,21 @@ namespace _InventoryPractice
             SlotListAdapter.ShowItems(Items);
         }
 
+        private void HandleInventoryChanged(int slotIndex, int secondIndex)
+        {
+            if (!_isActive)
+                return;
+
+            SlotListAdapter.HideItems();
+            SlotListAdapter.ShowItems(Items);
+            SlotListAdapter.ShowItemWithEffect(slotIndex, secondIndex);
+        }
+
         public void Dispose()
         {
             _inventory.OnInventoryListChanged -= HandleInventoryChanged;
+            _inventory.OnInventoryListChangedByDragAndDrop -= HandleInventoryChanged;
+
             WeightAdapter.Dispose();
             StatsViewAdapter.Dispose();
             SuccessDragHandler.Dispose();

@@ -50,6 +50,11 @@ namespace _InventoryPractice
             _view.RemoveButtonListener(OnSlotClicked);
         }
 
+        public void DoWiggleEffect()
+        {
+            _view.DoWiggleEffect();
+        }
+
         private void OnSlotClicked()
         {
             if (_item == null)

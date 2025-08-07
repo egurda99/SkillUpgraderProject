@@ -17,5 +17,6 @@ namespace _InventoryPractice
         event Action<PointerEventData> BeginDragEvent;
         event Action<PointerEventData> EndDragEvent;
         event Action<PointerEventData> DropEvent;
+        void DoWiggleEffect();
     }
 }

@@ -27,6 +27,11 @@ namespace _InventoryPractice
         public event Action<PointerEventData> EndDragEvent;
         public event Action<PointerEventData> DropEvent;
 
+        public void DoWiggleEffect()
+        {
+            _imageInventorySlot.DoWiggle();
+        }
+
         public void OnBeginDrag(PointerEventData eventData)
         {
             BeginDragEvent?.Invoke(eventData);

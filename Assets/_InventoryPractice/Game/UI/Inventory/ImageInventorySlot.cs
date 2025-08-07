@@ -26,18 +26,6 @@ namespace _InventoryPractice
             _icon.enabled = sprite != null;
         }
 
-        // public void SetDragState()
-        // {
-        //     _background.color = _onDragColor;
-        //     _icon.color = _onDragColor;
-        // }
-        //
-        // public void SetNormalState()
-        // {
-        //     _background.color = _normalColor;
-        //     _icon.color = _normalColor;
-        // }
-
         public void SetDragState()
         {
             KillTween();
@@ -65,6 +53,28 @@ namespace _InventoryPractice
                 _colorTween.Kill();
                 _colorTween = null;
             }
+        }
+
+        public void DoWiggle()
+        {
+            if (_icon == null || !_icon.gameObject.activeInHierarchy)
+                return;
+
+            // Убедимся, что не накапливаем твины
+            _icon.transform.DOKill();
+
+            // Сброс поворота перед анимацией
+            _icon.transform.localRotation = Quaternion.identity;
+
+            // Выполняем вращательный "удар"
+            _icon.transform
+                .DOPunchRotation(
+                    new Vector3(0, 0, 20f), // амплитуда "удара" по Z
+                    0.3f, // длительность
+                    6, // количество вибраций
+                    0.6f) // эластичность (0..1)
+                .SetEase(Ease.OutQuad)
+                .SetUpdate(true);
         }
     }
 }

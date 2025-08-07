@@ -16,7 +16,15 @@ namespace _InventoryPractice
             _equipment = equipment;
 
             _inventory.OnInventoryListChanged += Hide;
+            _inventory.OnInventoryListChangedByDragAndDrop += Hide;
+
+
             _equipment.OnEquipItemView += Hide;
+        }
+
+        private void Hide(int arg1, int arg2)
+        {
+            Stop();
         }
 
         private void Hide(EquipType arg1, InventoryItem arg2, int arg3)
@@ -123,6 +131,8 @@ namespace _InventoryPractice
         public void Dispose()
         {
             _inventory.OnInventoryListChanged -= Hide;
+            _inventory.OnInventoryListChangedByDragAndDrop -= Hide;
+
             _equipment.OnEquipItemView -= Hide;
         }
     }

@@ -33,6 +33,7 @@ namespace InventoryPractice
         public event Action<InventoryItem> OnItemEquipped;
 
         public event Action OnInventoryListChanged;
+        public event Action<int, int> OnInventoryListChangedByDragAndDrop;
 
         public event Action<int> OnWeightChanged;
 
@@ -430,6 +431,11 @@ namespace InventoryPractice
 
             // Обновляем событие
             OnInventoryListChanged?.Invoke();
+        }
+
+        public void FireItemsChangedEventByDragAndDrop(int slotIndex, int targetIndex = -1)
+        {
+            OnInventoryListChangedByDragAndDrop?.Invoke(slotIndex, targetIndex);
         }
     }
 }
