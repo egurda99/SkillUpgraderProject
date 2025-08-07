@@ -52,8 +52,6 @@ namespace _InventoryPractice
                 return;
 
             _hideTween = DOTween.Sequence()
-                // .Append(_canvasGroup.DOFade(0f, 0.15f))
-                // .Join(transform.DOScale(0.8f, 0.15f).SetEase(Ease.InBack))
                 .Join(transform.DOScale(0.0f, 0.3f).SetEase(Ease.InBack))
                 .Append(_canvasGroup.DOFade(0f, 0.1f))
                 .SetUpdate(true)
@@ -61,22 +59,6 @@ namespace _InventoryPractice
                 {
                     if (IsValid()) gameObject.SetActive(false);
                 });
-
-
-            //  gameObject.SetActive(false);
-
-            // _showTween?.Kill();
-            // _hideTween?.Kill();
-            //
-            // _hideTween = DOTween.Sequence()
-            //     .Join(transform.DOScale(0.01f, 0.3f).SetEase(Ease.InBack))
-            //     .Append(_canvasGroup.DOFade(0f, 0.1f))
-            //     .SetUpdate(true)
-            //     .OnComplete(() =>
-            //     {
-            //         if (this != null && gameObject != null)
-            //             gameObject.SetActive(false);
-            //     });
         }
 
         public void SetName(string name)
