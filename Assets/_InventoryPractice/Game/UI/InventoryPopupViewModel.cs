@@ -39,7 +39,8 @@ namespace _InventoryPractice
             _inventory = inventory;
             _detailPresenter = detailsItemPresenterFactory.Create();
 
-            ItemDetailAdapter = new InventoryDetailAdapter(detailContainer, detailView, _detailPresenter);
+            ItemDetailAdapter =
+                new InventoryDetailAdapter(detailContainer, detailView, _detailPresenter, equipmentView);
             EquipmentPresenter = new EquipmentPresenter(equipment, equipmentView, _detailPresenter, itemDragger);
             WeightAdapter = new WeightWidgetAdapter(weightView, inventory);
             StatsViewAdapter = new StatsViewAdapter(statsView, playerStats);

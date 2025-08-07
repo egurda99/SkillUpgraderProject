@@ -7,6 +7,7 @@ namespace _InventoryPractice
         private readonly Inventory _inventory;
         private readonly Equipment _equipment;
 
+
         public DetailsItemPresenterFactory(Inventory inventory, Equipment equipment)
         {
             _inventory = inventory;

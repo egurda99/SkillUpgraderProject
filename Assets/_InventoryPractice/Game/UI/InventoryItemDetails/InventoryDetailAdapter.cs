@@ -11,11 +11,12 @@ namespace _InventoryPractice
         private InventoryItemDetailView _view;
 
         public InventoryDetailAdapter(Transform container, InventoryItemDetailView prefab,
-            InventoryItemDetailPresenter presenter)
+            InventoryItemDetailPresenter presenter, EquipmentView equipmentView)
         {
             _container = container;
             _prefab = prefab;
             _presenter = presenter;
+            _presenter.SetEquipmentView(equipmentView);
         }
 
         public void Show()

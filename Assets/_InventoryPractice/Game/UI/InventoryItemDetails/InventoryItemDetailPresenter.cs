@@ -10,10 +10,14 @@ namespace _InventoryPractice
         private InventoryItem _item;
         private readonly Equipment _equipment;
 
+        private EquipableItemEffectsHelper _equipableItemEffectsHelper;
+
+
         public InventoryItemDetailPresenter(Inventory inventory, Equipment equipment)
         {
             _inventory = inventory;
             _equipment = equipment;
+
 
             _inventory.OnInventoryListChanged += Hide;
             _inventory.OnInventoryListChangedByDragAndDrop += Hide;
@@ -43,6 +47,11 @@ namespace _InventoryPractice
             _view.Hide();
         }
 
+        public void SetEquipmentView(EquipmentView equipmentView)
+        {
+            _equipableItemEffectsHelper = new EquipableItemEffectsHelper(equipmentView);
+        }
+
         public void ShowItemInfo(InventoryItem item, string amountText)
         {
             Stop();
@@ -55,7 +64,12 @@ namespace _InventoryPractice
             _view.SetAmount(amountText);
 
             _view.ShowUseButton(_item.Flags.HasFlag(InventoryItemFlags.Consumable));
-            _view.ShowEquipButton(_item.Flags.HasFlag(InventoryItemFlags.Equipable));
+
+            var isEquipable = _item.Flags.HasFlag(InventoryItemFlags.Equipable);
+
+            _equipableItemEffectsHelper.ShowEffects(isEquipable, _item);
+
+            _view.ShowEquipButton(isEquipable);
             _view.ShowUnEquipButton(false);
             _view.ShowDropButton(true);
 
@@ -64,6 +78,7 @@ namespace _InventoryPractice
             _view.SetDropActionListener(DropItem);
             _view.Show();
         }
+
 
         public void ShowEquippedSlotInfo(InventoryItem item)
         {
@@ -97,6 +112,8 @@ namespace _InventoryPractice
             _view.RemoveEquipActionListener(EquipItem);
             _view.RemoveUseActionListener(ConsumeItem);
             _view.RemoveUnEquipActionListener(UnEquipItem);
+
+            _equipableItemEffectsHelper.HideEquipableItemDetails();
         }
 
         private void DropItem()
