@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using InventoryPractice;
+using MyCodeBase.UI;
 using UnityEngine;
 
 namespace _InventoryPractice
@@ -28,6 +29,7 @@ namespace _InventoryPractice
             Equipment equipment,
             PlayerStats playerStats,
             DetailsItemPresenterFactory detailsItemPresenterFactory,
+            DoTweenAnimationManager dotweenAnimationManager,
             InventoryItemDetailView detailView,
             Transform detailContainer,
             ValueWidgetView weightView,
@@ -38,14 +40,17 @@ namespace _InventoryPractice
         {
             _inventory = inventory;
             _detailPresenter = detailsItemPresenterFactory.Create();
+            inventoryMainView.InitDotween(dotweenAnimationManager);
 
             ItemDetailAdapter =
-                new InventoryDetailAdapter(detailContainer, detailView, _detailPresenter, equipmentView);
-            EquipmentPresenter = new EquipmentPresenter(equipment, equipmentView, _detailPresenter, itemDragger);
+                new InventoryDetailAdapter(detailContainer, detailView, _detailPresenter, equipmentView,
+                    dotweenAnimationManager);
+            EquipmentPresenter = new EquipmentPresenter(equipment, equipmentView, _detailPresenter, itemDragger,
+                dotweenAnimationManager);
             WeightAdapter = new WeightWidgetAdapter(weightView, inventory);
             StatsViewAdapter = new StatsViewAdapter(statsView, playerStats);
             SlotListAdapter = new InventorySlotListAdapter(slotsContainer, slotPrefab, _detailPresenter, inventory,
-                itemDragger, inventoryMainView);
+                itemDragger, inventoryMainView, dotweenAnimationManager);
             SuccessDragHandler = new SuccessDragHandler(itemDragger, _inventory, equipment);
             _equipmentDragObserver = new EquipmentDragObserver(itemDragger, equipmentView);
 

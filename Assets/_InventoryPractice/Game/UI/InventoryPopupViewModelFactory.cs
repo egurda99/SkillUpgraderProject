@@ -1,4 +1,5 @@
 using InventoryPractice;
+using MyCodeBase.UI;
 using UnityEngine;
 
 namespace _InventoryPractice
@@ -9,17 +10,20 @@ namespace _InventoryPractice
         private readonly Equipment _equipment;
         private readonly PlayerStats _playerStats;
         private readonly DetailsItemPresenterFactory _presenterFactory;
+        private readonly DoTweenAnimationManager _dotweenAnimationManager;
 
         public InventoryPopupViewModelFactory(
             Inventory inventory,
             Equipment equipment,
             PlayerStats playerStats,
-            DetailsItemPresenterFactory presenterFactory)
+            DetailsItemPresenterFactory presenterFactory,
+            DoTweenAnimationManager doTweenAnimationManager)
         {
             _inventory = inventory;
             _equipment = equipment;
             _playerStats = playerStats;
             _presenterFactory = presenterFactory;
+            _dotweenAnimationManager = doTweenAnimationManager;
         }
 
         public InventoryPopupViewModel Create(
@@ -35,6 +39,7 @@ namespace _InventoryPractice
                 _equipment,
                 _playerStats,
                 _presenterFactory,
+                _dotweenAnimationManager,
                 detailView,
                 detailContainer,
                 weightView,

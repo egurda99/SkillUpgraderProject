@@ -1,4 +1,5 @@
 using System;
+using MyCodeBase.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -7,6 +8,7 @@ namespace _InventoryPractice
 {
     public interface IInventorySlotView
     {
+        void InitDotween(DoTweenAnimationManager doTweenAnimationManager);
         void SetSprite(Sprite sprite);
         void SetAmount(string value);
         void AddButtonListener(UnityAction action);

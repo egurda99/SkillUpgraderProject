@@ -1,5 +1,6 @@
 using System;
 using InventoryPractice;
+using MyCodeBase.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -14,6 +15,7 @@ namespace _InventoryPractice
         void AddButtonListener(UnityAction action);
         void RemoveAllButtonListeners();
         void SetIndex(int i);
+        void InitDotween(DoTweenAnimationManager doTweenAnimationManager);
 
         event Action<int, EquipType, PointerEventData, IEquipmentSlotView> BeginDragEvent;
         event Action<PointerEventData, IEquipmentSlotView> EndDragEvent;

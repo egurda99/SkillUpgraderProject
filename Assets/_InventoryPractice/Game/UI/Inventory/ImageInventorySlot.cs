@@ -20,6 +20,7 @@ namespace _InventoryPractice
         [SerializeField] private float _transitionDuration = 0.45f;
 
         private Tween _colorTween;
+        private DoTweenAnimationManager _dotweenAnimationManager;
 
         public void SetSprite(Sprite sprite)
         {
@@ -27,10 +28,15 @@ namespace _InventoryPractice
             _icon.enabled = sprite != null;
         }
 
+        public void InitDotween(DoTweenAnimationManager doTweenAnimationManager)
+        {
+            _dotweenAnimationManager = doTweenAnimationManager;
+        }
+
         public void SetDragState()
         {
             KillTween();
-            _colorTween = DoTweenAnimationManager.ChangeColor(_background, _icon, _onDragColor, _transitionDuration);
+            _colorTween = _dotweenAnimationManager.ChangeColor(_background, _icon, _onDragColor, _transitionDuration);
 
             // _colorTween = DOTween.Sequence()
             //     .Append(_background.DOColor(_onDragColor, _transitionDuration))
@@ -47,7 +53,7 @@ namespace _InventoryPractice
             //     .Join(_icon.DOColor(_normalColor, _transitionDuration))
             //     .SetUpdate(true);
 
-            _colorTween = DoTweenAnimationManager.ChangeColor(_background, _icon, _normalColor, _transitionDuration);
+            _colorTween = _dotweenAnimationManager.ChangeColor(_background, _icon, _normalColor, _transitionDuration);
         }
 
         public void KillTween()
@@ -70,7 +76,7 @@ namespace _InventoryPractice
             // Сброс поворота перед анимацией
             _icon.transform.localRotation = Quaternion.identity;
 
-            DoTweenAnimationManager.DoWiggle(_icon.transform);
+            _dotweenAnimationManager.DoWiggle(_icon.transform);
 
             // // Выполняем вращательный "удар"
             // _icon.transform
@@ -94,7 +100,7 @@ namespace _InventoryPractice
             // Сброс поворота перед анимацией
             _icon.transform.localRotation = Quaternion.identity;
 
-            DoTweenAnimationManager.DoPunchScale(_icon.transform);
+            _dotweenAnimationManager.DoPunchScale(_icon.transform);
 
             // // Выполняем вращательный "удар"
             // _icon.transform

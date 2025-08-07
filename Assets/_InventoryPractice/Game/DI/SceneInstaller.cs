@@ -1,4 +1,5 @@
 using _InventoryPractice;
+using MyCodeBase.UI;
 using Zenject;
 
 namespace InventoryPractice
@@ -9,6 +10,7 @@ namespace InventoryPractice
         {
             Container.Bind<Inventory>().AsSingle();
             Container.Bind<Equipment>().AsSingle();
+            Container.Bind<DoTweenAnimationManager>().AsSingle();
             Container.Bind<PlayerStats>().FromComponentInHierarchy().AsSingle();
             Container.Bind<DetailsItemPresenterFactory>().AsSingle();
             Container.Bind<InventoryPopupViewModelFactory>().AsSingle();

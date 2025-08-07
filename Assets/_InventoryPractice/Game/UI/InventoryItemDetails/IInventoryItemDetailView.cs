@@ -1,3 +1,4 @@
+using MyCodeBase.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,5 +25,6 @@ namespace _InventoryPractice
         void RemoveEquipActionListener(UnityAction action);
         void RemoveDropActionListener(UnityAction action);
         void RemoveUnEquipActionListener(UnityAction action);
+        void SetTweenManager(DoTweenAnimationManager tweenAnimationManager);
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using InventoryPractice;
+using MyCodeBase.UI;
 
 namespace _InventoryPractice
 {
@@ -41,9 +42,12 @@ namespace _InventoryPractice
             Stop();
         }
 
-        public void SetView(IInventoryItemDetailView view)
+        public void Init(IInventoryItemDetailView view, DoTweenAnimationManager tweenAnimationManager)
         {
             _view = view;
+
+            InitDotween(tweenAnimationManager);
+
             _view.Hide();
         }
 
@@ -51,6 +55,13 @@ namespace _InventoryPractice
         {
             _equipableItemEffectsHelper = new EquipableItemEffectsHelper(equipmentView);
         }
+
+
+        public void InitDotween(DoTweenAnimationManager tweenAnimationManager)
+        {
+            _view.SetTweenManager(tweenAnimationManager);
+        }
+
 
         public void ShowItemInfo(InventoryItem item, string amountText)
         {

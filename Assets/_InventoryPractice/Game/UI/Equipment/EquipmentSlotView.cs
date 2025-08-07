@@ -1,5 +1,6 @@
 using System;
 using InventoryPractice;
+using MyCodeBase.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -18,9 +19,15 @@ namespace _InventoryPractice
         private EquipType _equipType;
         private int _index;
 
+
         public event Action<int, EquipType, PointerEventData, IEquipmentSlotView> BeginDragEvent;
         public event Action<PointerEventData, IEquipmentSlotView> EndDragEvent;
         public event Action<int, EquipType, PointerEventData> DropEvent;
+
+        public void InitDotween(DoTweenAnimationManager doTweenAnimationManager)
+        {
+            _imageEquipmentSlot.InitDotween(doTweenAnimationManager);
+        }
 
         public void SetDragState()
         {

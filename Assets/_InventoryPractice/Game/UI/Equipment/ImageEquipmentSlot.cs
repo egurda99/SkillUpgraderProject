@@ -21,6 +21,13 @@ namespace _InventoryPractice
         [SerializeField] private float _transitionDuration = 0.25f;
 
         private Tween _highlightTween;
+        private DoTweenAnimationManager _dotweenAnimationManager;
+
+
+        public void InitDotween(DoTweenAnimationManager doTweenAnimationManager)
+        {
+            _dotweenAnimationManager = doTweenAnimationManager;
+        }
 
         public void SetSprite(Sprite sprite)
         {
@@ -54,7 +61,7 @@ namespace _InventoryPractice
             KillTween();
 
             _highlightTween =
-                DoTweenAnimationManager.StartHighlight(_background, _icon, _equipColor, _normalColor,
+                _dotweenAnimationManager.StartHighlight(_background, _icon, _equipColor, _normalColor,
                     _transitionDuration);
             // _highlightTween = DOTween.Sequence()
             //     .Append(_background.DOColor(_equipColor, _transitionDuration))
@@ -68,7 +75,7 @@ namespace _InventoryPractice
         public void StopHighlight()
         {
             KillTween();
-            DoTweenAnimationManager.StopHighlight(_background, _icon, _normalColor, _transitionDuration);
+            _dotweenAnimationManager.StopHighlight(_background, _icon, _normalColor, _transitionDuration);
 
             // _background.DOColor(_normalColor, _transitionDuration).SetUpdate(true);
             // _icon.DOColor(_normalColor, _transitionDuration).SetUpdate(true);
@@ -91,7 +98,7 @@ namespace _InventoryPractice
             // Сброс поворота перед анимацией
             _icon.transform.localRotation = Quaternion.identity;
 
-            DoTweenAnimationManager.DoPunchScale(_icon.transform);
+            _dotweenAnimationManager.DoPunchScale(_icon.transform);
         }
     }
 }

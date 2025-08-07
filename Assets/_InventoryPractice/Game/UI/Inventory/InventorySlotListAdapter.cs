@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using InventoryPractice;
+using MyCodeBase.UI;
 using UnityEngine;
 
 namespace _InventoryPractice
@@ -15,10 +16,11 @@ namespace _InventoryPractice
         private int _maxSlotCount;
         private readonly ItemDragger _itemDragger;
         private readonly InventoryMainView _mainView;
+        private readonly DoTweenAnimationManager _doTweenAnimationManager;
 
         public InventorySlotListAdapter(Transform container,
             InventorySlotView slotPrefab, InventoryItemDetailPresenter detailPresenter, Inventory inventory,
-            ItemDragger itemDragger, InventoryMainView mainView)
+            ItemDragger itemDragger, InventoryMainView mainView, DoTweenAnimationManager doTweenAnimationManager)
         {
             _container = container;
             _slotPrefab = slotPrefab;
@@ -26,6 +28,7 @@ namespace _InventoryPractice
             _inventory = inventory;
             _itemDragger = itemDragger;
             _mainView = mainView;
+            _doTweenAnimationManager = doTweenAnimationManager;
         }
 
         public void ShowMainView()
@@ -78,7 +81,8 @@ namespace _InventoryPractice
         private void ShowItem(InventoryItem item, int index)
         {
             var view = Object.Instantiate(_slotPrefab, _container);
-            var presenter = new InventorySlotPresenter(item, view, _detailPresenter, index, _itemDragger);
+            var presenter = new InventorySlotPresenter(item, view, _detailPresenter, index, _itemDragger,
+                _doTweenAnimationManager);
             presenter.Start();
             _viewHolders.Add(new ViewHolder(view, presenter));
         }

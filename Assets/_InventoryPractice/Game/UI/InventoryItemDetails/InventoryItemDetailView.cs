@@ -28,6 +28,7 @@ namespace _InventoryPractice
 
         private Tween _showTween;
         private Tween _hideTween;
+        private DoTweenAnimationManager _dotweenAnimationManager;
 
         public void Show()
         {
@@ -38,7 +39,7 @@ namespace _InventoryPractice
             _hideTween?.Kill();
             _showTween?.Kill();
             _showTween =
-                DoTweenAnimationManager.FadeInWithScale(_canvasGroup, transform, _fadeDuration, _scaleDuration);
+                _dotweenAnimationManager.FadeInWithScale(_canvasGroup, transform, _fadeDuration, _scaleDuration);
             // _canvasGroup.alpha = 0f;
             // transform.localScale = Vector3.one * 0.8f;
             //
@@ -53,7 +54,7 @@ namespace _InventoryPractice
             if (!IsValid())
                 return;
 
-            _hideTween = DoTweenAnimationManager.FadeOutWithScale(_canvasGroup, transform, 0.3f, 0.1f, () =>
+            _hideTween = _dotweenAnimationManager.FadeOutWithScale(_canvasGroup, transform, 0.3f, 0.1f, () =>
             {
                 if (IsValid())
                     gameObject.SetActive(false);
@@ -152,6 +153,11 @@ namespace _InventoryPractice
         public void RemoveUnEquipActionListener(UnityAction action)
         {
             _unEquipButton.onClick.RemoveListener(action);
+        }
+
+        public void SetTweenManager(DoTweenAnimationManager tweenAnimationManager)
+        {
+            _dotweenAnimationManager = tweenAnimationManager;
         }
 
         private void OnDestroy()

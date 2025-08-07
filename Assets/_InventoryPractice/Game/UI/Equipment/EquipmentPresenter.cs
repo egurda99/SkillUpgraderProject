@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using InventoryPractice;
+using MyCodeBase.UI;
 using UnityEngine.EventSystems;
 
 namespace _InventoryPractice
@@ -14,14 +15,17 @@ namespace _InventoryPractice
         private string _amountText;
         private readonly Equipment _equipment;
         private readonly ItemDragger _itemDragger;
+        private readonly DoTweenAnimationManager _doTweenAnimationManager;
 
         public EquipmentPresenter(Equipment equipment, IEquipmentView view,
-            InventoryItemDetailPresenter detailPresenter, ItemDragger itemDragger)
+            InventoryItemDetailPresenter detailPresenter, ItemDragger itemDragger,
+            DoTweenAnimationManager doTweenAnimationManager)
         {
             _equipment = equipment;
             _view = view;
             _detailPresenter = detailPresenter;
             _itemDragger = itemDragger;
+            _doTweenAnimationManager = doTweenAnimationManager;
         }
 
         public void Start()
@@ -33,6 +37,8 @@ namespace _InventoryPractice
             _equipment.OnDropOutItem += OnUnEquipedOutItem;
 
             RefreshView();
+            _view.InitDotween(_doTweenAnimationManager);
+
             _view.Show();
         }
 
@@ -104,6 +110,7 @@ namespace _InventoryPractice
                     var slotView = _view.GetSlotView(type, i);
                     slotView.SetEquipType(type);
                     slotView.SetIndex(i);
+                    slotView.InitDotween(_doTweenAnimationManager);
 
                     if (slotView == null)
                         continue;

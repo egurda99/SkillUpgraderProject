@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 namespace MyCodeBase.UI
 {
-    public static class DoTweenAnimationManager
+    public sealed class DoTweenAnimationManager
     {
-        public static Tween FadeInWithScale(CanvasGroup canvasGroup, Transform transform, float fadeDuration,
+        public Tween FadeInWithScale(CanvasGroup canvasGroup, Transform transform, float fadeDuration,
             float scaleDuration)
         {
             canvasGroup.alpha = 0f;
@@ -19,7 +19,7 @@ namespace MyCodeBase.UI
                 .SetUpdate(true);
         }
 
-        public static Tween FadeOutWithScale(CanvasGroup canvasGroup, Transform transform, float scaleDuration = 0.3f,
+        public Tween FadeOutWithScale(CanvasGroup canvasGroup, Transform transform, float scaleDuration = 0.3f,
             float fadeDuration = 0.1f, Action onComplete = null)
         {
             return DOTween.Sequence()
@@ -29,7 +29,7 @@ namespace MyCodeBase.UI
                 .OnComplete(() => onComplete?.Invoke());
         }
 
-        public static Tween FadeIn(CanvasGroup canvasGroup, float duration, float targetAlpha = 1f)
+        public Tween FadeIn(CanvasGroup canvasGroup, float duration, float targetAlpha = 1f)
         {
             canvasGroup.alpha = 0f;
             canvasGroup.interactable = true;
@@ -40,7 +40,7 @@ namespace MyCodeBase.UI
                 .SetUpdate(true);
         }
 
-        public static Tween FadeOut(CanvasGroup canvasGroup, float duration, float targetAlpha = 0f,
+        public Tween FadeOut(CanvasGroup canvasGroup, float duration, float targetAlpha = 0f,
             Action onComplete = null)
         {
             canvasGroup.interactable = false;
@@ -52,7 +52,7 @@ namespace MyCodeBase.UI
                 .OnComplete(() => onComplete?.Invoke());
         }
 
-        public static Tween StartHighlight(Image background, Image icon, Color highlightColor, Color normalColor,
+        public Tween StartHighlight(Image background, Image icon, Color highlightColor, Color normalColor,
             float duration)
         {
             return DOTween.Sequence()
@@ -64,13 +64,13 @@ namespace MyCodeBase.UI
                 .SetUpdate(true);
         }
 
-        public static void StopHighlight(Image background, Image icon, Color normalColor, float duration)
+        public void StopHighlight(Image background, Image icon, Color normalColor, float duration)
         {
             background.DOColor(normalColor, duration).SetUpdate(true);
             icon.DOColor(normalColor, duration).SetUpdate(true);
         }
 
-        public static Tween ChangeColor(Image background, Image icon, Color toColor, float duration)
+        public Tween ChangeColor(Image background, Image icon, Color toColor, float duration)
         {
             return DOTween.Sequence()
                 .Append(background.DOColor(toColor, duration))
@@ -78,7 +78,7 @@ namespace MyCodeBase.UI
                 .SetUpdate(true);
         }
 
-        public static void DoWiggle(Transform iconTransform)
+        public void DoWiggle(Transform iconTransform)
         {
             if (!iconTransform.gameObject.activeInHierarchy)
                 return;
@@ -92,7 +92,7 @@ namespace MyCodeBase.UI
                 .SetUpdate(true);
         }
 
-        public static void DoPunchScale(Transform iconTransform)
+        public void DoPunchScale(Transform iconTransform)
         {
             if (!iconTransform.gameObject.activeInHierarchy)
                 return;

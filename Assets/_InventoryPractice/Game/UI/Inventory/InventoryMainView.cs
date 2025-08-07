@@ -11,6 +11,12 @@ namespace _InventoryPractice
 
         private Tween _showTween;
         private Tween _hideTween;
+        private DoTweenAnimationManager _dotweenAnimationManager;
+
+        public void InitDotween(DoTweenAnimationManager doTweenAnimationManager)
+        {
+            _dotweenAnimationManager = doTweenAnimationManager;
+        }
 
         public void Show()
         {
@@ -21,7 +27,7 @@ namespace _InventoryPractice
             _canvasGroup.interactable = true;
             _canvasGroup.blocksRaycasts = true;
 
-            _showTween = DoTweenAnimationManager.FadeInWithScale(_canvasGroup, transform, 0f, 0.4f)
+            _showTween = _dotweenAnimationManager.FadeInWithScale(_canvasGroup, transform, 0f, 0.4f)
                 .OnComplete(() => _canvasGroup.alpha = 1);
         }
 
@@ -32,7 +38,7 @@ namespace _InventoryPractice
             _canvasGroup.interactable = false;
             _canvasGroup.blocksRaycasts = false;
 
-            _hideTween = DoTweenAnimationManager.FadeOut(_canvasGroup, 0.5f);
+            _hideTween = _dotweenAnimationManager.FadeOut(_canvasGroup, 0.5f);
         }
 
         private void KillTweens()

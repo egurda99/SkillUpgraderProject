@@ -1,4 +1,5 @@
 using System;
+using MyCodeBase.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -52,6 +53,11 @@ namespace _InventoryPractice
             DropEvent?.Invoke(eventData);
         }
 
+
+        public void InitDotween(DoTweenAnimationManager doTweenAnimationManager)
+        {
+            _imageInventorySlot.InitDotween(doTweenAnimationManager);
+        }
 
         public void SetSprite(Sprite sprite)
         {

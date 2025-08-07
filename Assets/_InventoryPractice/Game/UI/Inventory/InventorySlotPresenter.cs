@@ -1,4 +1,5 @@
 using InventoryPractice;
+using MyCodeBase.UI;
 using UnityEngine.EventSystems;
 
 namespace _InventoryPractice
@@ -10,15 +11,18 @@ namespace _InventoryPractice
         private readonly InventoryItemDetailPresenter _detailPresenter;
         private readonly int _slotIndex;
         private readonly ItemDragger _itemDragger;
+        private readonly DoTweenAnimationManager _dotweenAnimationManager;
 
         public InventorySlotPresenter(InventoryItem item,
             IInventorySlotView view,
-            InventoryItemDetailPresenter detailPresenter, int index, ItemDragger itemDragger)
+            InventoryItemDetailPresenter detailPresenter, int index, ItemDragger itemDragger,
+            DoTweenAnimationManager doTweenAnimationManager)
         {
             _item = item;
             _view = view;
             _detailPresenter = detailPresenter;
             _slotIndex = index;
+            _dotweenAnimationManager = doTweenAnimationManager;
             _itemDragger = itemDragger;
         }
 
@@ -26,6 +30,7 @@ namespace _InventoryPractice
         {
             _view.DropEvent += OnDrop;
 
+            _view.InitDotween(_dotweenAnimationManager);
             _view.SetSprite(_item?.MetaData.Icon);
             _view.SetAmount(GetAmountText(_item));
 
