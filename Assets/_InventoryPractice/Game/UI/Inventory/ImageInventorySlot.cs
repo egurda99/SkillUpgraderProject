@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using MyCodeBase.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,21 +30,24 @@ namespace _InventoryPractice
         public void SetDragState()
         {
             KillTween();
+            _colorTween = DoTweenAnimationManager.ChangeColor(_background, _icon, _onDragColor, _transitionDuration);
 
-            _colorTween = DOTween.Sequence()
-                .Append(_background.DOColor(_onDragColor, _transitionDuration))
-                .Join(_icon.DOColor(_onDragColor, _transitionDuration))
-                .SetUpdate(true);
+            // _colorTween = DOTween.Sequence()
+            //     .Append(_background.DOColor(_onDragColor, _transitionDuration))
+            //     .Join(_icon.DOColor(_onDragColor, _transitionDuration))
+            //     .SetUpdate(true);
         }
 
         public void SetNormalState()
         {
             KillTween();
 
-            _colorTween = DOTween.Sequence()
-                .Append(_background.DOColor(_normalColor, _transitionDuration))
-                .Join(_icon.DOColor(_normalColor, _transitionDuration))
-                .SetUpdate(true);
+            // _colorTween = DOTween.Sequence()
+            //     .Append(_background.DOColor(_normalColor, _transitionDuration))
+            //     .Join(_icon.DOColor(_normalColor, _transitionDuration))
+            //     .SetUpdate(true);
+
+            _colorTween = DoTweenAnimationManager.ChangeColor(_background, _icon, _normalColor, _transitionDuration);
         }
 
         public void KillTween()
@@ -66,15 +70,17 @@ namespace _InventoryPractice
             // Сброс поворота перед анимацией
             _icon.transform.localRotation = Quaternion.identity;
 
-            // Выполняем вращательный "удар"
-            _icon.transform
-                .DOPunchRotation(
-                    new Vector3(0, 0, 20f), // амплитуда "удара" по Z
-                    0.3f, // длительность
-                    6, // количество вибраций
-                    0.6f) // эластичность (0..1)
-                .SetEase(Ease.OutQuad)
-                .SetUpdate(true);
+            DoTweenAnimationManager.DoWiggle(_icon.transform);
+
+            // // Выполняем вращательный "удар"
+            // _icon.transform
+            //     .DOPunchRotation(
+            //         new Vector3(0, 0, 20f), // амплитуда "удара" по Z
+            //         0.3f, // длительность
+            //         6, // количество вибраций
+            //         0.6f) // эластичность (0..1)
+            //     .SetEase(Ease.OutQuad)
+            //     .SetUpdate(true);
         }
     }
 }

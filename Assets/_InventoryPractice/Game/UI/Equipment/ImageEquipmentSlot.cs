@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using MyCodeBase.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -52,21 +53,25 @@ namespace _InventoryPractice
         {
             KillTween();
 
-            _highlightTween = DOTween.Sequence()
-                .Append(_background.DOColor(_equipColor, _transitionDuration))
-                .Join(_icon.DOColor(_equipColor, _transitionDuration))
-                .Append(_background.DOColor(_normalColor, _transitionDuration))
-                .Join(_icon.DOColor(_normalColor, _transitionDuration))
-                .SetLoops(-1, LoopType.Restart)
-                .SetUpdate(true);
+            _highlightTween =
+                DoTweenAnimationManager.StartHighlight(_background, _icon, _equipColor, _normalColor,
+                    _transitionDuration);
+            // _highlightTween = DOTween.Sequence()
+            //     .Append(_background.DOColor(_equipColor, _transitionDuration))
+            //     .Join(_icon.DOColor(_equipColor, _transitionDuration))
+            //     .Append(_background.DOColor(_normalColor, _transitionDuration))
+            //     .Join(_icon.DOColor(_normalColor, _transitionDuration))
+            //     .SetLoops(-1, LoopType.Restart)
+            //     .SetUpdate(true);
         }
 
         public void StopHighlight()
         {
             KillTween();
+            DoTweenAnimationManager.StopHighlight(_background, _icon, _normalColor, _transitionDuration);
 
-            _background.DOColor(_normalColor, _transitionDuration).SetUpdate(true);
-            _icon.DOColor(_normalColor, _transitionDuration).SetUpdate(true);
+            // _background.DOColor(_normalColor, _transitionDuration).SetUpdate(true);
+            // _icon.DOColor(_normalColor, _transitionDuration).SetUpdate(true);
         }
 
         public void KillTween()

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using MyCodeBase.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -36,14 +37,15 @@ namespace _InventoryPractice
 
             _hideTween?.Kill();
             _showTween?.Kill();
-
-            _canvasGroup.alpha = 0f;
-            transform.localScale = Vector3.one * 0.8f;
-
-            _showTween = DOTween.Sequence()
-                .Append(_canvasGroup.DOFade(1f, _fadeDuration))
-                .Join(transform.DOScale(1f, _scaleDuration).SetEase(Ease.OutBack))
-                .SetUpdate(true);
+            _showTween =
+                DoTweenAnimationManager.FadeInWithScale(_canvasGroup, transform, _fadeDuration, _scaleDuration);
+            // _canvasGroup.alpha = 0f;
+            // transform.localScale = Vector3.one * 0.8f;
+            //
+            // _showTween = DOTween.Sequence()
+            //     .Append(_canvasGroup.DOFade(1f, _fadeDuration))
+            //     .Join(transform.DOScale(1f, _scaleDuration).SetEase(Ease.OutBack))
+            //     .SetUpdate(true);
         }
 
         public void Hide()
@@ -51,14 +53,20 @@ namespace _InventoryPractice
             if (!IsValid())
                 return;
 
-            _hideTween = DOTween.Sequence()
-                .Join(transform.DOScale(0.0f, 0.3f).SetEase(Ease.InBack))
-                .Append(_canvasGroup.DOFade(0f, 0.1f))
-                .SetUpdate(true)
-                .OnComplete(() =>
-                {
-                    if (IsValid()) gameObject.SetActive(false);
-                });
+            _hideTween = DoTweenAnimationManager.FadeOutWithScale(_canvasGroup, transform, 0.3f, 0.1f, () =>
+            {
+                if (IsValid())
+                    gameObject.SetActive(false);
+            });
+
+            // _hideTween = DOTween.Sequence()
+            //     .Join(transform.DOScale(0.0f, 0.3f).SetEase(Ease.InBack))
+            //     .Append(_canvasGroup.DOFade(0f, 0.1f))
+            //     .SetUpdate(true)
+            //     .OnComplete(() =>
+            //     {
+            //         if (IsValid()) gameObject.SetActive(false);
+            //     });
         }
 
         public void SetName(string name)

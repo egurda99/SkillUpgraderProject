@@ -34,7 +34,7 @@ namespace _InventoryPractice
             EquipmentView equipmentView,
             StatsView statsView,
             Transform slotsContainer,
-            InventorySlotView slotPrefab, ItemDragger itemDragger)
+            InventorySlotView slotPrefab, ItemDragger itemDragger, InventoryMainView inventoryMainView)
         {
             _inventory = inventory;
             _detailPresenter = detailsItemPresenterFactory.Create();
@@ -45,7 +45,7 @@ namespace _InventoryPractice
             WeightAdapter = new WeightWidgetAdapter(weightView, inventory);
             StatsViewAdapter = new StatsViewAdapter(statsView, playerStats);
             SlotListAdapter = new InventorySlotListAdapter(slotsContainer, slotPrefab, _detailPresenter, inventory,
-                itemDragger);
+                itemDragger, inventoryMainView);
             SuccessDragHandler = new SuccessDragHandler(itemDragger, _inventory, equipment);
             _equipmentDragObserver = new EquipmentDragObserver(itemDragger, equipmentView);
 
@@ -61,6 +61,7 @@ namespace _InventoryPractice
             ItemDetailAdapter.Show();
             EquipmentPresenter.Start();
             SlotListAdapter.ShowItems(Items);
+            SlotListAdapter.ShowMainView();
             WeightAdapter.UpdateWeightWidget(_inventory.CurrentWeight);
         }
 
@@ -70,6 +71,7 @@ namespace _InventoryPractice
 
             SlotListAdapter.HideItems();
             ItemDetailAdapter.Hide();
+            SlotListAdapter.HideMainView();
             EquipmentPresenter.Stop();
         }
 

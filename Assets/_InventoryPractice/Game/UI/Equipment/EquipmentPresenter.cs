@@ -33,6 +33,7 @@ namespace _InventoryPractice
             _equipment.OnDropOutItem += OnUnEquipedOutItem;
 
             RefreshView();
+            _view.Show();
         }
 
 
@@ -51,6 +52,7 @@ namespace _InventoryPractice
             _equipment.OnDropOutItem -= OnUnEquipedOutItem;
             _equipment.OnUnEquipItemView -= OnUnEquipedItemView;
             _equipment.OnEquipItemView -= OnEquipItemView;
+            _view.Hide();
         }
 
         private void OnUnEquipedOutItem(EquipType type, InventoryItem item, int index)

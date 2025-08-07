@@ -15,6 +15,7 @@ namespace _InventoryPractice
         [SerializeField] private EquipmentView _equipmentView;
         [SerializeField] private StatsView _statsView;
         [SerializeField] private ItemDragger _itemDragger;
+        [SerializeField] private InventoryMainView _inventoryMainView;
 
 
         private InventoryPopupViewModel _viewModel;
@@ -38,7 +39,8 @@ namespace _InventoryPractice
                 _statsView,
                 _slotsContainer,
                 _slotViewPrefab,
-                _itemDragger
+                _itemDragger,
+                _inventoryMainView
             );
 
             _viewModel.Show();

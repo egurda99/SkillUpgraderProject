@@ -14,16 +14,28 @@ namespace _InventoryPractice
         private readonly Inventory _inventory;
         private int _maxSlotCount;
         private readonly ItemDragger _itemDragger;
+        private readonly InventoryMainView _mainView;
 
         public InventorySlotListAdapter(Transform container,
             InventorySlotView slotPrefab, InventoryItemDetailPresenter detailPresenter, Inventory inventory,
-            ItemDragger itemDragger)
+            ItemDragger itemDragger, InventoryMainView mainView)
         {
             _container = container;
             _slotPrefab = slotPrefab;
             _detailPresenter = detailPresenter;
             _inventory = inventory;
             _itemDragger = itemDragger;
+            _mainView = mainView;
+        }
+
+        public void ShowMainView()
+        {
+            _mainView.Show();
+        }
+
+        public void HideMainView()
+        {
+            _mainView.Hide();
         }
 
         public void ShowItems(IReadOnlyList<InventoryItem> items)
@@ -48,6 +60,19 @@ namespace _InventoryPractice
             }
 
             _viewHolders.Clear();
+        }
+
+
+        public void ShowItemWithEffect(int slotIndex, int secondItemIndex)
+        {
+            var presenter = GetPresenterByIndex(slotIndex);
+            presenter.DoWiggleEffect();
+
+            if (secondItemIndex == -1)
+                return;
+
+            var secondPresenter = GetPresenterByIndex(secondItemIndex);
+            secondPresenter.DoWiggleEffect();
         }
 
         private void ShowItem(InventoryItem item, int index)
@@ -76,18 +101,6 @@ namespace _InventoryPractice
                 View = view;
                 Presenter = presenter;
             }
-        }
-
-        public void ShowItemWithEffect(int slotIndex, int secondItemIndex)
-        {
-            var presenter = GetPresenterByIndex(slotIndex);
-            presenter.DoWiggleEffect();
-
-            if (secondItemIndex == -1)
-                return;
-
-            var secondPresenter = GetPresenterByIndex(secondItemIndex);
-            secondPresenter.DoWiggleEffect();
         }
     }
 }
