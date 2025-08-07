@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -5,8 +6,14 @@ using UnityEngine.UI;
 
 namespace _InventoryPractice
 {
+    [RequireComponent(typeof(CanvasGroup))]
     public sealed class InventoryItemDetailView : MonoBehaviour, IInventoryItemDetailView
     {
+        [SerializeField] [Range(0f, 1f)] private float _fadeDuration;
+        [SerializeField] [Range(0f, 1f)] private float _scaleDuration;
+
+
+        [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private Image _icon;
         [SerializeField] private TMP_Text _nameText;
         [SerializeField] private TMP_Text _descriptionText;
@@ -18,15 +25,58 @@ namespace _InventoryPractice
         [SerializeField] private Button _unEquipButton;
         [SerializeField] private Button _dropButton;
 
+        private Tween _showTween;
+        private Tween _hideTween;
 
         public void Show()
         {
+            // gameObject.SetActive(true);
+
             gameObject.SetActive(true);
+
+            _hideTween?.Kill();
+            _showTween?.Kill();
+
+            _canvasGroup.alpha = 0f;
+            transform.localScale = Vector3.one * 0.8f;
+
+            _showTween = DOTween.Sequence()
+                .Append(_canvasGroup.DOFade(1f, _fadeDuration))
+                .Join(transform.DOScale(1f, _scaleDuration).SetEase(Ease.OutBack))
+                .SetUpdate(true);
         }
 
         public void Hide()
         {
-            gameObject.SetActive(false);
+            if (!IsValid())
+                return;
+
+            _hideTween = DOTween.Sequence()
+                // .Append(_canvasGroup.DOFade(0f, 0.15f))
+                // .Join(transform.DOScale(0.8f, 0.15f).SetEase(Ease.InBack))
+                .Join(transform.DOScale(0.0f, 0.3f).SetEase(Ease.InBack))
+                .Append(_canvasGroup.DOFade(0f, 0.1f))
+                .SetUpdate(true)
+                .OnComplete(() =>
+                {
+                    if (IsValid()) gameObject.SetActive(false);
+                });
+
+
+            //  gameObject.SetActive(false);
+
+            // _showTween?.Kill();
+            // _hideTween?.Kill();
+            //
+            // _hideTween = DOTween.Sequence()
+            //     .Join(transform.DOScale(0.01f, 0.3f).SetEase(Ease.InBack))
+            //     .Append(_canvasGroup.DOFade(0f, 0.1f))
+            //     .SetUpdate(true)
+            //     .OnComplete(() =>
+            //     {
+            //         if (this != null && gameObject != null)
+            //             gameObject.SetActive(false);
+            //     });
         }
 
         public void SetName(string name)
@@ -112,6 +162,18 @@ namespace _InventoryPractice
         public void RemoveUnEquipActionListener(UnityAction action)
         {
             _unEquipButton.onClick.RemoveListener(action);
+        }
+
+        private void OnDestroy()
+        {
+            DOTween.Kill(this);
+            _showTween?.Kill();
+            _hideTween?.Kill();
+        }
+
+        private bool IsValid()
+        {
+            return this != null && gameObject != null && transform != null && _canvasGroup != null;
         }
     }
 }
