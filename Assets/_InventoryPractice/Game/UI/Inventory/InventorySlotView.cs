@@ -32,6 +32,11 @@ namespace _InventoryPractice
             _imageInventorySlot.DoWiggle();
         }
 
+        public void DoPunchScaleEffect()
+        {
+            _imageInventorySlot.DoPunchScaleEffect();
+        }
+
         public void OnBeginDrag(PointerEventData eventData)
         {
             BeginDragEvent?.Invoke(eventData);

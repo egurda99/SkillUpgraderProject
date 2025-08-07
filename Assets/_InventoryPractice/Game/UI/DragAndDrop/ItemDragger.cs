@@ -1,5 +1,6 @@
 using System;
 using InventoryPractice;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _InventoryPractice
@@ -12,13 +13,13 @@ namespace _InventoryPractice
         public DragSourceType SourceType { get; private set; } = DragSourceType.None;
 
 
-        private DragItemView _currentView;
+        [ShowInInspector] [ReadOnly] private DragItemView _currentView;
         private int _slotIndex;
 
         public event Action<InventoryItem, DragSourceType> OnDragStarted;
         public event Action<InventoryItem> OnDragFinished;
 
-        public InventoryItem DraggedItem { get; private set; }
+        [ShowInInspector] [ReadOnly] public InventoryItem DraggedItem { get; private set; }
         public bool HasItem => DraggedItem != null;
 
         public int SlotIndex => _slotIndex;
@@ -26,9 +27,20 @@ namespace _InventoryPractice
         public event Action<InventoryItem, DragSourceType, int, EquipType, int> OnSuccessDragEventAtEquipment;
         public event Action<InventoryItem, DragSourceType, int> OnSuccessDragEventAtInventory;
 
+        private void OnEnable()
+        {
+            EndDrag();
+        }
+
+        private void OnDisable()
+        {
+            EndDrag();
+        }
+
         public void StartDrag(InventoryItem item, Sprite icon, DragSourceType source, string amount)
         {
             // Debug.Log($"<color=red>Started: {item.Id}</color>");
+            EndDrag();
             SourceType = source;
             DraggedItem = item;
             _currentView = Instantiate(_dragItemViewPrefab, _container);
@@ -41,6 +53,7 @@ namespace _InventoryPractice
             int slotIndex)
         {
             //  Debug.Log($"<color=red>Started: {item.Id}</color>");
+            EndDrag();
             SourceType = source;
             DraggedItem = item;
             _currentView = Instantiate(_dragItemViewPrefab, _container);
@@ -58,7 +71,10 @@ namespace _InventoryPractice
             DraggedItem = null;
             _slotIndex = -1;
             if (_currentView != null)
+            {
                 Destroy(_currentView.gameObject);
+                _currentView = null;
+            }
         }
 
 

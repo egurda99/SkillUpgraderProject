@@ -2258,7 +2258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fadeDuration: 0
-  _scaleDuration: 0.635
+  _scaleDuration: 0.4
   _canvasGroup: {fileID: 2373229873067475309}
   _icon: {fileID: 6060739984319952302}
   _nameText: {fileID: 7671516761948951152}

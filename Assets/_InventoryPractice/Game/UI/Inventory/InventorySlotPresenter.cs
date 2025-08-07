@@ -60,6 +60,7 @@ namespace _InventoryPractice
             if (_item == null)
                 return;
 
+            _view.DoPunchScaleEffect();
             _detailPresenter.ShowItemInfo(_item, GetAmountText(_item));
         }
 

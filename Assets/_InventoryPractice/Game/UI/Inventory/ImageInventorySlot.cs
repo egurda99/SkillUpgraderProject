@@ -82,5 +82,29 @@ namespace _InventoryPractice
             //     .SetEase(Ease.OutQuad)
             //     .SetUpdate(true);
         }
+
+        public void DoPunchScaleEffect()
+        {
+            if (_icon == null || !_icon.gameObject.activeInHierarchy)
+                return;
+
+            // Убедимся, что не накапливаем твины
+            _icon.transform.DOKill();
+
+            // Сброс поворота перед анимацией
+            _icon.transform.localRotation = Quaternion.identity;
+
+            DoTweenAnimationManager.DoPunchScale(_icon.transform);
+
+            // // Выполняем вращательный "удар"
+            // _icon.transform
+            //     .DOPunchRotation(
+            //         new Vector3(0, 0, 20f), // амплитуда "удара" по Z
+            //         0.3f, // длительность
+            //         6, // количество вибраций
+            //         0.6f) // эластичность (0..1)
+            //     .SetEase(Ease.OutQuad)
+            //     .SetUpdate(true);
+        }
     }
 }

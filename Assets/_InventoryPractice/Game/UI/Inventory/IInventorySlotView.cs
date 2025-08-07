@@ -18,5 +18,6 @@ namespace _InventoryPractice
         event Action<PointerEventData> EndDragEvent;
         event Action<PointerEventData> DropEvent;
         void DoWiggleEffect();
+        void DoPunchScaleEffect();
     }
 }

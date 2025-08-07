@@ -71,7 +71,7 @@ namespace _InventoryPractice
             slotView.SetSprite(item.MetaData.Icon);
 
             slotView.RemoveAllButtonListeners();
-            slotView.AddButtonListener(() => OnSlotClicked(item));
+            slotView.AddButtonListener(() => OnSlotClicked(item, slotView));
         }
 
         private void OnEquipItemView(EquipType type, InventoryItem item, int arg3)
@@ -88,7 +88,7 @@ namespace _InventoryPractice
             slotView.SetSprite(item.MetaData.Icon);
 
             slotView.RemoveAllButtonListeners();
-            slotView.AddButtonListener(() => OnSlotClicked(item));
+            slotView.AddButtonListener(() => OnSlotClicked(item, slotView));
         }
 
         private void RefreshView()
@@ -116,7 +116,7 @@ namespace _InventoryPractice
                     {
                         slotView.SetSprite(item.MetaData.Icon);
                         slotView.RemoveAllButtonListeners();
-                        slotView.AddButtonListener(() => OnSlotClicked(item));
+                        slotView.AddButtonListener(() => OnSlotClicked(item, slotView));
                     }
                     else
                     {
@@ -127,9 +127,10 @@ namespace _InventoryPractice
             }
         }
 
-        private void OnSlotClicked(InventoryItem item)
+        private void OnSlotClicked(InventoryItem item, IEquipmentSlotView slotView)
         {
             _detailPresenter.ShowEquippedSlotInfo(item);
+            slotView.DoPunchScale();
         }
 
         private void OnBeginDrag(int index, EquipType type, PointerEventData data, IEquipmentSlotView view)

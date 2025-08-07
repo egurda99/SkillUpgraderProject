@@ -20,6 +20,7 @@ namespace _InventoryPractice
         event Action<int, EquipType, PointerEventData> DropEvent;
         void SetDragState();
         void SetNormalState();
+        void DoPunchScale();
         void SetHighlightedState();
     }
 }

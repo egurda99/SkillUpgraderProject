@@ -79,5 +79,19 @@ namespace _InventoryPractice
             if (_highlightTween != null && _highlightTween.IsActive())
                 _highlightTween.Kill();
         }
+
+        public void DoPunchScale()
+        {
+            if (_icon == null || !_icon.gameObject.activeInHierarchy)
+                return;
+
+            // ”бедимс€, что не накапливаем твины
+            _icon.transform.DOKill();
+
+            // —брос поворота перед анимацией
+            _icon.transform.localRotation = Quaternion.identity;
+
+            DoTweenAnimationManager.DoPunchScale(_icon.transform);
+        }
     }
 }

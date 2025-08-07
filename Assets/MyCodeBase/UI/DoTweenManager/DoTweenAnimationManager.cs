@@ -91,5 +91,21 @@ namespace MyCodeBase.UI
                 .SetEase(Ease.OutQuad)
                 .SetUpdate(true);
         }
+
+        public static void DoPunchScale(Transform iconTransform)
+        {
+            if (!iconTransform.gameObject.activeInHierarchy)
+                return;
+
+            iconTransform.DOKill();
+            iconTransform.localRotation = Quaternion.identity;
+
+            iconTransform.transform.DOPunchScale(
+                Vector3.one * 0.2f, // амплитуда "удара"
+                0.25f, // длительность
+                8, // вибрации
+                0.8f // эластичность
+            ).SetEase(Ease.OutBack).SetUpdate(true);
+        }
     }
 }

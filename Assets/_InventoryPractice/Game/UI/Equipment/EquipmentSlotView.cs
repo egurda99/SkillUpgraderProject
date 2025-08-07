@@ -32,6 +32,11 @@ namespace _InventoryPractice
             _imageEquipmentSlot.SetNormalState();
         }
 
+        public void DoPunchScale()
+        {
+            _imageEquipmentSlot.DoPunchScale();
+        }
+
         public void SetHighlightedState()
         {
             _imageEquipmentSlot.Highlight();
