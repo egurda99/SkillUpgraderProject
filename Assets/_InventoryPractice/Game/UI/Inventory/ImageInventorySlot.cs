@@ -77,16 +77,6 @@ namespace _InventoryPractice
             _icon.transform.localRotation = Quaternion.identity;
 
             _dotweenAnimationManager.DoWiggle(_icon.transform);
-
-            // // Выполняем вращательный "удар"
-            // _icon.transform
-            //     .DOPunchRotation(
-            //         new Vector3(0, 0, 20f), // амплитуда "удара" по Z
-            //         0.3f, // длительность
-            //         6, // количество вибраций
-            //         0.6f) // эластичность (0..1)
-            //     .SetEase(Ease.OutQuad)
-            //     .SetUpdate(true);
         }
 
         public void DoPunchScaleEffect()

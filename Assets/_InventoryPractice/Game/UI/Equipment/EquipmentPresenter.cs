@@ -75,6 +75,7 @@ namespace _InventoryPractice
             var slotView = _view.GetSlotView(type, index);
 
             slotView.SetSprite(item.MetaData.Icon);
+            slotView.DoWiggleEffect();
 
             slotView.RemoveAllButtonListeners();
             slotView.AddButtonListener(() => OnSlotClicked(item, slotView));
@@ -156,12 +157,13 @@ namespace _InventoryPractice
             view.SetNormalState();
         }
 
-        private void OnDrop(int index, EquipType type, PointerEventData data)
+        private void OnDrop(int index, EquipType type, PointerEventData data, IEquipmentSlotView view)
         {
             if (!_itemDragger.HasItem)
                 return;
 
             _itemDragger.EndDragAfterSuccessDropAtEquipment(index, type);
+            view.DoWiggleEffect();
         }
     }
 }

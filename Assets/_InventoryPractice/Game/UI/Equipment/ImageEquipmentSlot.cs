@@ -100,5 +100,19 @@ namespace _InventoryPractice
 
             _dotweenAnimationManager.DoPunchScale(_icon.transform);
         }
+
+        public void DoWiggle()
+        {
+            if (_icon == null || !_icon.gameObject.activeInHierarchy)
+                return;
+
+            // ”бедимс€, что не накапливаем твины
+            _icon.transform.DOKill();
+
+            // —брос поворота перед анимацией
+            _icon.transform.localRotation = Quaternion.identity;
+
+            _dotweenAnimationManager.DoWiggle(_icon.transform);
+        }
     }
 }

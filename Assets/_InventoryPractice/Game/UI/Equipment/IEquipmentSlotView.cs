@@ -19,10 +19,11 @@ namespace _InventoryPractice
 
         event Action<int, EquipType, PointerEventData, IEquipmentSlotView> BeginDragEvent;
         event Action<PointerEventData, IEquipmentSlotView> EndDragEvent;
-        event Action<int, EquipType, PointerEventData> DropEvent;
+        event Action<int, EquipType, PointerEventData, IEquipmentSlotView> DropEvent;
         void SetDragState();
         void SetNormalState();
         void DoPunchScale();
+        void DoWiggleEffect();
         void SetHighlightedState();
     }
 }

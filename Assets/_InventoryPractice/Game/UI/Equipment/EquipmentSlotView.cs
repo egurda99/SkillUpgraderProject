@@ -22,7 +22,7 @@ namespace _InventoryPractice
 
         public event Action<int, EquipType, PointerEventData, IEquipmentSlotView> BeginDragEvent;
         public event Action<PointerEventData, IEquipmentSlotView> EndDragEvent;
-        public event Action<int, EquipType, PointerEventData> DropEvent;
+        public event Action<int, EquipType, PointerEventData, IEquipmentSlotView> DropEvent;
 
         public void InitDotween(DoTweenAnimationManager doTweenAnimationManager)
         {
@@ -42,6 +42,11 @@ namespace _InventoryPractice
         public void DoPunchScale()
         {
             _imageEquipmentSlot.DoPunchScale();
+        }
+
+        public void DoWiggleEffect()
+        {
+            _imageEquipmentSlot.DoWiggle();
         }
 
         public void SetHighlightedState()
@@ -99,7 +104,7 @@ namespace _InventoryPractice
 
         public void OnDrop(PointerEventData eventData)
         {
-            DropEvent?.Invoke(_index, _equipType, eventData);
+            DropEvent?.Invoke(_index, _equipType, eventData, this);
         }
 
         private void OnDestroy()
