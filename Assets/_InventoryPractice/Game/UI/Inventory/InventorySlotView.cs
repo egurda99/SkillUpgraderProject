@@ -1,4 +1,5 @@
 using System;
+using Coffee.UIExtensions;
 using MyCodeBase.UI;
 using TMPro;
 using UnityEngine;
@@ -19,6 +20,9 @@ namespace _InventoryPractice
 
         [SerializeField] private Button _button;
 
+        [SerializeField] private UIParticle _uiParticle;
+
+
         public void SetNormalState()
         {
             _imageInventorySlot.SetNormalState();
@@ -31,6 +35,7 @@ namespace _InventoryPractice
         public void DoWiggleEffect()
         {
             _imageInventorySlot.DoWiggle();
+            _uiParticle.Play();
         }
 
         public void DoPunchScaleEffect()

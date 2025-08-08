@@ -49,7 +49,7 @@ namespace InventoryPractice
             }
         }
 
-        private void OnUnEquippedToSlot(InventoryItem itemFromEquipment, int slotIndex)
+        private void OnUnEquippedToSlot(InventoryItem itemFromEquipment, int slotIndex, int index)
         {
             var inventoryItem = _inventory.ReplaceItemAt(itemFromEquipment, slotIndex);
 
@@ -73,7 +73,7 @@ namespace InventoryPractice
             _inventory.AddWeight(itemFromEquipment.Weight);
 
             _equipment.UnEquipFromDrop(itemFromEquipment);
-            _equipment.Equip(inventoryItem);
+            _equipment.Equip(inventoryItem, newEquipable.EquipType, index);
         }
 
         private void DecreasePlayerStats(EquipableItemComponent component)

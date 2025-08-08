@@ -11,12 +11,11 @@ namespace InventoryPractice
         public IReadOnlyDictionary<EquipType, List<InventoryItem>> EquippedItems => _equippedItems;
 
         public event Action<EquipType, InventoryItem> OnEquipItem;
-        public event Action<InventoryItem, int, EquipType> OnItemEquipByDragAndDrop;
 
         public event Action<EquipType, InventoryItem, int> OnUnEquipItemView;
         public event Action<EquipType, InventoryItem, int> OnEquipItemView;
         public event Action<EquipType, InventoryItem, int> OnUnEquipItem;
-        public event Action<InventoryItem, int> OnUnEquipItemToConcreteSlot;
+        public event Action<InventoryItem, int, int> OnUnEquipItemToConcreteSlot;
         public event Action<EquipType, InventoryItem, int> OnDropOutItem;
 
         public Equipment()
@@ -65,8 +64,16 @@ namespace InventoryPractice
 
 
             // Найти первый пустой слот
-            if (index == 0)
+            if (index <= limit)
             {
+                if (list[index] == null)
+                {
+                    list[index] = item;
+                    OnEquipItem?.Invoke(type, item);
+                    return;
+                }
+
+
                 for (var i = 0; i < list.Count; i++)
                 {
                     if (list[i] == null)
@@ -89,17 +96,18 @@ namespace InventoryPractice
 
                 var removedItem = list[index];
 
-                OnUnEquipItemToConcreteSlot?.Invoke(removedItem, slotIndex);
+                OnUnEquipItemToConcreteSlot?.Invoke(removedItem, slotIndex, index);
                 return;
             }
 
 
             // Нет свободных — заменим первый
-            var removed = list[0];
-            list[0] = item;
+
+            var removed = list[index];
+            list[index] = item;
 
             //    OnUnEquipItem?.Invoke(type, removed, 0);
-            OnUnEquipItemToConcreteSlot?.Invoke(removed, slotIndex);
+            OnUnEquipItemToConcreteSlot?.Invoke(removed, slotIndex, index);
             OnEquipItem?.Invoke(type, item);
         }
 
@@ -218,7 +226,7 @@ namespace InventoryPractice
                 var index = list.IndexOf(item);
                 if (index >= 0)
                 {
-                    OnUnEquipItemToConcreteSlot?.Invoke(item, inventorySlotIndex);
+                    OnUnEquipItemToConcreteSlot?.Invoke(item, inventorySlotIndex, index);
                     return;
                 }
             }

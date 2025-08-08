@@ -101,7 +101,8 @@ namespace InventoryPractice
             if (_items[index].Id == "null")
             {
                 _items[index] = newItem;
-                OnInventoryListChanged?.Invoke();
+                //OnInventoryListChanged?.Invoke();
+                OnInventoryListChangedByDragAndDrop?.Invoke(index, -1);
                 return null;
             }
 
@@ -109,10 +110,14 @@ namespace InventoryPractice
             {
                 _items[index] = newItem;
                 OnInventoryListChanged?.Invoke();
+                // OnInventoryListChangedByDragAndDrop?.Invoke(index, -1);
+
                 return null;
             }
 
             OnInventoryListChanged?.Invoke();
+            //OnInventoryListChangedByDragAndDrop?.Invoke(index, -1);
+
             return _items[index];
         }
 

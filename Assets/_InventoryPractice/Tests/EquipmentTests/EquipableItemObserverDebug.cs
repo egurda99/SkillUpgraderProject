@@ -24,7 +24,7 @@ namespace InventoryPractice
             _equipment.OnDropOutItem += OnDropOutItemFromEquipment;
         }
 
-        private void OnUnEquippedToSlot(InventoryItem itemFromEquipment, int slotIndex)
+        private void OnUnEquippedToSlot(InventoryItem itemFromEquipment, int slotIndex, int arg3)
         {
             var inventoryItem = _inventory.ReplaceItemAt(itemFromEquipment, slotIndex);
 
