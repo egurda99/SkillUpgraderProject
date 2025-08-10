@@ -318,6 +318,8 @@ MonoBehaviour:
   _amountText: {fileID: 8047422193585628933}
   _button: {fileID: 1666139540617524228}
   _uiParticle: {fileID: 7623151113930334864}
+  _clickClipName: itemClick
+  _changedPositionClipName: changeItems
 --- !u!1 &6722309034161815730
 GameObject:
   m_ObjectHideFlags: 0

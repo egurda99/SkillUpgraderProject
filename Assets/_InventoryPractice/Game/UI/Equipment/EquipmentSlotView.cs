@@ -1,4 +1,5 @@
 using System;
+using Audio;
 using InventoryPractice;
 using MyCodeBase.UI;
 using UnityEngine;
@@ -15,6 +16,10 @@ namespace _InventoryPractice
         [SerializeField] private ImageEquipmentSlot _imageEquipmentSlot;
 
         [SerializeField] private Button _button;
+        [SerializeField] private string _clickClipName;
+        [SerializeField] private string _unequipClipName;
+        [SerializeField] private string _equipClipName;
+
 
         private EquipType _equipType;
         private int _index;
@@ -54,6 +59,16 @@ namespace _InventoryPractice
             _imageEquipmentSlot.Highlight();
         }
 
+        public void PlayUnEquipedSound()
+        {
+            PlaySound(_unequipClipName);
+        }
+
+        public void PlayEquipSound()
+        {
+            PlaySound(_equipClipName);
+        }
+
 
         public void SetEquipType(EquipType equipType)
         {
@@ -75,7 +90,15 @@ namespace _InventoryPractice
         public void AddButtonListener(UnityAction action)
         {
             _button.onClick.AddListener(action);
-            _button.onClick.AddListener(() => Debug.Log("Clicked"));
+            _button.onClick.AddListener(() => PlaySound(_clickClipName));
+        }
+
+        private void PlaySound(string clipName)
+        {
+            if (AudioManager.Instance.TryGetAudioClipByName(clipName, out var audioClip))
+            {
+                AudioManager.Instance.PlaySound(audioClip, AudioOutput.UI);
+            }
         }
 
         public void RemoveAllButtonListeners()

@@ -2269,6 +2269,7 @@ MonoBehaviour:
   _equipButton: {fileID: 9087247344047685267}
   _unEquipButton: {fileID: 425146538791467843}
   _dropButton: {fileID: 3663678900105281678}
+  _dropSoundClipName: dropItem
 --- !u!225 &2373229873067475309
 CanvasGroup:
   m_ObjectHideFlags: 0

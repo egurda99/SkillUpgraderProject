@@ -25,5 +25,7 @@ namespace _InventoryPractice
         void DoPunchScale();
         void DoWiggleEffect();
         void SetHighlightedState();
+        void PlayUnEquipedSound();
+        void PlayEquipSound();
     }
 }

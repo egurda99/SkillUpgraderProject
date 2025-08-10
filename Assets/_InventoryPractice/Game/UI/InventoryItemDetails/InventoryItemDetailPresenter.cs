@@ -130,12 +130,14 @@ namespace _InventoryPractice
         private void DropItem()
         {
             _inventory.RemoveItemSlot(_item);
+            _view.PlayDropSound();
             _view.Hide();
         }
 
         private void DropItemFromEquipped()
         {
             _equipment.DropItemFromEquipped(_item);
+            _view.PlayDropSound();
             _view.Hide();
         }
 

@@ -46,6 +46,7 @@ namespace _InventoryPractice
         private void OnUnEquipedItemView(EquipType type, InventoryItem item, int index)
         {
             var slotView = _view.GetSlotView(type, index);
+            slotView.PlayUnEquipedSound();
             slotView.SetDefaultSprite();
             slotView.RemoveAllButtonListeners();
         }
@@ -64,6 +65,7 @@ namespace _InventoryPractice
         private void OnUnEquipedOutItem(EquipType type, InventoryItem item, int index)
         {
             var slotView = _view.GetSlotView(type, index);
+            slotView.PlayUnEquipedSound();
             slotView.SetDefaultSprite();
             slotView.RemoveAllButtonListeners();
         }
@@ -75,6 +77,7 @@ namespace _InventoryPractice
             var slotView = _view.GetSlotView(type, index);
 
             slotView.SetSprite(item.MetaData.Icon);
+            slotView.PlayEquipSound();
             slotView.DoWiggleEffect();
 
             slotView.RemoveAllButtonListeners();
@@ -93,6 +96,7 @@ namespace _InventoryPractice
             var slotView = _view.GetSlotView(type, index);
 
             slotView.SetSprite(item.MetaData.Icon);
+            slotView.PlayEquipSound();
 
             slotView.RemoveAllButtonListeners();
             slotView.AddButtonListener(() => OnSlotClicked(item, slotView));

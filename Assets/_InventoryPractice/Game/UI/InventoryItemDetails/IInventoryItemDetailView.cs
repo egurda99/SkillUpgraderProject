@@ -26,5 +26,6 @@ namespace _InventoryPractice
         void RemoveDropActionListener(UnityAction action);
         void RemoveUnEquipActionListener(UnityAction action);
         void SetTweenManager(DoTweenAnimationManager tweenAnimationManager);
+        void PlayDropSound();
     }
 }

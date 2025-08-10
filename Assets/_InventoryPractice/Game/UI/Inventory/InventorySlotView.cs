@@ -1,4 +1,5 @@
 using System;
+using Audio;
 using Coffee.UIExtensions;
 using MyCodeBase.UI;
 using TMPro;
@@ -21,6 +22,8 @@ namespace _InventoryPractice
         [SerializeField] private Button _button;
 
         [SerializeField] private UIParticle _uiParticle;
+        [SerializeField] private string _clickClipName;
+        [SerializeField] private string _changedPositionClipName;
 
 
         public void SetNormalState()
@@ -36,6 +39,7 @@ namespace _InventoryPractice
         {
             _imageInventorySlot.DoWiggle();
             _uiParticle.Play();
+            PlaySound(_changedPositionClipName);
         }
 
         public void DoPunchScaleEffect()
@@ -78,11 +82,22 @@ namespace _InventoryPractice
         public void AddButtonListener(UnityAction action)
         {
             _button.onClick.AddListener(action);
+            _button.onClick.AddListener(() => PlaySound(_clickClipName));
         }
+
+        private void PlaySound(string clipName)
+        {
+            if (AudioManager.Instance.TryGetAudioClipByName(clipName, out var audioClip))
+            {
+                AudioManager.Instance.PlaySound(audioClip, AudioOutput.UI);
+            }
+        }
+
 
         public void RemoveButtonListener(UnityAction action)
         {
             _button.onClick.RemoveListener(action);
+            _button.onClick.RemoveListener(() => PlaySound(_clickClipName));
         }
 
         public void SetDragState()

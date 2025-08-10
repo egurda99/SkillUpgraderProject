@@ -1,3 +1,4 @@
+using Audio;
 using DG.Tweening;
 using MyCodeBase.UI;
 using TMPro;
@@ -26,27 +27,20 @@ namespace _InventoryPractice
         [SerializeField] private Button _unEquipButton;
         [SerializeField] private Button _dropButton;
 
+        [Header("Sound")] [SerializeField] private string _dropSoundClipName;
+
         private Tween _showTween;
         private Tween _hideTween;
         private DoTweenAnimationManager _dotweenAnimationManager;
 
         public void Show()
         {
-            // gameObject.SetActive(true);
-
             gameObject.SetActive(true);
 
             _hideTween?.Kill();
             _showTween?.Kill();
             _showTween =
                 _dotweenAnimationManager.FadeInWithScale(_canvasGroup, transform, _fadeDuration, _scaleDuration);
-            // _canvasGroup.alpha = 0f;
-            // transform.localScale = Vector3.one * 0.8f;
-            //
-            // _showTween = DOTween.Sequence()
-            //     .Append(_canvasGroup.DOFade(1f, _fadeDuration))
-            //     .Join(transform.DOScale(1f, _scaleDuration).SetEase(Ease.OutBack))
-            //     .SetUpdate(true);
         }
 
         public void Hide()
@@ -158,6 +152,14 @@ namespace _InventoryPractice
         public void SetTweenManager(DoTweenAnimationManager tweenAnimationManager)
         {
             _dotweenAnimationManager = tweenAnimationManager;
+        }
+
+        public void PlayDropSound()
+        {
+            if (AudioManager.Instance.TryGetAudioClipByName(_dropSoundClipName, out var audioClip))
+            {
+                AudioManager.Instance.PlaySound(audioClip, AudioOutput.UI);
+            }
         }
 
         private void OnDestroy()
