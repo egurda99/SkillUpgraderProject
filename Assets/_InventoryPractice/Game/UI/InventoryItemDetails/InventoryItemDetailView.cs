@@ -33,14 +33,16 @@ namespace _InventoryPractice
         private Tween _hideTween;
         private DoTweenAnimationManager _dotweenAnimationManager;
 
+
         public void Show()
         {
             gameObject.SetActive(true);
 
-            _hideTween?.Kill();
-            _showTween?.Kill();
-            _showTween =
-                _dotweenAnimationManager.FadeInWithScale(_canvasGroup, transform, _fadeDuration, _scaleDuration);
+            KillAllTweens();
+
+            _showTween = _dotweenAnimationManager
+                .FadeInWithScale(_canvasGroup, transform, _fadeDuration, _scaleDuration)
+                .SetId(this); // Чтобы можно было Kill по id
         }
 
         public void Hide()
@@ -48,20 +50,22 @@ namespace _InventoryPractice
             if (!IsValid())
                 return;
 
-            _hideTween = _dotweenAnimationManager.FadeOutWithScale(_canvasGroup, transform, 0.3f, 0.1f, () =>
-            {
-                if (IsValid())
-                    gameObject.SetActive(false);
-            });
+            KillAllTweens();
 
-            // _hideTween = DOTween.Sequence()
-            //     .Join(transform.DOScale(0.0f, 0.3f).SetEase(Ease.InBack))
-            //     .Append(_canvasGroup.DOFade(0f, 0.1f))
-            //     .SetUpdate(true)
-            //     .OnComplete(() =>
-            //     {
-            //         if (IsValid()) gameObject.SetActive(false);
-            //     });
+            _hideTween = _dotweenAnimationManager
+                .FadeOutWithScale(_canvasGroup, transform, 0.3f, 0.1f, () =>
+                {
+                    if (IsValid())
+                        gameObject.SetActive(false);
+                })
+                .SetId(this);
+        }
+
+        private void KillAllTweens()
+        {
+            _showTween?.Kill();
+            _hideTween?.Kill();
+            DOTween.Kill(this); // убьёт все твины, у которых SetId(this)
         }
 
         public void SetName(string name)

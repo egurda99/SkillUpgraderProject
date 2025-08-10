@@ -1,3 +1,4 @@
+using DG.Tweening;
 using MyCodeBase;
 using UnityEngine;
 using Zenject;
@@ -17,6 +18,7 @@ namespace _InventoryPractice
         [SerializeField] private ItemDragger _itemDragger;
         [SerializeField] private InventoryMainView _inventoryMainView;
 
+        private Tween _hideTween;
 
         private InventoryPopupViewModel _viewModel;
         private InventoryPopupViewModelFactory _viewModelFactory;

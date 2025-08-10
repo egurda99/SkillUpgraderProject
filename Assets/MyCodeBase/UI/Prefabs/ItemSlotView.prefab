@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _imageInventorySlot:
+    _canvasGroup: {fileID: 4407753173332635416}
     _icon: {fileID: 793862492627177851}
     _background: {fileID: 8920234005666737117}
     _onDragColor: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}

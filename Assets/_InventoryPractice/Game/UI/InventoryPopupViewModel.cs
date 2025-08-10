@@ -73,10 +73,10 @@ namespace _InventoryPractice
         public void Hide()
         {
             _isActive = false;
+            SlotListAdapter.HideMainView();
 
             SlotListAdapter.HideItems();
             ItemDetailAdapter.Hide();
-            SlotListAdapter.HideMainView();
             EquipmentPresenter.Stop();
         }
 

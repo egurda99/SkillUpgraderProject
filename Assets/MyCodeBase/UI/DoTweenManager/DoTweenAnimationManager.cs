@@ -23,7 +23,7 @@ namespace MyCodeBase.UI
             float fadeDuration = 0.1f, Action onComplete = null)
         {
             return DOTween.Sequence()
-                .Join(transform.DOScale(0f, scaleDuration).SetEase(Ease.InBack))
+                .Join(transform.DOScale(Vector3.zero, scaleDuration).SetEase(Ease.InBack))
                 .Append(canvasGroup.DOFade(0f, fadeDuration))
                 .SetUpdate(true)
                 .OnComplete(() => onComplete?.Invoke());
@@ -78,18 +78,37 @@ namespace MyCodeBase.UI
                 .SetUpdate(true);
         }
 
-        public void DoWiggle(Transform iconTransform)
+        public void DoWiggle(Transform target, Graphic raycastBlocker = null, Button button = null,
+            CanvasGroup canvasGroup = null)
         {
-            if (!iconTransform.gameObject.activeInHierarchy)
+            if (!target.gameObject.activeInHierarchy)
                 return;
 
-            iconTransform.DOKill();
-            iconTransform.localRotation = Quaternion.identity;
+            // Отключаем взаимодействие
+            if (raycastBlocker != null)
+                raycastBlocker.raycastTarget = false;
+            if (button != null)
+                button.interactable = false;
+            if (canvasGroup != null)
+                canvasGroup.blocksRaycasts = false;
 
-            iconTransform
+            target.DOKill();
+            target.localRotation = Quaternion.identity;
+
+            target
                 .DOPunchRotation(new Vector3(0, 0, 20f), 0.3f, 6, 0.6f)
                 .SetEase(Ease.OutQuad)
-                .SetUpdate(true);
+                .SetUpdate(true)
+                .OnComplete(() =>
+                {
+                    // Возвращаем взаимодействие
+                    if (raycastBlocker != null)
+                        raycastBlocker.raycastTarget = true;
+                    if (button != null)
+                        button.interactable = true;
+                    if (canvasGroup != null)
+                        canvasGroup.blocksRaycasts = true;
+                });
         }
 
         public void DoPunchScale(Transform iconTransform)
@@ -99,6 +118,7 @@ namespace MyCodeBase.UI
 
             iconTransform.DOKill();
             iconTransform.localRotation = Quaternion.identity;
+            iconTransform.localScale = Vector3.one;
 
             iconTransform.transform.DOPunchScale(
                 Vector3.one * 0.2f, // амплитуда "удара"

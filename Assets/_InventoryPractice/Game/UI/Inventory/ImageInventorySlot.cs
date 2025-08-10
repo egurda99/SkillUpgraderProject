@@ -9,6 +9,8 @@ namespace _InventoryPractice
     [Serializable]
     public sealed class ImageInventorySlot
     {
+        [SerializeField] private CanvasGroup _canvasGroup;
+
         [SerializeField] private Image _icon;
         [SerializeField] private Image _background;
 
@@ -37,21 +39,11 @@ namespace _InventoryPractice
         {
             KillTween();
             _colorTween = _dotweenAnimationManager.ChangeColor(_background, _icon, _onDragColor, _transitionDuration);
-
-            // _colorTween = DOTween.Sequence()
-            //     .Append(_background.DOColor(_onDragColor, _transitionDuration))
-            //     .Join(_icon.DOColor(_onDragColor, _transitionDuration))
-            //     .SetUpdate(true);
         }
 
         public void SetNormalState()
         {
             KillTween();
-
-            // _colorTween = DOTween.Sequence()
-            //     .Append(_background.DOColor(_normalColor, _transitionDuration))
-            //     .Join(_icon.DOColor(_normalColor, _transitionDuration))
-            //     .SetUpdate(true);
 
             _colorTween = _dotweenAnimationManager.ChangeColor(_background, _icon, _normalColor, _transitionDuration);
         }
@@ -65,7 +57,7 @@ namespace _InventoryPractice
             }
         }
 
-        public void DoWiggle()
+        public void DoWiggle(Button button)
         {
             if (_icon == null || !_icon.gameObject.activeInHierarchy)
                 return;
@@ -76,6 +68,7 @@ namespace _InventoryPractice
             // Сброс поворота перед анимацией
             _icon.transform.localRotation = Quaternion.identity;
 
+            // _dotweenAnimationManager.DoWiggle(_icon.transform, _icon, button, _canvasGroup);
             _dotweenAnimationManager.DoWiggle(_icon.transform);
         }
 
@@ -91,16 +84,6 @@ namespace _InventoryPractice
             _icon.transform.localRotation = Quaternion.identity;
 
             _dotweenAnimationManager.DoPunchScale(_icon.transform);
-
-            // // Выполняем вращательный "удар"
-            // _icon.transform
-            //     .DOPunchRotation(
-            //         new Vector3(0, 0, 20f), // амплитуда "удара" по Z
-            //         0.3f, // длительность
-            //         6, // количество вибраций
-            //         0.6f) // эластичность (0..1)
-            //     .SetEase(Ease.OutQuad)
-            //     .SetUpdate(true);
         }
     }
 }

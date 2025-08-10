@@ -37,7 +37,7 @@ namespace _InventoryPractice
 
         public void DoWiggleEffect()
         {
-            _imageInventorySlot.DoWiggle();
+            _imageInventorySlot.DoWiggle(_button);
             _uiParticle.Play();
             PlaySound(_changedPositionClipName);
         }
