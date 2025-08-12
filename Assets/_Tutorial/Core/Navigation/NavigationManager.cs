@@ -1,3 +1,4 @@
+using Atomic.Entities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -6,7 +7,7 @@ namespace Game.Tutorial.Gameplay
 {
     public sealed class NavigationManager : ITickable, IInitializable
     {
-        private readonly NavigationArrow _arrow;
+        private readonly GameObject _arrowPrefab;
         private readonly Transform _worldContainer;
 
 
@@ -15,15 +16,20 @@ namespace Game.Tutorial.Gameplay
         [PropertySpace] [ReadOnly] [ShowInInspector]
         private Vector3 _targetPosition;
 
+        private readonly PlayerService _playerService;
+
         [ReadOnly] [ShowInInspector] private bool _isActive;
 
-        public NavigationManager(NavigationArrow arrow, Transform worldContainer)
-        {
-            _arrow = arrow;
-            _worldContainer = worldContainer;
-        }
-
         private bool _spawned;
+        private NavigationArrow _arrow;
+
+
+        public NavigationManager(PlayerService playerService, GameObject arrowPrefab, Transform worldContainer)
+        {
+            _arrowPrefab = arrowPrefab;
+            _worldContainer = worldContainer;
+            _playerService = playerService;
+        }
 
 
         [Button]
@@ -54,7 +60,8 @@ namespace Game.Tutorial.Gameplay
         {
             if (_isActive)
             {
-                _arrow.SetPosition(_position);
+                var playerPosition = _playerService.Player.GetRootTransform().position;
+                _arrow.SetPosition(playerPosition);
                 _arrow.LookAt(_targetPosition);
             }
         }
@@ -68,8 +75,11 @@ namespace Game.Tutorial.Gameplay
 
         private void Spawn()
         {
-            Object.Instantiate(_arrow.RootGameObject, _arrow.RootTransform.position, Quaternion.identity,
+            var arrow = Object.Instantiate(_arrowPrefab, _arrowPrefab.transform.position, Quaternion.identity,
                 _worldContainer);
+
+            _arrow = arrow.GetComponent<NavigationArrow>();
+
             _spawned = true;
         }
     }

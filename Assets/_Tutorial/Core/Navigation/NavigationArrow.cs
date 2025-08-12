@@ -27,6 +27,7 @@ namespace Game.Tutorial.Gameplay
         public void SetPosition(Vector3 position)
         {
             _rootTransform.position = position;
+            transform.position = position;
         }
 
         public void LookAt(Vector3 targetPosition)

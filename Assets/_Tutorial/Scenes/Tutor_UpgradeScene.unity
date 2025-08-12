@@ -1134,7 +1134,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stepList: {fileID: 11400000, guid: 532a40c8691b76b428717da9b8cbd1a8, type: 2}
-  _navigationArrow: {fileID: 1494336883, guid: 3b9db2be73036c14abebadd6199ee4cd, type: 3}
+  _navigationArrowPrefab: {fileID: 8263330246948199203, guid: 3b9db2be73036c14abebadd6199ee4cd,
+    type: 3}
   _pointerGO: {fileID: 989574721128722430, guid: d49c5a8875aaf4f90b2492f9b6c98aa4,
     type: 3}
   _worldTransform: {fileID: 1826465560}
