@@ -20,7 +20,7 @@ public sealed class PlayerInputController : IContextInit, IContextDispose
         _sceneEntity = sceneEntity;
     }
 
-    public void Init(IContext context)
+    public void Init(Atomic.Contexts.IContext context)
     {
         _keyboardInput = context.GetKeyboardInput();
         _mouseInput = context.GetMouseInput();
@@ -45,7 +45,7 @@ public sealed class PlayerInputController : IContextInit, IContextDispose
         _moveDirection.Value = direction;
     }
 
-    public void Dispose(IContext context)
+    public void Dispose(Atomic.Contexts.IContext context)
     {
         _keyboardInput.OnMoveInputChanged -= OnMoveInputChanged;
         _mouseInput.OnMouseWorldPositionChanged -= OnMouseWorldPositionChanged;
