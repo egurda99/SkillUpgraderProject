@@ -356,14 +356,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2879887336737608058}
-  - component: {fileID: 2119781095274022367}
   m_Layer: 5
   m_Name: PopupWelcome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2879887336737608058
 RectTransform:
   m_ObjectHideFlags: 0
@@ -384,25 +383,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2119781095274022367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3531963870078737009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38ca21ea16894066b7dc3a039c7cd103, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnPopupShow:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPopupHide:
-    m_PersistentCalls:
-      m_Calls: []
-  _welcomeView: {fileID: 6167192008385225716}
 --- !u!1 &3817404845202546103
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,7 +394,6 @@ GameObject:
   - component: {fileID: 8648436859792537071}
   - component: {fileID: 5755613671550122701}
   - component: {fileID: 1633206334643692789}
-  - component: {fileID: 6167192008385225716}
   m_Layer: 5
   m_Name: ContainerMain
   m_TagString: Untagged
@@ -482,21 +461,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6167192008385225716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3817404845202546103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6702c2ed9c3d4d6aa949b1ae53760215, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _titleText: {fileID: 46563751024810065}
-  _descriptionText: {fileID: 7169062661447056238}
-  _startButton: {fileID: 6970143058716441332}
 --- !u!1 &3950953949963174939
 GameObject:
   m_ObjectHideFlags: 0

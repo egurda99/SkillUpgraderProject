@@ -1,35 +1,30 @@
-using Atomic.Entities;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Tutorial.Gameplay
 {
-    public sealed class NavigationManager : MonoBehaviour
+    public sealed class NavigationManager : ITickable, IInitializable
     {
-        [SerializeField] private NavigationArrow _arrow;
+        private readonly NavigationArrow _arrow;
+        private readonly Transform _worldContainer;
+
 
         private Vector3 _position;
-
-        private SceneEntity _player;
 
         [PropertySpace] [ReadOnly] [ShowInInspector]
         private Vector3 _targetPosition;
 
         [ReadOnly] [ShowInInspector] private bool _isActive;
 
-        private void Awake()
+        public NavigationManager(NavigationArrow arrow, Transform worldContainer)
         {
-            _arrow.Hide();
+            _arrow = arrow;
+            _worldContainer = worldContainer;
         }
 
-        private void Update()
-        {
-            if (_isActive)
-            {
-                _arrow.SetPosition(_position);
-                _arrow.LookAt(_targetPosition);
-            }
-        }
+        private bool _spawned;
+
 
         [Button]
         public void StartLookAt(Transform targetPoint)
@@ -39,6 +34,11 @@ namespace Game.Tutorial.Gameplay
 
         public void StartLookAt(Vector3 targetPosition)
         {
+            if (!_spawned)
+            {
+                Spawn();
+            }
+
             _arrow.Show();
             _isActive = true;
             _targetPosition = targetPosition;
@@ -48,6 +48,29 @@ namespace Game.Tutorial.Gameplay
         {
             _arrow.Hide();
             _isActive = false;
+        }
+
+        public void Tick()
+        {
+            if (_isActive)
+            {
+                _arrow.SetPosition(_position);
+                _arrow.LookAt(_targetPosition);
+            }
+        }
+
+        public void Initialize()
+        {
+            Spawn();
+            _arrow.Hide();
+        }
+
+
+        private void Spawn()
+        {
+            Object.Instantiate(_arrow.RootGameObject, _arrow.RootTransform.position, Quaternion.identity,
+                _worldContainer);
+            _spawned = true;
         }
     }
 }

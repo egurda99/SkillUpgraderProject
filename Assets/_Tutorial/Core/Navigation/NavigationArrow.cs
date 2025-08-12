@@ -4,32 +4,36 @@ namespace Game.Tutorial.Gameplay
 {
     public sealed class NavigationArrow : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject rootGameObject;
+        [SerializeField] private GameObject _rootGameObject;
 
-        [SerializeField]
-        private Transform rootTransform;
+        [SerializeField] private Transform _rootTransform;
+
+
+        public GameObject RootGameObject => _rootGameObject;
+
+        public Transform RootTransform => _rootTransform;
+
 
         public void Show()
         {
-            this.rootGameObject.SetActive(true);
+            _rootGameObject.SetActive(true);
         }
 
         public void Hide()
         {
-            this.gameObject.SetActive(false);   
+            gameObject.SetActive(false);
         }
 
         public void SetPosition(Vector3 position)
         {
-            this.rootTransform.position = position;
+            _rootTransform.position = position;
         }
-        
+
         public void LookAt(Vector3 targetPosition)
         {
-            var distanceVector = targetPosition - this.rootTransform.position;
+            var distanceVector = targetPosition - _rootTransform.position;
             distanceVector.y = 0;
-            this.rootTransform.rotation = Quaternion.LookRotation(distanceVector.normalized, Vector3.up);
+            _rootTransform.rotation = Quaternion.LookRotation(distanceVector.normalized, Vector3.up);
         }
     }
 }

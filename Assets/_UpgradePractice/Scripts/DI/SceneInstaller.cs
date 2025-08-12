@@ -1,3 +1,4 @@
+using MyCodeBase.UI;
 using Zenject;
 
 namespace _UpgradePractice.Scripts
@@ -7,6 +8,7 @@ namespace _UpgradePractice.Scripts
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<ConverterInstaller>().FromComponentInHierarchy().AsSingle();
+            Container.BindInterfacesAndSelfTo<DoTweenAnimationManager>().AsSingle().NonLazy();
             BindMoneyStorage();
             BindUpgradeManager();
         }

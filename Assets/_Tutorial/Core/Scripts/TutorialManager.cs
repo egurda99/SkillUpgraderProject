@@ -1,11 +1,10 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game.Tutorial
 {
-    [AddComponentMenu("Tutorial/Tutorial Manager")]
-    public sealed class TutorialManager : MonoBehaviour
+    public sealed class TutorialManager
     {
         public event Action<TutorialStep> OnStepFinished;
 
@@ -13,90 +12,85 @@ namespace Game.Tutorial
 
         public event Action OnCompleted;
 
+        [ShowInInspector]
+        [ReadOnly]
         public bool IsCompleted
         {
-            get { return this.isCompleted; }
+            get { return _isCompleted; }
         }
 
+        [ShowInInspector]
+        [ReadOnly]
         public TutorialStep CurrentStep
         {
-            get { return this.stepList[this.currentIndex]; }
+            get { return _stepList[_currentIndex]; }
         }
 
+        [ShowInInspector]
+        [ReadOnly]
         public int CurrentIndex
         {
-            get { return this.currentIndex; }
+            get { return _currentIndex; }
         }
 
-        internal static TutorialManager Instance { get; private set; }
+        private readonly TutorialList _stepList;
 
-        [SerializeField, FormerlySerializedAs("config")]
-        private TutorialList stepList;
+        private int _currentIndex;
 
-        private int currentIndex;
+        private bool _isCompleted;
 
-        private bool isCompleted;
 
-        private void Awake()
+        public TutorialManager(TutorialList stepList)
         {
-            if (Instance != null)
-            {
-                throw new Exception("TutorialManager is already created!");
-            }
-
-            Instance = this;
+            _stepList = stepList;
         }
 
-        private void OnDestroy()
-        {
-            Instance = null;
-        }
 
         public void Initialize(bool isCompleted = false, int stepIndex = 0)
         {
-            this.isCompleted = isCompleted;
-            this.currentIndex = Mathf.Clamp(stepIndex, 0, this.stepList.LastIndex);
+            _isCompleted = isCompleted;
+            _currentIndex = Mathf.Clamp(stepIndex, 0, _stepList.LastIndex);
         }
 
         public void FinishCurrentStep()
         {
-            if (!this.isCompleted)
+            if (!_isCompleted)
             {
-                this.OnStepFinished?.Invoke(this.CurrentStep);
+                OnStepFinished?.Invoke(CurrentStep);
             }
         }
 
         public void MoveToNextStep()
         {
-            if (this.isCompleted)
+            if (_isCompleted)
             {
                 return;
             }
 
-            if (this.stepList.IsLast(this.currentIndex))
+            if (_stepList.IsLast(_currentIndex))
             {
-                this.isCompleted = true;
-                this.OnCompleted?.Invoke();
+                _isCompleted = true;
+                OnCompleted?.Invoke();
                 return;
             }
 
-            this.currentIndex++;
-            this.OnNextStep?.Invoke(this.CurrentStep);
+            _currentIndex++;
+            OnNextStep?.Invoke(CurrentStep);
         }
 
         public bool IsStepPassed(TutorialStep step)
         {
-            if (this.isCompleted)
+            if (_isCompleted)
             {
                 return true;
             }
 
-            return this.stepList.IndexOf(step) < this.currentIndex;
+            return _stepList.IndexOf(step) < _currentIndex;
         }
 
         public int IndexOfStep(TutorialStep step)
         {
-            return this.stepList.IndexOf(step);
+            return _stepList.IndexOf(step);
         }
     }
 }

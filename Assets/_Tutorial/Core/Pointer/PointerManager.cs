@@ -3,34 +3,35 @@ using UnityEngine;
 
 namespace Game.Tutorial.Gameplay
 {
-    public sealed class PointerManager : MonoBehaviour
+    public sealed class PointerManager
     {
-        [SerializeField]
-        public GameObject pointer;
+        [SerializeField] public GameObject _pointer;
 
-        private void Awake()
+
+        public PointerManager(GameObject pointer)
         {
-            this.pointer.SetActive(false);
+            _pointer = pointer;
+            _pointer.SetActive(false);
         }
 
         [Button]
         public void ShowPointer(Transform targetPoint)
         {
-            this.ShowPointer(targetPoint.position, targetPoint.rotation);
+            ShowPointer(targetPoint.position, targetPoint.rotation);
         }
 
         public void ShowPointer(Vector3 position, Quaternion rotation)
         {
-            var pointerTransform = this.pointer.transform;
+            var pointerTransform = _pointer.transform;
             pointerTransform.position = position;
             pointerTransform.rotation = rotation;
-            
-            this.pointer.SetActive(true);
+
+            _pointer.SetActive(true);
         }
 
         public void HidePointer()
         {
-            this.pointer.SetActive(false);
+            _pointer.SetActive(false);
         }
     }
 }

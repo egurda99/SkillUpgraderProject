@@ -1,3 +1,4 @@
+using _UpgradePractice.Scripts;
 using Atomic.Entities;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -17,6 +18,13 @@ public sealed class PlayerInstaller : MonoInstaller<PlayerInstaller>
             Quaternion.identity, _playerContainer);
         Container.Bind<PlayerService>().AsSingle().WithArguments(player);
 
+        AddStartResoucesToPlayer(player);
+
         _playerCamera.Follow = player.transform;
+    }
+
+    private void AddStartResoucesToPlayer(SceneEntity player)
+    {
+        player.GetComponentInChildren<DebugInventory>().AddItem(new ResourceItem(ResourceType.Wood, 4));
     }
 }
