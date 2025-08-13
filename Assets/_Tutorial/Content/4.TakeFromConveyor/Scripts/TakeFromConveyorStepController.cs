@@ -51,7 +51,7 @@ namespace Game.Tutorial
 
             //Показываем указатель:
             var targetPosition = _config.TargetPosition.position;
-            _visualZoneManager.ShowZone(targetPosition, Quaternion.Euler(90f, 0f, 0f));
+            _visualZoneManager.ShowRectangleZone(targetPosition, Quaternion.Euler(90f, 0f, 0f));
             _navigationManager.StartLookAt(targetPosition);
 
             //Показываем квест в UI:

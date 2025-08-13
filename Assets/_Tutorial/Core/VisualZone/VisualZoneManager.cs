@@ -30,21 +30,22 @@ namespace Game.Tutorial.Gameplay
             _spawned = true;
         }
 
-        public void ShowZone(Vector3 position, Quaternion rotation)
+        public void ShowRectangleZone(Vector3 position, Quaternion rotation)
         {
             position.y = 0;
             _zoneView.transform.position = position;
             _zoneView.transform.rotation = rotation;
-            _zoneView.Show();
+            _zoneView.ShowRectangle();
         }
 
-        public void ShowZone(Vector3 position, Quaternion rotation, float width, float length)
+        public void ShowCircleZone(Vector3 position, Quaternion rotation)
         {
+            position.y = 0;
             _zoneView.transform.position = position;
             _zoneView.transform.rotation = rotation;
-            _zoneView.SetSize(width, length);
-            _zoneView.Show();
+            _zoneView.ShowCircle();
         }
+
 
         public void HideZone()
         {

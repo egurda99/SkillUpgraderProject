@@ -7,7 +7,15 @@ namespace Game.Tutorial.Gameplay
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class ZoneView : MonoBehaviour
     {
+        [SerializeField] private Sprite _rectangleSprite;
+        [SerializeField] private Sprite _circleSprite;
+
+
         private SpriteRenderer _spriteRenderer;
+
+        private readonly Vector2 _rectangleSize = new(10, 10);
+        private readonly Vector2 _circleSize = new(7, 7);
+
 
         [Header("Animation settings")] [SerializeField]
         private Color _highlightColor = new(1f, 1f, 1f, 0.5f);
@@ -25,8 +33,23 @@ namespace Game.Tutorial.Gameplay
         }
 
         [Button]
-        public void Show()
+        public void ShowRectangle()
         {
+            _spriteRenderer.sprite = _rectangleSprite;
+            SetSize(_rectangleSize.x, _rectangleSize.y);
+
+            gameObject.SetActive(true);
+            _colorTween?.Kill();
+            _colorTween = _spriteRenderer.DOColor(_highlightColor, _animationDuration).SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo);
+        }
+
+        [Button]
+        public void ShowCircle()
+        {
+            _spriteRenderer.sprite = _circleSprite;
+            SetSize(_circleSize.x, _circleSize.y);
+
             gameObject.SetActive(true);
             _colorTween?.Kill();
             _colorTween = _spriteRenderer.DOColor(_highlightColor, _animationDuration).SetEase(Ease.InOutSine)
@@ -51,7 +74,7 @@ namespace Game.Tutorial.Gameplay
 
         public void SetSize(float width, float length)
         {
-            transform.localScale = new Vector3(width, 1f, length);
+            _spriteRenderer.size = new Vector2(width, length);
         }
     }
 }

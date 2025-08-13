@@ -100,5 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cd43c9368b648a8bdc575616a256276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectangleSprite: {fileID: 21300000, guid: 9a8d6f66eb6694ff4871aab0fda0dbcd, type: 3}
+  _circleSprite: {fileID: 21300000, guid: 65d249d5b6c54485383e927c3180c56b, type: 3}
   _highlightColor: {r: 1, g: 1, b: 1, a: 0}
   _animationDuration: 1.2

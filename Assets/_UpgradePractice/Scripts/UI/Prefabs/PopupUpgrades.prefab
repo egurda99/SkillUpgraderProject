@@ -58,7 +58,6 @@ MonoBehaviour:
   _viewPrefab: {fileID: 1968364529213511130, guid: ff21a834ce4e6d5439ec22797784c699,
     type: 3}
   _container: {fileID: 3274658653494927500}
-  _closeButton: {fileID: 6471928759607452902}
 --- !u!1 &2138420537858798652
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,7 +93,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -627.23914}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &9111169003603844297
 MonoBehaviour:

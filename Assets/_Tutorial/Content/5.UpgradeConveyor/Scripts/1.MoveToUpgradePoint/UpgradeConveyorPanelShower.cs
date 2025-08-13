@@ -4,11 +4,11 @@ using MyCodeBase.UI;
 namespace Game.Tutorial
 {
     [Serializable]
-    public sealed class TakeFromConveyorPanelShower : InfoPanelShower
+    public sealed class UpgradeConveyorPanelShower : InfoPanelShower
     {
-        private TakeFromConveyorConfig _config;
+        private UpgradeConveyorConfig _config;
 
-        public void Init(TakeFromConveyorConfig config)
+        public void Init(UpgradeConveyorConfig config)
         {
             _config = config;
         }

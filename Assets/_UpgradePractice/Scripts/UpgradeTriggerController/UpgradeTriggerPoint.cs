@@ -5,9 +5,10 @@ using Zenject;
 
 namespace _UpgradePractice.Scripts
 {
-    public sealed class UpgradeTrigger : MonoBehaviour
+    public sealed class UpgradeTriggerPoint : MonoBehaviour
     {
         private PopupManager _popupManager;
+
 
         [Inject]
         public void Construct(PopupManager popupManager)
