@@ -12,6 +12,8 @@ namespace MyCodeBase
 
         public event Action<Popup> OnPopupCloseRequested;
 
+        public event Action OnPopupHided;
+
         public void Show()
         {
             OnShow();
@@ -22,6 +24,7 @@ namespace MyCodeBase
         {
             OnHide();
             OnPopupHide?.Invoke();
+            OnPopupHided?.Invoke();
         }
 
         public void HideRequested()

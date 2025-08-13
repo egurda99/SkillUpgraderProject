@@ -7,30 +7,39 @@ namespace Game.Tutorial
     public sealed class WelcomeStepController : TutorialStepControllerBase
     {
         [SerializeField] private WelcomeConfig _config;
-        [SerializeField] private WelcomeView _welcomeView;
 
 
-        private WelcomePresenter _welcomePresenter;
         private PopupManager _popupManager;
+        private Popup _popup;
 
         [Inject]
         public void Construct(PopupManager popupManager)
         {
             _popupManager = popupManager;
-            _welcomePresenter = new WelcomePresenter(_config, _welcomeView, this);
         }
 
         protected override void OnStart()
         {
-            _welcomePresenter.Start();
-            _popupManager.ShowPopup(_config.PopupName);
+            _popup = _popupManager.FindPopup(_config.PopupName);
+            _popup.OnPopupHided += OnPopupHided;
+
+            if (_popup is WelcomePopup welcomePopup)
+            {
+                welcomePopup.Init(_config);
+                _popupManager.ShowPopup(_config.PopupName);
+            }
         }
 
-        public void OnPopupClicked()
+        protected override void OnStop()
+        {
+            base.OnStop();
+            _popup.OnPopupHided -= OnPopupHided;
+        }
+
+
+        public void OnPopupHided()
         {
             NotifyAboutCompleteAndMoveNext();
-            _welcomePresenter.Stop();
-            _popupManager.HidePopup(_config.PopupName);
         }
     }
 }

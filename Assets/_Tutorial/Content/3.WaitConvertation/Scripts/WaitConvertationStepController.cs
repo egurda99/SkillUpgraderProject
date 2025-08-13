@@ -8,10 +8,9 @@ namespace Game.Tutorial
     {
         [SerializeField] private WaitConvertationConfig _config;
 
-        [SerializeField] private WaitConvertationPanelShower _waitConvertationPanelShower;
 
-        [SerializeField] private Transform _panelContainer;
         private ConverterInstaller _converterInstaller;
+        private WaitConvertationPanelShower _waitConvertationPanelShower;
 
 
         [Inject]
@@ -19,6 +18,7 @@ namespace Game.Tutorial
         {
             _converterInstaller = converterInstaller;
 
+            _waitConvertationPanelShower = _config.WaitConvertationPanelShower;
             _waitConvertationPanelShower.Init(_config);
         }
 
@@ -37,7 +37,7 @@ namespace Game.Tutorial
             //Показываем квест в UI:
             _converterInstaller.System.OnOutputChanged += OnConvertationFinished;
 
-            _waitConvertationPanelShower.Show(_panelContainer);
+            _waitConvertationPanelShower.Show(_config.PanelContainer);
         }
 
         protected override void OnStop()

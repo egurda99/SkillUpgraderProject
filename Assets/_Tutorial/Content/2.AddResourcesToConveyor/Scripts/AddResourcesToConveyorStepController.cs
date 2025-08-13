@@ -14,11 +14,9 @@ namespace Game.Tutorial
 
         [SerializeField] private AddResourcesToConveyorConfig _config;
 
-        [SerializeField] private MoveToConveyorPanelShower _moveToConveyorPanelShower;
 
-        [SerializeField] private Transform _targetPosition;
-        [SerializeField] private Transform _panelContainer;
         private ConverterInstaller _converterInstaller;
+        private MoveToConveyorPanelShower _moveToConveyorPanelShower;
 
 
         [Inject]
@@ -28,6 +26,8 @@ namespace Game.Tutorial
             _navigationManager = navigationManager;
             _visualZoneManager = visualZoneManager;
             _converterInstaller = converterInstaller;
+
+            _moveToConveyorPanelShower = _config.MoveToConveyorPanelShower;
 
             _moveToConveyorPanelShower.Init(_config);
         }
@@ -50,12 +50,12 @@ namespace Game.Tutorial
             _converterInstaller.System.OnInputChanged += OnConverterVisited;
 
             //Показываем указатель:
-            var targetPosition = _targetPosition.position;
+            var targetPosition = _config.TargetPosition.position;
             _visualZoneManager.ShowZone(targetPosition, Quaternion.Euler(90f, 0f, 0f));
             _navigationManager.StartLookAt(targetPosition);
 
             //Показываем квест в UI:
-            _moveToConveyorPanelShower.Show(_panelContainer);
+            _moveToConveyorPanelShower.Show(_config.PanelContainer);
         }
 
         protected override void OnStop()

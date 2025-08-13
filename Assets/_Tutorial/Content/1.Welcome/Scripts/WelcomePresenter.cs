@@ -5,15 +5,15 @@ namespace Game.Tutorial
         private readonly WelcomeConfig _welcomeConfig;
 
         private readonly WelcomeView _view;
-        private readonly WelcomeStepController _welcomeStepController;
+        private readonly WelcomePopup _popup;
 
 
         public WelcomePresenter(WelcomeConfig welcomeConfig, WelcomeView view,
-            WelcomeStepController welcomeStepController)
+            WelcomePopup popup)
         {
             _welcomeConfig = welcomeConfig;
             _view = view;
-            _welcomeStepController = welcomeStepController;
+            _popup = popup;
         }
 
         public void Start()
@@ -31,7 +31,7 @@ namespace Game.Tutorial
 
         private void OnPopupClicked()
         {
-            _welcomeStepController.OnPopupClicked();
+            _popup.HideRequested();
         }
     }
 }

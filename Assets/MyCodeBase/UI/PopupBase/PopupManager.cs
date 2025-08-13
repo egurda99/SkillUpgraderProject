@@ -88,7 +88,7 @@ namespace MyCodeBase
             throw new Exception($"Name of popup {popup.name} is not found!");
         }
 
-        private Popup FindPopup(PopupName name)
+        public Popup FindPopup(PopupName name)
         {
             foreach (var holder in _allPopups)
             {
