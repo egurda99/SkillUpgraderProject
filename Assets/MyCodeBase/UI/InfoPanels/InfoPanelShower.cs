@@ -14,6 +14,7 @@ namespace MyCodeBase.UI
         public void Show(Transform parent)
         {
             view = Object.Instantiate(_viewPrefab, parent);
+            view.ShowWithAnimation();
             OnShow();
         }
 
