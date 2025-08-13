@@ -764,6 +764,56 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &290648327
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 290648328}
+  - component: {fileID: 290648329}
+  m_Layer: 0
+  m_Name: 3.WaitConvertation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &290648328
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290648327}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1371293589}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &290648329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290648327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19a0902e7ec541cba0eba498022a8bc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _step: 2
+  _config: {fileID: 11400000, guid: 83d582cad183f5348bc7aa3049ff24ca, type: 2}
+  _waitConvertationPanelShower:
+    _viewPrefab: {fileID: 3686309046735039914, guid: f3fc973cf4f79704c83411d440c7fa87,
+      type: 3}
+  _panelContainer: {fileID: 1144141563}
 --- !u!1 &452901779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1763,7 +1813,7 @@ GameObject:
   - component: {fileID: 994415385}
   - component: {fileID: 994415386}
   m_Layer: 0
-  m_Name: Welcome
+  m_Name: 1.Welcome
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1810,7 +1860,7 @@ GameObject:
   - component: {fileID: 1047722831}
   - component: {fileID: 1047722832}
   m_Layer: 0
-  m_Name: AddResourceToConveyor
+  m_Name: 2.AddResourceToConveyor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2468,6 +2518,7 @@ Transform:
   m_Children:
   - {fileID: 994415385}
   - {fileID: 1047722831}
+  - {fileID: 290648328}
   m_Father: {fileID: 1991855294}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1460250431

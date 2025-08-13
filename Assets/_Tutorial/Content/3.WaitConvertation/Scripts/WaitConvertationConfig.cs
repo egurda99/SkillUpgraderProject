@@ -3,10 +3,10 @@ using UnityEngine;
 namespace Game.Tutorial
 {
     [CreateAssetMenu(
-        fileName = "Config «AddResourcesToConveyorConfig»",
-        menuName = "Tutorial/New Config «AddResourcesToConveyorConfig»"
+        fileName = "Config «WaitConvertationConfig»",
+        menuName = "Tutorial/New Config «WaitConvertationConfig»"
     )]
-    public sealed class AddResourcesToConveyorConfig : ScriptableObject
+    public sealed class WaitConvertationConfig : ScriptableObject
     {
         [SerializeField] private string _title;
         [SerializeField] private Sprite _sprite;
