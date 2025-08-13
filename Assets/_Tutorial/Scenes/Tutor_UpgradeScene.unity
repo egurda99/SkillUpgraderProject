@@ -1136,7 +1136,7 @@ MonoBehaviour:
   _stepList: {fileID: 11400000, guid: 532a40c8691b76b428717da9b8cbd1a8, type: 2}
   _navigationArrowPrefab: {fileID: 8263330246948199203, guid: 3b9db2be73036c14abebadd6199ee4cd,
     type: 3}
-  _pointerGO: {fileID: 989574721128722430, guid: d49c5a8875aaf4f90b2492f9b6c98aa4,
+  _zoneViewPrefab: {fileID: 5565589003710480269, guid: 065cf546730ea424ab2c0ea99e59e71d,
     type: 3}
   _worldTransform: {fileID: 1826465560}
 --- !u!1 &777317804

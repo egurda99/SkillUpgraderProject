@@ -7,7 +7,7 @@ namespace Game.Tutorial
 {
     public sealed class AddResourcesToConveyorStepController : TutorialStepControllerBase
     {
-        private PointerManager _pointerManager;
+        private VisualZoneManager _visualZoneManager;
 
         private NavigationManager _navigationManager;
 
@@ -22,11 +22,11 @@ namespace Game.Tutorial
 
 
         [Inject]
-        public void Construct(NavigationManager navigationManager, PointerManager pointerManager,
+        public void Construct(NavigationManager navigationManager, VisualZoneManager visualZoneManager,
             ConverterInstaller converterInstaller)
         {
             _navigationManager = navigationManager;
-            _pointerManager = pointerManager;
+            _visualZoneManager = visualZoneManager;
             _converterInstaller = converterInstaller;
 
             _moveToConveyorPanelShower.Init(_config);
@@ -41,7 +41,7 @@ namespace Game.Tutorial
         private void OnConverterVisited(int obj)
         {
             //Убираем указатель
-            _pointerManager.HidePointer();
+            _visualZoneManager.HideZone();
             _navigationManager.Stop();
 
             //Убираем квест из UI:
@@ -55,7 +55,7 @@ namespace Game.Tutorial
         {
             //Показываем указатель:
             var targetPosition = _targetPosition.position;
-            _pointerManager.ShowPointer(targetPosition, _targetPosition.rotation);
+            _visualZoneManager.ShowZone(targetPosition, Quaternion.Euler(90f, 0f, 0f));
             _navigationManager.StartLookAt(targetPosition);
 
             //Показываем квест в UI:

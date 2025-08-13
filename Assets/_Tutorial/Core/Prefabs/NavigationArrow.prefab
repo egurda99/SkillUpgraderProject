@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 7.9159374, y: 0, z: -7.694424}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalScale: {x: 3, y: 0.1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2340270589457894456}
@@ -47,6 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rootGameObject: {fileID: 8263330246948199203}
   _rootTransform: {fileID: 8263330246948199202}
+  _forwardOffset: 1.5
+  _moveAmplitude: 0.3
+  _moveDuration: 1
 --- !u!1001 &2878071530075712467
 PrefabInstance:
   m_ObjectHideFlags: 0

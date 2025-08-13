@@ -5,7 +5,7 @@ namespace Game.Tutorial.Gameplay
 {
     public sealed class PointerManager
     {
-        [SerializeField] public GameObject _pointer;
+        private readonly GameObject _pointer;
 
 
         public PointerManager(GameObject pointer)
