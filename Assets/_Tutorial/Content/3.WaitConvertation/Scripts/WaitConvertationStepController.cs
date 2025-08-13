@@ -22,12 +22,6 @@ namespace Game.Tutorial
             _waitConvertationPanelShower.Init(_config);
         }
 
-        public override void Init()
-        {
-            base.Init();
-            _converterInstaller.System.OnOutputChanged += OnConvertationFinished;
-        }
-
         private void OnConvertationFinished(int obj)
         {
             //Убираем указатель
@@ -41,7 +35,15 @@ namespace Game.Tutorial
         protected override void OnStart()
         {
             //Показываем квест в UI:
+            _converterInstaller.System.OnOutputChanged += OnConvertationFinished;
+
             _waitConvertationPanelShower.Show(_panelContainer);
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+            _converterInstaller.System.OnOutputChanged -= OnConvertationFinished;
         }
     }
 }

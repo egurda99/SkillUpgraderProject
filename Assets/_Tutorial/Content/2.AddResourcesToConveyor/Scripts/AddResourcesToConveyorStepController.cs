@@ -32,12 +32,6 @@ namespace Game.Tutorial
             _moveToConveyorPanelShower.Init(_config);
         }
 
-        public override void Init()
-        {
-            base.Init();
-            _converterInstaller.System.OnInputChanged += OnConverterVisited;
-        }
-
         private void OnConverterVisited(int obj)
         {
             //Убираем указатель
@@ -53,6 +47,8 @@ namespace Game.Tutorial
 
         protected override void OnStart()
         {
+            _converterInstaller.System.OnInputChanged += OnConverterVisited;
+
             //Показываем указатель:
             var targetPosition = _targetPosition.position;
             _visualZoneManager.ShowZone(targetPosition, Quaternion.Euler(90f, 0f, 0f));
@@ -60,6 +56,12 @@ namespace Game.Tutorial
 
             //Показываем квест в UI:
             _moveToConveyorPanelShower.Show(_panelContainer);
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+            _converterInstaller.System.OnInputChanged -= OnConverterVisited;
         }
     }
 }
