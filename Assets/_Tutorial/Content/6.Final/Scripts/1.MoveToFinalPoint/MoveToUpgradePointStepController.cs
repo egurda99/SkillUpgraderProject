@@ -75,6 +75,9 @@ namespace Game.Tutorial
                 _popupManager.ShowPopup(_config.PopupName);
             }
 
+            NotifyAboutComplete();
+
+
             _popupManager.ShowPopup(_config.PopupName);
         }
 

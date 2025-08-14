@@ -15,12 +15,13 @@ namespace Game.Tutorial
         public void Construct(TutorialManager manager)
         {
             _tutorialManager = manager;
-        }
-
-        private void Start()
-        {
             _tutorialManager.Initialize(_isCompleted, _stepIndex);
         }
+
+        // private void Start()
+        // {
+        //     _tutorialManager.Initialize(_isCompleted, _stepIndex);
+        // }
 
         [Button]
         public void SetStep(TutorialStep step)

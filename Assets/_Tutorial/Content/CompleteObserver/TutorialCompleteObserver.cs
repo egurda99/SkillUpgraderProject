@@ -16,6 +16,11 @@ namespace _Tutorial.Content
             _upgradeTriggerPoint.gameObject.SetActive(false);
 
             _tutorialManager.OnCompleted += OnTutorialCompleted;
+
+            if (_tutorialManager.IsCompleted)
+            {
+                OnTutorialCompleted();
+            }
         }
 
         private void OnTutorialCompleted()

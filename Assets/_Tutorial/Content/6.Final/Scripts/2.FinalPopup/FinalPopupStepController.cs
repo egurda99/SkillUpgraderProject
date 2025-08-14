@@ -30,7 +30,7 @@ namespace Game.Tutorial
             _popupManager.HidePopup(_config.PopupName);
             _closeButton.onClick.RemoveListener(OnCloseClicked);
 
-            NotifyAboutCompleteAndMoveNext();
+            NotifyAboutMoveNext();
         }
 
 

@@ -50,6 +50,9 @@ namespace Game.Tutorial
         {
             _isCompleted = isCompleted;
             _currentIndex = Mathf.Clamp(stepIndex, 0, _stepList.LastIndex);
+
+            if (_isCompleted)
+                OnCompleted?.Invoke();
         }
 
         public void FinishCurrentStep()
