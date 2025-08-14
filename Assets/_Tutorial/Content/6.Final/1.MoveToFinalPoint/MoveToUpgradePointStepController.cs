@@ -6,23 +6,23 @@ using Zenject;
 
 namespace Game.Tutorial
 {
-    public sealed class MoveToUpgradePointStepController : TutorialStepControllerBase
+    public sealed class FinalStepController : TutorialStepControllerBase
     {
         private VisualZoneManager _visualZoneManager;
 
         private NavigationManager _navigationManager;
 
 
-        [SerializeField] private UpgradeConveyorConfig _config;
+        [SerializeField] private FinalStepConfig _config;
 
         [SerializeField] private Transform _panelContainer;
         [SerializeField] private Transform _targetPosition;
 
 
-        private UpgradeConveyorPanelShower _upgradeConveyorPanelShower;
-        private UpgradeTriggerPoint _upgradeTriggerPoint;
+        private FinalPanelShower _finalPanelShower;
         private PlaceTriggerPoint _triggerPoint;
         private PopupManager _popupManager;
+        private Popup _popup;
 
 
         [Inject]
@@ -34,9 +34,9 @@ namespace Game.Tutorial
             _popupManager = popupManager;
 
 
-            _upgradeConveyorPanelShower = _config.UpgradeConveyorPanelShower;
+            _finalPanelShower = _config.FinalPanelShower;
 
-            _upgradeConveyorPanelShower.Init(_config);
+            _finalPanelShower.Init(_config);
         }
 
         protected override void OnStart()
@@ -57,7 +57,7 @@ namespace Game.Tutorial
             _navigationManager.StartLookAt(targetPosition);
 
             //Показываем квест в UI:
-            _upgradeConveyorPanelShower.Show(_panelContainer);
+            _finalPanelShower.Show(_panelContainer);
         }
 
         private void OnPlaceVisited()
@@ -65,7 +65,16 @@ namespace Game.Tutorial
             _visualZoneManager.HideZone();
             _navigationManager.Stop();
 
-            _upgradeConveyorPanelShower.Hide();
+            _finalPanelShower.Hide();
+
+            _popup = _popupManager.FindPopup(_config.PopupName);
+
+            if (_popup is FinishPopup finishPopup)
+            {
+                finishPopup.Init(_config);
+                _popupManager.ShowPopup(_config.PopupName);
+            }
+
             _popupManager.ShowPopup(_config.PopupName);
         }
 

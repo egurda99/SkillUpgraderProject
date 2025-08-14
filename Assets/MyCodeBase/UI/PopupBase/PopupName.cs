@@ -4,6 +4,7 @@ namespace MyCodeBase
     {
         CONVERTER_UPGRADES = 0,
         WELCOME = 1,
-        TUTORIAL_UPGRADES = 2
+        TUTORIAL_UPGRADES = 2,
+        FINAL_TUTORIAL = 3
     }
 }

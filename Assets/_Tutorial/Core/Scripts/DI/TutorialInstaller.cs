@@ -1,3 +1,4 @@
+using _Tutorial.Content;
 using _UpgradePractice.Scripts;
 using Game.Tutorial.Gameplay;
 using UnityEngine;
@@ -24,6 +25,8 @@ namespace Game.Tutorial.DI
 
             Container.BindInterfacesAndSelfTo<VisualZoneManager>().AsSingle()
                 .WithArguments(_zoneViewPrefab, _worldTransform);
+
+            Container.BindInterfacesAndSelfTo<TutorialCompleteObserver>().AsSingle();
         }
     }
 }
