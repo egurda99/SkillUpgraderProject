@@ -17,14 +17,8 @@ namespace Game.Tutorial
 
         [SerializeField] private MoveToConveyorPanelShower _moveToConveyorPanelShower;
 
-        [SerializeField] private Transform _targetPosition;
-        [SerializeField] private Transform _panelContainer;
 
         public MoveToConveyorPanelShower MoveToConveyorPanelShower => _moveToConveyorPanelShower;
-
-        public Transform TargetPosition => _targetPosition;
-
-        public Transform PanelContainer => _panelContainer;
 
         public Sprite Sprite => _sprite;
 

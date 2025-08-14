@@ -21,5 +21,11 @@ namespace Game.Tutorial
         {
             _tutorialManager.Initialize(_isCompleted, _stepIndex);
         }
+
+        [Button]
+        public void SetStep(TutorialStep step)
+        {
+            _tutorialManager.SetStep(step);
+        }
     }
 }

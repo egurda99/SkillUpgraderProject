@@ -19,9 +19,8 @@ MonoBehaviour:
   _upgradeConveyorPanelShower:
     _viewPrefab: {fileID: 3686309046735039914, guid: f3fc973cf4f79704c83411d440c7fa87,
       type: 3}
-  _targetPosition: {fileID: 0}
-  _panelContainer: {fileID: 0}
-  _popupName: 0
-  _targetLevel: 2
+  _popupName: 2
+  _upgradeConfig: {fileID: 11400000, guid: 13ff205b2a9e47446af6bd31f58a52b5, type: 2}
+  _targetLevel: 3
   _placeTriggerPointPrefab: {fileID: 5282106676796001346, guid: 51fdca134d7efd9428e7ff0184cba370,
     type: 3}

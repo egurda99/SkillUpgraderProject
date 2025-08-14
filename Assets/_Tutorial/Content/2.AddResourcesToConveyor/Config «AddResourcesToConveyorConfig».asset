@@ -19,5 +19,7 @@ MonoBehaviour:
   _moveToConveyorPanelShower:
     _viewPrefab: {fileID: 3686309046735039914, guid: f3fc973cf4f79704c83411d440c7fa87,
       type: 3}
-  _targetPosition: {fileID: 0}
-  _panelContainer: {fileID: 0}
+  _targetPosition: {fileID: 8308658276900176084, guid: e07701f6d53a4484fa97f5688a940e28,
+    type: 3}
+  _panelContainer: {fileID: 7725263787936774130, guid: d6c92aa6a1e5dca4e92e2162b4e96cc0,
+    type: 3}

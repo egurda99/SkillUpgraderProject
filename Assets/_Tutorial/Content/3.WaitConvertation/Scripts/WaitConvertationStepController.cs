@@ -7,7 +7,7 @@ namespace Game.Tutorial
     public sealed class WaitConvertationStepController : TutorialStepControllerBase
     {
         [SerializeField] private WaitConvertationConfig _config;
-
+        [SerializeField] private Transform _panelContainer;
 
         private ConverterInstaller _converterInstaller;
         private WaitConvertationPanelShower _waitConvertationPanelShower;
@@ -37,7 +37,7 @@ namespace Game.Tutorial
             //Показываем квест в UI:
             _converterInstaller.System.OnOutputChanged += OnConvertationFinished;
 
-            _waitConvertationPanelShower.Show(_config.PanelContainer);
+            _waitConvertationPanelShower.Show(_panelContainer);
         }
 
         protected override void OnStop()

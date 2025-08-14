@@ -14,6 +14,9 @@ namespace Game.Tutorial
 
         [SerializeField] private TakeFromConveyorConfig _config;
 
+        [SerializeField] private Transform _panelContainer;
+        [SerializeField] private Transform _targetPosition;
+
 
         private ConverterInstaller _converterInstaller;
         private TakeFromConveyorPanelShower _takeFromConveyorPanelShower;
@@ -50,12 +53,12 @@ namespace Game.Tutorial
             _converterInstaller.System.OnOutputChanged += OnConverterOutputChanged;
 
             //Показываем указатель:
-            var targetPosition = _config.TargetPosition.position;
+            var targetPosition = _targetPosition.position;
             _visualZoneManager.ShowRectangleZone(targetPosition, Quaternion.Euler(90f, 0f, 0f));
             _navigationManager.StartLookAt(targetPosition);
 
             //Показываем квест в UI:
-            _takeFromConveyorPanelShower.Show(_config.PanelContainer);
+            _takeFromConveyorPanelShower.Show(_panelContainer);
         }
 
         protected override void OnStop()

@@ -32,6 +32,11 @@ namespace Game.Tutorial.Gameplay
             _originalColor = _spriteRenderer.color;
         }
 
+        private void OnEnable()
+        {
+            _colorTween?.Kill();
+        }
+
         [Button]
         public void ShowRectangle()
         {

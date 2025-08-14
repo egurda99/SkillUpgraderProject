@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using _UpgradePractice.Scripts;
 using MyCodeBase;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -9,16 +8,15 @@ namespace Game.Tutorial
 {
     public sealed class ConverterUpgradesTutorialPopup : Popup
     {
-        [SerializeField] private UpgradeView _viewPrefab;
+        [SerializeField] private UpgradeConveyorConfig _config;
 
+        [SerializeField] private UpgradeView _upgradeViewPrefab;
         [SerializeField] private Transform _container;
 
-
+        private UpgradesManager _upgradesManager;
         private UpgradeCatalog _upgradeCatalog;
 
         private readonly List<ViewHolder> _viewHolders = new();
-
-        private UpgradesManager _upgradesManager;
 
         [Inject]
         public void Construct(UpgradesManager upgradesManager)
@@ -27,59 +25,52 @@ namespace Game.Tutorial
             _upgradeCatalog = upgradesManager.UpgradeCatalog;
         }
 
-
         protected override void OnShow()
         {
             base.OnShow();
-            Show();
+            ShowUpgrades();
         }
 
         protected override void OnHide()
         {
             base.OnHide();
-            Hide();
+            HideUpgrades();
         }
 
-
-        [Button]
-        public void Show()
+        private void ShowUpgrades()
         {
             var upgrades = _upgradeCatalog.GetAllUpgrades();
-            for (int i = 0, count = upgrades.Length; i < count; i++)
+
+            ShowUpgrade(_config.UpgradeConfig);
+
+            for (var index = 0; index < upgrades.Length; index++)
             {
-                var config = upgrades[i];
+                var config = upgrades[index];
+                if (config.Id == _config.UpgradeConfig.Id)
+                    continue;
+
                 ShowUpgrade(config);
             }
-
-            // _closeButton.onClick.AddListener(Hide);
-        }
-
-        [Button]
-        public void Hide()
-        {
-            for (int i = 0, count = _viewHolders.Count; i < count; i++)
-            {
-                var vh = _viewHolders[i];
-                HideUpgrade(vh);
-            }
-
-            //  _closeButton.onClick.RemoveListener(Hide);
-            _viewHolders.Clear();
         }
 
         private void ShowUpgrade(UpgradeConfig config)
         {
-            var view = Instantiate(_viewPrefab, _container);
+            var view = Instantiate(_upgradeViewPrefab, _container);
             var presenter = new UpgradePresenter(config, view, _upgradesManager);
             presenter.Start();
 
             _viewHolders.Add(new ViewHolder(view, presenter));
         }
 
-        private void HideUpgrade(ViewHolder vh)
+        private void HideUpgrades()
         {
-            vh.Presenter.Stop();
-            Destroy(vh.View.gameObject);
+            foreach (var vh in _viewHolders)
+            {
+                vh.Presenter.Stop();
+                Destroy(vh.View.gameObject);
+            }
+
+            _viewHolders.Clear();
         }
 
         private readonly struct ViewHolder

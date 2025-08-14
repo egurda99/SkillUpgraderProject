@@ -92,5 +92,11 @@ namespace Game.Tutorial
         {
             return _stepList.IndexOf(step);
         }
+
+        public void SetStep(TutorialStep step)
+        {
+            _currentIndex = IndexOfStep(step);
+            OnNextStep?.Invoke(CurrentStep);
+        }
     }
 }

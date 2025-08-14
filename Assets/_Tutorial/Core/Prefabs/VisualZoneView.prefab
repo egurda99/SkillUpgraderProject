@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 9a8d6f66eb6694ff4871aab0fda0dbcd, type: 3}
-  m_Color: {r: 1, g: 0.19018313, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -102,5 +102,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rectangleSprite: {fileID: 21300000, guid: 9a8d6f66eb6694ff4871aab0fda0dbcd, type: 3}
   _circleSprite: {fileID: 21300000, guid: 65d249d5b6c54485383e927c3180c56b, type: 3}
-  _highlightColor: {r: 1, g: 1, b: 1, a: 0}
+  _highlightColor: {r: 1, g: 0.06914881, b: 0, a: 0.8156863}
   _animationDuration: 1.2

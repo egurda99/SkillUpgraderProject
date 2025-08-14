@@ -16,11 +16,9 @@ namespace Game.Tutorial
 
         [SerializeField] private WaitConvertationPanelShower _waitConvertationPanelShower;
 
-        [SerializeField] private Transform _panelContainer;
 
         public WaitConvertationPanelShower WaitConvertationPanelShower => _waitConvertationPanelShower;
 
-        public Transform PanelContainer => _panelContainer;
 
         public Sprite Sprite => _sprite;
 

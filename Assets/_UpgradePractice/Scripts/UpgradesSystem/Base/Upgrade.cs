@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace _UpgradePractice.Scripts
@@ -11,6 +12,8 @@ namespace _UpgradePractice.Scripts
 
         private readonly UpgradeConfig _config;
         private int _level;
+
+        public event Action<int> OnLevelUp;
 
         protected Upgrade(UpgradeConfig config)
         {
@@ -29,6 +32,7 @@ namespace _UpgradePractice.Scripts
             }
 
             _level++;
+            OnLevelUp?.Invoke(_level);
 
             OnUpgrade();
         }
