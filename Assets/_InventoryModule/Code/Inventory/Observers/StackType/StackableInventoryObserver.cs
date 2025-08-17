@@ -32,7 +32,6 @@ namespace InventoryPractice
                     _inventory.AddWeight(itemClone.Weight);
                 }
 
-                // _inventory.FireItemsChangedEvent();
                 return;
             }
 
@@ -80,8 +79,6 @@ namespace InventoryPractice
                 _inventory.AddWeight(weightToAdd);
                 remainingAmount -= newStackSize;
             }
-
-            // _inventory.FireItemsChangedEvent();
         }
 
         public void OnItemAdded(InventoryItem newItem)
@@ -91,7 +88,6 @@ namespace InventoryPractice
             {
                 _inventory.ReplaceFirstNullable(newItem);
                 _inventory.AddWeight(newItem.Weight);
-                // _inventory.FireItemsChangedEvent();
                 return;
             }
 
@@ -120,7 +116,6 @@ namespace InventoryPractice
             // create new stack
             _inventory.ReplaceFirstNullable(newItem);
             _inventory.AddWeight(newItem.Weight);
-            //  _inventory.FireItemsChangedEvent();
         }
 
         public void OnItemRemoved(InventoryItem item)
@@ -130,7 +125,6 @@ namespace InventoryPractice
             {
                 _inventory.ReplaceItemWithNullable(item);
                 _inventory.DecreaseWeight(item.Weight);
-                // _inventory.FireItemsChangedEvent();
                 return;
             }
 
@@ -140,9 +134,10 @@ namespace InventoryPractice
             if (stackableComponent.Value <= 0 && _inventory.Items.Contains(item))
             {
                 _inventory.ReplaceItemWithNullable(item);
+                return;
             }
 
-            // _inventory.FireItemsChangedEvent();
+            _inventory.FireItemsChangedEvent();
         }
 
         public void OnItemsRemoved(InventoryItem item, int amountToRemove)

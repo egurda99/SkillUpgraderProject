@@ -86,7 +86,6 @@ namespace _InventoryPractice
             if (!_isActive)
                 return;
 
-            SlotListAdapter.HideItems();
             SlotListAdapter.ShowItems(Items);
         }
 
@@ -95,7 +94,6 @@ namespace _InventoryPractice
             if (!_isActive)
                 return;
 
-            SlotListAdapter.HideItems();
             SlotListAdapter.ShowItems(Items);
             SlotListAdapter.ShowItemWithEffect(slotIndex, secondIndex);
         }
