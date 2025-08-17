@@ -575,6 +575,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _upgradeCatalog: {fileID: 11400000, guid: 994b5348081c6b24aa28d35548370712, type: 2}
+  _resourceExchangeRates:
+  - {fileID: 11400000, guid: b8d072b11b95d2c40a282a8cae90d95e, type: 2}
 --- !u!1 &227099917
 GameObject:
   m_ObjectHideFlags: 0
@@ -3725,12 +3727,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _view:
-    _converterData:
-      "_\u0441onvertTime": 10
-      _inputZoneCapacity: 16
-      _outputZoneCapacity: 15
-      _exchangeRate:
-      - {fileID: 11400000, guid: b8d072b11b95d2c40a282a8cae90d95e, type: 2}
     _inputZoneVisual: {fileID: 321564266019547451}
     _outputZoneVisual: {fileID: 321564266067845918}
     _progressBar: {fileID: 5542297090791568841}

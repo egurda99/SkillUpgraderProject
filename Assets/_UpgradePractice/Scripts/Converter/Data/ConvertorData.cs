@@ -1,16 +1,15 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace _UpgradePractice.Scripts
 {
     [Serializable]
     public sealed class ConverterData
     {
-        [SerializeField] private float _ñonvertTime;
-        [SerializeField] private int _inputZoneCapacity;
-        [SerializeField] private int _outputZoneCapacity;
-        [SerializeField] private ResourceExchangeRate[] _exchangeRate;
+        private float _ñonvertTime = 5f;
+        private int _inputZoneCapacity = 4;
+        private int _outputZoneCapacity = 4;
+        private List<ResourceExchangeRate> _exchangeRate;
 
 
         private List<ResourceItem> _inputList = new();
@@ -20,10 +19,15 @@ namespace _UpgradePractice.Scripts
         public int InputZoneCapacity => _inputZoneCapacity;
         public int OutputZoneCapacity => _outputZoneCapacity;
 
-        public ResourceExchangeRate[] ExchangeRate => _exchangeRate;
+        public List<ResourceExchangeRate> ExchangeRate => _exchangeRate;
 
         public List<ResourceItem> InputList => _inputList;
         public List<ResourceItem> OutputList => _outputList;
+
+        public ConverterData(List<ResourceExchangeRate> exchangeRate)
+        {
+            _exchangeRate = exchangeRate;
+        }
 
         public void SetConvertationTime(float time)
         {
@@ -38,6 +42,12 @@ namespace _UpgradePractice.Scripts
         public void SetOutputZoneCapacity(int outputZoneCapacity)
         {
             _outputZoneCapacity = outputZoneCapacity;
+        }
+
+        public void SetExchangeRate(ResourceExchangeRate[] exchangeRate)
+        {
+            _exchangeRate.Clear();
+            _exchangeRate.AddRange(exchangeRate);
         }
     }
 }

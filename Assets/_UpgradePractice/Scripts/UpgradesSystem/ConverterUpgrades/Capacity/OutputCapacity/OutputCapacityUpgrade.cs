@@ -14,9 +14,9 @@ namespace _UpgradePractice.Scripts
         }
 
         [Inject]
-        public void Construct(ConverterInstaller converterInstaller)
+        public void Construct(ConverterDataService converterDataService)
         {
-            _converterData = converterInstaller.View.Data;
+            _converterData = converterDataService.ConverterData;
             var capacity = _outputCapacityUpgradeConfig.CapacityTable.GetCapacity(Level);
             _converterData.SetOutputZoneCapacity(capacity);
         }

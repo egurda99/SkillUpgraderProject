@@ -4,11 +4,22 @@ namespace _UpgradePractice.Scripts
 {
     public class SceneInstaller : MonoInstaller<SceneInstaller>
     {
+        private SceneInstallerHelper _helper;
+
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<ConverterInstaller>().FromComponentInHierarchy().AsSingle();
+            _helper = FindObjectOfType<SceneInstallerHelper>();
+
+            BindConverterDataService();
             BindMoneyStorage();
             BindUpgradeManager();
+        }
+
+        private void BindConverterDataService()
+        {
+            var converterData = new ConverterData(_helper.ResourceExchangeRates);
+
+            Container.Bind<ConverterDataService>().AsSingle().WithArguments(converterData);
         }
 
         private void BindMoneyStorage()
@@ -18,9 +29,7 @@ namespace _UpgradePractice.Scripts
 
         private void BindUpgradeManager()
         {
-            var helper = FindObjectOfType<SceneInstallerHelper>();
-
-            Container.Bind<UpgradesManager>().AsSingle().WithArguments(helper.UpgradeCatalog);
+            Container.Bind<UpgradesManager>().AsSingle().WithArguments(_helper.UpgradeCatalog);
         }
     }
 }
