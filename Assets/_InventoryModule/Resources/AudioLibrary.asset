@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20c0ca8dbc6d43b0bb9508654c841a53, type: 3}
+  m_Name: AudioLibrary
+  m_EditorClassIdentifier: 
+  _clips:
+  - Name: buttonClick
+    Clip: {fileID: 8300000, guid: 534baf35541873b4a8658dbbe2f313d5, type: 3}
+  - Name: dropItem
+    Clip: {fileID: 8300000, guid: 80e9756711d6dd240a68ab394bee4293, type: 3}
+  - Name: closeInventory
+    Clip: {fileID: 8300000, guid: e1a3abd55e7bbd140b0c951cfe8f3169, type: 3}
+  - Name: openInventory
+    Clip: {fileID: 8300000, guid: 8214cf2642be5fe4383263dedae7293a, type: 3}
+  - Name: equipItem
+    Clip: {fileID: 8300000, guid: 2d7f513883bab0d48813203f1e93a0e1, type: 3}
+  - Name: itemClick
+    Clip: {fileID: 8300000, guid: 979cbb8f7ab287b4c8e5473ed5086e72, type: 3}
+  - Name: changeItems
+    Clip: {fileID: 8300000, guid: dc88b2d59723fc646a680e3da99854d1, type: 3}
