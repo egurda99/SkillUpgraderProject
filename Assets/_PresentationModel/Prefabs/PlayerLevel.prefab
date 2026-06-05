@@ -147,8 +147,9 @@ GameObject:
   - component: {fileID: 2485575215505787275}
   - component: {fileID: 7604384337062049530}
   - component: {fileID: 2072776929887623456}
-  - component: {fileID: 1488923300295955667}
   - component: {fileID: 6407684268093760064}
+  - component: {fileID: 5744303511598275265}
+  - component: {fileID: 7806459314211908292}
   m_Layer: 5
   m_Name: PlayerLevel
   m_TagString: Untagged
@@ -215,23 +216,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1488923300295955667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996520331689843467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43946d6577a8426595a4a29b1da30289, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentLevelValueText: {fileID: 2905892553787193033}
-  _currentXp: {fileID: 1516399075610743101}
-  _requiredXp: {fileID: 2777065564607037253}
-  _levelButton: {fileID: 6881383571439568608}
-  _levelProgressBar: {fileID: 6407684268093760064}
 --- !u!114 &6407684268093760064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,6 +233,36 @@ MonoBehaviour:
     type: 3}
   _lockedUpgradeSprite: {fileID: 21300000, guid: c9ea6483ca2494ae892f993fec2cb4a6,
     type: 3}
+--- !u!114 &5744303511598275265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996520331689843467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b136160416540178331e80e9daab869, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentLevelValueText: {fileID: 2905892553787193033}
+  _currentXp: {fileID: 1516399075610743101}
+  _requiredXp: {fileID: 2777065564607037253}
+  _levelButton: {fileID: 6881383571439568608}
+  _levelProgressBar: {fileID: 6407684268093760064}
+--- !u!114 &7806459314211908292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996520331689843467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e59be110fc5f4c0eb3dcb4ac96057ff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerLevelPassiveView: {fileID: 5744303511598275265}
 --- !u!1 &1209062567233787734
 GameObject:
   m_ObjectHideFlags: 0

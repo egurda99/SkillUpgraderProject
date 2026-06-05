@@ -1503,11 +1503,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerLevel
       objectReference: {fileID: 0}
-    - target: {fileID: 1265907799124197494, guid: e884d23132bf9a3408367f059db5f969,
-        type: 3}
-      propertyPath: _popup
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2485575215505787275, guid: e884d23132bf9a3408367f059db5f969,
         type: 3}
       propertyPath: m_Pivot.x
