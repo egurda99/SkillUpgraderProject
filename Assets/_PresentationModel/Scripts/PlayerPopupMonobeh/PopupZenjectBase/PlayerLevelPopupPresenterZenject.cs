@@ -2,20 +2,22 @@ using System;
 using Modules.Popups;
 using R3;
 using UnityEngine;
+using Zenject;
 
 namespace Lessons.Architecture.PM
 {
-    public sealed class PlayerLevelPopupPresenter : PopupPresenter
+    public sealed class PlayerLevelPopupPresenterZenject : PopupPresenter
     {
         [SerializeField] private PlayerLevelPassiveView _view;
-        [SerializeField] private PopupView _popupView; // опционально: назначить для анимаций
+        [SerializeField] private PopupView _popupView;
 
         private PlayerLevel _playerLevel;
         private CompositeDisposable _disposables;
 
-        private void Awake()
+        [Inject]
+        public void Construct(PlayerLevel playerLevel)
         {
-            _playerLevel = ServiceLocator.ServiceLocator.Instance.Get<PlayerLevel>();
+            _playerLevel = playerLevel;
         }
 
         public override void Show(IPopupArgs args)

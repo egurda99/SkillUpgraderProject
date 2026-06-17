@@ -1,17 +1,15 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Zenject;
 
 namespace Lessons.Architecture.PM
 {
-    public sealed class PlayerLevelTester : MonoBehaviour
+    public sealed class PlayerLevelTesterServiceLocator : MonoBehaviour
     {
         private PlayerLevel _playerLevel;
 
-        [Inject]
-        public void Construct(PlayerLevel playerLevel)
+        private void Start()
         {
-            _playerLevel = playerLevel;
+            _playerLevel = ServiceLocator.ServiceLocator.Instance.Get<PlayerLevel>();
         }
 
         [Button]

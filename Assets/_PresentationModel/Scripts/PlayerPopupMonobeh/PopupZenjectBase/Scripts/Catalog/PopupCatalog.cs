@@ -20,5 +20,14 @@ namespace Modules.Popups
 
             throw new Exception($"Info for popup of type {typeof(T)} not found in {name}");
         }
+
+        public PopupInfo GetPopupInfo(PopupType type)
+        {
+            foreach (PopupInfo info in _presenters)
+                if (info.Type == type)
+                    return info;
+
+            throw new Exception($"Info for popup of type {type} not found in {name}");
+        }
     }
 }

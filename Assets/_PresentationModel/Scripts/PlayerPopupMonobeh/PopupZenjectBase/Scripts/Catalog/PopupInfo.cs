@@ -7,6 +7,9 @@ namespace Modules.Popups
     public sealed class PopupInfo
     {
         [field: SerializeField]
+        public PopupType Type { get; private set; }
+
+        [field: SerializeField]
         public bool Cached { get; private set; }
 
         [field: SerializeField]
