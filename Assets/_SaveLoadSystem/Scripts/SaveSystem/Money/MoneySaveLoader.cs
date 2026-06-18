@@ -4,6 +4,7 @@ using UnityEngine;
 [Serializable]
 public sealed class MoneySaveLoader : SaveLoader<MoneyStorage, MoneyData>
 {
+    protected override string Key => "moneyотлично";
     protected override MoneyData ConvertToData(MoneyStorage service)
     {
         Debug.Log($"<color=yellow>Convert to data = {service.Money}</color>");

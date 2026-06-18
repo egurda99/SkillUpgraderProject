@@ -17,10 +17,8 @@ public sealed class GameRepository : IGameRepository
         ReferenceLoopHandling = ReferenceLoopHandling.Ignore
     };
 
-    public bool TryGetData<T>(out T data)
+    public bool TryGetData<T>(string key, out T data)
     {
-        var key = typeof(T).Name;
-
         if (_gameState.TryGetValue(key, out var jsonData))
         {
             data = JsonConvert.DeserializeObject<T>(jsonData, _jsonSettings);
@@ -31,9 +29,8 @@ public sealed class GameRepository : IGameRepository
         return false;
     }
 
-    public void SetData<T>(T data)
+    public void SetData<T>(string key, T data)
     {
-        var key = typeof(T).Name;
         var jsonData = JsonConvert.SerializeObject(data, _jsonSettings);
         _gameState[key] = jsonData;
     }

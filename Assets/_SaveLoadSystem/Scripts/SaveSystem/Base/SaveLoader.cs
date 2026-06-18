@@ -1,5 +1,7 @@
 public abstract class SaveLoader<TService, TData> : ISaveLoader
 {
+    protected virtual string Key => typeof(TData).Name;
+
     protected abstract TData ConvertToData(TService service);
     protected abstract void SetupData(TService service, TData data);
 
@@ -11,7 +13,7 @@ public abstract class SaveLoader<TService, TData> : ISaveLoader
     {
         var service = context.GetService<TService>();
 
-        if (repository.TryGetData(out TData data))
+        if (repository.TryGetData(Key, out TData data))
         {
             SetupData(service, data);
         }
@@ -25,6 +27,6 @@ public abstract class SaveLoader<TService, TData> : ISaveLoader
     {
         var service = context.GetService<TService>();
         var data = ConvertToData(service);
-        repository.SetData(data);
+        repository.SetData(Key, data);
     }
 }

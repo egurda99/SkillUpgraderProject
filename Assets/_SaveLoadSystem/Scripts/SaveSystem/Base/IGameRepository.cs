@@ -1,5 +1,5 @@
 public interface IGameRepository
 {
-    bool TryGetData<T>(out T data);
-    void SetData<T>(T data);
+    bool TryGetData<T>(string key, out T data);
+    void SetData<T>(string key, T data);
 }
