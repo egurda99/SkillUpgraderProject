@@ -2,16 +2,20 @@
 
 ## Архитектура
 
-Система состоит из 4 слоёв:
+Система состоит из 5 слоёв:
 
 ```
 ServiceLocator          — хранит зависимости (PlayerLevel и др.)
 PopupCatalog            — ScriptableObject, реестр всех попапов
 PopupManagerNoZenject   — управляет показом/скрытием попапов
-PopupPresenter          — базовый класс каждого конкретного попапа
+PopupPresenter          — базовый класс, отвечает только за lifecycle попапа (Show/Hide/анимации)
+ViewPresenter           — отдельный MonoBehaviour для каждой вью: подписки на модель, refresh
+PassiveView             — чистая пассивная вью, не знает ни о модели, ни о презентере
 ```
 
 **Правила:**
+- У каждой вьюшки есть свой презентер (`ViewPresenter`)
+- `PopupPresenter` делегирует управление данными своему `ViewPresenter`, сам отвечает только за lifecycle
 - В один момент времени открыт только один попап
 - Попапы создаются лениво — при первом вызове `Show`
 - Если `Cached = true` в каталоге — экземпляр переиспользуется, иначе уничтожается при скрытии
@@ -41,78 +45,108 @@ PopupPresenter          — базовый класс каждого конкр�
 
 ## Как добавить новый попап — пошагово
 
-### Шаг 1. Создать View
+### Шаг 1. Создать PassiveView
 
 ```csharp
 public sealed class MyPopupView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _titleText;
 
+    public event Action ButtonClicked;
+
     public void SetTitle(string title) => _titleText.text = title;
 }
 ```
 
-### Шаг 2. Создать Presenter
+### Шаг 2. Создать ViewPresenter
+
+Отдельный MonoBehaviour, который знает о вью и модели. Менеджит подписки.
+
+```csharp
+public sealed class MyPopupViewPresenter : MonoBehaviour
+{
+    [SerializeField] private MyPopupView _view;
+
+    private SomeDependency _dependency;
+
+    private void Start()
+    {
+        _dependency = ServiceLocator.ServiceLocator.Instance.Get<SomeDependency>();
+    }
+
+    public void Show()
+    {
+        if (_dependency == null)
+            _dependency = ServiceLocator.ServiceLocator.Instance.Get<SomeDependency>();
+
+        _view.ButtonClicked += OnButtonClicked;
+        _view.SetTitle(_dependency.GetTitle());
+    }
+
+    public void Hide()
+    {
+        _view.ButtonClicked -= OnButtonClicked;
+    }
+
+    private void OnButtonClicked() => _dependency.DoSomething();
+}
+```
+
+> **Почему `Start` + null-check в `Show`:**  
+> `Start` вызывается раньше первого `Show` при нормальном сценарии.  
+> Null-check — страховка на случай если попап закэширован и переиспользуется между сценами.
+
+### Шаг 3. Создать PopupPresenter
+
+Тонкая обёртка — только lifecycle: делегирует Show/Hide своему ViewPresenter, управляет анимацией.
 
 ```csharp
 public sealed class MyPopupPresenter : PopupPresenter
 {
-    [SerializeField] private MyPopupView _view;
+    [SerializeField] private MyPopupViewPresenter _presenter;
     [SerializeField] private PopupView _popupView; // опционально — для анимаций
-
-    private SomeDependency _dependency;
-
-    private void Awake()
-    {
-        // Зависимости берём из ServiceLocator — Awake вызывается один раз при первом Show
-        _dependency = ServiceLocator.ServiceLocator.Instance.Get<SomeDependency>();
-    }
 
     public override void Show(IPopupArgs args)
     {
-        _view.SetTitle("Hello");
+        _presenter.Show();
 
         if (_popupView != null)
             _popupView.AnimateShow();
-        else
-            _view.gameObject.SetActive(true);
     }
 
     public override void Hide()
     {
-        if (_popupView != null)
-            _popupView.Hide();
-        else
-            _view.gameObject.SetActive(false);
+        _presenter.Hide();
+        _popupView?.Hide();
     }
 
-    // Переопределяем для анимированного скрытия
     public override void Hide(Action onComplete)
     {
+        _presenter.Hide();
+
         if (_popupView != null)
             _popupView.AnimateHide(() => onComplete?.Invoke());
         else
-        {
-            _view.gameObject.SetActive(false);
             onComplete?.Invoke();
-        }
     }
 }
 ```
 
-> **Важно:** зависимости получаем в `Awake`, не в `Show`.  
-> `Awake` вызывается один раз — при первом открытии попапа.  
-> `Show` / `Hide` могут вызываться многократно.
+### Шаг 4. Создать префаб
 
-### Шаг 3. Создать префаб
+На одном GO три компонента:
 
-1. Создать новый GameObject в сцене
-2. Добавить компоненты `MyPopupPresenter`, `MyPopupView`, `PopupView` (если нужна анимация)
-3. Назначить `_view` в инспекторе
-4. Если нужна анимация — назначить `_popupView` и настроить `_animationRoot`
-5. Сохранить как префаб
+```
+[MyPopup GO]
+ ├── MyPopupPresenter     → _presenter: [ссылка на MyPopupViewPresenter]
+ │                        → _popupView: [ссылка на PopupView, опционально]
+ ├── MyPopupViewPresenter → _view: [ссылка на MyPopupView]
+ └── MyPopupView          → (UI-поля: TextMeshPro, кнопки и т.д.)
+```
 
-### Шаг 4. Добавить значение в enum
+> Все три компонента можно держать на одном GO или разнести по дочерним — главное назначить ссылки в инспекторе.
+
+### Шаг 5. Добавить значение в enum
 
 ```csharp
 // PopupType.cs — Modules.Popups
@@ -124,7 +158,7 @@ public enum PopupType
 }
 ```
 
-### Шаг 5. Зарегистрировать в PopupCatalog
+### Шаг 6. Зарегистрировать в PopupCatalog
 
 Открыть `PopupCatalog.asset` → в массиве `_presenters` добавить новый элемент:
 
@@ -163,14 +197,16 @@ public struct MyPopupArgs : IPopupArgs
 }
 ```
 
-**2. Presenter наследуется от `PopupPresenter<T>`:**
+**2. PopupPresenter наследуется от `PopupPresenter<T>`:**
 ```csharp
 public sealed class MyPopupPresenter : PopupPresenter<MyPopupArgs>
 {
+    [SerializeField] private MyPopupViewPresenter _presenter;
+
     public override void Show(MyPopupArgs args)
     {
-        _view.SetTitle(args.Title);
-        _view.SetValue(args.Value);
+        _presenter.Show(args); // передаём args в ViewPresenter если нужно
+        // ...
     }
 }
 ```
@@ -216,7 +252,7 @@ _popupManager.OnHide += presenter => Debug.Log($"Закрыт: {presenter.GetTyp
 
 1. Добавить компонент `PopupView` на корневой GO префаба
 2. Назначить `_animationRoot` (обычно `this.transform` — сбрасывается автоматически через `Reset`)
-3. В инспекторе презентера назначить `_popupView`
+3. В инспекторе `PopupPresenter`-а назначить `_popupView`
 
 ### Поведение анимаций
 
@@ -229,7 +265,7 @@ _popupManager.OnHide += presenter => Debug.Log($"Закрыт: {presenter.GetTyp
 
 ### Без анимации
 
-Если `_popupView` не назначен в инспекторе — попап открывается и закрывается мгновенно.  
+Если `_popupView` не назначен — попап открывается и закрывается мгновенно.  
 Никаких изменений в коде не требуется.
 
 ### Как работает Hide с анимацией
@@ -302,13 +338,17 @@ public sealed class ServiceLocatorInstaller : MonoBehaviour
 ## Структура файлов
 
 ```
-PopupNoZenjectBase/
- ├── PopupManagerNoZenject.cs       — менеджер попапов
- ├── PopupTesterNoZenject.cs        — тестер для Play Mode
- ├── PlayerLevelPopupPresenter.cs   — пример попапа с уровнем игрока
- ├── PlayerStatsPopupPresenter.cs   — пример попапа со статистикой
- ├── PlayerStatsView.cs             — вью для PlayerStats
- └── PopupCatalog.asset             — реестр попапов (ScriptableObject)
+PlayerPopupMonobeh/
+ ├── PlayerLevelPopupPresenter.cs   — popup presenter для уровня (lifecycle only)
+ ├── PlayerLevelPresenter.cs        — view presenter для уровня (данные + подписки)
+ ├── PlayerLevelPassiveView.cs      — пассивная вью уровня
+
+ └── PopupNoZenjectBase/
+      ├── PopupManagerNoZenject.cs      — менеджер попапов
+      ├── PopupTesterNoZenject.cs       — тестер для Play Mode
+      ├── PlayerStatsPopupPresenter.cs  — popup presenter для статистики (lifecycle only)
+      ├── PlayerStatsPresenter.cs       — view presenter для статистики (данные)
+      └── PlayerStatsPassiveView.cs     — пассивная вью статистики
 
 PopupZenjectBase/Scripts/           — общие базовые классы (Modules.Popups)
  ├── PopupType.cs                   — enum всех типов попапов

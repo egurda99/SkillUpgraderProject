@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e00e2e2f72403eac27f9695c0638ef, type: 3}
+  m_Name: PopupCatalogZenject
+  m_EditorClassIdentifier: 
+  _presenters:
+  - <Type>k__BackingField: 0
+    <Cached>k__BackingField: 1
+    <Prefab>k__BackingField: {fileID: 1417537189241902768, guid: 00162dc8938bf854abd512d107603e2e,
+      type: 3}
+  - <Type>k__BackingField: 1
+    <Cached>k__BackingField: 1
+    <Prefab>k__BackingField: {fileID: 2583241115985766365, guid: 49299074defe34744ba3cc1262c059da,
+      type: 3}
+  - <Type>k__BackingField: 2
+    <Cached>k__BackingField: 1
+    <Prefab>k__BackingField: {fileID: 7704316836636923175, guid: 0aa639f7e64753147be81e01a0e44b6c,
+      type: 3}
