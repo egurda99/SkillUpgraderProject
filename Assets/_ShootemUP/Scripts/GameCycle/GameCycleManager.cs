@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Tools.Logging;
 
 namespace ShootEmUp
 {
@@ -91,7 +92,8 @@ namespace ShootEmUp
                 return;
             }
 
-            Debug.Log("<color=green>Game started</color>");
+            Log.GameCycle.Info("Game started");
+            Log.CraneMechanic.Warning("Game started");
 
             foreach (var listener in _gameListeners)
             {
@@ -112,7 +114,7 @@ namespace ShootEmUp
                 return;
             }
 
-            Debug.Log("<color=green>Game paused</color>");
+            Log.GameCycle.Info("Game paused");
 
             foreach (var listener in _gameListeners)
             {
@@ -133,7 +135,7 @@ namespace ShootEmUp
                 return;
             }
 
-            Debug.Log("<color=green>Game resumed</color>");
+            Log.GameCycle.Info("Game resumed");
 
             foreach (var listener in _gameListeners)
             {
@@ -154,7 +156,7 @@ namespace ShootEmUp
                 return;
             }
 
-            Debug.Log("<color=green>Game finished</color>");
+            Log.GameCycle.Info("Game finished");
 
             foreach (var listener in _gameListeners)
             {

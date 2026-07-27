@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 386ab3181d364544aa1d08323f803dc9, type: 3}
+  m_Name: LoggingSettings
+  m_EditorClassIdentifier: 
+  _channels:
+  - _propertyName: GameCycle
+    _tag: GAME_CYCLE
+    _muteInfo: 0
+    _muteWarning: 0
+    _color: {r: 0.36216712, g: 1, b: 0, a: 1}
+  - _propertyName: CraneMechanic
+    _tag: CRANE_MECHANIC
+    _muteInfo: 0
+    _muteWarning: 0
+    _color: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
