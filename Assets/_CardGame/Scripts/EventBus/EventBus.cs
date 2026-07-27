@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace _CardGame
 {
@@ -10,6 +11,9 @@ namespace _CardGame
 
         public void Subscribe<T>(Action<T> handler, int priority = 0)
         {
+            if (handler == null)
+                return;
+
             var type = typeof(T);
             if (!_handlers.ContainsKey(type))
             {
@@ -26,6 +30,9 @@ namespace _CardGame
 
         public void Unsubscribe<T>(Action<T> handler)
         {
+            if (handler == null)
+                return;
+
             var type = typeof(T);
             if (_handlers.TryGetValue(type, out var list))
             {
@@ -36,11 +43,20 @@ namespace _CardGame
         public void RaiseEvent<T>(T evt)
         {
             var type = typeof(T);
-            if (_handlers.TryGetValue(type, out var list))
+            if (!_handlers.TryGetValue(type, out var list))
+                return;
+
+            var snapshot = list.Cast<Subscriber<T>>().ToArray();
+
+            foreach (var subscriber in snapshot)
             {
-                foreach (var obj in list.Cast<Subscriber<T>>())
+                try
                 {
-                    obj.Handler.Invoke(evt);
+                    subscriber.Handler.Invoke(evt);
+                }
+                catch (Exception exception)
+                {
+                    Debug.LogException(exception);
                 }
             }
         }

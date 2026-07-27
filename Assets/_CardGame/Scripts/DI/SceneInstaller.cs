@@ -27,8 +27,8 @@ namespace _CardGame.DI
 
             var helper = FindObjectOfType<InstallerHelper>();
 
-            Container.Bind<GameManager>().AsSingle().NonLazy();
-            Container.Bind<GameEndViewAdapter>().AsSingle().WithArguments(helper.GameEndView).NonLazy();
+            Container.BindInterfacesAndSelfTo<GameManager>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<GameEndViewAdapter>().AsSingle().WithArguments(helper.GameEndView).NonLazy();
         }
 
 
