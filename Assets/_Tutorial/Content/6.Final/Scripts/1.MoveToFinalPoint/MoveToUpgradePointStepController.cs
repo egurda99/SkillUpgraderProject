@@ -51,12 +51,12 @@ namespace Game.Tutorial
             }
 
 
-            //Показываем указатель:
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
             var targetPosition = _targetPosition.position;
             _visualZoneManager.ShowCircleZone(targetPosition, Quaternion.Euler(90f, 0f, 0f));
             _navigationManager.StartLookAt(targetPosition);
 
-            //Показываем квест в UI:
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ UI:
             _finalPanelShower.Show(_panelContainer);
         }
 
@@ -84,7 +84,17 @@ namespace Game.Tutorial
         protected override void OnStop()
         {
             base.OnStop();
-            _triggerPoint.OnPlaceVisited -= OnPlaceVisited;
+
+            if (_triggerPoint != null)
+            {
+                _triggerPoint.OnPlaceVisited -= OnPlaceVisited;
+                Destroy(_triggerPoint.gameObject);
+                _triggerPoint = null;
+            }
+
+            _visualZoneManager.HideZone();
+            _navigationManager.Stop();
+            _finalPanelShower.Hide();
         }
     }
 }

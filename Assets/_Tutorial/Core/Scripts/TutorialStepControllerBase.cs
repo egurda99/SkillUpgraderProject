@@ -25,6 +25,7 @@ namespace Game.Tutorial
         public virtual void Init()
         {
             TutorialManager.OnStepFinished += CheckForFinish;
+            TutorialManager.OnStepInterrupted += CheckForInterrupt;
             TutorialManager.OnNextStep += CheckForStart;
             StartGame();
         }
@@ -41,6 +42,7 @@ namespace Game.Tutorial
         private void OnDestroy()
         {
             TutorialManager.OnStepFinished -= CheckForFinish;
+            TutorialManager.OnStepInterrupted -= CheckForInterrupt;
             TutorialManager.OnNextStep -= CheckForStart;
         }
 
@@ -85,6 +87,14 @@ namespace Game.Tutorial
         }
 
         private void CheckForFinish(TutorialStep step)
+        {
+            if (_step == step)
+            {
+                OnStop();
+            }
+        }
+
+        private void CheckForInterrupt(TutorialStep step)
         {
             if (_step == step)
             {

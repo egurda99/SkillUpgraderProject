@@ -26,6 +26,15 @@ namespace Game.Tutorial
             _targetUpgrade.OnLevelUp += OnLevelUp;
         }
 
+        public void Stop()
+        {
+            if (_targetUpgrade != null)
+            {
+                _targetUpgrade.OnLevelUp -= OnLevelUp;
+                _targetUpgrade = null;
+            }
+        }
+
         private void OnLevelUp(int currentLevel)
         {
             if (currentLevel < _config.TargetLevel)

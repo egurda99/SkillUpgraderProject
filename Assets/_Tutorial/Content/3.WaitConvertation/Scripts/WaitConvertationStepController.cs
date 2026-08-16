@@ -24,8 +24,8 @@ namespace Game.Tutorial
 
         private void OnConvertationFinished(int obj)
         {
-            //Убираем указатель
-            //Убираем квест из UI:
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ UI:
             _waitConvertationPanelShower.Hide();
 
             NotifyAboutCompleteAndMoveNext();
@@ -34,7 +34,7 @@ namespace Game.Tutorial
 
         protected override void OnStart()
         {
-            //Показываем квест в UI:
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ UI:
             _converterInstaller.System.OnOutputChanged += OnConvertationFinished;
 
             _waitConvertationPanelShower.Show(_panelContainer);
@@ -43,7 +43,9 @@ namespace Game.Tutorial
         protected override void OnStop()
         {
             base.OnStop();
+
             _converterInstaller.System.OnOutputChanged -= OnConvertationFinished;
+            _waitConvertationPanelShower.Hide();
         }
     }
 }

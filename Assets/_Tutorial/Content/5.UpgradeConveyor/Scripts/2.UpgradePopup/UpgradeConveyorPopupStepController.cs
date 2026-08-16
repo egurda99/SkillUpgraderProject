@@ -63,6 +63,18 @@ namespace Game.Tutorial
         protected override void OnStop()
         {
             base.OnStop();
+
+            _closeButton.onClick.RemoveListener(OnCloseClicked);
+            _upgradeQuestInspector?.Stop();
+
+            if (_popupManager.IsPopupActive(_config.PopupName))
+            {
+                _popupManager.HidePopup(_config.PopupName);
+            }
+
+            _cursorUpgrade.gameObject.SetActive(false);
+            _cursorCloseButton.gameObject.SetActive(false);
+            _closeButton.interactable = false;
         }
     }
 }

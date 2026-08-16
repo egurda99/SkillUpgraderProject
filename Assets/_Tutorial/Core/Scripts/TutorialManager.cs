@@ -8,6 +8,8 @@ namespace Game.Tutorial
     {
         public event Action<TutorialStep> OnStepFinished;
 
+        public event Action<TutorialStep> OnStepInterrupted;
+
         public event Action<TutorialStep> OnNextStep;
 
         public event Action OnCompleted;
@@ -78,6 +80,24 @@ namespace Game.Tutorial
             }
 
             _currentIndex++;
+            OnNextStep?.Invoke(CurrentStep);
+        }
+
+        public void MoveToPreviousStep()
+        {
+            if (_isCompleted)
+            {
+                return;
+            }
+
+            if (_currentIndex <= 0)
+            {
+                return;
+            }
+
+            OnStepInterrupted?.Invoke(CurrentStep);
+
+            _currentIndex--;
             OnNextStep?.Invoke(CurrentStep);
         }
 

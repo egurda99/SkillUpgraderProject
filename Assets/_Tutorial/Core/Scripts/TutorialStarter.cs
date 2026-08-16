@@ -28,5 +28,11 @@ namespace Game.Tutorial
         {
             _tutorialManager.SetStep(step);
         }
+
+        [Button]
+        public void MoveToPreviousStep()
+        {
+            _tutorialManager.MoveToPreviousStep();
+        }
     }
 }

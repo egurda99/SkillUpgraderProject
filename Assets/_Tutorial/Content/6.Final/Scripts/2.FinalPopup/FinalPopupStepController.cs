@@ -37,6 +37,13 @@ namespace Game.Tutorial
         protected override void OnStop()
         {
             base.OnStop();
+
+            _closeButton.onClick.RemoveListener(OnCloseClicked);
+
+            if (_popupManager.IsPopupActive(_config.PopupName))
+            {
+                _popupManager.HidePopup(_config.PopupName);
+            }
         }
     }
 }

@@ -36,11 +36,11 @@ namespace Game.Tutorial
 
         private void OnConverterVisited(int obj)
         {
-            //Убираем указатель
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             _visualZoneManager.HideZone();
             _navigationManager.Stop();
 
-            //Убираем квест из UI:
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ UI:
             _moveToConveyorPanelShower.Hide();
 
             NotifyAboutCompleteAndMoveNext();
@@ -51,19 +51,24 @@ namespace Game.Tutorial
         {
             _converterInstaller.System.OnInputChanged += OnConverterVisited;
 
-            //Показываем указатель:
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
             var targetPosition = _targetPosition.position;
             _visualZoneManager.ShowRectangleZone(targetPosition, Quaternion.Euler(90f, 0f, 0f));
             _navigationManager.StartLookAt(targetPosition);
 
-            //Показываем квест в UI:
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ UI:
             _moveToConveyorPanelShower.Show(_panelContainer);
         }
 
         protected override void OnStop()
         {
             base.OnStop();
+
             _converterInstaller.System.OnInputChanged -= OnConverterVisited;
+
+            _visualZoneManager.HideZone();
+            _navigationManager.Stop();
+            _moveToConveyorPanelShower.Hide();
         }
     }
 }
